@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "EncoShared", "EncoShared\EncoShared.visualdproj", "{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}"
+EndProject
+Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "EncoDesktop", "EncoDesktop\EncoDesktop.visualdproj", "{37BE5994-E9EF-43A6-8D9A-36013711E25E}"
+EndProject
+Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "EncoGL3", "EncoGL3\EncoGL3.visualdproj", "{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}.Debug|Win32.Build.0 = Debug|Win32
+		{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}.Release|Win32.ActiveCfg = Release|Win32
+		{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}.Release|Win32.Build.0 = Release|Win32
+		{37BE5994-E9EF-43A6-8D9A-36013711E25E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{37BE5994-E9EF-43A6-8D9A-36013711E25E}.Debug|Win32.Build.0 = Debug|Win32
+		{37BE5994-E9EF-43A6-8D9A-36013711E25E}.Release|Win32.ActiveCfg = Release|Win32
+		{37BE5994-E9EF-43A6-8D9A-36013711E25E}.Release|Win32.Build.0 = Release|Win32
+		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}.Debug|Win32.Build.0 = Debug|Win32
+		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}.Release|Win32.ActiveCfg = Release|Win32
+		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

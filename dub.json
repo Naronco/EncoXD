@@ -1,0 +1,17 @@
+{
+	"name": "EncoX",
+	"description": "Naronco open source 3D engine",
+	"authors": ["NaroncoNexo", "WebFreak001"],
+	"homepage": "https://github.com/Naronco/EncoX",
+	"license": "GPL-2.0",
+	"dependencies": {
+		"derelict-sdl2": ">=1.2.8",
+		"derelict-gl3": ">=1.0.10",
+		"gl3n": ">=1.0.0"
+	},
+	"subPackages": [
+		"source/EncoXD/EncoShared",
+		"source/EncoXD/EncoDesktop",
+		"source/EncoXD/EncoGL3"
+	]
+}
