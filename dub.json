@@ -3,6 +3,7 @@
 	"description": "Naronco open source 3D engine",
 	"authors": ["NaroncoNexo", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoX",
+	"targetPath": "bin",
 	"license": "GPL-2.0",
 	"dependencies": {
 		"derelict-sdl2": ">=1.2.8",
