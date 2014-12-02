@@ -9,6 +9,8 @@ Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "EncoDesktop", "EncoDesktop\
 EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "EncoGL3", "EncoGL3\EncoGL3.visualdproj", "{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}"
 EndProject
+Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Demo", "..\..\Demo\Demo.visualdproj", "{CC7A5E9F-DABC-4D09-8CFC-C94C51105ABD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}.Debug|Win32.Build.0 = Debug|Win32
 		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}.Release|Win32.ActiveCfg = Release|Win32
 		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}.Release|Win32.Build.0 = Release|Win32
+		{CC7A5E9F-DABC-4D09-8CFC-C94C51105ABD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CC7A5E9F-DABC-4D09-8CFC-C94C51105ABD}.Debug|Win32.Build.0 = Debug|Win32
+		{CC7A5E9F-DABC-4D09-8CFC-C94C51105ABD}.Release|Win32.ActiveCfg = Release|Win32
+		{CC7A5E9F-DABC-4D09-8CFC-C94C51105ABD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -139,6 +139,11 @@ class GL3Renderer : IRenderer
 		glDrawElements(GL_TRIANGLES, mesh.indexLength, GL_UNSIGNED_INT, null);
 	}
 
+	ShaderProgram createShader(Shader[] shaders)
+	{
+		return 0;
+	}
+
 	@property bool valid() { return m_valid; }
 
 	private bool m_valid = false;

@@ -1,9 +1,9 @@
 <DProject>
- <ProjectGuid>{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}</ProjectGuid>
+ <ProjectGuid>{CC7A5E9F-DABC-4D09-8CFC-C94C51105ABD}</ProjectGuid>
  <Config name="Debug" platform="Win32">
   <obj>0</obj>
   <link>0</link>
-  <lib>1</lib>
+  <lib>0</lib>
   <subsystem>0</subsystem>
   <multiobj>0</multiobj>
   <singleFileCompilation>0</singleFileCompilation>
@@ -50,7 +50,7 @@
   <compiler>0</compiler>
   <otherDMD>0</otherDMD>
   <program>$(DMDInstallDir)windows\bin\dmd.exe</program>
-  <imppath />
+  <imppath>../source/EncoXD/EncoDesktop;../source/EncoXD/EncoGL3;../source/EncoXD/EncoShared</imppath>
   <fileImppath />
   <outdir>$(ConfigurationName)</outdir>
   <objdir>$(OutDir)</objdir>
@@ -90,7 +90,7 @@
   <libpaths />
   <deffile />
   <resfile />
-  <exefile>$(OutDir)\$(ProjectName).lib</exefile>
+  <exefile>$(OutDir)\$(ProjectName).exe</exefile>
   <useStdLibPath>1</useStdLibPath>
   <cRuntime>2</cRuntime>
   <additionalOptions />
@@ -101,7 +101,7 @@
  <Config name="Release" platform="Win32">
   <obj>0</obj>
   <link>0</link>
-  <lib>1</lib>
+  <lib>0</lib>
   <subsystem>0</subsystem>
   <multiobj>0</multiobj>
   <singleFileCompilation>0</singleFileCompilation>
@@ -188,7 +188,7 @@
   <libpaths />
   <deffile />
   <resfile />
-  <exefile>$(OutDir)\$(ProjectName).lib</exefile>
+  <exefile>$(OutDir)\$(ProjectName).exe</exefile>
   <useStdLibPath>1</useStdLibPath>
   <cRuntime>1</cRuntime>
   <additionalOptions />
@@ -196,14 +196,7 @@
   <postBuildCommand />
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
- <Folder name="EncoShared">
-  <Folder name="Enco3D">
-   <File path="Enco3D\Mesh.d" />
-   <File path="Enco3D\Shader.d" />
-  </Folder>
-  <File path="EncoContext.d" />
-  <File path="IRenderer.d" />
-  <File path="IView.d" />
+ <Folder name="Demo">
   <File path="main.d" />
  </Folder>
 </DProject>

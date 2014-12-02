@@ -31,4 +31,6 @@ interface IRenderer
 	RenderableMesh createMesh(Mesh mesh);
 	void deleteMesh(RenderableMesh mesh);
 	void renderMesh(RenderableMesh mesh);
+
+	ShaderProgram createShader(Shader[] shaders);
 }

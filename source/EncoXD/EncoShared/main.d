@@ -16,8 +16,9 @@ public
 	import Enco.Shared.IRenderer;
 	import Enco.Shared.IView;
 	import Enco.Shared.EncoContext;
-
+	
 	import Enco.Shared.Enco3D.Mesh;
+	import Enco.Shared.Enco3D.Shader;
 
 	alias char int8, i8;
 	alias short int16, i16;

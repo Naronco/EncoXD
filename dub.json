@@ -4,6 +4,9 @@
 	"authors": ["NaroncoNexo", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoX",
 	"targetPath": "bin",
+	"targetType": "executable",
+	"sourcePaths": ["Demo/", "source/"],
+	"importPaths": ["Demo/", "source/"],
 	"license": "GPL-2.0",
 	"dependencies": {
 		"derelict-sdl2": ">=1.2.8",
@@ -13,6 +16,7 @@
 	"subPackages": [
 		"source/EncoXD/EncoShared",
 		"source/EncoXD/EncoDesktop",
-		"source/EncoXD/EncoGL3"
+		"source/EncoXD/EncoGL3",
+		"Demo/"
 	]
 }
