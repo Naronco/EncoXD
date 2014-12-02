@@ -12,7 +12,7 @@ void main() {
 	auto renderer = new GL3Renderer();
 
 	auto context = new EncoContext(
-				new DesktopView("Ein Hauch Magie *:･ﾟ✧ (∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ. * ･", 800, 600),
+				new DesktopView("UTF-8 Magic *:･ﾟ✧ (∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ. * ･", 800, 600),
 				renderer);
 
 	context.start();
