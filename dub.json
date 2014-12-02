@@ -8,6 +8,21 @@
 	"sourcePaths": ["Demo/", "source/"],
 	"importPaths": ["Demo/", "source/"],
 	"license": "GPL-2.0",
+	"buildTypes": {
+		"debug": {
+			"buildOptions": ["debugMode", "debugInfo", "debugInfoC", "optimize", "alwaysStackFrame", "stackStomping"]
+		},
+		"debug-profile": {
+			"buildOptions": ["debugMode", "debugInfo", "debugInfoC", "profile", "alwaysStackFrame", "stackStomping"]
+		},
+		"release": {
+			"buildOptions": ["releaseMode", "inline", "optimize"]
+		},
+		"docs": {
+			"buildOptions": ["syntaxOnly"],
+			"dflags": ["-c", "-Dddocs"]
+		}
+	},
 	"dependencies": {
 		"derelict-sdl2": ">=1.2.8",
 		"derelict-gl3": ">=1.0.10",
