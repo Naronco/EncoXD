@@ -10,7 +10,7 @@
 	"license": "GPL-2.0",
 	"buildTypes": {
 		"debug": {
-			"buildOptions": ["debugMode", "debugInfo", "debugInfoC", "optimize", "alwaysStackFrame", "stackStomping"]
+			"buildOptions": ["debugMode", "debugInfo", "debugInfoC", "alwaysStackFrame", "stackStomping"]
 		},
 		"debug-profile": {
 			"buildOptions": ["debugMode", "debugInfo", "debugInfoC", "profile", "alwaysStackFrame", "stackStomping"]
