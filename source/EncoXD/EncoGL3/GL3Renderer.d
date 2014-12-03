@@ -98,7 +98,7 @@ class GL3Renderer : IRenderer
 		}
 	}
 	
-	private static const int bufferCount = 3;
+	private static const int bufferCount = 4;
 
 	RenderableMesh createMesh(Mesh mesh)
 	{
@@ -120,6 +120,11 @@ class GL3Renderer : IRenderer
 		glBufferData(GL_ARRAY_BUFFER, vec2.sizeof * mesh.texCoords.length, mesh.texCoords.ptr, GL_STATIC_DRAW);
 		glVertexAttribPointer(1u, 2, GL_FLOAT, cast(u8)0, 0, null);
 		glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+		glBufferData(GL_ARRAY_BUFFER, vec3.sizeof * mesh.normals.length, mesh.normals.ptr, GL_STATIC_DRAW);
+		glVertexAttribPointer(2u, 3, GL_FLOAT, cast(u8)0, 0, null);
+		glEnableVertexAttribArray(2);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[bufferCount - 1]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, uint.sizeof * mesh.indices.length, mesh.indices.ptr, GL_STATIC_DRAW);

@@ -41,6 +41,8 @@ void main() {
 
 	//DerelictASSIMP3.load();
 
+	auto random = new Random();
+
 	auto triangle = new Mesh();
 	int i = 0;
 	for(int x = 0; x < 10; x++)
@@ -48,12 +50,15 @@ void main() {
 		for(int y = 0; y < 10; y++)
 		{
 			triangle.addVertices([vec3((x - 5) * 0.2f, (y - 4) * 0.2f, 0), vec3((x - 4) * 0.2f, (y - 4) * 0.2f, 0), vec3((x - 4) * 0.2f, (y - 5) * 0.2f, 0), vec3((x - 5) * 0.2f, (y - 5) * 0.2f, 0)]);
-			triangle.addTexCoords([vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1)]);
-			triangle.addNormals([vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1)]);
-			triangle.addIndices([i + 3, i , i + 1, i + 1, i + 2, i + 3]);
+			triangle.addTexCoords([vec2(x * 0.1f, y * 0.1f), vec2(x * 0.1f + 0.1f, y * 0.1f), vec2(x * 0.1f + 0.1f, y * 0.1f + 0.1f), vec2(x * 0.1f, y * 0.1f + 0.1f)]);
+			triangle.addNormals([vec3(random.nextFloat(), random.nextFloat(), random.nextFloat()), vec3(random.nextFloat(), random.nextFloat(), random.nextFloat()), vec3(random.nextFloat(), random.nextFloat(), random.nextFloat()), vec3(random.nextFloat(), random.nextFloat(), random.nextFloat())]);
+			triangle.addIndices([i + 1, i , i + 3, i + 3, i + 2, i + 1]);
 			i += 4;
 		}
 	}
+
+	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_CULL_FACE);
 
 	auto mesh = renderer.createMesh(triangle);
 	

@@ -16,6 +16,7 @@ public
 	import Enco.Shared.IRenderer;
 	import Enco.Shared.IView;
 	import Enco.Shared.EncoContext;
+	import Enco.Shared.Random;
 	
 	import Enco.Shared.Enco3D.Mesh;
 	import Enco.Shared.Enco3D.Shader;

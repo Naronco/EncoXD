@@ -205,5 +205,6 @@
   <File path="IRenderer.d" />
   <File path="IView.d" />
   <File path="main.d" />
+  <File path="Random.d" />
  </Folder>
 </DProject>
