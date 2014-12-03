@@ -2,105 +2,82 @@ import EncoShared;
 import EncoDesktop;
 import EncoGL3;
 
+import derelict.assimp3.assimp;
+
 import std.stdio;
+static import std.file;
 import std.traits;
 
 void main() {
-	DerelictSDL2.load();
-	SDL_Init(SDL_INIT_VIDEO);
-
 	auto renderer = new GL3Renderer();
-
 	auto context = new EncoContext(
 				new DesktopView("UTF-8 Magic *:･ﾟ✧ (∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ. * ･", 800, 600),
 				renderer);
-
 	context.start();
 	renderer.setClearColor(0.5f, 0.8f, 1.0f);
 
-	uint program, vs, fs;
+	Shader vertex = new GLShader();
+	vertex.load(ShaderType.Vertex, std.file.readText("shader.vert"));
+	vertex.compile();
 
-	vs = glCreateShader(GL_VERTEX_SHADER);
-	fs = glCreateShader(GL_FRAGMENT_SHADER);
+	Shader fragment = new GLShader();
+	fragment.load(ShaderType.Fragment, std.file.readText("shader.frag"));
+	fragment.compile();
 
-	string vertex = "#version 330
+	auto program = renderer.createShader([vertex, fragment]);
+	program.registerUniform("modelview");
+	program.registerUniform("projection");
+	program.registerUniform("normalmatrix");
 
-layout(location = 0) in vec3 in_position;
-layout(location = 1) in vec2 in_tex;
+	mat4 modelview = mat4.look_at(vec3(0, 0, 4), vec3(0, 0, 0), vec3(0, 1, 0));
+	mat4 projection = mat4.perspective(800, 600, 45, 0.1f, 100.0f);
+	
+	program.set("modelview", modelview);
+	program.set("projection", projection);
+	
+	writeln(modelview);
+	writeln(projection);
+	program.set("normalmatrix", modelview.transposed().inverse());
 
-out vec2 texCoord;
-
-void main(void)
-{
-	gl_Position = vec4(in_position, 1);
-
-	texCoord = in_tex;
-}";
-
-	const int vl = vertex.length;
-
-	glShaderSource(vs, 1, [vertex.ptr].ptr, &vl);
-	glCompileShader(vs);
-
-	char* log = new char[1024].ptr;
-	int len = 0;
-	glGetShaderInfoLog(vs, 1024, &len, log);
-
-	if(len != 0)
-	{
-		write(log[0 .. len]);
-		return;
-	}
-
-	string fragment = "#version 330
-out vec4 out_frag_color;
-
-in vec2 texCoord;
-
-void main(void)
-{
-	out_frag_color = vec4(texCoord.x, 0, texCoord.y, 1);
-}";
-
-	const int fl = fragment.length;
-
-	glShaderSource(fs, 1, [fragment.ptr].ptr, &fl);
-	glCompileShader(fs);
-
-	char* flog = new char[1024].ptr;
-	int flen = 0;
-	glGetShaderInfoLog(fs, 1024, &flen, flog);
-
-	if(flen != 0)
-	{
-		write(flog[0 .. flen]);
-		return;
-	}
-
-	program = glCreateProgram();
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-
-	glLinkProgram(program);
-	glUseProgram(program);
+	//DerelictASSIMP3.load();
 
 	auto triangle = new Mesh();
-	triangle.addVertices([vec3(-1, 1, 0), vec3(1, 1, 0), vec3(1, -1, 0), vec3(-1, -1, 0)]);
-	triangle.addTexCoords([vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1)]);
-	triangle.addIndices([3, 0, 1, 1, 2, 3]);
-	// TODO: Minimize all this code to 10-20 lines + shaders
+	int i = 0;
+	for(int x = 0; x < 10; x++)
+	{
+		for(int y = 0; y < 10; y++)
+		{
+			triangle.addVertices([vec3((x - 5) * 0.2f, (y - 4) * 0.2f, 0), vec3((x - 4) * 0.2f, (y - 4) * 0.2f, 0), vec3((x - 4) * 0.2f, (y - 5) * 0.2f, 0), vec3((x - 5) * 0.2f, (y - 5) * 0.2f, 0)]);
+			triangle.addTexCoords([vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1)]);
+			triangle.addNormals([vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1)]);
+			triangle.addIndices([i + 3, i , i + 1, i + 1, i + 2, i + 3]);
+			i += 4;
+		}
+	}
 
 	auto mesh = renderer.createMesh(triangle);
+	
+	// TODO: Minimize all this code to 15-25 lines + shaders + imports
+
+	float t = 0;
 
 	while(context.update())
 	{
 		renderer.beginFrame();
 		renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
 
-		glUseProgram(program);
+		program.bind();
+
+		modelview = mat4.look_at(vec3(0, 0, 4), vec3(0, 0, 0), vec3(0, 1, 0)) * mat4.identity.rotate(t, vec3(1, 0, 0));
+
+		program.set("modelview", modelview);
+		program.set("projection", projection);
+		program.set("normalmatrix", modelview.transposed().inverse());
 		renderer.renderMesh(mesh);
 
 		renderer.endFrame();
+
+		t += 0.01f;
 	}
 
 	renderer.deleteMesh(mesh);

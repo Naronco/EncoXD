@@ -26,7 +26,8 @@
 	"dependencies": {
 		"derelict-sdl2": ">=1.2.8",
 		"derelict-gl3": ">=1.0.10",
-		"gl3n": ">=1.0.0"
+		"gl3n": ">=1.0.0",
+		"derelict-assimp3": ">=1.0.0"
 	},
 	"subPackages": [
 		"source/EncoXD/EncoShared",

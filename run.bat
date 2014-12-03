@@ -1,0 +1,2 @@
+dub build
+bin\encox

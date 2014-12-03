@@ -2,6 +2,8 @@ module Enco.GL3.GL3Renderer;
 
 import EncoGL3;
 
+import std.stdio;
+
 class GL3Renderer : IRenderer
 {
 	this()
@@ -141,7 +143,18 @@ class GL3Renderer : IRenderer
 
 	ShaderProgram createShader(Shader[] shaders)
 	{
-		return 0;
+		GLShaderProgram program = new GLShaderProgram();
+		program.create();
+		writeln("ShaderProgram ", program.pr);
+
+		foreach(Shader shader; shaders)
+		{
+			program.attach(shader);
+		}
+
+		program.link();
+
+		return program;
 	}
 
 	@property bool valid() { return m_valid; }
