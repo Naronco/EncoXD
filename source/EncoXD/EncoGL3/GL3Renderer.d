@@ -150,7 +150,6 @@ class GL3Renderer : IRenderer
 	{
 		GLShaderProgram program = new GLShaderProgram();
 		program.create();
-		writeln("ShaderProgram ", program.pr);
 
 		foreach(Shader shader; shaders)
 		{

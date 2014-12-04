@@ -201,10 +201,14 @@
    <File path="Enco3D\Mesh.d" />
    <File path="Enco3D\Shader.d" />
   </Folder>
+  <File path="Camera.d" />
   <File path="EncoContext.d" />
+  <File path="GameObject.d" />
   <File path="IRenderer.d" />
+  <File path="ITexture.d" />
   <File path="IView.d" />
   <File path="main.d" />
   <File path="Random.d" />
+  <File path="Transform.d" />
  </Folder>
 </DProject>

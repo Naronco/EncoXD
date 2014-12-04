@@ -4,7 +4,8 @@ public
 {
 	import derelict.sdl2.sdl;
 	import derelict.sdl2.image;
-	
+	import derelict.assimp3.assimp;
+
 	import gl3n.aabb;
 	import gl3n.frustum;
 	import gl3n.interpolate;
@@ -15,8 +16,12 @@ public
 
 	import Enco.Shared.IRenderer;
 	import Enco.Shared.IView;
+	import Enco.Shared.ITexture;
 	import Enco.Shared.EncoContext;
 	import Enco.Shared.Random;
+	import Enco.Shared.GameObject;
+	import Enco.Shared.Camera;
+	import Enco.Shared.Transform;
 	
 	import Enco.Shared.Enco3D.Mesh;
 	import Enco.Shared.Enco3D.Shader;

@@ -11,7 +11,7 @@ layout(location = 2) in vec3 in_normal;
 out vec2 texCoord;
 out vec3 normal;
 
-void main(void)
+void main()
 {
 	gl_Position = projection * modelview * vec4(in_position, 1);
 

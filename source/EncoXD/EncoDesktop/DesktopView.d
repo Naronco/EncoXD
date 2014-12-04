@@ -1,11 +1,63 @@
 module Enco.Desktop.DesktopView;
 
 import EncoDesktop;
-private import std.stdio;
+import std.stdio;
+import EncoShared;
 
-private
+struct KeyboardState
 {
-	import EncoShared;
+	bool[] keys = new bool[65536];
+	
+	bool isKeyDown(u16 key)
+	{
+		return keys[key];
+	}
+
+	bool isKeyUp(u16 key)
+	{
+		return !keys[key];
+	}
+}
+
+class Keyboard
+{
+	static KeyboardState* getState() { return new KeyboardState(keys[]); }
+
+	private static void setKey(u16 key, bool state)
+	{
+		keys[key] = state;
+	}
+
+	private static bool[] keys = new bool[65536];
+}
+
+struct MouseState
+{
+	vec2 position;
+	bool[] buttons = new bool[8];
+	
+	bool isButtonDown(u8 button)
+	{
+		return buttons[button];
+	}
+
+	bool isKeyUp(u8 button)
+	{
+		return !buttons[button];
+	}
+}
+
+class Mouse
+{
+	static MouseState* getState() { return new MouseState(position, buttons[]); }
+
+	private static void setPosition(i32 x, i32 y)
+	{
+		position = vec2(x, y);
+	}
+
+	private static vec2 position;
+	private static bool[] buttons = new bool[8];
 }
 
 class DesktopView : IView
@@ -63,6 +115,15 @@ class DesktopView : IView
 				switch (event.type) {
 				case SDL_QUIT:
 					return false;
+				case SDL_KEYDOWN:
+					Keyboard.setKey(cast(u16)event.key.keysym.sym, true);
+					break;
+				case SDL_KEYUP:
+					Keyboard.setKey(cast(u16)event.key.keysym.sym, false);
+					break;
+				case SDL_MOUSEMOTION:
+					Mouse.setPosition(event.motion.x, event.motion.y);
+					break;
 				default: break;
 				}
 			}

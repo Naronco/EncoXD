@@ -32,7 +32,6 @@ class GLShaderProgram : ShaderProgram
 		if((uniform in m_properties) !is null)
 			return m_properties[uniform];
 		m_properties[uniform] = glGetUniformLocation(program, uniform.ptr);
-		writeln(uniform, " = ", m_properties[uniform]);
 		return m_properties[uniform];
 	}
 

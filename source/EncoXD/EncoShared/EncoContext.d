@@ -16,6 +16,10 @@ class EncoContext
 
 	void start()
 	{
+		DerelictSDL2.load();
+		DerelictSDL2Image.load();
+		DerelictASSIMP3.load();
+
 		m_mainView.create(m_renderer);
 	}
 
