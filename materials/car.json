@@ -1,0 +1,14 @@
+{
+	"Name": "Car",
+	"Textures":
+	{
+		"0": { "File": "car.png", "MipMap": true }
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "diffuse",
+		"Ambient": "vec3(0.1, 0.1, 0.1)",
+		"Color": "tex(slot0)"
+	}
+}

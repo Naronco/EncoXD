@@ -23,6 +23,8 @@ class FPSRotation : IComponent
 	{
 		mstate = Mouse.getState();
 		object.transform.rotation -= vec3(mstate.offset.y, mstate.offset.x, 0) * 0.005f;
+		if(object.transform.rotation.x > 1.57079633f) object.transform.rotation.x = 1.57079633f;
+		if(object.transform.rotation.x < -1.57079633f) object.transform.rotation.x = -1.57079633f;
 	}
 	
 	MouseState* mstate;

@@ -14,6 +14,9 @@ abstract class IView
 	
 	protected abstract void onResize();
 	protected abstract void onRename();
+	
+	final @property u32 width() { return m_size.x; }
+	final @property u32 height() { return m_size.y; }
 
 	protected u32vec2 m_size;
 	protected string m_name;

@@ -14,6 +14,10 @@ class Game3DLayer : RenderLayer
 		addGameObject(new MeshObject(meshes[1], GLMaterial.load(scene.renderer, "materials/brick.json")));
 		addGameObject(new MeshObject(meshes[2], GLMaterial.load(scene.renderer, "materials/yard_decoration.json")));
 		addGameObject(new MeshObject(meshes[3], GLMaterial.load(scene.renderer, "materials/tree.json")));
+		
+		auto car = Mesh.loadFromObj("car.obj", 0);
+		addGameObject(new MeshObject(car[0], GLMaterial.load(scene.renderer, "materials/glass.json")));
+		addGameObject(new MeshObject(car[1], GLMaterial.load(scene.renderer, "materials/car.json")));
 	}
 }
 

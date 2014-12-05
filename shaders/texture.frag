@@ -9,7 +9,7 @@ const vec3 ambient = @{Ambient};
 in vec3 normal;
 in vec2 texCoord;
 
-out vec4 out_frag_color;
+layout(location = 0) out vec4 out_frag_color;
 
 vec4 tex(sampler2D slot)
 {

@@ -1,0 +1,12 @@
+{
+	"Name": "CarGlass (R)",
+	"Textures":
+	{
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "glass",
+		"Ambient": "vec3(0.1, 0.1, 0.1)"
+	}
+}
