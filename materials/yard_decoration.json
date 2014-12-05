@@ -1,0 +1,14 @@
+{
+	"Name": "Yard Decoration",
+	"Textures":
+	{
+		"0": { "File": "yard.png", "MipMap": true }
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "diffuse",
+		"Ambient": "vec3(0.1, 0.1, 0.1)",
+		"Color": "tex(slot0)"
+	}
+}

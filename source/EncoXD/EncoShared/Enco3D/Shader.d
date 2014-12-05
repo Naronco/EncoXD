@@ -19,6 +19,12 @@ interface ShaderProgram
 
 	int registerUniform(string uniform);
 
+	final void registerUniforms(const string[] uniforms)
+	{
+		foreach(string uniform; uniforms)
+			registerUniform(uniform);
+	}
+
 	void set(string uniform, float value);
 
 	void set(string uniform, vec2 value);

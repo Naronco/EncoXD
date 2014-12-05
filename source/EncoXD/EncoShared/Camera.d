@@ -21,9 +21,9 @@ class Camera : GameObject
 	
 	@property mat4 viewMatrix()
 	{
-		m_viewMatrix = mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1)) *
+		m_viewMatrix = mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
 					   mat4.identity.rotate(transform.rotation.y, vec3(0, 1, 0)) *
-					   mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
+					   mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1)) *
 					   mat4.identity.translate(-transform.position.x, -transform.position.y, -transform.position.z);
 		return m_viewMatrix;
 	}

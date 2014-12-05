@@ -6,34 +6,38 @@ import EncoShared;
 
 struct KeyboardState
 {
-	bool[] keys = new bool[65536];
+	bool[int] keys;
 	
-	bool isKeyDown(u16 key)
+	bool isKeyDown(u32 key)
 	{
-		return keys[key];
+		return (key in keys) !is null;
 	}
 
-	bool isKeyUp(u16 key)
+	bool isKeyUp(u32 key)
 	{
-		return !keys[key];
+		return (key in keys) is null;
 	}
 }
 
 class Keyboard
 {
-	static KeyboardState* getState() { return new KeyboardState(keys[]); }
+	static KeyboardState* getState() { return new KeyboardState(keys.dup); }
 
-	private static void setKey(u16 key, bool state)
+	private static void setKey(u32 key, bool state)
 	{
-		keys[key] = state;
+		if(state)
+			keys[key] = true;
+		else
+			keys.remove(key);
 	}
 
-	private static bool[] keys = new bool[65536];
+	private static bool[int] keys;
 }
 
 struct MouseState
 {
 	vec2 position;
+	vec2 offset;
 	bool[] buttons = new bool[8];
 	
 	bool isButtonDown(u8 button)
@@ -49,14 +53,45 @@ struct MouseState
 
 class Mouse
 {
-	static MouseState* getState() { return new MouseState(position, buttons[]); }
+	static MouseState* getState()
+	{
+		return new MouseState(position, offset, buttons[]);
+	}
+	
+	static void capture(DesktopView window)
+	{
+		SDL_SetRelativeMouseMode(true);
+		SDL_ShowCursor(false);
+		SDL_SetWindowGrab(window.handle, true);
+	}
+	
+	static void release(DesktopView window)
+	{
+		SDL_SetRelativeMouseMode(false);
+		SDL_ShowCursor(true);
+		SDL_SetWindowGrab(window.handle, false);
+	}
 
 	private static void setPosition(i32 x, i32 y)
 	{
-		position = vec2(x, y);
+		position.x = x;
+		position.y = y;
 	}
 
-	private static vec2 position;
+	private static void addOffset(i32 x, i32 y)
+	{
+		offset.x += x;
+		offset.y += y;
+	}
+
+	private static void setOffset(i32 x, i32 y)
+	{
+		offset.x = x;
+		offset.y = y;
+	}
+	
+	private static vec2 position = vec2(0, 0);
+	private static vec2 offset = vec2(0, 0);
 	private static bool[] buttons = new bool[8];
 }
 
@@ -68,12 +103,7 @@ class DesktopView : IView
 
 	override void create(IRenderer renderer)
 	{
-		if(renderer is null)
-		{
-			stderr.writeln("renderer == null // DesktopView (#", &this, ")");
-			m_valid = false;
-			return;
-		}
+		assert(renderer !is null);
 
 		m_renderer = renderer;
 		
@@ -110,19 +140,21 @@ class DesktopView : IView
 	{
 		if(valid)
 		{
+			Mouse.setOffset(0, 0);
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
 				case SDL_QUIT:
 					return false;
 				case SDL_KEYDOWN:
-					Keyboard.setKey(cast(u16)event.key.keysym.sym, true);
+					Keyboard.setKey(event.key.keysym.sym, true);
 					break;
 				case SDL_KEYUP:
-					Keyboard.setKey(cast(u16)event.key.keysym.sym, false);
+					Keyboard.setKey(event.key.keysym.sym, false);
 					break;
 				case SDL_MOUSEMOTION:
 					Mouse.setPosition(event.motion.x, event.motion.y);
+					Mouse.addOffset(event.motion.xrel, event.motion.yrel);
 					break;
 				default: break;
 				}
@@ -148,6 +180,7 @@ class DesktopView : IView
 		}
 	}
 
+	@property SDL_Window* handle() { return m_window; }
 	@property bool valid() { return m_valid; }
 
 	private bool m_valid = false;

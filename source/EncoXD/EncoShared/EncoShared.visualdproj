@@ -204,11 +204,17 @@
   <File path="Camera.d" />
   <File path="EncoContext.d" />
   <File path="GameObject.d" />
+  <File path="IComponent.d" />
   <File path="IRenderer.d" />
   <File path="ITexture.d" />
   <File path="IView.d" />
   <File path="main.d" />
+  <File path="Material.d" />
+  <File path="MeshObject.d" />
   <File path="Random.d" />
+  <File path="RenderContext.d" />
+  <File path="Scene.d" />
+  <File path="TemplateParser.d" />
   <File path="Transform.d" />
  </Folder>
 </DProject>

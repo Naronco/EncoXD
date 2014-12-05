@@ -1,0 +1,14 @@
+{
+	"Name": "Material",
+	"Textures":
+	{
+		"0": { "File": "grass.png" }
+	},
+	"Vertex": "shader",
+	"Fragment":
+	{
+		"Base": "shader",
+		"Ambient": "vec3(0.1, 0.1, 0.1)",
+		"Color": "tex(slot0)"
+	}
+}

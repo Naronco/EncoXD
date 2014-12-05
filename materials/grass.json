@@ -1,0 +1,14 @@
+{
+	"Name": "Grass",
+	"Textures":
+	{
+		"0": { "File": "grass.png", "MipMap": true }
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "diffuse",
+		"Ambient": "vec3(0.1, 0.1, 0.1)",
+		"Color": "tex(slot0, 10, 10)"
+	}
+}

@@ -198,6 +198,7 @@
  </Config>
  <Folder name="EncoGL3">
   <File path="GL3Renderer.d" />
+  <File path="GLMaterial.d" />
   <File path="GLShader.d" />
   <File path="GLTexture.d" />
   <File path="main.d" />

@@ -1,0 +1,14 @@
+{
+	"Name": "Tree",
+	"Textures":
+	{
+		"0": { "File": "tree.png", "MipMap": true }
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "texture",
+		"Ambient": "vec3(0.1, 0.1, 0.1)",
+		"Color": "tex(slot0)"
+	}
+}

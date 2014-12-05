@@ -30,7 +30,7 @@ class Mesh
 	
 	static Mesh[] loadFromObj(string file, u32 flags)
 	{
-		const aiScene* scene = aiImportFile(file.ptr, aiProcess_CalcTangentSpace | aiProcess_GenNormals |
+		const aiScene* scene = aiImportFile(file.ptr, aiProcess_GenNormals |
 				aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs | flags);
 		Mesh[] meshes;
 		meshes.length = scene.mNumMeshes;
@@ -56,7 +56,7 @@ class Mesh
 			meshes[j] = mesh;
 		}
 		
-		return meshes;
+		return meshes.reverse;
 	}
 
 	private vec3[] m_vertices;

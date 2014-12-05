@@ -22,6 +22,12 @@ public
 	import Enco.Shared.GameObject;
 	import Enco.Shared.Camera;
 	import Enco.Shared.Transform;
+	import Enco.Shared.IComponent;
+	import Enco.Shared.Scene;
+	import Enco.Shared.MeshObject;
+	import Enco.Shared.Material;
+	import Enco.Shared.TemplateParser;
+	import Enco.Shared.RenderContext;
 	
 	import Enco.Shared.Enco3D.Mesh;
 	import Enco.Shared.Enco3D.Shader;
