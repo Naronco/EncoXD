@@ -1,8 +1,8 @@
 module Enco.GL3.GL3Renderer;
 
-import EncoGL3;
-
 import std.stdio;
+
+import EncoGL3;
 
 class GL3Renderer : IRenderer
 {
@@ -100,7 +100,7 @@ class GL3Renderer : IRenderer
 	
 	private static const int bufferCount = 4;
 
-	RenderableMesh createMesh(Mesh mesh)
+	Mesh createMesh(Mesh mesh)
 	{
 		u32 vao;
 		glGenVertexArrays(1, &vao);
@@ -131,19 +131,21 @@ class GL3Renderer : IRenderer
 
 		glBindVertexArray(0);
 
-		return RenderableMesh(vao, vbo, mesh.indices.length);
+		mesh.renderable = new RenderableMesh(vao, vbo, mesh.indices.length);
+
+		return mesh;
 	}
 
-	void deleteMesh(RenderableMesh mesh)
+	void deleteMesh(Mesh mesh)
 	{
-		glDeleteBuffers(bufferCount, mesh.vbos);
-		glDeleteVertexArrays(1, &mesh.bufferID);
+		glDeleteBuffers(bufferCount, mesh.renderable.vbos);
+		glDeleteVertexArrays(1, &mesh.renderable.bufferID);
 	}
 
-	void renderMesh(RenderableMesh mesh)
+	void renderMesh(Mesh mesh)
 	{
-		glBindVertexArray(mesh.bufferID);
-		glDrawElements(GL_TRIANGLES, mesh.indexLength, GL_UNSIGNED_INT, null);
+		glBindVertexArray(mesh.renderable.bufferID);
+		glDrawElements(GL_TRIANGLES, mesh.renderable.indexLength, GL_UNSIGNED_INT, null);
 	}
 
 	ShaderProgram createShader(Shader[] shaders)

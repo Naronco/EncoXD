@@ -2,7 +2,7 @@
 	"Name": "Grass",
 	"Textures":
 	{
-		"0": { "File": "grass.png", "MipMap": true }
+		"0": { "File": "tex/grass.png", "MipMap": true }
 	},
 	"Vertex": "default",
 	"Fragment":

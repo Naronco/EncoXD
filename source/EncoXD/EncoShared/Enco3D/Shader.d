@@ -24,6 +24,8 @@ interface ShaderProgram
 		foreach(string uniform; uniforms)
 			registerUniform(uniform);
 	}
+	
+	void set(string uniform, int value);
 
 	void set(string uniform, float value);
 

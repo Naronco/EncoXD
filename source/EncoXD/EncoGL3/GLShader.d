@@ -11,6 +11,19 @@ class GLShaderProgram : ShaderProgram
 		return program = glCreateProgram();
 	}
 
+	static ShaderProgram fromVertexFragmentFiles(GL3Renderer renderer, string vertex, string fragment)
+	{
+		GLShader v = new GLShader();
+		v.load(ShaderType.Vertex, std.file.readText(vertex));
+		v.compile();
+		
+		GLShader f = new GLShader();
+		f.load(ShaderType.Fragment, std.file.readText(fragment));
+		f.compile();
+
+		return renderer.createShader([v, f]);
+	}
+
 	void attach(Shader shader)
 	{
 		glAttachShader(program, shader.id);
@@ -33,6 +46,11 @@ class GLShaderProgram : ShaderProgram
 			return m_properties[uniform];
 		m_properties[uniform] = glGetUniformLocation(program, uniform.ptr);
 		return m_properties[uniform];
+	}
+
+	void set(string uniform, int value)
+	{
+		glUniform1i(m_properties[uniform], value);
 	}
 
 	void set(string uniform, float value)

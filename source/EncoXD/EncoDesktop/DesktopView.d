@@ -45,7 +45,7 @@ struct MouseState
 		return buttons[button];
 	}
 
-	bool isKeyUp(u8 button)
+	bool isButtonUp(u8 button)
 	{
 		return !buttons[button];
 	}
@@ -55,7 +55,11 @@ class Mouse
 {
 	static MouseState* getState()
 	{
-		return new MouseState(position, offset, buttons[]);
+		MouseState* state = new MouseState();
+		state.position = position;
+		state.offset = offset;
+		state.buttons[] = buttons;
+		return state;
 	}
 	
 	static void capture(DesktopView window)
@@ -70,6 +74,11 @@ class Mouse
 		SDL_SetRelativeMouseMode(false);
 		SDL_ShowCursor(true);
 		SDL_SetWindowGrab(window.handle, false);
+	}
+
+	private static void setButton(i8 button, bool isDown)
+	{
+		buttons[button - 1] = isDown;
 	}
 
 	private static void setPosition(i32 x, i32 y)
@@ -110,7 +119,21 @@ class DesktopView : IView
 		DerelictSDL2.load();
 		SDL_Init(SDL_INIT_VIDEO);
 
-		m_window = SDL_CreateWindow(m_name.ptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, cast(int)m_size.x, cast(int)m_size.y, SDL_WINDOW_SHOWN | cast(uint)renderer.getSDLOptions());
+		auto flags = SDL_WINDOW_SHOWN;
+
+		if(m_size.x == 0 && m_size.y == 0)
+		{
+			SDL_DisplayMode current;
+
+			SDL_GetCurrentDisplayMode(0, &current);
+			
+			m_size.x = current.w;
+			m_size.y = current.h;
+
+			flags = SDL_WINDOW_BORDERLESS;
+		}
+
+		m_window = SDL_CreateWindow(m_name.ptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, cast(int)m_size.x, cast(int)m_size.y, flags | cast(uint)renderer.getSDLOptions());
 		if(!m_window)
 		{
 			throw new Exception("Window failed");
@@ -155,6 +178,11 @@ class DesktopView : IView
 				case SDL_MOUSEMOTION:
 					Mouse.setPosition(event.motion.x, event.motion.y);
 					Mouse.addOffset(event.motion.xrel, event.motion.yrel);
+					break;
+				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONUP:
+					Mouse.setPosition(event.button.x, event.button.y);
+					Mouse.setButton(event.button.button, event.button.state == SDL_PRESSED);
 					break;
 				default: break;
 				}

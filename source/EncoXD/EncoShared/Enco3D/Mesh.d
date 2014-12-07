@@ -2,11 +2,18 @@ module Enco.Shared.Enco3D.Mesh;
 
 import EncoShared;
 
-struct RenderableMesh
+class RenderableMesh
 {
 	u32 bufferID;
 	u32* vbos;
 	u32 indexLength;
+
+	this(u32 bufferID, u32* vbos, u32 indexLength)
+	{
+		this.bufferID = bufferID;
+		this.vbos = vbos;
+		this.indexLength = indexLength;
+	}
 }
 
 class Mesh
@@ -58,6 +65,8 @@ class Mesh
 		
 		return meshes.reverse;
 	}
+
+	RenderableMesh renderable = null;
 
 	private vec3[] m_vertices;
 	private vec3[] m_normals;

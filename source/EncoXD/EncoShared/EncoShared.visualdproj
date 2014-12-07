@@ -213,6 +213,7 @@
   <File path="MeshObject.d" />
   <File path="Random.d" />
   <File path="RenderContext.d" />
+  <File path="IRenderTarget.d" />
   <File path="Scene.d" />
   <File path="TemplateParser.d" />
   <File path="Transform.d" />

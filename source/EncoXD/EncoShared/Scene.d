@@ -1,5 +1,7 @@
 module Enco.Shared.Scene;
 
+import std.algorithm;
+
 import EncoShared;
 
 class RenderLayer
@@ -37,6 +39,13 @@ class RenderLayer
 		m_gameObjects.length++;
 		m_gameObjects[m_gameObjects.length - 1] = object;
 	}
+
+	void removeGameObject(GameObject object)
+	{
+		m_gameObjects = remove!(o => o == object)(m_gameObjects);
+	}
+
+	@property GameObject[] gameObjects() { return m_gameObjects; }
 
 	void destroy()
 	{

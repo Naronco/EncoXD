@@ -28,9 +28,9 @@ interface IRenderer
 
 	void clearBuffer(RenderingBuffer buffers);
 
-	RenderableMesh createMesh(Mesh mesh);
-	void deleteMesh(RenderableMesh mesh);
-	void renderMesh(RenderableMesh mesh);
+	Mesh createMesh(Mesh mesh);
+	void deleteMesh(Mesh mesh);
+	void renderMesh(Mesh mesh);
 
 	ShaderProgram createShader(Shader[] shaders);
 }

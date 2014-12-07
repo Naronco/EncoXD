@@ -2,7 +2,7 @@
 	"Name": "Bricks",
 	"Textures":
 	{
-		"0": { "File": "bricks.png", "MipMap": true }
+		"0": { "File": "tex/bricks.png", "MipMap": true }
 	},
 	"Vertex": "default",
 	"Fragment":

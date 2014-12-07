@@ -11,10 +11,13 @@ layout(location = 2) in vec3 in_normal;
 out vec2 texCoord;
 out vec3 normal;
 
+out vec3 eyeVec;
+
 void main()
 {
 	gl_Position = projection * modelview * vec4(in_position, 1);
 
 	texCoord = in_tex;
 	normal = (normalmatrix * vec4(in_normal, 1)).xyz;
+	eyeVec = vec3(modelview * vec4(in_position, 1));
 }

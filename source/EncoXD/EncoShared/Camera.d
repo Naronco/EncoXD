@@ -13,7 +13,10 @@ class Camera : GameObject
 	{
 		if(m_needUpdate)
 		{
-			m_projectionMatrix = mat4.perspective(m_width, m_height, m_fov, m_near, m_far);
+			if(m_mode == ProjectionMode.Perspective)
+				m_projectionMatrix = mat4.perspective(m_width, m_height, m_fov, m_near, m_far);
+			else if(m_mode == ProjectionMode.Orthographic)
+				m_projectionMatrix = mat4.orthographic(0, m_width, m_height, 0, m_near, m_far);
 			m_needUpdate = false;
 		}
 		return m_projectionMatrix;
@@ -33,18 +36,21 @@ class Camera : GameObject
 	@property f32 width() { return m_width; }
 	@property f32 height() { return m_height; }
 	@property f32 fov() { return m_fov; }
+	@property ProjectionMode projectionMode() { return m_mode; }
 	
-	void setNearClip(float value) { m_needUpdate = m_needUpdate || m_near != value; m_near = value; }
-	void setFarClip(float value) { m_needUpdate = m_needUpdate || m_far != value; m_far = value; }
-	void setWidth(float value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
-	void setHeight(float value) { m_needUpdate = m_needUpdate || m_height != value; m_height = value; }
-	void setFov(float value) { m_needUpdate = m_needUpdate || m_fov != value; m_fov = value; }
+	@property void nearClip(float value) { m_needUpdate = m_needUpdate || m_near != value; m_near = value; }
+	@property void farClip(float value) { m_needUpdate = m_needUpdate || m_far != value; m_far = value; }
+	@property void width(float value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
+	@property void height(float value) { m_needUpdate = m_needUpdate || m_height != value; m_height = value; }
+	@property void fov(float value) { m_needUpdate = m_needUpdate || m_fov != value; m_fov = value; }
+	@property void projectionMode(ProjectionMode value) { m_needUpdate = m_needUpdate || m_mode != value; m_mode = value; }
 	
 	private f32 m_near = 0.1f;
 	private f32 m_far = 100;
 	private f32 m_width = 1;
 	private f32 m_height = 1;
 	private f32 m_fov = 45;
+	private ProjectionMode m_mode = ProjectionMode.Perspective;
 
 	private mat4 m_projectionMatrix = mat4.perspective(1, 1, 45, 0.1f, 100);
 	private mat4 m_viewMatrix = mat4.identity;

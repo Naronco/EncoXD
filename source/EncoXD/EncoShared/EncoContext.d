@@ -34,6 +34,7 @@ class EncoContext
 
 	void stop()
 	{
+		m_scene.destroy();
 		m_mainView.destroy();
 	}
 

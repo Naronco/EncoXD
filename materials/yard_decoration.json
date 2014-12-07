@@ -2,7 +2,7 @@
 	"Name": "Yard Decoration",
 	"Textures":
 	{
-		"0": { "File": "yard.png", "MipMap": true }
+		"0": { "File": "tex/yard.png", "MipMap": true }
 	},
 	"Vertex": "default",
 	"Fragment":

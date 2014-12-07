@@ -88,7 +88,7 @@ class GLMaterial
 		fs.compile();
 
 		auto program = renderer.createShader([vs, fs]);
-		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "l_viewDir"] ~ textureSlotUniforms);
+		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "transl"] ~ textureSlotUniforms);
 
 		mat.program = program;
 

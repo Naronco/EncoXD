@@ -2,7 +2,7 @@
 	"Name": "Tree",
 	"Textures":
 	{
-		"0": { "File": "tree.png", "MipMap": true }
+		"0": { "File": "tex/tree.png", "MipMap": true }
 	},
 	"Vertex": "default",
 	"Fragment":

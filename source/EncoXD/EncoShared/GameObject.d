@@ -46,6 +46,7 @@ class GameObject
 	void destroy() {  }
 
 	Transform transform = Transform();
+	void* data = null;
 
 	void addComponent(IComponent component)
 	{
