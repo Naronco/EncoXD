@@ -29,7 +29,7 @@ class GLMaterial
 
 		foreach(string id, JSONValue texture; textures)
 		{
-			textureSlots ~= "uniform sampler2D slot" ~ id ~ ";\n";
+			textureSlots ~= "uniform sampler2D slot" ~ id ~ ";";
 			textureSlotUniforms ~= "slot" ~ id;
 
 			int i = parse!int(id);
@@ -88,7 +88,7 @@ class GLMaterial
 		fs.compile();
 
 		auto program = renderer.createShader([vs, fs]);
-		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "transl"] ~ textureSlotUniforms);
+		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "cam_translation"] ~ textureSlotUniforms);
 
 		mat.program = program;
 

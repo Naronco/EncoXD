@@ -6,7 +6,12 @@ interface IRenderTarget
 {
 	void init(u32 width, u32 height, bool depth);
 
-	void capture();
+	void resize(u32 width, u32 height);
 
-	void display(i32 colorID, i32 depthID);
+	void bind();
+
+	void unbind();
+	
+	@property ITexture color();
+	@property ITexture depth();
 }

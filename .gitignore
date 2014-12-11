@@ -29,3 +29,5 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 *.selections.json
 .dub/
+!meshes/*.obj
+.blend1

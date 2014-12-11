@@ -28,6 +28,8 @@ public
 	import Enco.Shared.Material;
 	import Enco.Shared.TemplateParser;
 	import Enco.Shared.RenderContext;
+	import Enco.Shared.Logger;
+	import Enco.Shared.IRenderTarget;
 	
 	import Enco.Shared.Enco3D.Mesh;
 	import Enco.Shared.Enco3D.Shader;

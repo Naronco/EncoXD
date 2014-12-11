@@ -18,6 +18,6 @@ struct Material
 		}
 		program.bind();
 		program.set("l_direction", context.lightDirection);
-		program.set("transl", context.camera.transform.position);
+		program.set("cam_translation", context.camera.transform.position);
 	}
 }

@@ -1,7 +1,7 @@
 module Enco.GL3.GLTexture;
 
 import EncoGL3;
-import std.stdio;
+import EncoShared;
 
 enum TextureFilterMode : int
 {
@@ -12,7 +12,7 @@ enum TextureFilterMode : int
 	LinearMipmapLinear = GL_LINEAR_MIPMAP_LINEAR,
 }
 
-enum TextureClampMode : int
+enum TextureClampMode : i32
 {
 	ClampToBorder = GL_CLAMP_TO_BORDER,
 	ClampToEdge = GL_CLAMP_TO_EDGE,
@@ -26,29 +26,39 @@ class GLTexture : ITexture
 	{
 		create(width, height, GL_RGBA, pixels);
 	}
-
-	void create(u32 width, u32 height, int mode, void* pixels)
+	
+	void create(u32 width, u32 height, i32 mode, void* pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
 
-		if(pixels == null)
-		{
-			writeln("Can't load Texture(", width, "x", height, ")");
-			return;
-		}
-
 		glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
 
 		applyTexParams();
+		
+		this.inMode = mode;
+		this.mode = mode;
+	}
+
+	void create(u32 width, u32 height, i32 inMode, i32 mode, void* pixels, int type = GL_UNSIGNED_BYTE)
+	{
+		glGenTextures(1, &m_id);
+		glBindTexture(GL_TEXTURE_2D, m_id);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, type, pixels);
+
+		applyTexParams();
+		
+		this.inMode = inMode;
+		this.mode = mode;
 	}
 
 	void applyTexParams()
 	{
 		bind(0);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+		
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapX);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapY);
@@ -72,28 +82,40 @@ class GLTexture : ITexture
 
 		if(surface is null || surface.pixels is null)
 		{
-			writeln("Can't load Texture ", file);
-			int i = 0;
+			Logger.errln("Can't load Texture ", file);
+			i32 i = 0;
 			const char* err = IMG_GetError();
-			for(int x = 0; x < 1024; x++)
+			for(i32 x = 0; x < 1024; x++)
 			{
 				i = x;
 				if(err[x] == '\0') break;
 			}
-			writeln(err[0 .. i]);
+			Logger.errln(err[0 .. i]);
 			return;
 		}
 
-		int mode = GL_RGB;
+		i32 mode = GL_RGB;
 
 		if(surface.format.BytesPerPixel == 4)
 		{
 			mode = GL_RGBA;
 		}
+
+		if(surface.pixels == null)
+		{
+			Logger.errln("Can't load Texture(", surface.w, "x", surface.h, ")");
+			return;
+		}
 		
 		create(surface.w, surface.h, mode, surface.pixels);
 		
 		SDL_FreeSurface(surface);
+	}
+
+	void resize(u32 width, u32 height, void* pixels = null)
+	{
+		bind(0);
+		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
 	}
 
 	void destroy()
@@ -109,6 +131,8 @@ class GLTexture : ITexture
 	TextureClampMode wrapX = TextureClampMode.Repeat;
 	TextureClampMode wrapY = TextureClampMode.Repeat;
 
+	private i32 inMode, mode;
+
 
 	@property u32 id() { return m_id; }
 
@@ -123,18 +147,19 @@ class GLTexture3D : ITexture3D
 		create(width, height, depth, GL_RGBA, pixels);
 	}
 
-	void create(u32 width, u32 height, u32 depth, int mode, void* pixels)
+	void create(u32 width, u32 height, u32 depth, i32 mode, void* pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_3D, m_id);
 
 		if(pixels == null)
 		{
-			writeln("Can't load Texture3D(", width, "x", height, "x", depth, ")");
+			Logger.errln("Can't load Texture3D(", width, "x", height, "x", depth, ")");
 			return;
 		}
 
 		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels);
+		this.mode = mode;
 
 		applyTexParams();
 	}
@@ -169,19 +194,19 @@ class GLTexture3D : ITexture3D
 
 		if(surface is null || surface.pixels is null)
 		{
-			writeln("Can't load Texture ", file);
-			int i = 0;
+			Logger.errln("Can't load Texture ", file);
+			i32 i = 0;
 			const char* err = IMG_GetError();
-			for(int x = 0; x < 1024; x++)
+			for(i32 x = 0; x < 1024; x++)
 			{
 				i = x;
 				if(err[x] == '\0') break;
 			}
-			writeln(err[0 .. i]);
+			Logger.errln(err[0 .. i]);
 			return;
 		}
 
-		int mode = GL_RGB;
+		i32 mode = GL_RGB;
 
 		if(surface.format.BytesPerPixel == 4)
 		{
@@ -191,6 +216,12 @@ class GLTexture3D : ITexture3D
 		create(surface.w, surface.w, surface.h / surface.w, mode, surface.pixels);
 		
 		SDL_FreeSurface(surface);
+	}
+
+	void resize(u32 width, u32 height, u32 depth, void* pixels = null)
+	{
+		bind(0);
+		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels);
 	}
 
 	void destroy()
@@ -210,6 +241,7 @@ class GLTexture3D : ITexture3D
 
 	@property u32 id() { return m_id; }
 
+	private i32 mode;
 	u32 m_id;
 }
 

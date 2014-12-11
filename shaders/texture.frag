@@ -2,10 +2,6 @@
 
 @{TextureSlots}
 
-uniform vec3 l_direction;
-
-const vec3 ambient = @{Ambient};
-
 in vec3 normal;
 in vec2 texCoord;
 
@@ -23,7 +19,7 @@ vec4 tex(sampler2D slot, float x, float y)
 
 void main()
 {
-	vec4 color = @{Color};
+	vec4 color = @{Color:vec4(1, 0, 1, 1)};
 	if(color.a < 0.01) discard;
 	out_frag_color = color;
 }

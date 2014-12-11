@@ -9,6 +9,7 @@
 	{
 		"Base": "specular",
 		"Ambient": "vec3(0.1, 0.1, 0.1)",
-		"Color": "tex(slot0)"
+		"Color": "tex(slot0)",
+		"Shininess": "50"
 	}
 }

@@ -1,8 +1,9 @@
 module Enco.GL3.GLShader;
 
+import EncoShared;
 import EncoGL3;
 
-import std.stdio;
+import std.conv;
 
 class GLShaderProgram : ShaderProgram
 {
@@ -98,6 +99,7 @@ class GLShader : Shader
 {
 	bool load(ShaderType type, string content)
 	{
+		this.content = content;
 		switch(type)
 		{
 		case ShaderType.Vertex:
@@ -116,7 +118,7 @@ class GLShader : Shader
 			m_id = glCreateShader(GL_FRAGMENT_SHADER);
 			break;
 		default:
-			writeln("ShaderType is not defined!");
+			Logger.errln("ShaderType ", to!string(type) ," is not defined!");
 			return false;
 		}
 
@@ -140,7 +142,9 @@ class GLShader : Shader
 			char* log = new char[logSize].ptr;
 			glGetShaderInfoLog(m_id, logSize, &logSize, &log[0]);
 
-			writeln(log[0 .. logSize]);
+			Logger.writeln(content);
+
+			Logger.errln("Program Output:\n", log[0 .. logSize]);
 			return false;
 		}
 		return true;
@@ -152,4 +156,5 @@ class GLShader : Shader
 	}
 
 	private u32 m_id = 0;
+	private string content;
 }

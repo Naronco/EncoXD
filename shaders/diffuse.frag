@@ -4,11 +4,8 @@
 
 uniform vec3 l_direction;
 
-const vec3 ambient = @{Ambient};
-
 in vec3 normal;
 in vec2 texCoord;
-in vec3 eyeVec;
 
 layout(location = 0) out vec4 out_frag_color;
 
@@ -24,8 +21,8 @@ vec4 tex(sampler2D slot, float x, float y)
 
 void main()
 {
-	vec4 color = @{Color};
+	vec4 color = @{Color:vec4(1, 0, 1, 1)};
 	if(color.a < 0.01) discard;
 	float diffuse = clamp(dot(normal, normalize(l_direction)), 0, 1);
-	out_frag_color = color * vec4(ambient + vec3(diffuse), 1);
+	out_frag_color = color * vec4(@{Ambient:vec3(0.1, 0.1, 0.1)} + vec3(diffuse), 1);
 }

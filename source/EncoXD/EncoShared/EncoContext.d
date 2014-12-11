@@ -1,10 +1,20 @@
 module Enco.Shared.EncoContext;
 
+import std.json;
+
 import EncoShared;
 
 class EncoContext
 {
-	this(IView mainView, IRenderer renderer, Scene scene)
+	static EncoContext instance;
+
+	static void create(IView mainView, IRenderer renderer, Scene scene)
+	{
+		assert(instance is null);
+		instance = new EncoContext(mainView, renderer, scene);
+	}
+
+	private this(IView mainView, IRenderer renderer, Scene scene)
 	{
 		m_mainView = mainView;
 		m_renderer = renderer;
@@ -21,6 +31,14 @@ class EncoContext
 
 	~this()
 	{
+	}
+
+	void importSettings(string jsonStr)
+	{
+		JSONValue json = parseJSON(jsonStr);
+		
+		renderer.importSettings(json);
+		view.importSettings(json);
 	}
 
 	void start()

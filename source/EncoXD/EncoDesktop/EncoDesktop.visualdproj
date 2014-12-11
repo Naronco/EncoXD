@@ -198,7 +198,6 @@
  </Config>
  <Folder name="EncoDesktop">
   <File path="DesktopView.d" />
-  <File path="..\EncoShared\FPSRotation.d" />
   <File path="main.d" />
  </Folder>
 </DProject>

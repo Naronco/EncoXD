@@ -9,11 +9,11 @@ import std.traits;
 
 void main() {
 	auto renderer = new GL3Renderer();
-	auto context = new EncoContext(
+	EncoContext.create(
 				new DesktopView("UTF-8 Magic *:･ﾟ✧ (∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ. * ･", 1600, 900),
 				renderer,
 				new GameScene());
-	context.start();
+	EncoContext.instance.start();
 	renderer.setClearColor(0.5f, 0.8f, 1.0f);
 
 	Camera camera = new Camera();
@@ -50,45 +50,8 @@ void main() {
 	tex.wrapZ = TextureClampMode.ClampToEdge;
 	tex.load("tex/pallete16_mod.png");
 
-
-	u32 fbo = 0;
-	glGenFramebuffers(1, &fbo);
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-	u32 renderTexture;
-	glGenTextures(1, &renderTexture);
-
-	glBindTexture(GL_TEXTURE_2D, renderTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1600, 900, 0, GL_RGB, GL_UNSIGNED_BYTE, null);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	u32 depthTexture;
-	glGenTextures(1, &depthTexture);
-
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 1600, 900, 0, GL_DEPTH_COMPONENT, GL_FLOAT, null);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	GLuint depthrenderbuffer;
-	glGenRenderbuffers(1, &depthrenderbuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, depthrenderbuffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1600, 900);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthrenderbuffer);
-	
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderTexture, 0);
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthTexture, 0);
-
-	const uint[] DrawBuffers = [ GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT ];
-	glDrawBuffers(3, DrawBuffers.ptr);
-
-	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) assert(0);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	glViewport(0, 0, 1600, 900);
+	GLRenderTarget target = new GLRenderTarget();
+	target.init(1600, 900, true);
 
 	GLShaderProgram program = cast(GLShaderProgram)GLShaderProgram.fromVertexFragmentFiles(renderer, "shaders/post.vert", "shaders/post.frag");
 	program.registerUniforms(["slot0", "slot1", "slot2"]);
@@ -99,35 +62,28 @@ void main() {
 	KeyboardState* state = Keyboard.getState();
 	MouseState* mstate = Mouse.getState();
 
-	Mouse.capture(cast(DesktopView)context.view);
+	Mouse.capture(cast(DesktopView)EncoContext.instance.view);
 
-	while(context.update())
+	while(EncoContext.instance.update())
 	{
 		state = Keyboard.getState();
 		mstate = Mouse.getState();
 
 		renderer.beginFrame();
-		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-		glViewport(0, 0, 1600, 900);
 
-		renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
+		target.bind();
 		
 		camera.performUpdate(0);
 
-		context.draw(render);
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, 1600, 900);
-		renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
+		EncoContext.instance.draw(render);
+		
+		target.unbind();
 
 		program.bind();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, renderTexture);
 
+		target.color.bind(0);
 		tex.bind(1);
-
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, depthTexture);
+		target.depth.bind(2);
 
 		renderer.renderMesh(m);
 
@@ -145,5 +101,5 @@ void main() {
 		//camera.transform.rotation -= vec3(mstate.offset.y, mstate.offset.x, 0) * 0.005f;
 	}
 
-	context.stop();
+	EncoContext.instance.stop();
 }
