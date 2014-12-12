@@ -1,6 +1,7 @@
 module Enco.GL3.GL3Renderer;
 
 import std.stdio;
+import std.json;
 
 import EncoGL3;
 
@@ -12,6 +13,11 @@ class GL3Renderer : IRenderer
 	}
 
 	~this()
+	{
+
+	}
+
+	void importSettings(JSONValue json)
 	{
 
 	}

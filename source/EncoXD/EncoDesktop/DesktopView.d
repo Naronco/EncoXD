@@ -1,7 +1,9 @@
 module Enco.Desktop.DesktopView;
 
-import EncoDesktop;
+import std.json;
 import std.stdio;
+
+import EncoDesktop;
 import EncoShared;
 
 struct KeyboardState
@@ -116,7 +118,6 @@ class DesktopView : IView
 
 		m_renderer = renderer;
 		
-		DerelictSDL2.load();
 		SDL_Init(SDL_INIT_VIDEO);
 
 		auto flags = SDL_WINDOW_SHOWN;
@@ -141,6 +142,30 @@ class DesktopView : IView
 
 		m_renderer.createContext(0, 0, m_size.x, m_size.y, 32, 16, 0, false, m_window);
 		m_valid = true;
+	}
+
+	override void importSettings(JSONValue json)
+	{
+		if(valid)
+		{
+			try
+			{
+				if(json["Window"].type == JSON_TYPE.OBJECT)
+				{
+					if(json["Window"]["Width"].type == JSON_TYPE.INTEGER && json["Window"]["Height"].type == JSON_TYPE.INTEGER)
+					{
+						size = u32vec2(cast(u32)json["Window"]["Width"].integer, cast(u32)json["Window"]["Height"].integer);
+					}
+					if(json["Window"]["Title"].type == JSON_TYPE.STRING)
+					{
+						name = json["Window"]["Title"].str ~ "\0";
+					}
+				}
+			}
+			catch(Exception e)
+			{
+			}
+		}
 	}
 
 	override void destroy()
@@ -198,6 +223,7 @@ class DesktopView : IView
 		{
 			SDL_SetWindowSize(m_window, cast(int)m_size.x, cast(int)m_size.y);
 		}
+		Logger.writeln("Set Size to ", m_size);
 	}
 
 	protected override void onRename()

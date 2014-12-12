@@ -13,12 +13,13 @@ void main() {
 				new DesktopView("UTF-8 Magic *:･ﾟ✧ (∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ. * ･", 1600, 900),
 				renderer,
 				new GameScene());
+	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
 	renderer.setClearColor(0.5f, 0.8f, 1.0f);
 
 	Camera camera = new Camera();
-	camera.width = 1600;
-	camera.height = 900;
+	camera.width = EncoContext.instance.view.width;
+	camera.height = EncoContext.instance.view.height;
 	camera.farClip = 100;
 	camera.fov = 45;
 	
@@ -37,12 +38,7 @@ void main() {
 	
 	// TODO: Minimize all this code to 15-25 lines + shaders + imports
 
-	Mesh m = new Mesh();
-	m.addVertices([vec3(-1, -1, 0), vec3(1, -1, 0), vec3(1, 1, 0), vec3(-1, 1, 0)]);
-	m.addTexCoords([vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1)]);
-	m.addNormals([vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1)]);
-	m.addIndices([0, 1, 2, 0, 2, 3]);
-	m = renderer.createMesh(m);
+	Mesh m = renderer.createMesh(MeshUtils.createPlane());
 
 	GLTexture3D tex = new GLTexture3D();
 	tex.wrapX = TextureClampMode.ClampToEdge;
@@ -51,7 +47,7 @@ void main() {
 	tex.load("tex/pallete16_mod.png");
 
 	GLRenderTarget target = new GLRenderTarget();
-	target.init(1600, 900, true);
+	target.init(EncoContext.instance.view.width, EncoContext.instance.view.height, true);
 
 	GLShaderProgram program = cast(GLShaderProgram)GLShaderProgram.fromVertexFragmentFiles(renderer, "shaders/post.vert", "shaders/post.frag");
 	program.registerUniforms(["slot0", "slot1", "slot2"]);

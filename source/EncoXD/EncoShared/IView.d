@@ -1,11 +1,15 @@
 module Enco.Shared.IView;
 
+import std.json;
+
 import EncoShared;
 
 abstract class IView
 {
 	abstract void create(IRenderer renderer);
 	abstract void destroy();
+
+	void importSettings(JSONValue json);
 
 	abstract bool update(f64 deltaTime);
 	

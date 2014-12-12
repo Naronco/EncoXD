@@ -43,7 +43,7 @@
   <pic>0</pic>
   <cov>0</cov>
   <nofloat>0</nofloat>
-  <Dversion>2.043</Dversion>
+  <Dversion>2</Dversion>
   <ignoreUnsupportedPragmas>0</ignoreUnsupportedPragmas>
   <allinst>0</allinst>
   <stackStomp>0</stackStomp>
@@ -203,6 +203,7 @@
   </Folder>
   <File path="Camera.d" />
   <File path="EncoContext.d" />
+  <File path="EncoShared.d" />
   <File path="GameObject.d" />
   <File path="IComponent.d" />
   <File path="IRenderer.d" />
@@ -210,7 +211,6 @@
   <File path="ITexture.d" />
   <File path="IView.d" />
   <File path="Logger.d" />
-  <File path="main.d" />
   <File path="Material.d" />
   <File path="MeshObject.d" />
   <File path="Random.d" />

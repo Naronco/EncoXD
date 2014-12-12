@@ -16,6 +16,19 @@ class RenderableMesh
 	}
 }
 
+class MeshUtils
+{
+	public static Mesh createPlane(f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	{
+		Mesh m = new Mesh();
+		m.addVertices([vec3(left, top, 0), vec3(right, top, 0), vec3(right, bottom, 0), vec3(left, bottom, 0)]);
+		m.addTexCoords([vec2(uvX1, uvY1), vec2(uvX2, uvY1), vec2(uvX2, uvY2), vec2(uvX1, uvY2)]);
+		m.addNormals([vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1)]);
+		m.addIndices([0, 1, 2, 0, 2, 3]);
+		return m;
+	}
+}
+
 class Mesh
 {
 	@property vec3[] vertices() { return m_vertices; }
