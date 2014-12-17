@@ -1,2 +1,1 @@
-dub build
-bin\encox
+dub run
