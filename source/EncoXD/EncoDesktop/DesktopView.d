@@ -110,6 +110,7 @@ class DesktopView : IView
 {
 	this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
 	this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
+	this() { this("", 0, 0); }
 	~this() {}
 
 	override void create(IRenderer renderer)
@@ -146,25 +147,23 @@ class DesktopView : IView
 
 	override void importSettings(JSONValue json)
 	{
-		if(valid)
+		try
 		{
-			try
+			if(("Window" in json) !is null && json["Window"].type == JSON_TYPE.OBJECT)
 			{
-				if(json["Window"].type == JSON_TYPE.OBJECT)
+				if(("Width" in json["Window"]) !is null && ("Height" in json["Window"]) !is null && json["Window"]["Width"].type == JSON_TYPE.INTEGER && json["Window"]["Height"].type == JSON_TYPE.INTEGER)
 				{
-					if(json["Window"]["Width"].type == JSON_TYPE.INTEGER && json["Window"]["Height"].type == JSON_TYPE.INTEGER)
-					{
-						size = u32vec2(cast(u32)json["Window"]["Width"].integer, cast(u32)json["Window"]["Height"].integer);
-					}
-					if(json["Window"]["Title"].type == JSON_TYPE.STRING)
-					{
-						name = json["Window"]["Title"].str ~ "\0";
-					}
+					size = u32vec2(cast(u32)json["Window"]["Width"].integer, cast(u32)json["Window"]["Height"].integer);
+				}
+				if(("Title" in json["Window"]) !is null && json["Window"]["Title"].type == JSON_TYPE.STRING)
+				{
+					name = json["Window"]["Title"].str ~ "\0";
 				}
 			}
-			catch(Exception e)
-			{
-			}
+		}
+		catch(Exception e)
+		{
+			Logger.errln(e);
 		}
 	}
 
@@ -223,7 +222,6 @@ class DesktopView : IView
 		{
 			SDL_SetWindowSize(m_window, cast(int)m_size.x, cast(int)m_size.y);
 		}
-		Logger.writeln("Set Size to ", m_size);
 	}
 
 	protected override void onRename()

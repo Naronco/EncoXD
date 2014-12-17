@@ -25,13 +25,13 @@ void main()
 {
 	vec4 color = @{Color:vec4(1, 0, 1, 1)};
 	if(color.a < 0.01) discard;
-	float diffuse = clamp(dot(normal, normalize(l_direction)), 0, 1);
+	float diffuse = dot(normal, normalize(l_direction));
 
 
 	vec3 reflectionDirection = normalize(reflect(-normalize(l_direction), normal));
 	vec3 viewDirection = normalize(cam_translation - eyeVec);
 	float specIntensity = pow(dot(viewDirection, reflectionDirection), @{Shininess:32});
 	vec3 spec = vec3(0);
-	if(specIntensity > 0) spec = vec3(specIntensity * @{Intensity:10}) * @{LightColor:vec3(1, 1, 1)};
-	out_frag_color = color * vec4(@{Ambient:vec3(0.1, 0.1, 0.1)} + vec3(diffuse) + spec, 1);
+	if(specIntensity > 0 && diffuse > 0) spec = vec3(specIntensity * @{Intensity:10}) * @{LightColor:vec3(1, 1, 1)};
+	out_frag_color = color * vec4(@{Ambient:vec3(0.1, 0.1, 0.1)} + vec3(clamp(diffuse, 0, 1)) + spec, 1);
 }

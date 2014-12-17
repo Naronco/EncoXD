@@ -1,8 +1,20 @@
 {
 	"Window":
 	{
-		"Width": 400,
-		"Height": 300,
-		"Title": "Bob"
+		"Width": 1600,
+		"Height": 900,
+		"Title": "EncoXD Demo"
+	},
+	"Context": 
+	{
+		"ClearColor": [0.5, 0.8, 1.0],
+		"DepthTest": true,
+		"CullFace": true,
+		"Blend":
+		{
+			"Enabled": true,
+			"Src": "SrcAlpha",
+			"Dest": "OneMinusSrcAlpha"
+		}
 	}
 }

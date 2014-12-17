@@ -197,6 +197,9 @@
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
  <Folder name="Demo">
+  <Folder name="views">
+   <File path="..\views\demo.json" />
+  </Folder>
   <File path="GameScene.d" />
   <File path="main.d" />
  </Folder>

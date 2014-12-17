@@ -19,7 +19,63 @@ class GL3Renderer : IRenderer
 
 	void importSettings(JSONValue json)
 	{
+	}
 
+	u32 blendFuncFromString(string str)
+	{
+		switch(str)
+		{
+			case "Zero": return GL_ZERO;
+			case "One": return GL_ONE;
+			case "SrcColor": return GL_SRC_COLOR;
+			case "OneMinusSrcColor": return GL_ONE_MINUS_SRC_COLOR;
+			case "DstColor": return GL_DST_COLOR;
+			case "OneMinusDstColor": return GL_ONE_MINUS_DST_COLOR;
+			case "SrcAlpha": return GL_SRC_ALPHA;
+			case "OneMinusSrcAlpha": return GL_ONE_MINUS_SRC_ALPHA;
+			case "DstAlpha": return GL_DST_ALPHA;
+			case "OneMinusDstAlpha": return GL_ONE_MINUS_DST_ALPHA;
+			case "SrcAlphaSaturate": return GL_SRC_ALPHA_SATURATE;
+			case "Src1Color": return GL_SRC1_COLOR;
+			case "OneMinusSrc1Color": return GL_ONE_MINUS_SRC1_COLOR;
+			case "OneMinusSrc1Alpha": return GL_ONE_MINUS_SRC1_ALPHA;
+			default: return GL_ZERO; 
+		}
+	}
+
+	void postImportSettings(JSONValue json)
+	{
+		if(("Context" in json) !is null && json["Context"].type == JSON_TYPE.OBJECT)
+		{
+			if(("DepthTest" in json["Context"]) !is null && json["Context"]["DepthTest"].type == JSON_TYPE.TRUE)
+				glEnable(GL_DEPTH_TEST);
+			if(("CullFace" in json["Context"]) !is null && json["Context"]["CullFace"].type == JSON_TYPE.TRUE)
+				glEnable(GL_CULL_FACE);
+			if(("ClearColor" in json["Context"]) !is null && json["Context"]["ClearColor"].type == JSON_TYPE.ARRAY && json["Context"]["ClearColor"].array.length == 3)
+				setClearColor(json["Context"]["ClearColor"].array[0].floating, json["Context"]["ClearColor"].array[1].floating, json["Context"]["ClearColor"].array[2].floating);
+			if(("Blend" in json["Context"]) !is null)
+			{
+				if(json["Context"]["Blend"].type == JSON_TYPE.OBJECT)
+				{
+					if(("Enabled" in json["Context"]["Blend"]) !is null && json["Context"]["Blend"]["Enabled"].type == JSON_TYPE.TRUE)
+					{
+						if(("Src" in json["Context"]["Blend"]) !is null && ("Dest" in json["Context"]["Blend"]) !is null &&
+							json["Context"]["Blend"]["Src"].type == JSON_TYPE.STRING && json["Context"]["Blend"]["Dest"].type == JSON_TYPE.STRING)
+						{
+							string src = json["Context"]["Blend"]["Src"].str;
+							string dest = json["Context"]["Blend"]["Dest"].str;
+
+							glBlendFunc(blendFuncFromString(src), blendFuncFromString(dest));
+						}
+					} 
+				}
+				else if(json["Context"]["Blend"].type == JSON_TYPE.TRUE)
+				{
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				}
+			}
+		}
 	}
 
 	void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, SDL_Window* sdlWindow = null)

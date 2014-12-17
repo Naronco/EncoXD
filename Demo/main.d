@@ -10,12 +10,11 @@ import std.traits;
 void main() {
 	auto renderer = new GL3Renderer();
 	EncoContext.create(
-				new DesktopView("UTF-8 Magic *:･ﾟ✧ (∩ ͡° ͜ʖ ͡°)⊃━☆ﾟ. * ･", 1600, 900),
+				new DesktopView(),
 				renderer,
 				new GameScene());
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
-	renderer.setClearColor(0.5f, 0.8f, 1.0f);
 
 	Camera camera = new Camera();
 	camera.width = EncoContext.instance.view.width;
@@ -28,13 +27,6 @@ void main() {
 
 	RenderContext render = RenderContext();
 	render.camera = camera;
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	
 	// TODO: Minimize all this code to 15-25 lines + shaders + imports
 

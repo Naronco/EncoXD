@@ -17,6 +17,7 @@ interface IRenderer
 	void deleteContext();
 
 	void importSettings(JSONValue json);
+	void postImportSettings(JSONValue json);
 
 	int getSDLOptions();
 

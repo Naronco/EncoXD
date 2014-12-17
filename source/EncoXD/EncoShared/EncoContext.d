@@ -7,6 +7,7 @@ import EncoShared;
 class EncoContext
 {
 	static EncoContext instance;
+	string settings;
 
 	static void create(IView mainView, IRenderer renderer, Scene scene)
 	{
@@ -35,6 +36,7 @@ class EncoContext
 
 	void importSettings(string jsonStr)
 	{
+		settings = jsonStr;
 		JSONValue json = parseJSON(jsonStr);
 		
 		renderer.importSettings(json);
@@ -48,6 +50,8 @@ class EncoContext
 		m_scene.renderer = m_renderer;
 		m_scene.view = m_mainView;
 		m_scene.init();
+
+		m_renderer.postImportSettings(parseJSON(settings));
 	}
 
 	void stop()

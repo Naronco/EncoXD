@@ -18,4 +18,9 @@ class Logger
 	{
 		std.stdio.writeln("ERROR > ", args);
 	}
+
+	static void errln(Exception e)
+	{
+		std.stdio.writeln("ERROR > ", e.file, "@", e.line, ": ", e.msg);
+	}
 }
