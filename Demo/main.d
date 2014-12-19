@@ -13,8 +13,13 @@ void main() {
 				new DesktopView(),
 				renderer,
 				new GameScene());
+	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
+	
+	auto test = EncoContext.instance.createLuaState();
+	
+	test.loadString(import("network-test.lua")).call();
 
 	Camera camera = new Camera();
 	camera.width = EncoContext.instance.view.width;

@@ -6,6 +6,8 @@ public
 	import derelict.sdl2.image;
 	import derelict.assimp3.assimp;
 
+	import luad.all;
+
 	import gl3n.aabb;
 	import gl3n.frustum;
 	import gl3n.interpolate;
@@ -30,6 +32,7 @@ public
 	import Enco.Shared.RenderContext;
 	import Enco.Shared.Logger;
 	import Enco.Shared.IRenderTarget;
+	import Enco.Shared.LuaExt;
 	
 	import Enco.Shared.Enco3D.Mesh;
 	import Enco.Shared.Enco3D.Shader;
@@ -48,4 +51,6 @@ public
 	alias double f64, float64;
 
 	alias Vector!(u32, 2) u32vec2;
+
+	alias std.string.strip trim;
 }

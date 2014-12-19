@@ -1,13 +1,23 @@
 module Enco.Shared.EncoContext;
 
 import std.json;
+import std.string;
+import std.conv;
 
 import EncoShared;
+
+enum DynamicLibrary
+{
+	Assimp, SDL2, SDL2Image, Lua, 
+}
 
 class EncoContext
 {
 	static EncoContext instance;
 	string settings;
+	LuaState lua;
+	
+	LuaFunction[][string] lua_events;
 
 	static void create(IView mainView, IRenderer renderer, Scene scene)
 	{
@@ -24,14 +34,84 @@ class EncoContext
 		assert(m_mainView !is null);
 		assert(m_renderer !is null);
 		assert(m_scene !is null);
-
-		DerelictSDL2.load();
-		DerelictSDL2Image.load();
-		DerelictASSIMP3.load();
 	}
 
 	~this()
 	{
+	}
+
+	void useDynamicLibraries(const DynamicLibrary[] libs)
+	{
+		foreach(DynamicLibrary lib; libs)
+		{
+			switch(lib)
+			{
+			case DynamicLibrary.Assimp:
+				DerelictASSIMP3.load();
+				break;
+			case DynamicLibrary.SDL2:
+				DerelictSDL2.load();
+				break;
+			case DynamicLibrary.SDL2Image:
+				DerelictSDL2Image.load();
+				break;
+			case DynamicLibrary.Lua:
+				lua = createLuaState();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	void luaOn(string type, LuaFunction func)
+	{
+		type = type.toLower().trim();
+		if((type in lua_events) is null) lua_events[type] = [];
+		lua_events[type].length++;
+		lua_events[type][lua_events[type].length - 1] = func;
+	}
+
+	void luaEmit(A)(string type, A[] args...)
+	{
+		type = type.toLower().trim();
+		if((type in lua_events) !is null)
+			foreach(ref LuaFunction func; lua_events[type])
+			{
+				func(args);
+			}
+	}
+
+	void luaEmitSingle(string type)
+	{
+		type = type.toLower().trim();
+		if((type in lua_events) !is null)
+			foreach(ref LuaFunction func; lua_events[type])
+			{
+				func();
+			}
+	}
+
+	static void panic(LuaState lua, in char[] error)
+	{
+		string err = error.idup;
+		LuaLogger.errln("in script ", lua.get!LuaTable("info").get!string("name"), "\n\t", err);
+	}
+
+	LuaState createLuaState()
+	{
+		auto lua = new LuaState;
+		lua.openLibs();
+		lua["print"] = &LuaLogger.writeln!LuaObject;
+		lua["printerr"] = &LuaLogger.errln!LuaObject;
+		lua["printwarn"] = &LuaLogger.warnln!LuaObject;
+		lua["on"] = &luaOn;
+		lua["emit"] = &luaEmit!LuaObject;
+		lua["emite"] = &luaEmitSingle;
+		lua = LuaExt.apply(lua);
+
+		lua.setPanicHandler(&panic);
+		return lua;
 	}
 
 	void importSettings(string jsonStr)
@@ -68,11 +148,13 @@ class EncoContext
 			m_scene = m_scene.next;
 			m_scene.init();
 		}
+		luaEmitSingle("update");
 		return m_mainView.update(0); // TODO: Add delta time
 	}
 
 	void draw(RenderContext context)
 	{
+		luaEmitSingle("draw");
 		m_scene.draw(context, m_renderer);
 	}
 

@@ -211,6 +211,7 @@
   <File path="ITexture.d" />
   <File path="IView.d" />
   <File path="Logger.d" />
+  <File path="LuaExt.d" />
   <File path="Material.d" />
   <File path="MeshObject.d" />
   <File path="Random.d" />

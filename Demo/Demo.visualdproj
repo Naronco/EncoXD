@@ -199,6 +199,7 @@
  <Folder name="Demo">
   <Folder name="views">
    <File path="..\views\demo.json" />
+   <File path="..\views\network-test.lua" />
   </Folder>
   <File path="GameScene.d" />
   <File path="main.d" />
