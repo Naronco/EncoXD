@@ -7,12 +7,12 @@ local function main()
 	print("Starting " .. info["name"] .. " version " .. info["version"])
 
 	-- TODO: Replace Array with single values (LuaD dev needs to accept my PR)
-	on("customEvent",
-	function(e)
-		print("Custom Events ", e[1], " ", e[2])
+	on("join",
+	function(send, recv, sleep)
+		print("Sending...")
+		send("Hello World")
+		send("This is networking!")
 	end)
-
-	emit("customEvent", "are awesome", "not")
 end
 
 main()

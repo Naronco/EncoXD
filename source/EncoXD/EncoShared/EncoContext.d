@@ -8,7 +8,7 @@ import EncoShared;
 
 enum DynamicLibrary
 {
-	Assimp, SDL2, SDL2Image, Lua, 
+	Assimp, SDL2, SDL2Image, Lua,
 }
 
 class EncoContext
@@ -25,15 +25,17 @@ class EncoContext
 		instance = new EncoContext(mainView, renderer, scene);
 	}
 
+	static void create()
+	{
+		assert(instance is null);
+		instance = new EncoContext(null, null, null);
+	}
+
 	private this(IView mainView, IRenderer renderer, Scene scene)
 	{
 		m_mainView = mainView;
 		m_renderer = renderer;
 		m_scene = scene;
-		
-		assert(m_mainView !is null);
-		assert(m_renderer !is null);
-		assert(m_scene !is null);
 	}
 
 	~this()
@@ -72,7 +74,7 @@ class EncoContext
 		lua_events[type][lua_events[type].length - 1] = func;
 	}
 
-	void luaEmit(A)(string type, A[] args...)
+	void luaEmit(A...)(string type, A args)
 	{
 		type = type.toLower().trim();
 		if((type in lua_events) !is null)
@@ -119,51 +121,65 @@ class EncoContext
 		settings = jsonStr;
 		JSONValue json = parseJSON(jsonStr);
 		
-		renderer.importSettings(json);
-		view.importSettings(json);
+		if(m_renderer !is null)
+			m_renderer.importSettings(json);
+		if(m_mainView !is null)
+			m_mainView.importSettings(json);
 	}
 
 	void start()
 	{
-		m_mainView.create(m_renderer);
-
-		m_scene.renderer = m_renderer;
-		m_scene.view = m_mainView;
-		m_scene.init();
-
-		m_renderer.postImportSettings(parseJSON(settings));
+		if(m_renderer !is null)
+			m_mainView.create(m_renderer);
+		
+		if(m_scene !is null)
+		{
+			if(m_renderer !is null)
+				m_scene.renderer = m_renderer;
+			if(m_mainView !is null)
+				m_scene.view = m_mainView;
+			m_scene.init();
+		}
+		
+		if(m_renderer !is null)
+			m_renderer.postImportSettings(parseJSON(settings));
 	}
 
 	void stop()
 	{
-		m_scene.destroy();
-		m_mainView.destroy();
+		if(m_scene !is null)
+			m_scene.destroy();
+		if(m_mainView !is null)
+			m_mainView.destroy();
 	}
 
 	bool update()
 	{
-		if(!m_scene.update(0))
-		{
-			m_scene.destroy();
-			m_scene = m_scene.next;
-			m_scene.init();
-		}
+		if(m_scene !is null)
+			if(!m_scene.update(0))
+			{
+				m_scene.destroy();
+				m_scene = m_scene.next;
+				m_scene.init();
+			}
 		luaEmitSingle("update");
-		return m_mainView.update(0); // TODO: Add delta time
+		if(m_mainView !is null)
+			return m_mainView.update(0); // TODO: Add delta time
+		else
+			return false;
 	}
 
 	void draw(RenderContext context)
 	{
 		luaEmitSingle("draw");
-		m_scene.draw(context, m_renderer);
+		if(m_scene !is null)
+			m_scene.draw(context, m_renderer);
 	}
 
 
 	@property Scene scene() { return m_scene; }
 	@property IView view() { return m_mainView; }
 	@property IRenderer renderer() { return m_renderer; }
-
-	IView getMainView() { return m_mainView; }
 
 	private IView m_mainView;
 	private IRenderer m_renderer;

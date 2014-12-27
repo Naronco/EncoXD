@@ -7,7 +7,8 @@ import GameScene;
 import std.stdio;
 import std.traits;
 
-void main() {
+void main()
+{
 	auto renderer = new GL3Renderer();
 	EncoContext.create(
 				new DesktopView(),
@@ -16,24 +17,15 @@ void main() {
 	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
-	
-	auto test = EncoContext.instance.createLuaState();
-	
-	test.loadString(import("network-test.lua")).call();
 
 	Camera camera = new Camera();
-	camera.width = EncoContext.instance.view.width;
-	camera.height = EncoContext.instance.view.height;
 	camera.farClip = 100;
 	camera.fov = 45;
 	
 	camera.transform.position = vec3(0, 1, 2);
 	camera.addComponent(new FPSRotation());
 
-	RenderContext render = RenderContext();
-	render.camera = camera;
-	
-	// TODO: Minimize all this code to 15-25 lines + shaders + imports
+	RenderContext render = RenderContext(camera);
 
 	Mesh m = renderer.createMesh(MeshUtils.createPlane());
 

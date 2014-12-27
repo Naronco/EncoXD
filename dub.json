@@ -5,8 +5,6 @@
 	"homepage": "https://github.com/Naronco/EncoX",
 	"targetPath": "bin",
 	"targetType": "executable",
-	"sourcePaths": ["Demo/", "source/"],
-	"importPaths": ["Demo/", "source/"],
 	"license": "GPL-2.0",
 	"buildTypes": {
 		"debug": {
@@ -23,6 +21,20 @@
 			"dflags": ["-c", "-Dddocs"]
 		}
 	},
+	"configurations": [
+		{
+			"name": "Demo",
+			"targetType": "executable",
+			"sourcePaths": ["Demo/", "source/"],
+			"importPaths": ["Demo/", "source/"]
+		},
+		{
+			"name": "Server",
+			"targetType": "executable",
+			"sourcePaths": ["Examples/ScriptedServer/", "source/"],
+			"importPaths": ["Examples/ScriptedServer/", "source/"]
+		}
+	],
 	"dependencies": {
 		"derelict-sdl2": ">=1.2.8",
 		"derelict-gl3": ">=1.0.10",
@@ -34,7 +46,6 @@
 	"subPackages": [
 		"source/EncoXD/EncoShared",
 		"source/EncoXD/EncoDesktop",
-		"source/EncoXD/EncoGL3",
-		"Demo/"
+		"source/EncoXD/EncoGL3"
 	]
 }

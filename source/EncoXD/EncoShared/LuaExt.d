@@ -6,7 +6,7 @@ import std.socket;
 
 import EncoShared;
 
-class LuaThread : Fiber
+class LuaThread : Thread
 {
 	LuaFunction fnc;
 
@@ -23,7 +23,7 @@ class LuaThread : Fiber
 
 	static void createThread(LuaFunction fnc)
 	{
-		new LuaThread(fnc).call();
+		new LuaThread(fnc).start();
 		LuaLogger.writeln("Started new Thread (", fnc.object.toString(), ")");
 	}
 }

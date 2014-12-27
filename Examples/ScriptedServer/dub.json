@@ -1,10 +1,10 @@
 {
-	"name": "Demo Project",
+	"name": "Scripted Server Example",
 	"description": "Example for EncoX",
 	"authors": ["NaroncoNexo", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoX",
 	"license": "GPL-2.0",
 	"targetType": "executable",
-	"sourcePaths": [".", "../source/"],
-	"importPaths": [".", "../source/"]
+	"sourcePaths": [".", "../../source/"],
+	"importPaths": [".", "../../source/"]
 }
