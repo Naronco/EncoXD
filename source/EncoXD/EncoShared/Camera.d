@@ -9,7 +9,7 @@ enum ProjectionMode
 
 class Camera : GameObject
 {
-	this()
+	public this()
 	{
 		if(EncoContext.instance !is null && EncoContext.instance.view !is null)
 		{
@@ -18,7 +18,7 @@ class Camera : GameObject
 		}
 	}
 
-	@property mat4 projectionMatrix()
+	public @property mat4 projectionMatrix()
 	{
 		if(m_needUpdate)
 		{
@@ -31,7 +31,7 @@ class Camera : GameObject
 		return m_projectionMatrix;
 	}
 	
-	@property mat4 viewMatrix()
+	public @property mat4 viewMatrix()
 	{
 		m_viewMatrix = mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
 					   mat4.identity.rotate(transform.rotation.y, vec3(0, 1, 0)) *
@@ -40,19 +40,19 @@ class Camera : GameObject
 		return m_viewMatrix;
 	}
 	
-	@property f32 nearClip() { return m_near; }
-	@property f32 farClip() { return m_far; }
-	@property f32 width() { return m_width; }
-	@property f32 height() { return m_height; }
-	@property f32 fov() { return m_fov; }
-	@property ProjectionMode projectionMode() { return m_mode; }
+	public @property f32 nearClip() { return m_near; }
+	public @property f32 farClip() { return m_far; }
+	public @property f32 width() { return m_width; }
+	public @property f32 height() { return m_height; }
+	public @property f32 fov() { return m_fov; }
+	public @property ProjectionMode projectionMode() { return m_mode; }
 	
-	@property void nearClip(float value) { m_needUpdate = m_needUpdate || m_near != value; m_near = value; }
-	@property void farClip(float value) { m_needUpdate = m_needUpdate || m_far != value; m_far = value; }
-	@property void width(float value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
-	@property void height(float value) { m_needUpdate = m_needUpdate || m_height != value; m_height = value; }
-	@property void fov(float value) { m_needUpdate = m_needUpdate || m_fov != value; m_fov = value; }
-	@property void projectionMode(ProjectionMode value) { m_needUpdate = m_needUpdate || m_mode != value; m_mode = value; }
+	public @property void nearClip(float value) { m_needUpdate = m_needUpdate || m_near != value; m_near = value; }
+	public @property void farClip(float value) { m_needUpdate = m_needUpdate || m_far != value; m_far = value; }
+	public @property void width(float value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
+	public @property void height(float value) { m_needUpdate = m_needUpdate || m_height != value; m_height = value; }
+	public @property void fov(float value) { m_needUpdate = m_needUpdate || m_fov != value; m_fov = value; }
+	public @property void projectionMode(ProjectionMode value) { m_needUpdate = m_needUpdate || m_mode != value; m_mode = value; }
 	
 	private f32 m_near = 0.1f;
 	private f32 m_far = 100;

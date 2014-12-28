@@ -7,22 +7,22 @@ import EncoShared;
 
 class Logger
 {
-	static void writeln(S...)(S args)
+	public static void writeln(S...)(S args)
 	{
 		cwriteln("INFO > ".color(fg.light_black), "".color(fg.white), args);
 	}
 
-	static void warnln(S...)(S args)
+	public static void warnln(S...)(S args)
 	{
 		cwriteln("WARN > ".color(fg.yellow), "".color(fg.white), args);
 	}
 
-	static void errln(S...)(S args)
+	public static void errln(S...)(S args)
 	{
 		cwriteln("ERROR > ".color(fg.red), "".color(fg.white), args);
 	}
 
-	static void errln(Exception e)
+	public static void errln(Exception e)
 	{
 		cwriteln("ERROR > ".color(fg.red), "".color(fg.white), e.file, "@", e.line, ": ", e.msg);
 	}
@@ -30,7 +30,7 @@ class Logger
 
 class LuaLogger
 {
-	static void writeln(S)(S[] args...)
+	public static void writeln(S)(S[] args...)
 	{
 		cwrite("LUA INFO > ".color(fg.light_black), "".color(fg.white));
 		foreach(param; args)
@@ -38,7 +38,7 @@ class LuaLogger
 		std.stdio.writeln();
 	}
 
-	static void warnln(S)(S[] args...)
+	public static void warnln(S)(S[] args...)
 	{
 		cwrite("LUA WARN > ".color(fg.yellow), "".color(fg.white));
 		foreach(param; args)
@@ -46,7 +46,7 @@ class LuaLogger
 		std.stdio.writeln();
 	}
 
-	static void errln(S)(S[] args...)
+	public static void errln(S)(S[] args...)
 	{
 		cwrite("LUA ERROR > ".color(fg.red), "".color(fg.white));
 		foreach(param; args)

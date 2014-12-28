@@ -4,11 +4,11 @@ import EncoShared;
 
 class RenderableMesh
 {
-	u32 bufferID;
-	u32* vbos;
-	u32 indexLength;
+	public u32 bufferID;
+	public u32* vbos;
+	public u32 indexLength;
 
-	this(u32 bufferID, u32* vbos, u32 indexLength)
+	public this(u32 bufferID, u32* vbos, u32 indexLength)
 	{
 		this.bufferID = bufferID;
 		this.vbos = vbos;
@@ -31,24 +31,24 @@ class MeshUtils
 
 class Mesh
 {
-	@property vec3[] vertices() { return m_vertices; }
-	@property vec3[] normals() { return m_normals; }
-	@property u32[] indices() { return m_indices; }
-	@property vec2[] texCoords() { return m_texCoords; }
+	public @property vec3[] vertices() { return m_vertices; }
+	public @property vec3[] normals() { return m_normals; }
+	public @property u32[] indices() { return m_indices; }
+	public @property vec2[] texCoords() { return m_texCoords; }
 
-	void addVertex(vec3 vertex) { m_vertices.length++; m_vertices[m_vertices.length - 1] = vertex; }
-	void addVertices(const vec3[] vertices) { m_vertices ~= vertices; }
+	public void addVertex(vec3 vertex) { m_vertices.length++; m_vertices[m_vertices.length - 1] = vertex; }
+	public void addVertices(const vec3[] vertices) { m_vertices ~= vertices; }
 
-	void addNormal(vec3 normal) { m_normals.length++; m_normals[m_normals.length - 1] = normal; }
-	void addNormals(const vec3[] normals) { m_normals ~= normals; }
+	public void addNormal(vec3 normal) { m_normals.length++; m_normals[m_normals.length - 1] = normal; }
+	public void addNormals(const vec3[] normals) { m_normals ~= normals; }
 
-	void addIndex(u32 index) { m_indices.length++; m_indices[m_indices.length - 1] = index; }
-	void addIndices(const u32[] indices) { m_indices ~= indices; }
+	public void addIndex(u32 index) { m_indices.length++; m_indices[m_indices.length - 1] = index; }
+	public void addIndices(const u32[] indices) { m_indices ~= indices; }
 
-	void addTexCoord(vec2 texCoord) { m_texCoords.length++; m_texCoords[m_texCoords.length - 1] = texCoord; }
-	void addTexCoords(const vec2[] texCoords) { m_texCoords ~= texCoords; }
+	public void addTexCoord(vec2 texCoord) { m_texCoords.length++; m_texCoords[m_texCoords.length - 1] = texCoord; }
+	public void addTexCoords(const vec2[] texCoords) { m_texCoords ~= texCoords; }
 	
-	static Mesh[] loadFromObj(string file, u32 flags)
+	public static Mesh[] loadFromObj(string file, u32 flags)
 	{
 		const aiScene* scene = aiImportFile(file.ptr, aiProcess_GenNormals |
 				aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs | flags);
@@ -79,7 +79,7 @@ class Mesh
 		return meshes.reverse;
 	}
 
-	RenderableMesh renderable = null;
+	public RenderableMesh renderable = null;
 
 	private vec3[] m_vertices;
 	private vec3[] m_normals;

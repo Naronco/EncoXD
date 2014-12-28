@@ -201,6 +201,9 @@
    <File path="Enco3D\Mesh.d" />
    <File path="Enco3D\Shader.d" />
   </Folder>
+  <Folder name="Network">
+   <File path="Tcp.d" />
+  </Folder>
   <File path="Camera.d" />
   <File path="EncoContext.d" />
   <File path="EncoShared.d" />

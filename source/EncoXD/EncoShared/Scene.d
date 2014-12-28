@@ -6,7 +6,7 @@ import EncoShared;
 
 class RenderLayer
 {
-	void init(Scene scene) {}
+	public void init(Scene scene) {}
 
 	protected void preUpdate(f64 deltaTime) {}
 	protected void update(f64 deltaTime) {}
@@ -14,7 +14,7 @@ class RenderLayer
 	protected void preDraw(RenderContext context, IRenderer renderer) {}
 	protected void draw(RenderContext context, IRenderer renderer) {}
 
-	void performUpdate(f64 deltaTime)
+	public void performUpdate(f64 deltaTime)
 	{
 		preUpdate(deltaTime);
 		foreach(GameObject obj; m_gameObjects)
@@ -24,7 +24,7 @@ class RenderLayer
 		update(deltaTime);
 	}
 
-	void performDraw(RenderContext context, IRenderer renderer)
+	public void performDraw(RenderContext context, IRenderer renderer)
 	{
 		preDraw(context, renderer);
 		foreach(GameObject obj; m_gameObjects)
@@ -34,20 +34,20 @@ class RenderLayer
 		draw(context, renderer);
 	}
 
-	void addGameObject(GameObject object)
+	public void addGameObject(GameObject object)
 	{
 		m_gameObjects.length++;
 		m_gameObjects[m_gameObjects.length - 1] = object;
 	}
 
-	void removeGameObject(GameObject object)
+	public void removeGameObject(GameObject object)
 	{
 		m_gameObjects = remove!(o => o == object)(m_gameObjects);
 	}
 
-	@property GameObject[] gameObjects() { return m_gameObjects; }
+	public @property GameObject[] gameObjects() { return m_gameObjects; }
 
-	void destroy()
+	public void destroy()
 	{
 		foreach(GameObject obj; m_gameObjects)
 		{
@@ -61,9 +61,9 @@ class RenderLayer
 
 class Scene
 {
-	void init() {}
+	public void init() {}
 
-	bool update(f64 deltaTime)
+	public bool update(f64 deltaTime)
 	{
 		foreach(RenderLayer layer; m_layers)
 		{
@@ -72,7 +72,7 @@ class Scene
 		return m_next is null;
 	}
 
-	void draw(RenderContext context, IRenderer renderer)
+	public void draw(RenderContext context, IRenderer renderer)
 	{
 		foreach(RenderLayer layer; m_layers)
 		{
@@ -80,17 +80,17 @@ class Scene
 		}
 	}
 
-	@property void next(Scene scene) { m_next = scene; }
-	@property Scene next() { return m_next; }
+	public @property void next(Scene scene) { m_next = scene; }
+	public @property Scene next() { return m_next; }
 
-	void addLayer(RenderLayer layer)
+	public void addLayer(RenderLayer layer)
 	{
 		m_layers.length++;
 		m_layers[m_layers.length - 1] = layer;
 		layer.init(this);
 	}
 
-	void destroy()
+	public void destroy()
 	{
 		foreach(RenderLayer layer; m_layers)
 		{
@@ -99,8 +99,8 @@ class Scene
 		m_layers = null;
 	}
 	
-	IRenderer renderer;
-	IView view;
+	public IRenderer renderer;
+	public IView view;
 
 	private Scene m_next = null;
 	private RenderLayer[] m_layers;

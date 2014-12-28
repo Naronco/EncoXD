@@ -9,7 +9,7 @@ import std.conv;
 class GLMaterial
 {
 	/// Loads JSON Material File in format {Name:str, Textures:int->texture, Vertex:str/shader, Fragment:str/shader}
-	static Material load(IRenderer renderer, string file)
+	public static Material load(IRenderer renderer, string file)
 	{
 		JSONValue value = parseJSON!string(std.file.readText(file));
 		
@@ -40,7 +40,7 @@ class GLMaterial
 				tex.enableMipMaps = true;
 				tex.minFilter = TextureFilterMode.LinearMipmapLinear;
 			}
-			tex.applyTexParams();
+			tex.applyParameters();
 
 			mat.textures[i] = tex;
 		}

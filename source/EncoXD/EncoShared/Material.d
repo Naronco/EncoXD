@@ -4,13 +4,13 @@ import EncoShared;
 
 struct Material
 {
-	string name;
+	public string name;
 
-	ITexture[int] textures;
+	public ITexture[int] textures;
 
-	ShaderProgram program;
+	public ShaderProgram program;
 
-	void bind(RenderContext context)
+	public void bind(RenderContext context)
 	{
 		foreach(int id, ITexture texture; textures)
 		{

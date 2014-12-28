@@ -13,19 +13,19 @@ enum DynamicLibrary
 
 class EncoContext
 {
-	static EncoContext instance;
-	string settings;
-	LuaState lua;
+	public static EncoContext instance;
+	public string settings;
+	public LuaState lua;
 	
-	LuaFunction[][string] lua_events;
+	public LuaFunction[][string] lua_events;
 
-	static void create(IView mainView, IRenderer renderer, Scene scene)
+	public static void create(IView mainView, IRenderer renderer, Scene scene)
 	{
 		assert(instance is null);
 		instance = new EncoContext(mainView, renderer, scene);
 	}
 
-	static void create()
+	public static void create()
 	{
 		assert(instance is null);
 		instance = new EncoContext(null, null, null);
@@ -38,11 +38,11 @@ class EncoContext
 		m_scene = scene;
 	}
 
-	~this()
+	public ~this()
 	{
 	}
 
-	void useDynamicLibraries(const DynamicLibrary[] libs)
+	public void useDynamicLibraries(const DynamicLibrary[] libs)
 	{
 		foreach(DynamicLibrary lib; libs)
 		{
@@ -66,7 +66,7 @@ class EncoContext
 		}
 	}
 
-	void luaOn(string type, LuaFunction func)
+	public void luaOn(string type, LuaFunction func)
 	{
 		type = type.toLower().trim();
 		if((type in lua_events) is null) lua_events[type] = [];
@@ -74,7 +74,7 @@ class EncoContext
 		lua_events[type][lua_events[type].length - 1] = func;
 	}
 
-	void luaEmit(A...)(string type, A args)
+	public void luaEmit(A...)(string type, A args)
 	{
 		type = type.toLower().trim();
 		if((type in lua_events) !is null)
@@ -84,7 +84,7 @@ class EncoContext
 			}
 	}
 
-	void luaEmitSingle(string type)
+	public void luaEmitSingle(string type)
 	{
 		type = type.toLower().trim();
 		if((type in lua_events) !is null)
@@ -94,13 +94,13 @@ class EncoContext
 			}
 	}
 
-	static void panic(LuaState lua, in char[] error)
+	public static void panic(LuaState lua, in char[] error)
 	{
 		string err = error.idup;
 		LuaLogger.errln("in script ", lua.get!LuaTable("info").get!string("name"), "\n\t", err);
 	}
 
-	LuaState createLuaState()
+	public LuaState createLuaState()
 	{
 		auto lua = new LuaState;
 		lua.openLibs();
@@ -116,7 +116,7 @@ class EncoContext
 		return lua;
 	}
 
-	void importSettings(string jsonStr)
+	public void importSettings(string jsonStr)
 	{
 		settings = jsonStr;
 		JSONValue json = parseJSON(jsonStr);
@@ -127,7 +127,7 @@ class EncoContext
 			m_mainView.importSettings(json);
 	}
 
-	void start()
+	public void start()
 	{
 		if(m_renderer !is null)
 			m_mainView.create(m_renderer);
@@ -145,7 +145,7 @@ class EncoContext
 			m_renderer.postImportSettings(parseJSON(settings));
 	}
 
-	void stop()
+	public void stop()
 	{
 		if(m_scene !is null)
 			m_scene.destroy();
@@ -153,7 +153,7 @@ class EncoContext
 			m_mainView.destroy();
 	}
 
-	bool update()
+	public bool update()
 	{
 		if(m_scene !is null)
 			if(!m_scene.update(0))
@@ -169,7 +169,7 @@ class EncoContext
 			return false;
 	}
 
-	void draw(RenderContext context)
+	public void draw(RenderContext context)
 	{
 		luaEmitSingle("draw");
 		if(m_scene !is null)
@@ -177,9 +177,9 @@ class EncoContext
 	}
 
 
-	@property Scene scene() { return m_scene; }
-	@property IView view() { return m_mainView; }
-	@property IRenderer renderer() { return m_renderer; }
+	public @property Scene scene() { return m_scene; }
+	public @property IView view() { return m_mainView; }
+	public @property IRenderer renderer() { return m_renderer; }
 
 	private IView m_mainView;
 	private IRenderer m_renderer;

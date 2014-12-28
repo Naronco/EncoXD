@@ -5,7 +5,7 @@ import EncoGL3;
 
 class GLRenderTarget : IRenderTarget
 {
-	void init(u32 width, u32 height, bool depth)
+	public void init(u32 width, u32 height, bool depth)
 	{
 		glGenFramebuffers(1, &fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -45,7 +45,7 @@ class GLRenderTarget : IRenderTarget
 		this.height = height;
 	}
 
-	void resize(u32 width, u32 height)
+	public void resize(u32 width, u32 height)
 	{
 		this.width = width;
 		this.height = height;
@@ -53,26 +53,26 @@ class GLRenderTarget : IRenderTarget
 		if(m_depth !is null) m_depth.resize(width, height);
 	}
 
-	void bind()
+	public void bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glViewport(0, 0, width, height);
 		EncoContext.instance.renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
 	}
 
-	void unbind()
+	public void unbind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glViewport(0, 0, EncoContext.instance.view.width, EncoContext.instance.view.height);
 		EncoContext.instance.renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
 	}
 	
-	@property ITexture color()
+	public @property ITexture color()
 	{
 		return cast(ITexture)m_color;
 	}
 
-	@property ITexture depth()
+	public @property ITexture depth()
 	{
 		return cast(ITexture)m_depth;
 	}

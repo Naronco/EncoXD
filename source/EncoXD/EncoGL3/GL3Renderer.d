@@ -7,21 +7,21 @@ import EncoGL3;
 
 class GL3Renderer : IRenderer
 {
-	this()
+	public this()
 	{
 
 	}
 
-	~this()
+	public ~this()
 	{
 
 	}
 
-	void importSettings(JSONValue json)
+	public void importSettings(JSONValue json)
 	{
 	}
 
-	u32 blendFuncFromString(string str)
+	public u32 blendFuncFromString(string str)
 	{
 		switch(str)
 		{
@@ -43,7 +43,7 @@ class GL3Renderer : IRenderer
 		}
 	}
 
-	void postImportSettings(JSONValue json)
+	public void postImportSettings(JSONValue json)
 	{
 		if(("Context" in json) !is null && json["Context"].type == JSON_TYPE.OBJECT)
 		{
@@ -78,7 +78,7 @@ class GL3Renderer : IRenderer
 		}
 	}
 
-	void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, SDL_Window* sdlWindow = null)
+	public void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, SDL_Window* sdlWindow = null)
 	{
 		if(sdlWindow != null)
 		{
@@ -101,7 +101,7 @@ class GL3Renderer : IRenderer
 		}
 	}
 
-	void deleteContext()
+	public void deleteContext()
 	{
 		if(valid)
 		{
@@ -110,16 +110,16 @@ class GL3Renderer : IRenderer
 		}
 	}
 
-	int getSDLOptions()
+	public int getSDLOptions()
 	{
 		return SDL_WINDOW_OPENGL;
 	}
 
-	void beginFrame()
+	public void beginFrame()
 	{
 	}
 
-	void endFrame()
+	public void endFrame()
 	{
 		if(valid)
 		{
@@ -128,7 +128,7 @@ class GL3Renderer : IRenderer
 	}
 
 	/// OpenGL only
-	void makeCurrent()
+	public void makeCurrent()
 	{
 		if(valid)
 		{
@@ -137,17 +137,17 @@ class GL3Renderer : IRenderer
 	}
 
 
-	void setClearColor(f32 r, f32 g, f32 b)
+	public void setClearColor(f32 r, f32 g, f32 b)
 	{
 		glClearColor(r, g, b, 1);
 	}
 
-	void setClearDepth(f64 clearDepth)
+	public void setClearDepth(f64 clearDepth)
 	{
 		glClearDepth(clearDepth);
 	}
 
-	void clearBuffer(RenderingBuffer buffers)
+	public void clearBuffer(RenderingBuffer buffers)
 	{
 		if ((buffers & RenderingBuffer.colorBuffer) == RenderingBuffer.colorBuffer) {
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -162,7 +162,7 @@ class GL3Renderer : IRenderer
 	
 	private static const int bufferCount = 4;
 
-	Mesh createMesh(Mesh mesh)
+	public Mesh createMesh(Mesh mesh)
 	{
 		u32 vao;
 		glGenVertexArrays(1, &vao);
@@ -198,19 +198,19 @@ class GL3Renderer : IRenderer
 		return mesh;
 	}
 
-	void deleteMesh(Mesh mesh)
+	public void deleteMesh(Mesh mesh)
 	{
 		glDeleteBuffers(bufferCount, mesh.renderable.vbos);
 		glDeleteVertexArrays(1, &mesh.renderable.bufferID);
 	}
 
-	void renderMesh(Mesh mesh)
+	public void renderMesh(Mesh mesh)
 	{
 		glBindVertexArray(mesh.renderable.bufferID);
 		glDrawElements(GL_TRIANGLES, mesh.renderable.indexLength, GL_UNSIGNED_INT, null);
 	}
 
-	ShaderProgram createShader(Shader[] shaders)
+	public ShaderProgram createShader(Shader[] shaders)
 	{
 		GLShaderProgram program = new GLShaderProgram();
 		program.create();
@@ -225,9 +225,9 @@ class GL3Renderer : IRenderer
 		return program;
 	}
 
-	@property bool valid() { return m_valid; }
+	public @property bool valid() { return m_valid; }
 
 	private bool m_valid = false;
-	SDL_Window* m_window;
-	SDL_GLContext m_context;
+	public SDL_Window* m_window;
+	public SDL_GLContext m_context;
 }

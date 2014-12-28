@@ -5,38 +5,38 @@ import std.datetime;
 
 class Random
 {
-	this(u64 seed)
+	public this(u64 seed)
 	{
 		setSeed(seed);
 	}
 
-	this(u64 x, u64 y, u64 z)
+	public this(u64 x, u64 y, u64 z)
 	{
 		m_x = x + 1; // Make sure they are not zero
 		m_y = y + 1;
 		m_z = z + 1;
 	}
 
-	this()
+	public this()
 	{
 		setSeed(Clock.currSystemTick().length);
 	}
 
-	void setSeed(u64 seed)
+	public void setSeed(u64 seed)
 	{
 		m_x = seed + 1; // Make sure they are not zero
 		m_y = seed + 2;
 		m_z = seed + 3;
 	}
 
-	void setSeed(u64 x, u64 y, u64 z)
+	public void setSeed(u64 x, u64 y, u64 z)
 	{
 		m_x = x + 1; // Make sure they are not zero
 		m_y = y + 1;
 		m_z = z + 1;
 	}
 
-	u64 nextLong()
+	public u64 nextLong()
 	{
 		m_x ^= m_x << 16;
 		m_x ^= m_x >> 5;
@@ -50,27 +50,27 @@ class Random
 		return m_z;
 	}
 
-	u32 nextInt()
+	public u32 nextInt()
 	{
 		return nextLong() % u32.max;
 	}
 
-	u32 nextInt(u32 max)
+	public u32 nextInt(u32 max)
 	{
 		return nextLong() % max;
 	}
 
-	f64 nextDouble()
+	public f64 nextDouble()
 	{
 		return (nextLong() % u64.max) / cast(f64)u64.max;
 	}
 
-	f32 nextFloat()
+	public f32 nextFloat()
 	{
 		return cast(f32)nextDouble();
 	}
 
-	bool nextBool()
+	public bool nextBool()
 	{
 		return nextInt(2) == 0;
 	}

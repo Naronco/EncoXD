@@ -4,7 +4,7 @@ import EncoShared;
 
 class GameObject
 {
-	this()
+	public this()
 	{
 		
 	}
@@ -13,7 +13,7 @@ class GameObject
 
 	protected void draw(RenderContext context, IRenderer renderer) {}
 
-	void performUpdate(f64 deltaTime)
+	public void performUpdate(f64 deltaTime)
 	{
 		foreach(IComponent com; m_components)
 		{
@@ -28,7 +28,7 @@ class GameObject
 		}
 	}
 
-	void performDraw(RenderContext context, IRenderer renderer)
+	public void performDraw(RenderContext context, IRenderer renderer)
 	{
 		foreach(IComponent com; m_components)
 		{
@@ -43,12 +43,12 @@ class GameObject
 		}
 	}
 
-	void destroy() {  }
+	public void destroy() {  }
 
-	Transform transform = Transform();
-	void* data = null;
+	public Transform transform = Transform();
+	public void* data = null;
 
-	void addComponent(IComponent component)
+	public void addComponent(IComponent component)
 	{
 		m_components.length++;
 		m_components[m_components.length - 1] = component;

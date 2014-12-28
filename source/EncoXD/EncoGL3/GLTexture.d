@@ -22,38 +22,38 @@ enum TextureClampMode : i32
 
 class GLTexture : ITexture
 {
-	void create(u32 width, u32 height, void* pixels)
+	public void create(u32 width, u32 height, void* pixels)
 	{
 		create(width, height, GL_RGBA, pixels);
 	}
 	
-	void create(u32 width, u32 height, i32 mode, void* pixels)
+	public void create(u32 width, u32 height, i32 mode, void* pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
 
-		applyTexParams();
+		applyParameters();
 		
 		this.inMode = mode;
 		this.mode = mode;
 	}
 
-	void create(u32 width, u32 height, i32 inMode, i32 mode, void* pixels, int type = GL_UNSIGNED_BYTE)
+	public void create(u32 width, u32 height, i32 inMode, i32 mode, void* pixels, int type = GL_UNSIGNED_BYTE)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, type, pixels);
 
-		applyTexParams();
+		applyParameters();
 		
 		this.inMode = inMode;
 		this.mode = mode;
 	}
 
-	void applyTexParams()
+	public void applyParameters()
 	{
 		bind(0);
 		
@@ -70,13 +70,13 @@ class GLTexture : ITexture
 		}
 	}
 
-	void bind(u32 unit)
+	public void bind(u32 unit)
 	{
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_2D, m_id);
 	}
 
-	void load(string file)
+	public void load(string file)
 	{
 		auto surface = IMG_Load((file ~ '\0').ptr);
 
@@ -112,42 +112,41 @@ class GLTexture : ITexture
 		SDL_FreeSurface(surface);
 	}
 
-	void resize(u32 width, u32 height, void* pixels = null)
+	public void resize(u32 width, u32 height, void* pixels = null)
 	{
 		bind(0);
 		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
 	}
 
-	void destroy()
+	public void destroy()
 	{
 		glDeleteTextures(1, &m_id);
 	}
 
-	bool enableMipMaps = false;
+	public bool enableMipMaps = false;
 	
-	TextureFilterMode minFilter = TextureFilterMode.Linear;
-	TextureFilterMode magFilter = TextureFilterMode.Linear;
+	public TextureFilterMode minFilter = TextureFilterMode.Linear;
+	public TextureFilterMode magFilter = TextureFilterMode.Linear;
 	
-	TextureClampMode wrapX = TextureClampMode.Repeat;
-	TextureClampMode wrapY = TextureClampMode.Repeat;
+	public TextureClampMode wrapX = TextureClampMode.Repeat;
+	public TextureClampMode wrapY = TextureClampMode.Repeat;
 
 	private i32 inMode, mode;
 
-
-	@property u32 id() { return m_id; }
-
-	u32 m_id;
+	
+	public u32 m_id;
+	public @property u32 id() { return m_id; }
 }
 
 
 class GLTexture3D : ITexture3D
 {
-	void create(u32 width, u32 height, u32 depth, void* pixels)
+	public void create(u32 width, u32 height, u32 depth, void* pixels)
 	{
 		create(width, height, depth, GL_RGBA, pixels);
 	}
 
-	void create(u32 width, u32 height, u32 depth, i32 mode, void* pixels)
+	public void create(u32 width, u32 height, u32 depth, i32 mode, void* pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_3D, m_id);
@@ -161,10 +160,10 @@ class GLTexture3D : ITexture3D
 		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels);
 		this.mode = mode;
 
-		applyTexParams();
+		applyParameters();
 	}
 
-	void applyTexParams()
+	public void applyParameters()
 	{
 		bind(0);
 
@@ -182,13 +181,13 @@ class GLTexture3D : ITexture3D
 		}
 	}
 
-	void bind(u32 unit)
+	public void bind(u32 unit)
 	{
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_3D, m_id);
 	}
 
-	void load(string file)
+	public void load(string file)
 	{
 		auto surface = IMG_Load((file ~ '\0').ptr);
 
@@ -218,36 +217,35 @@ class GLTexture3D : ITexture3D
 		SDL_FreeSurface(surface);
 	}
 
-	void resize(u32 width, u32 height, u32 depth, void* pixels = null)
+	public void resize(u32 width, u32 height, u32 depth, void* pixels = null)
 	{
 		bind(0);
 		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels);
 	}
 
-	void destroy()
+	public void destroy()
 	{
 		glDeleteTextures(1, &m_id);
 	}
 
-	bool enableMipMaps = false;
+	public bool enableMipMaps = false;
 	
-	TextureFilterMode minFilter = TextureFilterMode.Linear;
-	TextureFilterMode magFilter = TextureFilterMode.Linear;
+	public TextureFilterMode minFilter = TextureFilterMode.Linear;
+	public TextureFilterMode magFilter = TextureFilterMode.Linear;
 	
-	TextureClampMode wrapX = TextureClampMode.Repeat;
-	TextureClampMode wrapY = TextureClampMode.Repeat;
-	TextureClampMode wrapZ = TextureClampMode.Repeat;
+	public TextureClampMode wrapX = TextureClampMode.Repeat;
+	public TextureClampMode wrapY = TextureClampMode.Repeat;
+	public TextureClampMode wrapZ = TextureClampMode.Repeat;
 
-
-	@property u32 id() { return m_id; }
+	public u32 m_id;
+	public @property u32 id() { return m_id; }
 
 	private i32 mode;
-	u32 m_id;
 }
 
 class GLTexturePool
 {
-	static GLTexture load(string texture)
+	public static GLTexture load(string texture)
 	{
 		if((texture in m_textures) !is null)
 			return m_textures[texture];

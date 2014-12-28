@@ -7,12 +7,12 @@ import std.conv;
 
 class GLShaderProgram : ShaderProgram
 {
-	u32 create()
+	public u32 create()
 	{
 		return program = glCreateProgram();
 	}
 
-	static ShaderProgram fromVertexFragmentFiles(GL3Renderer renderer, string vertex, string fragment)
+	public static ShaderProgram fromVertexFragmentFiles(GL3Renderer renderer, string vertex, string fragment)
 	{
 		GLShader v = new GLShader();
 		v.load(ShaderType.Vertex, std.file.readText(vertex));
@@ -25,23 +25,23 @@ class GLShaderProgram : ShaderProgram
 		return renderer.createShader([v, f]);
 	}
 
-	void attach(Shader shader)
+	public void attach(Shader shader)
 	{
 		glAttachShader(program, shader.id);
 	}
 
-	void link()
+	public void link()
 	{
 		glLinkProgram(program);
 		bind();
 	}
 
-	void bind()
+	public void bind()
 	{
 		glUseProgram(program);
 	}
 	
-	int registerUniform(string uniform)
+	public int registerUniform(string uniform)
 	{
 		if((uniform in m_properties) !is null)
 			return m_properties[uniform];
@@ -49,47 +49,47 @@ class GLShaderProgram : ShaderProgram
 		return m_properties[uniform];
 	}
 
-	void set(string uniform, int value)
+	public void set(string uniform, int value)
 	{
 		glUniform1i(m_properties[uniform], value);
 	}
 
-	void set(string uniform, float value)
+	public void set(string uniform, float value)
 	{
 		glUniform1f(m_properties[uniform], value);
 	}
 
-	void set(string uniform, vec2 value)
+	public void set(string uniform, vec2 value)
 	{
 		glUniform2fv(m_properties[uniform], 1, value.value_ptr);
 	}
 
-	void set(string uniform, vec3 value)
+	public void set(string uniform, vec3 value)
 	{
 		glUniform3fv(m_properties[uniform], 1, value.value_ptr);
 	}
 
-	void set(string uniform, vec4 value)
+	public void set(string uniform, vec4 value)
 	{
 		glUniform4fv(m_properties[uniform], 1, value.value_ptr);
 	}
 
-	void set(string uniform, mat2 value)
+	public void set(string uniform, mat2 value)
 	{
 		glUniformMatrix2fv(m_properties[uniform], 1, 1, value.value_ptr);
 	}
 
-	void set(string uniform, mat3 value)
+	public void set(string uniform, mat3 value)
 	{
 		glUniformMatrix3fv(m_properties[uniform], 1, 1, value.value_ptr);
 	}
 
-	void set(string uniform, mat4 value)
+	public void set(string uniform, mat4 value)
 	{
 		glUniformMatrix4fv(m_properties[uniform], 1, 1, value.value_ptr);
 	}
 
-	int pr() { return program; }
+	public int pr() { return program; }
 
 	private u32 program;
 	private int[string] m_properties;
@@ -97,7 +97,7 @@ class GLShaderProgram : ShaderProgram
 
 class GLShader : Shader
 {
-	bool load(ShaderType type, string content)
+	public bool load(ShaderType type, string content)
 	{
 		this.content = content;
 		switch(type)
@@ -128,7 +128,7 @@ class GLShader : Shader
 		return true;
 	}
 
-	bool compile()
+	public bool compile()
 	{
 		glCompileShader(m_id);
 		i32 success = 0;
@@ -150,7 +150,7 @@ class GLShader : Shader
 		return true;
 	}
 	
-	@property u32 id()
+	public @property u32 id()
 	{
 		return m_id;
 	}

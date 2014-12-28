@@ -6,13 +6,13 @@ import EncoShared;
 
 class MeshObject : GameObject
 {
-	this(Mesh mesh, Material material)
+	public this(Mesh mesh, Material material)
 	{
 		m_mesh = mesh;
 		m_material = material;
 	}
 
-	override protected void draw(RenderContext context, IRenderer renderer)
+	protected override void draw(RenderContext context, IRenderer renderer)
 	{
 		if(m_mesh.renderable is null)
 		{
@@ -28,7 +28,7 @@ class MeshObject : GameObject
 		renderer.renderMesh(m_mesh);
 	}
 
-	@property mat4 modelMatrix()
+	public @property mat4 modelMatrix()
 	{
 		return  mat4.identity.translate(transform.position.x, transform.position.y, transform.position.z) *
 				mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
@@ -37,11 +37,11 @@ class MeshObject : GameObject
 				mat4.identity.scale(transform.scale.x, transform.scale.y, transform.scale.z);
 	}
 	
-	@property Mesh mesh() { return m_mesh; }
-	@property void mesh(Mesh mesh) { m_mesh = mesh; }
+	public @property Mesh mesh() { return m_mesh; }
+	public @property void mesh(Mesh mesh) { m_mesh = mesh; }
 	
-	@property Material material() { return m_material; }
-	@property void material(Material material) { m_material = material; }
+	public @property Material material() { return m_material; }
+	public @property void material(Material material) { m_material = material; }
 
 	protected Mesh m_mesh;
 	protected Material m_material;

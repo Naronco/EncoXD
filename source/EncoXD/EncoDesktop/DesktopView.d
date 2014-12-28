@@ -8,14 +8,14 @@ import EncoShared;
 
 struct KeyboardState
 {
-	bool[int] keys;
+	public bool[int] keys;
 	
-	bool isKeyDown(u32 key)
+	public bool isKeyDown(u32 key)
 	{
 		return (key in keys) !is null;
 	}
 
-	bool isKeyUp(u32 key)
+	public bool isKeyUp(u32 key)
 	{
 		return (key in keys) is null;
 	}
@@ -23,7 +23,7 @@ struct KeyboardState
 
 class Keyboard
 {
-	static KeyboardState* getState() { return new KeyboardState(keys.dup); }
+	public static KeyboardState* getState() { return new KeyboardState(keys.dup); }
 
 	private static void setKey(u32 key, bool state)
 	{
@@ -38,16 +38,16 @@ class Keyboard
 
 struct MouseState
 {
-	vec2 position;
-	vec2 offset;
-	bool[] buttons = new bool[8];
+	public vec2 position;
+	public vec2 offset;
+	public bool[] buttons = new bool[8];
 	
-	bool isButtonDown(u8 button)
+	public bool isButtonDown(u8 button)
 	{
 		return buttons[button];
 	}
 
-	bool isButtonUp(u8 button)
+	public bool isButtonUp(u8 button)
 	{
 		return !buttons[button];
 	}
@@ -55,7 +55,7 @@ struct MouseState
 
 class Mouse
 {
-	static MouseState* getState()
+	public static MouseState* getState()
 	{
 		MouseState* state = new MouseState();
 		state.position = position;
@@ -64,14 +64,14 @@ class Mouse
 		return state;
 	}
 	
-	static void capture(DesktopView window)
+	public static void capture(DesktopView window)
 	{
 		SDL_SetRelativeMouseMode(true);
 		SDL_ShowCursor(false);
 		SDL_SetWindowGrab(window.handle, true);
 	}
 	
-	static void release(DesktopView window)
+	public static void release(DesktopView window)
 	{
 		SDL_SetRelativeMouseMode(false);
 		SDL_ShowCursor(true);
@@ -108,12 +108,12 @@ class Mouse
 
 class DesktopView : IView
 {
-	this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
-	this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
-	this() { this("", 0, 0); }
-	~this() {}
+	public this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
+	public this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
+	public this() { this("", 0, 0); }
+	public ~this() {}
 
-	override void create(IRenderer renderer)
+	public override void create(IRenderer renderer)
 	{
 		assert(renderer !is null);
 
@@ -145,7 +145,7 @@ class DesktopView : IView
 		m_valid = true;
 	}
 
-	override void importSettings(JSONValue json)
+	public override void importSettings(JSONValue json)
 	{
 		try
 		{
@@ -167,7 +167,7 @@ class DesktopView : IView
 		}
 	}
 
-	override void destroy()
+	public override void destroy()
 	{
 		if(valid)
 		{
@@ -183,7 +183,7 @@ class DesktopView : IView
 		}
 	}
 
-	override bool update(f64 deltaTime)
+	public override bool update(f64 deltaTime)
 	{
 		if(valid)
 		{
@@ -232,8 +232,8 @@ class DesktopView : IView
 		}
 	}
 
-	@property SDL_Window* handle() { return m_window; }
-	@property bool valid() { return m_valid; }
+	public @property SDL_Window* handle() { return m_window; }
+	public @property bool valid() { return m_valid; }
 
 	private bool m_valid = false;
 	private SDL_Window* m_window;
