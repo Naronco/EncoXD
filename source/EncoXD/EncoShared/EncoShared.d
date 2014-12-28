@@ -5,6 +5,7 @@ public
 	import derelict.sdl2.sdl;
 	import derelict.sdl2.image;
 	import derelict.assimp3.assimp;
+	import derelict.sdl2.net;
 
 	import luad.all;
 
@@ -15,7 +16,8 @@ public
 	import gl3n.math;
 	import gl3n.plane;
 	import gl3n.util;
-
+	
+	import Enco.Shared.String;
 	import Enco.Shared.IRenderer;
 	import Enco.Shared.IView;
 	import Enco.Shared.ITexture;
@@ -36,6 +38,13 @@ public
 	
 	import Enco.Shared.Enco3D.Mesh;
 	import Enco.Shared.Enco3D.Shader;
+	
+	import Enco.Shared.Network.Network;
+	import Enco.Shared.Network.Tcp;
+	
+	import std.algorithm;
+	import std.string;
+	import std.conv;
 
 	alias char int8, i8;
 	alias short int16, i16;
@@ -51,6 +60,4 @@ public
 	alias double f64, float64;
 
 	alias Vector!(u32, 2) u32vec2;
-
-	alias std.string.strip trim;
 }

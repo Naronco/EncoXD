@@ -203,5 +203,6 @@
   </Folder>
   <File path="GameScene.d" />
   <File path="main.d" />
+  <File path="Player.d" />
  </Folder>
 </DProject>

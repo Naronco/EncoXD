@@ -202,6 +202,7 @@
    <File path="Enco3D\Shader.d" />
   </Folder>
   <Folder name="Network">
+   <File path="Network.d" />
    <File path="Tcp.d" />
   </Folder>
   <File path="Camera.d" />
@@ -220,6 +221,7 @@
   <File path="Random.d" />
   <File path="RenderContext.d" />
   <File path="Scene.d" />
+  <File path="String.d" />
   <File path="TemplateParser.d" />
   <File path="Transform.d" />
  </Folder>

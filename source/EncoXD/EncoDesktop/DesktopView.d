@@ -23,7 +23,8 @@ struct KeyboardState
 
 class Keyboard
 {
-	public static KeyboardState* getState() { return new KeyboardState(keys.dup); }
+	public static KeyboardState* getState() { return state; }
+	public static void update() { state = new KeyboardState(keys.dup); }
 
 	private static void setKey(u32 key, bool state)
 	{
@@ -33,6 +34,7 @@ class Keyboard
 			keys.remove(key);
 	}
 
+	private static KeyboardState* state;
 	private static bool[int] keys;
 }
 
@@ -57,10 +59,6 @@ class Mouse
 {
 	public static MouseState* getState()
 	{
-		MouseState* state = new MouseState();
-		state.position = position;
-		state.offset = offset;
-		state.buttons[] = buttons;
 		return state;
 	}
 	
@@ -76,6 +74,14 @@ class Mouse
 		SDL_SetRelativeMouseMode(false);
 		SDL_ShowCursor(true);
 		SDL_SetWindowGrab(window.handle, false);
+	}
+
+	public static void update()
+	{
+		state = new MouseState();
+		state.position = position;
+		state.offset = offset;
+		state.buttons[] = buttons;
 	}
 
 	private static void setButton(i8 button, bool isDown)
@@ -101,6 +107,7 @@ class Mouse
 		offset.y = y;
 	}
 	
+	private static MouseState* state;
 	private static vec2 position = vec2(0, 0);
 	private static vec2 offset = vec2(0, 0);
 	private static bool[] buttons = new bool[8];

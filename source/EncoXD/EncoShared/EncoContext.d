@@ -1,14 +1,13 @@
 module Enco.Shared.EncoContext;
 
 import std.json;
-import std.string;
-import std.conv;
+import std.datetime;
 
 import EncoShared;
 
 enum DynamicLibrary
 {
-	Assimp, SDL2, SDL2Image, Lua,
+	Assimp, SDL2, SDL2Image, Lua, SDL2Network,
 }
 
 class EncoContext
@@ -16,6 +15,9 @@ class EncoContext
 	public static EncoContext instance;
 	public string settings;
 	public LuaState lua;
+
+	private StopWatch deltaTime;
+	private f64 delta = 0;
 	
 	public LuaFunction[][string] lua_events;
 
@@ -56,6 +58,9 @@ class EncoContext
 				break;
 			case DynamicLibrary.SDL2Image:
 				DerelictSDL2Image.load();
+				break;
+			case DynamicLibrary.SDL2Network:
+				DerelictSDL2Net.load();
 				break;
 			case DynamicLibrary.Lua:
 				lua = createLuaState();
@@ -155,16 +160,20 @@ class EncoContext
 
 	public bool update()
 	{
+		deltaTime.start();
 		if(m_scene !is null)
-			if(!m_scene.update(0))
+			if(!m_scene.update(delta))
 			{
 				m_scene.destroy();
 				m_scene = m_scene.next;
 				m_scene.init();
 			}
 		luaEmitSingle("update");
+		deltaTime.stop();
+		delta = deltaTime.peek().usecs * 0.000001;
+		deltaTime.reset();
 		if(m_mainView !is null)
-			return m_mainView.update(0); // TODO: Add delta time
+			return m_mainView.update(delta);
 		else
 			return false;
 	}

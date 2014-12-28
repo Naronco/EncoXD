@@ -3,17 +3,20 @@ import EncoDesktop;
 import EncoGL3;
 
 import GameScene;
+import Player;
 
 import std.stdio;
 import std.traits;
 
 void main()
 {
-	auto renderer = new GL3Renderer();
+	GL3Renderer renderer = new GL3Renderer();
+	GameScene game = new GameScene();
 	EncoContext.create(
 				new DesktopView(),
 				renderer,
-				new GameScene());
+				game);
+
 	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
@@ -24,6 +27,9 @@ void main()
 	
 	camera.transform.position = vec3(0, 1, 2);
 	camera.addComponent(new FPSRotation());
+	camera.addComponent(new Player());
+
+	game.game3DLayer.addGameObject(camera);
 
 	RenderContext render = RenderContext(camera);
 
@@ -43,6 +49,9 @@ void main()
 	program.set("slot0", 0);
 	program.set("slot1", 1);
 	program.set("slot2", 2);
+	
+	Keyboard.update();
+	Mouse.update();
 
 	KeyboardState* state = Keyboard.getState();
 	MouseState* mstate = Mouse.getState();
@@ -51,14 +60,15 @@ void main()
 
 	while(EncoContext.instance.update())
 	{
+		Keyboard.update();
+		Mouse.update();
+
 		state = Keyboard.getState();
 		mstate = Mouse.getState();
 
 		renderer.beginFrame();
 
 		target.bind();
-		
-		camera.performUpdate(0);
 
 		EncoContext.instance.draw(render);
 		
@@ -74,16 +84,7 @@ void main()
 
 		renderer.endFrame();
 		
-		if (state.isKeyDown(SDLK_w)) camera.transform.position += vec3(cos(-camera.transform.rotation.y - 1.57079633f) * cos(-camera.transform.rotation.x), -sin(-camera.transform.rotation.x), sin(-camera.transform.rotation.y - 1.57079633f) * cos(-camera.transform.rotation.x)) * 0.1f;
-		if (state.isKeyDown(SDLK_s)) camera.transform.position -= vec3(cos(-camera.transform.rotation.y - 1.57079633f) * cos(-camera.transform.rotation.x), -sin(-camera.transform.rotation.x), sin(-camera.transform.rotation.y - 1.57079633f) * cos(-camera.transform.rotation.x)) * 0.1f;
-		if (state.isKeyDown(SDLK_a)) camera.transform.position -= vec3(cos(-camera.transform.rotation.y), 0, sin(-camera.transform.rotation.y)) * 0.1f;
-		if (state.isKeyDown(SDLK_d)) camera.transform.position += vec3(cos(-camera.transform.rotation.y), 0, sin(-camera.transform.rotation.y)) * 0.1f;
-		if (state.isKeyDown(SDLK_SPACE)) camera.transform.position += vec3(0, 1, 0) * 0.1f;
-		if (state.isKeyDown(SDLK_LSHIFT)) camera.transform.position -= vec3(0, 1, 0) * 0.1f;
 		if (state.isKeyDown(SDLK_ESCAPE)) break;
-		//if (state.isKeyDown(SDLK_a)) camera.transform.position.z += 0.1f;
-		//if (state.isKeyDown(SDLK_d)) camera.transform.position.z -= 0.1f;
-		//camera.transform.rotation -= vec3(mstate.offset.y, mstate.offset.x, 0) * 0.005f;
 	}
 
 	EncoContext.instance.stop();

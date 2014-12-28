@@ -1,6 +1,5 @@
 import EncoShared;
 
-import std.socket;
 import std.conv;
 import core.thread;
 
@@ -17,27 +16,19 @@ class Client : Thread
 
 		Logger.writeln("Connecting");
 
-		Socket client = new TcpSocket();
-		scope(exit) client.close();
-		assert(client.isAlive);
-		client.blocking = true;
-		client.connect(new InternetAddress("127.0.0.1", 4578));
+		auto client = new TcpSocket();
+		scope(exit) client.disconnect();
+
+		client.bind("127.0.0.1", 4578);
+		client.connect();
 
 		Logger.writeln("Connected");
 
-		void[] buf = new void[512];
-
 		while(true)
 		{
-			int i = client.receive(buf);
-
-			if(i > 1)
-			{
-				
-				Logger.writeln(cast(char[])buf[0 .. i]);
-			}
-
-			buf = new void[512];
+			auto s = new StringPacket();
+			client.recv(s);
+			Logger.writeln(s.text);
 		}
 	}
 }
@@ -59,12 +50,11 @@ class Server : Thread
 
 		Thread.sleep(dur!("seconds")(1));
 
-		Socket listener = new TcpSocket();
-		assert(listener.isAlive);
-		scope(exit) listener.close();
-		listener.blocking = true;
-		listener.bind(new InternetAddress(port));
-		listener.listen(5);
+		auto listener = new TcpSocket();
+		scope(exit) listener.disconnect();
+		assert(listener.bind(port));
+		assert(listener.connect());
+
 		Logger.writeln("Listening on 127.0.0.1:", port);
 
 
@@ -79,14 +69,14 @@ class Server : Thread
 
 				void send(string msg)
 				{
-					client.send(msg);
+					client.send(new StringPacket(msg));
 				}
 
 				string receive(int len)
 				{
-					void[] msg = new void[len];
-					client.receive(msg);
-					return cast(string)((cast(char[])msg).idup);
+					StringPacket p = new StringPacket();
+					client.recv(p);
+					return p.text;
 				}
 
 				void sleep(int ms)
@@ -95,8 +85,7 @@ class Server : Thread
 				}
 
 				EncoContext.instance.luaEmit("join", &send, &receive, &sleep);
-				client.send("\0");
-				client.close();
+				client.disconnect();
 			}
 			catch(Exception e)
 			{
@@ -109,7 +98,7 @@ class Server : Thread
 void main(string[] args)
 {
 	if(args.length >= 2)
-		new Server(to!u16(args[1])).start();
+		new Server(parse!u16(args[1])).start();
 	else
 		new Client().start();
 

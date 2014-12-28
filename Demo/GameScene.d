@@ -6,7 +6,7 @@ import EncoGL3;
 
 class Game3DLayer : RenderLayer
 {
-	override void init(Scene scene)
+	public override void init(Scene scene)
 	{
 		auto meshes = Mesh.loadFromObj("meshes/yard.obj", 0);
 		
@@ -23,8 +23,10 @@ class Game3DLayer : RenderLayer
 
 class GameScene : Scene
 {
-	override void init()
+	public Game3DLayer game3DLayer;
+
+	public override void init()
 	{
-		addLayer(new Game3DLayer());
+		addLayer(game3DLayer = new Game3DLayer());
 	}
 }
