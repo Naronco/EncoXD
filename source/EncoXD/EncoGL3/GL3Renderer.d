@@ -112,7 +112,7 @@ class GL3Renderer : IRenderer
 
 	public int getSDLOptions()
 	{
-		return SDL_WINDOW_OPENGL;
+		return SDL_WINDOW_OPENGL | SDL_RENDERER_PRESENTVSYNC;
 	}
 
 	public void beginFrame()
