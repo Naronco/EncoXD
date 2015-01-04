@@ -17,13 +17,12 @@ class FPSRotation : IComponent
 	}
 	
 	public override void preUpdate(f64 deltaTime) {
-		Logger.writeln();
 	}
 	
 	public override void update(f64 deltaTime)
 	{
 		mstate = Mouse.getState();
-		object.transform.rotation -= vec3(mstate.offset.y, mstate.offset.x, 0) * 0.01;
+		object.transform.rotation -= vec3(mstate.offset.y, mstate.offset.x, 0) * deltaTime * 0.5;
 		if(object.transform.rotation.x > 1.5707963f) object.transform.rotation.x = 1.5707963f;
 		if(object.transform.rotation.x < -1.5707963f) object.transform.rotation.x = -1.5707963f;
 	}

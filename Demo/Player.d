@@ -22,7 +22,7 @@ class Player : IComponent
 		state = Keyboard.getState();
 
 		if(deltaTime == 0)
-			Logger.warnln("Delta Time = 0!");
+			Logger.warnln("DeltaTime = 0!");
 
 		vec3 off = vec3(0);
 
@@ -34,7 +34,7 @@ class Player : IComponent
 		if (state.isKeyDown(SDLK_LSHIFT)) off -= vec3(0, 1, 0);
 
 		if(off.length_squared != 0)
-			object.transform.position += off.normalized() * deltaTime * 10000;
+			object.transform.position += off.normalized() * deltaTime * 10;
 	}
 
 	void preDraw(RenderContext context, IRenderer renderer)

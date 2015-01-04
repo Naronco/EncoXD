@@ -16,8 +16,8 @@ class EncoContext
 	public string settings;
 	public LuaState lua;
 
-	private StopWatch deltaTime;
-	private f64 delta = 0;
+	private StopWatch sw;
+	private TickDuration delta;
 	
 	public LuaFunction[][string] lua_events;
 
@@ -160,20 +160,17 @@ class EncoContext
 
 	public bool update()
 	{
-		deltaTime.start();
+		sw.start();
 		if(m_scene !is null)
-			if(!m_scene.update(delta))
+			if(!m_scene.update(delta.to!("seconds", f64)))
 			{
 				m_scene.destroy();
 				m_scene = m_scene.next;
 				m_scene.init();
 			}
 		luaEmitSingle("update");
-		deltaTime.stop();
-		delta = deltaTime.peek().usecs * 0.000001;
-		deltaTime.reset();
 		if(m_mainView !is null)
-			return m_mainView.update(delta);
+			return m_mainView.update(delta.to!("seconds", f64));
 		else
 			return false;
 	}
@@ -185,6 +182,14 @@ class EncoContext
 			m_scene.draw(context, m_renderer);
 	}
 
+	public void endUpdate()
+	{
+		sw.stop();
+		delta = sw.peek();
+		sw.reset();
+	}
+
+	public @property f64 deltaTime() { return delta.to!("seconds", f64); }
 
 	public @property Scene scene() { return m_scene; }
 	public @property IView view() { return m_mainView; }
