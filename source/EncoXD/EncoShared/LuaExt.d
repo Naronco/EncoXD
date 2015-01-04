@@ -35,7 +35,6 @@ class LuaExt
 		auto lib = lua.newTable();
 
 		lib["start"] = &LuaThread.createThread;
-		lib["yield"] = &Fiber.yield;
 
 		return lib;
 	}
