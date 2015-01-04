@@ -42,6 +42,9 @@ public
 	import Enco.Shared.Network.Network;
 	import Enco.Shared.Network.Tcp;
 	
+	import Enco.Shared.Animation.Animation;
+	import Enco.Shared.Animation.BasicEaseFunctions;
+	
 	import std.algorithm;
 	import std.string;
 	import std.conv;

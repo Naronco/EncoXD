@@ -201,6 +201,10 @@
    <File path="Enco3D\Mesh.d" />
    <File path="Enco3D\Shader.d" />
   </Folder>
+  <Folder name="Animation">
+   <File path="Animation.d" />
+   <File path="BasicEaseFunctions.d" />
+  </Folder>
   <Folder name="Network">
    <File path="Network.d" />
    <File path="Tcp.d" />

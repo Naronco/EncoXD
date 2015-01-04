@@ -55,7 +55,6 @@ void main()
 
 	KeyboardState* state = Keyboard.getState();
 	MouseState* mstate = Mouse.getState();
-
 	Mouse.capture(cast(DesktopView)EncoContext.instance.view);
 
 	while(EncoContext.instance.update())
@@ -85,6 +84,8 @@ void main()
 		renderer.endFrame();
 		
 		if (state.isKeyDown(SDLK_ESCAPE)) break;
+
+		EncoContext.instance.endUpdate();
 	}
 
 	EncoContext.instance.stop();
