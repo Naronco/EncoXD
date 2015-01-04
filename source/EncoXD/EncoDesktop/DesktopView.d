@@ -66,14 +66,12 @@ class Mouse
 	{
 		SDL_SetRelativeMouseMode(true);
 		SDL_ShowCursor(false);
-		SDL_SetWindowGrab(window.handle, true);
 	}
 	
 	public static void release(DesktopView window)
 	{
 		SDL_SetRelativeMouseMode(false);
 		SDL_ShowCursor(true);
-		SDL_SetWindowGrab(window.handle, false);
 	}
 
 	public static void update()
