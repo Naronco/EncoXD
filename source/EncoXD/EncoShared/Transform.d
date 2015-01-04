@@ -1,4 +1,4 @@
-module Enco.Shared.Transform;
+module Enco.Shared.Math.Transform;
 
 import EncoShared;
 

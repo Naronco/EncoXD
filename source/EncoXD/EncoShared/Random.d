@@ -1,4 +1,4 @@
-module Enco.Shared.Random;
+module Enco.Shared.Math.Random;
 
 import EncoShared;
 import std.datetime;

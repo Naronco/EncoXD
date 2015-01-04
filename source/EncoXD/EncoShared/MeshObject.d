@@ -1,4 +1,4 @@
-module Enco.Shared.MeshObject;
+module Enco.Shared.Render.MeshObject;
 
 import std.stdio;
 

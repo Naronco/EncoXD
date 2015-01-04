@@ -1,4 +1,4 @@
-module Enco.Shared.GameObject;
+module Enco.Shared.Core.GameObject;
 
 import EncoShared;
 

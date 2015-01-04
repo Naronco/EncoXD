@@ -1,4 +1,4 @@
-module Enco.Shared.Scene;
+module Enco.Shared.Core.Scene;
 
 import std.algorithm;
 

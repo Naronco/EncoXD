@@ -1,4 +1,4 @@
-module Enco.Shared.Material;
+module Enco.Shared.Render.Material;
 
 import EncoShared;
 

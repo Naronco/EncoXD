@@ -1,4 +1,4 @@
-module Enco.Shared.Camera;
+module Enco.Shared.Core.Camera;
 
 import EncoShared;
 

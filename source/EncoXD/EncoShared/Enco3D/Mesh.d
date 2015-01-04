@@ -1,4 +1,4 @@
-module Enco.Shared.Enco3D.Mesh;
+module Enco.Shared.Render.Mesh;
 
 import EncoShared;
 

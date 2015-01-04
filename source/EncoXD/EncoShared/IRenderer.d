@@ -1,4 +1,4 @@
-module Enco.Shared.IRenderer;
+module Enco.Shared.Render.IRenderer;
 
 import std.json;
 

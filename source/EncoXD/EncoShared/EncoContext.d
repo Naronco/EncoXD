@@ -1,4 +1,4 @@
-module Enco.Shared.EncoContext;
+module Enco.Shared.Core.EncoContext;
 
 import std.json;
 import std.datetime;

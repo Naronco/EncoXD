@@ -1,4 +1,4 @@
-module Enco.Shared.IRenderTarget;
+module Enco.Shared.Render.IRenderTarget;
 
 import EncoShared;
 

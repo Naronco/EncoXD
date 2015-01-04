@@ -1,4 +1,4 @@
-module Enco.Shared.IView;
+module Enco.Shared.Core.IView;
 
 import std.json;
 

@@ -1,4 +1,4 @@
-module Enco.Shared.TemplateParser;
+module Enco.Shared.Core.TemplateParser;
 
 import EncoShared;
 

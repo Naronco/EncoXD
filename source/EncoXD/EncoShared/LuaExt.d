@@ -1,4 +1,4 @@
-module Enco.Shared.LuaExt;
+module Enco.Shared.Scripting.LuaExt;
 
 import std.traits;
 import core.thread;

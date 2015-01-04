@@ -1,4 +1,4 @@
-module Enco.Shared.ITexture;
+module Enco.Shared.Render.ITexture;
 
 import EncoShared;
 import std.stdio;

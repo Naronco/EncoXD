@@ -1,4 +1,4 @@
-module Enco.Shared.IComponent;
+module Enco.Shared.Core.IComponent;
 
 import EncoShared;
 

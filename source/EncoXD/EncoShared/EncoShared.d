@@ -17,27 +17,31 @@ public
 	import gl3n.plane;
 	import gl3n.util;
 	
-	import Enco.Shared.String;
-	import Enco.Shared.IRenderer;
-	import Enco.Shared.IView;
-	import Enco.Shared.ITexture;
-	import Enco.Shared.EncoContext;
-	import Enco.Shared.Random;
-	import Enco.Shared.GameObject;
-	import Enco.Shared.Camera;
-	import Enco.Shared.Transform;
-	import Enco.Shared.IComponent;
-	import Enco.Shared.Scene;
-	import Enco.Shared.MeshObject;
-	import Enco.Shared.Material;
-	import Enco.Shared.TemplateParser;
-	import Enco.Shared.RenderContext;
-	import Enco.Shared.Logger;
-	import Enco.Shared.IRenderTarget;
-	import Enco.Shared.LuaExt;
 	
-	import Enco.Shared.Enco3D.Mesh;
-	import Enco.Shared.Enco3D.Shader;
+	import Enco.Shared.Math.Random;
+	import Enco.Shared.Math.Transform;
+	
+	import Enco.Shared.Core.IView;
+	import Enco.Shared.Core.EncoContext;
+	import Enco.Shared.Core.Camera;
+	import Enco.Shared.Core.GameObject;
+	import Enco.Shared.Core.IComponent;
+	import Enco.Shared.Core.Scene;
+	import Enco.Shared.Core.TemplateParser;
+	import Enco.Shared.Core.Logger;
+	
+	import Enco.Shared.Render.IRenderer;
+	import Enco.Shared.Render.ITexture;
+	import Enco.Shared.Render.Material;
+	import Enco.Shared.Render.RenderContext;
+	import Enco.Shared.Render.IRenderTarget;
+	import Enco.Shared.Render.MeshObject;
+	import Enco.Shared.Render.Mesh;
+	import Enco.Shared.Render.Shader;
+
+	import Enco.Shared.Scripting.LuaExt;
+	
+	import Enco.Shared.Ext.String;
 	
 	import Enco.Shared.Network.Network;
 	import Enco.Shared.Network.Tcp;

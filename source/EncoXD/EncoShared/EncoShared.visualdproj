@@ -197,36 +197,44 @@
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
  <Folder name="EncoShared">
-  <Folder name="Enco3D">
-   <File path="Enco3D\Mesh.d" />
-   <File path="Enco3D\Shader.d" />
-  </Folder>
   <Folder name="Animation">
    <File path="Animation.d" />
    <File path="BasicEaseFunctions.d" />
+  </Folder>
+  <Folder name="Core">
+   <File path="Camera.d" />
+   <File path="EncoContext.d" />
+   <File path="GameObject.d" />
+   <File path="IComponent.d" />
+   <File path="IView.d" />
+   <File path="Logger.d" />
+   <File path="Scene.d" />
+   <File path="TemplateParser.d" />
+  </Folder>
+  <Folder name="Ext">
+   <File path="String.d" />
+  </Folder>
+  <Folder name="Math">
+   <File path="Random.d" />
+   <File path="Transform.d" />
+  </Folder>
+  <Folder name="Scripting">
+   <File path="LuaExt.d" />
+  </Folder>
+  <Folder name="Render">
+   <File path="IRenderer.d" />
+   <File path="IRenderTarget.d" />
+   <File path="ITexture.d" />
+   <File path="Material.d" />
+   <File path="Enco3D\Mesh.d" />
+   <File path="MeshObject.d" />
+   <File path="RenderContext.d" />
+   <File path="Enco3D\Shader.d" />
   </Folder>
   <Folder name="Network">
    <File path="Network.d" />
    <File path="Tcp.d" />
   </Folder>
-  <File path="Camera.d" />
-  <File path="EncoContext.d" />
   <File path="EncoShared.d" />
-  <File path="GameObject.d" />
-  <File path="IComponent.d" />
-  <File path="IRenderer.d" />
-  <File path="IRenderTarget.d" />
-  <File path="ITexture.d" />
-  <File path="IView.d" />
-  <File path="Logger.d" />
-  <File path="LuaExt.d" />
-  <File path="Material.d" />
-  <File path="MeshObject.d" />
-  <File path="Random.d" />
-  <File path="RenderContext.d" />
-  <File path="Scene.d" />
-  <File path="String.d" />
-  <File path="TemplateParser.d" />
-  <File path="Transform.d" />
  </Folder>
 </DProject>

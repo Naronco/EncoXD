@@ -1,4 +1,4 @@
-module Enco.Shared.Enco3D.Shader;
+module Enco.Shared.Render.Shader;
 
 import EncoShared;
 

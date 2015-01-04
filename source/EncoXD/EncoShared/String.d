@@ -1,4 +1,4 @@
-module Enco.Shared.String;
+module Enco.Shared.Ext.String;
 
 import std.algorithm;
 

@@ -1,4 +1,4 @@
-module Enco.Shared.Logger;
+module Enco.Shared.Core.Logger;
 
 import colorize;
 import std.array;
