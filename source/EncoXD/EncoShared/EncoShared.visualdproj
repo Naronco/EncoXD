@@ -1,240 +1,242 @@
 <DProject>
-	<ProjectGuid>{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}</ProjectGuid>
-	<Config name="Debug" platform="Win32">
-		<obj>0</obj>
-		<link>0</link>
-		<lib>1</lib>
-		<subsystem>0</subsystem>
-		<multiobj>0</multiobj>
-		<singleFileCompilation>0</singleFileCompilation>
-		<oneobj>0</oneobj>
-		<trace>0</trace>
-		<quiet>0</quiet>
-		<verbose>0</verbose>
-		<vtls>0</vtls>
-		<vgc>0</vgc>
-		<symdebug>1</symdebug>
-		<optimize>0</optimize>
-		<cpu>0</cpu>
-		<isX86_64>0</isX86_64>
-		<isLinux>0</isLinux>
-		<isOSX>0</isOSX>
-		<isWindows>0</isWindows>
-		<isFreeBSD>0</isFreeBSD>
-		<isSolaris>0</isSolaris>
-		<scheduler>0</scheduler>
-		<useDeprecated>0</useDeprecated>
-		<errDeprecated>0</errDeprecated>
-		<useAssert>0</useAssert>
-		<useInvariants>0</useInvariants>
-		<useIn>0</useIn>
-		<useOut>0</useOut>
-		<useArrayBounds>0</useArrayBounds>
-		<noboundscheck>0</noboundscheck>
-		<useSwitchError>0</useSwitchError>
-		<useUnitTests>0</useUnitTests>
-		<useInline>0</useInline>
-		<release>0</release>
-		<preservePaths>0</preservePaths>
-		<warnings>0</warnings>
-		<infowarnings>0</infowarnings>
-		<checkProperty>0</checkProperty>
-		<genStackFrame>0</genStackFrame>
-		<pic>0</pic>
-		<cov>0</cov>
-		<nofloat>0</nofloat>
-		<Dversion>2</Dversion>
-		<ignoreUnsupportedPragmas>0</ignoreUnsupportedPragmas>
-		<allinst>0</allinst>
-		<stackStomp>0</stackStomp>
-		<compiler>0</compiler>
-		<otherDMD>0</otherDMD>
-		<program>$(DMDInstallDir)windows\bin\dmd.exe</program>
-		<imppath />
-		<fileImppath />
-		<outdir>$(ConfigurationName)</outdir>
-		<objdir>$(OutDir)</objdir>
-		<objname />
-		<libname />
-		<doDocComments>0</doDocComments>
-		<docdir />
-		<docname />
-		<modules_ddoc />
-		<ddocfiles />
-		<doHdrGeneration>0</doHdrGeneration>
-		<hdrdir />
-		<hdrname />
-		<doXGeneration>1</doXGeneration>
-		<xfilename>$(IntDir)\$(TargetName).json</xfilename>
-		<debuglevel>0</debuglevel>
-		<debugids />
-		<versionlevel>0</versionlevel>
-		<versionids />
-		<dump_source>0</dump_source>
-		<mapverbosity>0</mapverbosity>
-		<createImplib>0</createImplib>
-		<defaultlibname />
-		<debuglibname />
-		<moduleDepsFile />
-		<run>0</run>
-		<runargs />
-		<runCv2pdb>1</runCv2pdb>
-		<pathCv2pdb>$(VisualDInstallDir)cv2pdb\cv2pdb.exe</pathCv2pdb>
-		<cv2pdbPre2043>0</cv2pdbPre2043>
-		<cv2pdbNoDemangle>0</cv2pdbNoDemangle>
-		<cv2pdbEnumType>0</cv2pdbEnumType>
-		<cv2pdbOptions />
-		<objfiles />
-		<linkswitches />
-		<libfiles />
-		<libpaths />
-		<deffile />
-		<resfile />
-		<exefile>$(OutDir)\$(ProjectName).lib</exefile>
-		<useStdLibPath>1</useStdLibPath>
-		<cRuntime>2</cRuntime>
-		<additionalOptions />
-		<preBuildCommand />
-		<postBuildCommand />
-		<filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
-	</Config>
-	<Config name="Release" platform="Win32">
-		<obj>0</obj>
-		<link>0</link>
-		<lib>1</lib>
-		<subsystem>0</subsystem>
-		<multiobj>0</multiobj>
-		<singleFileCompilation>0</singleFileCompilation>
-		<oneobj>0</oneobj>
-		<trace>0</trace>
-		<quiet>0</quiet>
-		<verbose>0</verbose>
-		<vtls>0</vtls>
-		<vgc>0</vgc>
-		<symdebug>0</symdebug>
-		<optimize>0</optimize>
-		<cpu>0</cpu>
-		<isX86_64>0</isX86_64>
-		<isLinux>0</isLinux>
-		<isOSX>0</isOSX>
-		<isWindows>0</isWindows>
-		<isFreeBSD>0</isFreeBSD>
-		<isSolaris>0</isSolaris>
-		<scheduler>0</scheduler>
-		<useDeprecated>0</useDeprecated>
-		<errDeprecated>0</errDeprecated>
-		<useAssert>0</useAssert>
-		<useInvariants>0</useInvariants>
-		<useIn>0</useIn>
-		<useOut>0</useOut>
-		<useArrayBounds>0</useArrayBounds>
-		<noboundscheck>0</noboundscheck>
-		<useSwitchError>0</useSwitchError>
-		<useUnitTests>0</useUnitTests>
-		<useInline>0</useInline>
-		<release>1</release>
-		<preservePaths>0</preservePaths>
-		<warnings>0</warnings>
-		<infowarnings>0</infowarnings>
-		<checkProperty>0</checkProperty>
-		<genStackFrame>0</genStackFrame>
-		<pic>0</pic>
-		<cov>0</cov>
-		<nofloat>0</nofloat>
-		<Dversion>2.043</Dversion>
-		<ignoreUnsupportedPragmas>0</ignoreUnsupportedPragmas>
-		<allinst>0</allinst>
-		<stackStomp>0</stackStomp>
-		<compiler>0</compiler>
-		<otherDMD>0</otherDMD>
-		<program>$(DMDInstallDir)windows\bin\dmd.exe</program>
-		<imppath />
-		<fileImppath />
-		<outdir>$(ConfigurationName)</outdir>
-		<objdir>$(OutDir)</objdir>
-		<objname />
-		<libname />
-		<doDocComments>0</doDocComments>
-		<docdir />
-		<docname />
-		<modules_ddoc />
-		<ddocfiles />
-		<doHdrGeneration>0</doHdrGeneration>
-		<hdrdir />
-		<hdrname />
-		<doXGeneration>1</doXGeneration>
-		<xfilename>$(IntDir)\$(TargetName).json</xfilename>
-		<debuglevel>0</debuglevel>
-		<debugids />
-		<versionlevel>0</versionlevel>
-		<versionids />
-		<dump_source>0</dump_source>
-		<mapverbosity>0</mapverbosity>
-		<createImplib>0</createImplib>
-		<defaultlibname />
-		<debuglibname />
-		<moduleDepsFile />
-		<run>0</run>
-		<runargs />
-		<runCv2pdb>0</runCv2pdb>
-		<pathCv2pdb>$(VisualDInstallDir)cv2pdb\cv2pdb.exe</pathCv2pdb>
-		<cv2pdbPre2043>0</cv2pdbPre2043>
-		<cv2pdbNoDemangle>0</cv2pdbNoDemangle>
-		<cv2pdbEnumType>0</cv2pdbEnumType>
-		<cv2pdbOptions />
-		<objfiles />
-		<linkswitches />
-		<libfiles />
-		<libpaths />
-		<deffile />
-		<resfile />
-		<exefile>$(OutDir)\$(ProjectName).lib</exefile>
-		<useStdLibPath>1</useStdLibPath>
-		<cRuntime>1</cRuntime>
-		<additionalOptions />
-		<preBuildCommand />
-		<postBuildCommand />
-		<filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
-	</Config>
-	<Folder name="EncoShared">
-		<Folder name="Animation">
-			<File path="Animation\Animation.d" />
-			<File path="Animation\BasicEaseFunctions.d" />
-		</Folder>
-		<Folder name="Core">
-			<File path="Core\Camera.d" />
-			<File path="Core\EncoContext.d" />
-			<File path="Core\GameObject.d" />
-			<File path="Core\IComponent.d" />
-			<File path="Core\IView.d" />
-			<File path="Core\Logger.d" />
-			<File path="Core\Scene.d" />
-			<File path="Core\TemplateParser.d" />
-		</Folder>
-		<Folder name="Ext">
-			<File path="Ext\String.d" />
-		</Folder>
-		<Folder name="Math">
-			<File path="Math\Random.d" />
-			<File path="Math\Transform.d" />
-		</Folder>
-		<Folder name="Scripting">
-			<File path="Scripting\LuaExt.d" />
-		</Folder>
-		<Folder name="Render">
-			<File path="Render\IRenderer.d" />
-			<File path="Render\IRenderTarget.d" />
-			<File path="Render\ITexture.d" />
-			<File path="Render\Material.d" />
-			<File path="Render\Mesh.d" />
-			<File path="Render\MeshObject.d" />
-			<File path="Render\RenderContext.d" />
-			<File path="Render\Shader.d" />
-		</Folder>
-		<Folder name="Network">
-			<File path="Network\Network.d" />
-			<File path="Network\Tcp.d" />
-		</Folder>
-		<File path="EncoShared.d" />
-	</Folder>
+ <ProjectGuid>{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}</ProjectGuid>
+ <Config name="Debug" platform="Win32">
+  <obj>0</obj>
+  <link>0</link>
+  <lib>1</lib>
+  <subsystem>0</subsystem>
+  <multiobj>0</multiobj>
+  <singleFileCompilation>0</singleFileCompilation>
+  <oneobj>0</oneobj>
+  <trace>0</trace>
+  <quiet>0</quiet>
+  <verbose>0</verbose>
+  <vtls>0</vtls>
+  <vgc>0</vgc>
+  <symdebug>1</symdebug>
+  <optimize>0</optimize>
+  <cpu>0</cpu>
+  <isX86_64>0</isX86_64>
+  <isLinux>0</isLinux>
+  <isOSX>0</isOSX>
+  <isWindows>0</isWindows>
+  <isFreeBSD>0</isFreeBSD>
+  <isSolaris>0</isSolaris>
+  <scheduler>0</scheduler>
+  <useDeprecated>0</useDeprecated>
+  <errDeprecated>0</errDeprecated>
+  <useAssert>0</useAssert>
+  <useInvariants>0</useInvariants>
+  <useIn>0</useIn>
+  <useOut>0</useOut>
+  <useArrayBounds>0</useArrayBounds>
+  <noboundscheck>0</noboundscheck>
+  <useSwitchError>0</useSwitchError>
+  <useUnitTests>0</useUnitTests>
+  <useInline>0</useInline>
+  <release>0</release>
+  <preservePaths>0</preservePaths>
+  <warnings>0</warnings>
+  <infowarnings>0</infowarnings>
+  <checkProperty>0</checkProperty>
+  <genStackFrame>0</genStackFrame>
+  <pic>0</pic>
+  <cov>0</cov>
+  <nofloat>0</nofloat>
+  <Dversion>2</Dversion>
+  <ignoreUnsupportedPragmas>0</ignoreUnsupportedPragmas>
+  <allinst>0</allinst>
+  <stackStomp>0</stackStomp>
+  <compiler>0</compiler>
+  <otherDMD>0</otherDMD>
+  <program>$(DMDInstallDir)windows\bin\dmd.exe</program>
+  <imppath />
+  <fileImppath />
+  <outdir>$(ConfigurationName)</outdir>
+  <objdir>$(OutDir)</objdir>
+  <objname />
+  <libname />
+  <doDocComments>0</doDocComments>
+  <docdir />
+  <docname />
+  <modules_ddoc />
+  <ddocfiles />
+  <doHdrGeneration>0</doHdrGeneration>
+  <hdrdir />
+  <hdrname />
+  <doXGeneration>1</doXGeneration>
+  <xfilename>$(IntDir)\$(TargetName).json</xfilename>
+  <debuglevel>0</debuglevel>
+  <debugids />
+  <versionlevel>0</versionlevel>
+  <versionids />
+  <dump_source>0</dump_source>
+  <mapverbosity>0</mapverbosity>
+  <createImplib>0</createImplib>
+  <defaultlibname />
+  <debuglibname />
+  <moduleDepsFile />
+  <run>0</run>
+  <runargs />
+  <runCv2pdb>1</runCv2pdb>
+  <pathCv2pdb>$(VisualDInstallDir)cv2pdb\cv2pdb.exe</pathCv2pdb>
+  <cv2pdbPre2043>0</cv2pdbPre2043>
+  <cv2pdbNoDemangle>0</cv2pdbNoDemangle>
+  <cv2pdbEnumType>0</cv2pdbEnumType>
+  <cv2pdbOptions />
+  <objfiles />
+  <linkswitches />
+  <libfiles />
+  <libpaths />
+  <deffile />
+  <resfile />
+  <exefile>$(OutDir)\$(ProjectName).lib</exefile>
+  <useStdLibPath>1</useStdLibPath>
+  <cRuntime>2</cRuntime>
+  <additionalOptions />
+  <preBuildCommand />
+  <postBuildCommand />
+  <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
+ </Config>
+ <Config name="Release" platform="Win32">
+  <obj>0</obj>
+  <link>0</link>
+  <lib>1</lib>
+  <subsystem>0</subsystem>
+  <multiobj>0</multiobj>
+  <singleFileCompilation>0</singleFileCompilation>
+  <oneobj>0</oneobj>
+  <trace>0</trace>
+  <quiet>0</quiet>
+  <verbose>0</verbose>
+  <vtls>0</vtls>
+  <vgc>0</vgc>
+  <symdebug>0</symdebug>
+  <optimize>0</optimize>
+  <cpu>0</cpu>
+  <isX86_64>0</isX86_64>
+  <isLinux>0</isLinux>
+  <isOSX>0</isOSX>
+  <isWindows>0</isWindows>
+  <isFreeBSD>0</isFreeBSD>
+  <isSolaris>0</isSolaris>
+  <scheduler>0</scheduler>
+  <useDeprecated>0</useDeprecated>
+  <errDeprecated>0</errDeprecated>
+  <useAssert>0</useAssert>
+  <useInvariants>0</useInvariants>
+  <useIn>0</useIn>
+  <useOut>0</useOut>
+  <useArrayBounds>0</useArrayBounds>
+  <noboundscheck>0</noboundscheck>
+  <useSwitchError>0</useSwitchError>
+  <useUnitTests>0</useUnitTests>
+  <useInline>0</useInline>
+  <release>1</release>
+  <preservePaths>0</preservePaths>
+  <warnings>0</warnings>
+  <infowarnings>0</infowarnings>
+  <checkProperty>0</checkProperty>
+  <genStackFrame>0</genStackFrame>
+  <pic>0</pic>
+  <cov>0</cov>
+  <nofloat>0</nofloat>
+  <Dversion>2.043</Dversion>
+  <ignoreUnsupportedPragmas>0</ignoreUnsupportedPragmas>
+  <allinst>0</allinst>
+  <stackStomp>0</stackStomp>
+  <compiler>0</compiler>
+  <otherDMD>0</otherDMD>
+  <program>$(DMDInstallDir)windows\bin\dmd.exe</program>
+  <imppath />
+  <fileImppath />
+  <outdir>$(ConfigurationName)</outdir>
+  <objdir>$(OutDir)</objdir>
+  <objname />
+  <libname />
+  <doDocComments>0</doDocComments>
+  <docdir />
+  <docname />
+  <modules_ddoc />
+  <ddocfiles />
+  <doHdrGeneration>0</doHdrGeneration>
+  <hdrdir />
+  <hdrname />
+  <doXGeneration>1</doXGeneration>
+  <xfilename>$(IntDir)\$(TargetName).json</xfilename>
+  <debuglevel>0</debuglevel>
+  <debugids />
+  <versionlevel>0</versionlevel>
+  <versionids />
+  <dump_source>0</dump_source>
+  <mapverbosity>0</mapverbosity>
+  <createImplib>0</createImplib>
+  <defaultlibname />
+  <debuglibname />
+  <moduleDepsFile />
+  <run>0</run>
+  <runargs />
+  <runCv2pdb>0</runCv2pdb>
+  <pathCv2pdb>$(VisualDInstallDir)cv2pdb\cv2pdb.exe</pathCv2pdb>
+  <cv2pdbPre2043>0</cv2pdbPre2043>
+  <cv2pdbNoDemangle>0</cv2pdbNoDemangle>
+  <cv2pdbEnumType>0</cv2pdbEnumType>
+  <cv2pdbOptions />
+  <objfiles />
+  <linkswitches />
+  <libfiles />
+  <libpaths />
+  <deffile />
+  <resfile />
+  <exefile>$(OutDir)\$(ProjectName).lib</exefile>
+  <useStdLibPath>1</useStdLibPath>
+  <cRuntime>1</cRuntime>
+  <additionalOptions />
+  <preBuildCommand />
+  <postBuildCommand />
+  <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
+ </Config>
+ <Folder name="EncoShared">
+  <Folder name="Animation">
+   <File path="Animation\AnimatedProperty.d" />
+   <File path="Animation\Animation.d" />
+   <File path="Animation\BasicEaseFunctions.d" />
+  </Folder>
+  <Folder name="Core">
+   <File path="Core\Camera.d" />
+   <File path="Core\EncoContext.d" />
+   <File path="Core\GameObject.d" />
+   <File path="Core\IComponent.d" />
+   <File path="Core\IView.d" />
+   <File path="Core\Logger.d" />
+   <File path="Core\Scene.d" />
+   <File path="Core\TemplateParser.d" />
+  </Folder>
+  <Folder name="Ext">
+   <File path="Ext\String.d" />
+  </Folder>
+  <Folder name="Math">
+   <File path="Math\Frustum.d" />
+   <File path="Math\Random.d" />
+   <File path="Math\Transform.d" />
+  </Folder>
+  <Folder name="Network">
+   <File path="Network\Network.d" />
+   <File path="Network\Tcp.d" />
+  </Folder>
+  <Folder name="Render">
+   <File path="Render\IRenderer.d" />
+   <File path="Render\IRenderTarget.d" />
+   <File path="Render\ITexture.d" />
+   <File path="Render\Material.d" />
+   <File path="Render\Mesh.d" />
+   <File path="Render\MeshObject.d" />
+   <File path="Render\RenderContext.d" />
+   <File path="Render\Shader.d" />
+  </Folder>
+  <Folder name="Scripting">
+   <File path="Scripting\LuaExt.d" />
+  </Folder>
+  <File path="EncoShared.d" />
+ </Folder>
 </DProject>
