@@ -34,10 +34,11 @@ class RenderLayer
 		draw(context, renderer);
 	}
 
-	public void addGameObject(GameObject object)
+	public GameObject addGameObject(GameObject object)
 	{
 		m_gameObjects.length++;
 		m_gameObjects[m_gameObjects.length - 1] = object;
+		return object;
 	}
 
 	public void removeGameObject(GameObject object)
