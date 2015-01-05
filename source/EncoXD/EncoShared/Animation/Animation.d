@@ -18,7 +18,7 @@ struct DoubleDoublePair
 	}
 }
 
-struct AnimatedProperty
+struct AnimatedAnimationProperty
 {
 	public string name;
 	public string[] functions;
@@ -29,9 +29,9 @@ struct AnimatedProperty
 		return format("%s = %s -> %s", name, functions, keyframes);
 	}
 
-	public @property AnimatedProperty dup()
+	public @property AnimatedAnimationProperty dup()
 	{
-		AnimatedProperty b;
+		AnimatedAnimationProperty b;
 		b.name = name;
 		b.functions = functions.dup;
 		b.keyframes = keyframes.dup;
@@ -45,7 +45,7 @@ class Animation
 {
 	private f64 currentTime = 0;
 	private f64 iLengthInSec = 0;
-	private AnimatedProperty[] props;
+	private AnimatedAnimationProperty[] props;
 
 	public f64[string] properties;
 	public f64 time = 0;
@@ -55,7 +55,7 @@ class Animation
 		string[] lines = storyboard.split('\n');
 		iLengthInSec = 1 / (ms * 0.001);
 
-		AnimatedProperty current = AnimatedProperty();
+		AnimatedAnimationProperty current = AnimatedAnimationProperty();
 		current.name = null;
 
 		bool cmp(DoubleDoublePair x, DoubleDoublePair y) @safe pure nothrow { return x.a < y.a; }
@@ -152,7 +152,7 @@ class Animation
 
 	// Easing functions
 
-	public static EasingFunction[string] easingFunctions;
+	public static const EasingFunction[string] easingFunctions;
 
 	public static f64 call(string func, f64 delta, f64 offset, f64 time)
 	{

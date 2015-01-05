@@ -17,7 +17,7 @@ public
 	import gl3n.plane;
 	import gl3n.util;
 	
-	
+	import Enco.Shared.Math.Frustum;
 	import Enco.Shared.Math.Random;
 	import Enco.Shared.Math.Transform;
 	
@@ -48,6 +48,7 @@ public
 	
 	import Enco.Shared.Animation.Animation;
 	import Enco.Shared.Animation.BasicEaseFunctions;
+	import Enco.Shared.Animation.AnimatedProperty;
 	
 	import std.algorithm;
 	import std.string;
