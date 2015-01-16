@@ -22,6 +22,11 @@ enum TextureClampMode : i32
 
 class GLTexture : ITexture
 {
+	public ~this()
+	{
+		glDeleteTextures(1, &m_id);
+	}
+
 	public void create(u32 width, u32 height, void* pixels)
 	{
 		create(width, height, GL_RGBA, pixels);

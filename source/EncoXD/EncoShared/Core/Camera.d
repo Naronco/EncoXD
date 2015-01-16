@@ -4,7 +4,7 @@ import EncoShared;
 
 enum ProjectionMode
 {
-	Perspective, Orthographic
+	Perspective, Orthographic2D, Orthographic3D
 }
 
 class Camera : GameObject
@@ -24,8 +24,10 @@ class Camera : GameObject
 		{
 			if(m_mode == ProjectionMode.Perspective)
 				m_projectionMatrix = mat4.perspective(m_width, m_height, m_fov, m_near, m_far);
-			else if(m_mode == ProjectionMode.Orthographic)
+			else if(m_mode == ProjectionMode.Orthographic2D)
 				m_projectionMatrix = mat4.orthographic(0, m_width, m_height, 0, m_near, m_far);
+			else if(m_mode == ProjectionMode.Orthographic3D)
+				m_projectionMatrix = mat4.orthographic(-1, 1, -1, 1, m_near, m_far) * mat4.identity.scale(m_iZoom, m_iZoom, m_iZoom);
 			m_needUpdate = false;
 		}
 		return m_projectionMatrix;
@@ -45,13 +47,15 @@ class Camera : GameObject
 	public @property f32 width() { return m_width; }
 	public @property f32 height() { return m_height; }
 	public @property f32 fov() { return m_fov; }
+	public @property f32 zoom() { return 1 / m_iZoom; }
 	public @property ProjectionMode projectionMode() { return m_mode; }
 	
-	public @property void nearClip(float value) { m_needUpdate = m_needUpdate || m_near != value; m_near = value; }
-	public @property void farClip(float value) { m_needUpdate = m_needUpdate || m_far != value; m_far = value; }
-	public @property void width(float value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
-	public @property void height(float value) { m_needUpdate = m_needUpdate || m_height != value; m_height = value; }
-	public @property void fov(float value) { m_needUpdate = m_needUpdate || m_fov != value; m_fov = value; }
+	public @property void nearClip(f32 value) { m_needUpdate = m_needUpdate || m_near != value; m_near = value; }
+	public @property void farClip(f32 value) { m_needUpdate = m_needUpdate || m_far != value; m_far = value; }
+	public @property void width(f32 value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
+	public @property void height(f32 value) { m_needUpdate = m_needUpdate || m_height != value; m_height = value; }
+	public @property void fov(f32 value) { m_needUpdate = m_needUpdate || m_fov != value; m_fov = value; }
+	public @property void zoom(f32 value) { m_iZoom = 1 / value; }
 	public @property void projectionMode(ProjectionMode value) { m_needUpdate = m_needUpdate || m_mode != value; m_mode = value; }
 	
 	private f32 m_near = 0.1f;
@@ -59,6 +63,7 @@ class Camera : GameObject
 	private f32 m_width = 1;
 	private f32 m_height = 1;
 	private f32 m_fov = 45;
+	private f32 m_iZoom = 1 / 7.0f;
 	private ProjectionMode m_mode = ProjectionMode.Perspective;
 
 	private mat4 m_projectionMatrix = mat4.perspective(1, 1, 45, 0.1f, 100);

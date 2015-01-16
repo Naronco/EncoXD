@@ -62,13 +62,13 @@ class Mouse
 		return state;
 	}
 	
-	public static void capture(DesktopView window)
+	public static void capture()
 	{
 		SDL_SetRelativeMouseMode(true);
 		SDL_ShowCursor(false);
 	}
 	
-	public static void release(DesktopView window)
+	public static void release()
 	{
 		SDL_SetRelativeMouseMode(false);
 		SDL_ShowCursor(true);

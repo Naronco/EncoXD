@@ -55,7 +55,7 @@ void main()
 
 	KeyboardState* state = Keyboard.getState();
 	MouseState* mstate = Mouse.getState();
-	Mouse.capture(cast(DesktopView)EncoContext.instance.view);
+	Mouse.capture();
 
 	while(EncoContext.instance.update())
 	{
@@ -68,7 +68,7 @@ void main()
 		renderer.beginFrame();
 
 		target.bind();
-
+		
 		EncoContext.instance.draw(render);
 		
 		target.unbind();

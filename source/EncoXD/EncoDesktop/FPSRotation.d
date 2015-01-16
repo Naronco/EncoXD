@@ -27,6 +27,6 @@ class FPSRotation : IComponent
 		if(object.transform.rotation.x < -1.5707963f) object.transform.rotation.x = -1.5707963f;
 	}
 	
-	public MouseState* mstate;
+	private MouseState* mstate;
 	public GameObject object;
 }

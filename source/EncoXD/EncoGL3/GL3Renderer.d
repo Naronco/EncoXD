@@ -51,6 +51,8 @@ class GL3Renderer : IRenderer
 				glEnable(GL_DEPTH_TEST);
 			if(("CullFace" in json["Context"]) !is null && json["Context"]["CullFace"].type == JSON_TYPE.TRUE)
 				glEnable(GL_CULL_FACE);
+			if(("InvertCull" in json["Context"]) !is null && json["Context"]["InvertCull"].type == JSON_TYPE.TRUE)
+				glCullFace(GL_FRONT);
 			if(("ClearColor" in json["Context"]) !is null && json["Context"]["ClearColor"].type == JSON_TYPE.ARRAY && json["Context"]["ClearColor"].array.length == 3)
 				setClearColor(json["Context"]["ClearColor"].array[0].floating, json["Context"]["ClearColor"].array[1].floating, json["Context"]["ClearColor"].array[2].floating);
 			if(("Blend" in json["Context"]) !is null)
