@@ -1,5 +1,8 @@
 module Enco.Desktop.Input.Mouse;
 
+import EncoShared;
+import EncoDesktop;
+
 struct MouseState
 {
 	public vec2 position;
@@ -44,31 +47,31 @@ class Mouse
 		state.buttons[] = buttons;
 	}
 
-	private static void setButton(i8 button, bool isDown)
+	public static void setButton(i8 button, bool isDown)
 	{
 		buttons[button - 1] = isDown;
 	}
 
-	private static void setPosition(i32 x, i32 y)
+	public static void setPosition(i32 x, i32 y)
 	{
 		position.x = x;
 		position.y = y;
 	}
 
-	private static void addOffset(i32 x, i32 y)
+	public static void addOffset(i32 x, i32 y)
 	{
 		offset.x += x;
 		offset.y += y;
 	}
 
-	private static void setOffset(i32 x, i32 y)
+	public static void setOffset(i32 x, i32 y)
 	{
 		offset.x = x;
 		offset.y = y;
 	}
 	
-	private static MouseState* state;
-	private static vec2 position = vec2(0, 0);
-	private static vec2 offset = vec2(0, 0);
-	private static bool[] buttons = new bool[8];
+	public static MouseState* state;
+	public static vec2 position = vec2(0, 0);
+	public static vec2 offset = vec2(0, 0);
+	public static bool[] buttons = new bool[8];
 }

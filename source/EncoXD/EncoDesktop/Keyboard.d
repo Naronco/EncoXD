@@ -1,5 +1,8 @@
 module Enco.Desktop.Input.Keyboard;
 
+import EncoShared;
+import EncoDesktop;
+
 struct KeyboardState
 {
 	public bool[int] keys;
@@ -20,7 +23,7 @@ class Keyboard
 	public static KeyboardState* getState() { return state; }
 	public static void update() { state = new KeyboardState(keys.dup); }
 
-	private static void setKey(u32 key, bool state)
+	public static void setKey(u32 key, bool state)
 	{
 		if(state)
 			keys[key] = true;
@@ -28,6 +31,6 @@ class Keyboard
 			keys.remove(key);
 	}
 
-	private static KeyboardState* state;
-	private static bool[int] keys;
+	public static KeyboardState* state;
+	public static bool[int] keys;
 }
