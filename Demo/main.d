@@ -89,7 +89,6 @@ void main()
 	}
 
 	Mouse.release();
-	core.thread.Thread.sleep(core.thread.dur!"seconds"(5));
 
 	EncoContext.instance.stop();
 }
