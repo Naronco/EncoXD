@@ -39,7 +39,7 @@ class GL3Renderer : IRenderer
 			case "Src1Color": return GL_SRC1_COLOR;
 			case "OneMinusSrc1Color": return GL_ONE_MINUS_SRC1_COLOR;
 			case "OneMinusSrc1Alpha": return GL_ONE_MINUS_SRC1_ALPHA;
-			default: return GL_ZERO; 
+			default: return GL_ZERO;
 		}
 	}
 
@@ -69,7 +69,7 @@ class GL3Renderer : IRenderer
 
 							glBlendFunc(blendFuncFromString(src), blendFuncFromString(dest));
 						}
-					} 
+					}
 				}
 				else if(json["Context"]["Blend"].type == JSON_TYPE.TRUE)
 				{
@@ -87,7 +87,7 @@ class GL3Renderer : IRenderer
 			DerelictGL3.load();
 
 			m_window = sdlWindow;
-			
+
 			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, cast(i32)depthBits);
 			SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, cast(i32)stencilBits);
 
@@ -161,7 +161,7 @@ class GL3Renderer : IRenderer
 			glClear(GL_STENCIL_BUFFER_BIT);
 		}
 	}
-	
+
 	private static const int bufferCount = 4;
 
 	public Mesh createMesh(Mesh mesh)
@@ -195,7 +195,7 @@ class GL3Renderer : IRenderer
 
 		glBindVertexArray(0);
 
-		mesh.renderable = new RenderableMesh(vao, vbo, mesh.indices.length);
+		mesh.renderable = new RenderableMesh(vao, vbo, cast(u32)mesh.indices.length);
 
 		return mesh;
 	}
