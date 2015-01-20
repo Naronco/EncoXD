@@ -93,6 +93,9 @@ class DesktopView : IView
 				switch (event.type) {
 				case SDL_QUIT:
 					return false;
+				case SDL_WINDOWEVENT_RESIZED:
+					size = u32vec2(event.window.data1, event.window.data2);
+					break;
 				case SDL_KEYDOWN:
 					Keyboard.setKey(event.key.keysym.sym, true);
 					break;

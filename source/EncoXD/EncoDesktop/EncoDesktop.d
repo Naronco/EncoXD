@@ -6,4 +6,5 @@ public
 	import Enco.Desktop.FPSRotation;
 	import Enco.Desktop.Input.Mouse;
 	import Enco.Desktop.Input.Keyboard;
+	import Enco.Desktop.Input.Controller;
 }

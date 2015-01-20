@@ -49,9 +49,6 @@ void main()
 	program.set("slot0", 0);
 	program.set("slot1", 1);
 	program.set("slot2", 2);
-	
-	Keyboard.update();
-	Mouse.update();
 
 	KeyboardState* state = Keyboard.getState();
 	MouseState* mstate = Mouse.getState();
@@ -59,9 +56,6 @@ void main()
 
 	while(EncoContext.instance.update())
 	{
-		Keyboard.update();
-		Mouse.update();
-
 		state = Keyboard.getState();
 		mstate = Mouse.getState();
 

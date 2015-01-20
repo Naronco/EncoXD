@@ -21,16 +21,19 @@ struct KeyboardState
 class Keyboard
 {
 	public static KeyboardState* getState() { return state; }
-	public static void update() { state = new KeyboardState(keys.dup); }
 
-	public static void setKey(u32 key, bool state)
+	public static void setKey(u32 key, bool click)
 	{
-		if(state)
-			keys[key] = true;
+		if(click)
+			state.keys[key] = true;
 		else
-			keys.remove(key);
+			state.keys.remove(key);
 	}
 
 	public static KeyboardState* state;
-	public static bool[int] keys;
+
+	static this()
+	{
+		state = new KeyboardState();
+	}
 }

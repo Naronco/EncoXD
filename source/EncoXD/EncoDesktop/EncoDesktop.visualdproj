@@ -204,6 +204,7 @@
  </Config>
  <Folder name="EncoDesktop">
   <Folder name="Input">
+   <File path="Controller.d" />
    <File path="Keyboard.d" />
    <File path="Mouse.d" />
   </Folder>
