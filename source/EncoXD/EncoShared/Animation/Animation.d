@@ -83,7 +83,7 @@ class Animation
 				string[] splits = line.split(' ');
 				current.functions ~= splits[0].toLower();
 				f64 t, val;
-				
+
 				t = to!f64(splits[1].trim());
 				val = to!f64(splits[2].trim());
 
@@ -120,7 +120,7 @@ class Animation
 
 		foreach(prop; props)
 		{
-			for(int i = prop.keyframes.length - 2; i >= 0; i--)
+			for(u64 i = prop.keyframes.length - 2; i >= 0; i--)
 			{
 				DoubleDoublePair kv = prop.keyframes[i];
 
@@ -143,7 +143,7 @@ class Animation
 			}
 		}
 	}
-	
+
 	public static Animation load(int lengthInMs, string file)
 	{
 		assert(std.file.exists(file));
@@ -168,7 +168,7 @@ class Animation
 	static this()
 	{
 		string funcs[];
-		
+
 		foreach (member_string; __traits(allMembers, AnimationFunctions))
 		{
 			mixin("alias member = AnimationFunctions." ~ member_string ~ ";");

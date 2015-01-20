@@ -31,7 +31,7 @@ class TcpSocket
 		if(!splits[1].isNumeric())
 			return false;
 		port = parse!int(splits[1]);
-		
+
 		return SDLNet_ResolveHost(&ipaddress, hostname.ptr, cast(u16)port) == 0;
 	}
 
@@ -49,7 +49,7 @@ class TcpSocket
 			if(splits[1].isNumeric())
 				port = parse!int(splits[1]);
 		}
-		
+
 		return SDLNet_ResolveHost(&ipaddress, hostname.ptr, cast(u16)port) == 0;
 	}
 
@@ -76,7 +76,7 @@ class TcpSocket
 
 	public bool send(void[] data)
 	{
-		return SDLNet_TCP_Send(tcpsock, data.ptr, data.length) >= data.length;
+		return SDLNet_TCP_Send(tcpsock, data.ptr, cast(i32)data.length) >= data.length;
 	}
 
 	public byte[] recv(u32 length)

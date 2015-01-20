@@ -24,7 +24,7 @@ void main()
 	Camera camera = new Camera();
 	camera.farClip = 100;
 	camera.fov = 45;
-	
+
 	camera.transform.position = vec3(0, 1, 2);
 	camera.addComponent(new FPSRotation());
 	camera.addComponent(new Player());
@@ -49,7 +49,7 @@ void main()
 	program.set("slot0", 0);
 	program.set("slot1", 1);
 	program.set("slot2", 2);
-	
+
 	Keyboard.update();
 	Mouse.update();
 
@@ -68,9 +68,9 @@ void main()
 		renderer.beginFrame();
 
 		target.bind();
-		
+
 		EncoContext.instance.draw(render);
-		
+
 		target.unbind();
 
 		program.bind();
@@ -82,11 +82,14 @@ void main()
 		renderer.renderMesh(m);
 
 		renderer.endFrame();
-		
+
 		if (state.isKeyDown(SDLK_ESCAPE)) break;
 
 		EncoContext.instance.endUpdate();
 	}
+
+	Mouse.release();
+	core.thread.Thread.sleep(core.thread.dur!"seconds"(5));
 
 	EncoContext.instance.stop();
 }

@@ -20,7 +20,7 @@ class StringPacket : IPacket
 
 	public @property u32 length()
 	{
-		return content.length + 1;
+		return cast(u32)(content.length + 1);
 	}
 
 	public @property string text()

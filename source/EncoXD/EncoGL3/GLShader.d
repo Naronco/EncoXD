@@ -17,7 +17,7 @@ class GLShaderProgram : ShaderProgram
 		GLShader v = new GLShader();
 		v.load(ShaderType.Vertex, std.file.readText(vertex));
 		v.compile();
-		
+
 		GLShader f = new GLShader();
 		f.load(ShaderType.Fragment, std.file.readText(fragment));
 		f.compile();
@@ -40,7 +40,7 @@ class GLShaderProgram : ShaderProgram
 	{
 		glUseProgram(program);
 	}
-	
+
 	public int registerUniform(string uniform)
 	{
 		if((uniform in m_properties) !is null)
@@ -122,7 +122,7 @@ class GLShader : Shader
 			return false;
 		}
 
-		const i32 len = content.length;
+		const i32 len = cast(const(i32))content.length;
 
 		glShaderSource(m_id, 1, [content.ptr].ptr, &len);
 		return true;
@@ -149,7 +149,7 @@ class GLShader : Shader
 		}
 		return true;
 	}
-	
+
 	public @property u32 id()
 	{
 		return m_id;
