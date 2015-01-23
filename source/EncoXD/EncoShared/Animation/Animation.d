@@ -120,7 +120,7 @@ class Animation
 
 		foreach(prop; props)
 		{
-			for(u64 i = prop.keyframes.length - 2; i >= 0; i--)
+			for(u32 i = cast(u32)prop.keyframes.length - 2; i >= 0; i--)
 			{
 				DoubleDoublePair kv = prop.keyframes[i];
 
