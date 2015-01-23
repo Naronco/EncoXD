@@ -5,8 +5,8 @@ import EncoShared;
 interface IPacket
 {
 	@property u32 length();
-	byte[] serialize();
-	void deserialize(byte[]);
+	void[] serialize();
+	void deserialize(void[]);
 }
 
 class StringPacket : IPacket
@@ -33,29 +33,14 @@ class StringPacket : IPacket
 		content = c;
 	}
 
-	public byte[] serialize()
+	public void[] serialize()
 	{
-		byte[] data = new byte[length];
-
-		foreach(int i, immutable(char) c; content)
-		{
-			data[i] = cast(byte)c;
-		}
-
-		data[data.length - 1] = '\0';
-
-		return data;
+		void[] data = cast(void[])(content.idup ~ '\0');
+		return data[0 .. length];
 	}
 
-	public void deserialize(byte[] buf)
+	public void deserialize(void[] buf)
 	{
-		char[] c = new char[buf.length];
-
-		foreach(int i, byte b; buf)
-		{
-			c[i] = cast(char)b;
-		}
-
-		content = c.idup;
+		content = cast(immutable(char)[])(buf);
 	}
 }

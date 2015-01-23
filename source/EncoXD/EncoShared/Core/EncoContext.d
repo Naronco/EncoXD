@@ -7,7 +7,7 @@ import EncoShared;
 
 enum DynamicLibrary
 {
-	Assimp, SDL2, SDL2Image, Lua, SDL2Network,
+	Assimp, SDL2, SDL2Image, Lua,
 }
 
 class EncoContext
@@ -58,9 +58,6 @@ class EncoContext
 				break;
 			case DynamicLibrary.SDL2Image:
 				DerelictSDL2Image.load();
-				break;
-			case DynamicLibrary.SDL2Network:
-				DerelictSDL2Net.load();
 				break;
 			case DynamicLibrary.Lua:
 				lua = createLuaState();

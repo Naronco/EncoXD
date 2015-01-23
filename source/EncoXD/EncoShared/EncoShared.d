@@ -5,7 +5,6 @@ public
 	import derelict.sdl2.sdl;
 	import derelict.sdl2.image;
 	import derelict.assimp3.assimp;
-	import derelict.sdl2.net;
 
 	import luad.all;
 

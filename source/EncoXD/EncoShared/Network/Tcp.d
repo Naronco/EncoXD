@@ -5,21 +5,22 @@ import EncoShared;
 
 class TcpSocket
 {
-	private IPaddress ipaddress;
-	private TCPsocket tcpsock;
+	private std.socket.InternetAddress ipaddress;
+	private std.socket.TcpSocket tcpsock;
 
-	public this(TCPsocket handle)
+	public this(std.socket.TcpSocket handle)
 	{
 		tcpsock = handle;
 	}
 
 	public this()
 	{
+		tcpsock = new std.socket.TcpSocket();
 	}
 
 	public bool bind(const string host)
 	{
-		i32 port = 0;
+		i16 port = 0;
 		string hostname = host;
 
 		if(!host.contains(":"))
@@ -30,14 +31,15 @@ class TcpSocket
 
 		if(!splits[1].isNumeric())
 			return false;
-		port = parse!int(splits[1]);
-
-		return SDLNet_ResolveHost(&ipaddress, hostname.ptr, cast(u16)port) == 0;
+		port = parse!i16(splits[1]);
+		
+		ipaddress = new std.socket.InternetAddress(hostname, port);
+		return true;
 	}
 
-	public bool bind(const string host, i32 fallbackPort)
+	public void bind(const string host, i16 fallbackPort)
 	{
-		i32 port = fallbackPort;
+		i16 port = fallbackPort;
 		string hostname = host;
 
 		if(host.contains(":"))
@@ -47,72 +49,77 @@ class TcpSocket
 			hostname = splits[0];
 
 			if(splits[1].isNumeric())
-				port = parse!int(splits[1]);
+				port = parse!i16(splits[1]);
 		}
 
-		return SDLNet_ResolveHost(&ipaddress, hostname.ptr, cast(u16)port) == 0;
+		ipaddress = new std.socket.InternetAddress(hostname, port);
 	}
 
-	public bool bind(u16 listenPort)
+	public void bind(u16 listenPort)
 	{
-		return SDLNet_ResolveHost(&ipaddress, null, listenPort) == 0;
+		ipaddress = new std.socket.InternetAddress(listenPort);
+	}
+
+	public bool listen(i32 backlog)
+	{
+		tcpsock.bind(ipaddress);
+		tcpsock.listen(backlog);
+		return isAlive;
 	}
 
 	public bool connect()
 	{
-		tcpsock = SDLNet_TCP_Open(&ipaddress);
-		return tcpsock != null;
+		tcpsock.connect(ipaddress);
+		return isAlive;
 	}
 
 	public void disconnect()
 	{
-		SDLNet_TCP_Close(tcpsock);
+		tcpsock.shutdown(std.socket.SocketShutdown.BOTH);
+		tcpsock.close();
+		tcpsock = new std.socket.TcpSocket();
 	}
 
 	public TcpSocket accept()
 	{
-		return new TcpSocket(SDLNet_TCP_Accept(tcpsock));
+		return new TcpSocket(cast(std.socket.TcpSocket)(tcpsock.accept()));
 	}
 
-	public bool send(void[] data)
+	public ptrdiff_t send(const(void)[] data)
 	{
-		return SDLNet_TCP_Send(tcpsock, data.ptr, cast(i32)data.length) >= data.length;
+		return tcpsock.send(data);
 	}
 
-	public byte[] recv(u32 length)
+	public void[] receive(u32 len, out ptrdiff_t recieved)
 	{
-		byte[] data;
-		byte* buf;
-		u32 left = length;
-		u32 n;
-		while(left > 0)
-		{
-			n = SDLNet_TCP_Recv(tcpsock, buf, left);
-			if(n == -1)
-				break;
-			left -= n;
-			data ~= buf[0 .. n];
-		}
-		assert(n != -1);
+		void[] data = new void[len];
+		recieved = tcpsock.receive(data);
 		return data;
 	}
 
-	public bool send(IPacket packet)
+	public void[] receive(u32 len)
 	{
-		byte[] data = new byte[packet.length + u32.sizeof];
-		u32 len = packet.length;
-		data[0] = cast(byte)((len) & 0xFF);
-		data[1] = cast(byte)((len >> 8) & 0xFF);
-		data[2] = cast(byte)((len >> 16) & 0xFF);
-		data[3] = cast(byte)((len >> 24) & 0xFF);
-		data[4 .. $] = packet.serialize();
+		void[] data = new void[len];
+		tcpsock.receive(data);
+		return data;
+	}
+
+	public ptrdiff_t send(IPacket packet)
+	{
+		void[] data;
+		data[0 .. 0] = [packet.length];
+		data[1 .. packet.length] = packet.serialize()[0 .. packet.length];
 		return send(data);
 	}
 
-	public void recv(IPacket packet)
+	public void receive(IPacket packet)
 	{
-		byte[] lenBuf = recv(4);
-		int len = lenBuf[0] | (lenBuf[1] << 8) | (lenBuf[2] << 16) | (lenBuf[3] << 24);
-		packet.deserialize(recv(len));
+		void[] lenBuf = receive(1);
+		packet.deserialize(receive((cast(u32[])lenBuf[0 .. 0])[0]));
+	}
+
+	public @property bool isAlive()
+	{
+		return tcpsock.isAlive;
 	}
 }
