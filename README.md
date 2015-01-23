@@ -20,6 +20,4 @@ and 3D rendering with OpenGL 3.2
 * Bullet 3D physics
 * More preset effects (Parallax mapping, Ambient occlussion, etc.)
 
-![EncoXD on Windows]()
-
-![EncoXD on Linux](http://i.imgur.com/7cG0ijo.png)
+![EncoXD](http://i.imgur.com/Z6KDsQh.jpg)
