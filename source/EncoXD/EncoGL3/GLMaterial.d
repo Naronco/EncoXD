@@ -8,7 +8,7 @@ import std.conv;
 
 class GLMaterial
 {
-	/// Loads JSON Material File in format {Name:str, Textures:int->texture, Vertex:str/shader, Fragment:str/shader}
+	/// Loads JSON Material File in format {Name:str, Textures:string->texture, Vertex:str/shader, Fragment:str/shader}
 	public static Material load(IRenderer renderer, string file)
 	{
 		JSONValue value = parseJSON!string(std.file.readText(file));
@@ -32,17 +32,20 @@ class GLMaterial
 			textureSlots ~= "uniform sampler2D slot" ~ id ~ ";";
 			textureSlotUniforms ~= "slot" ~ id;
 
-			int i = parse!int(id);
-
-			GLTexture tex = GLTexturePool.load(texture["File"].str);
-			if(texture["MipMap"].type == JSON_TYPE.TRUE)
+			if(texture["File"].str != "null")
 			{
-				tex.enableMipMaps = true;
-				tex.minFilter = TextureFilterMode.LinearMipmapLinear;
-			}
-			tex.applyParameters();
+				int i = parse!int(id);
 
-			mat.textures[i] = tex;
+				GLTexture tex = GLTexturePool.load(texture["File"].str);
+				if(texture["MipMap"].type == JSON_TYPE.TRUE)
+				{
+					tex.enableMipMaps = true;
+					tex.minFilter = TextureFilterMode.LinearMipmapLinear;
+				}
+				tex.applyParameters();
+
+				mat.textures[i] = tex;
+			}
 		}
 
 		string vertex;
