@@ -24,6 +24,9 @@ interface IRenderer
 	void beginFrame();
 	void endFrame();
 
+	@property void enableDepthTest(bool value);
+	@property bool enableDepthTest();
+
 	void makeCurrent(); /// OpenGL only
 
 	final void setClearColor(vec3 color) { setClearColor(color.r, color.g, color.b); }
