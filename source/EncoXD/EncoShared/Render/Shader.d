@@ -40,6 +40,8 @@ interface ShaderProgram
 	void set(string uniform, mat3 value);
 
 	void set(string uniform, mat4 value);
+
+	u32 id();
 }
 
 interface Shader

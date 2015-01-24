@@ -89,7 +89,7 @@ class GLShaderProgram : ShaderProgram
 		glUniformMatrix4fv(m_properties[uniform], 1, 1, value.value_ptr);
 	}
 
-	public int pr() { return program; }
+	public u32 id() { return program; }
 
 	private u32 program;
 	private int[string] m_properties;
