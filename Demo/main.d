@@ -17,6 +17,7 @@ void main()
 				renderer,
 				game);
 
+
 	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
@@ -54,6 +55,10 @@ void main()
 	MouseState* mstate = Mouse.getState();
 	Mouse.capture();
 
+	GUIRenderer gui = new GUIRenderer(renderer, GLMaterial.load(renderer, "materials/gui.json"), EncoContext.instance.view.width, EncoContext.instance.view.height);
+	GLTexture[] guitex = [GLTexturePool.load("tex/test.png"), GLTexturePool.load("tex/test2.png")];
+	vec4[] colors = [vec4(1, 0, 0, 1), vec4(0, 1, 0, 1), vec4(0, 0, 1, 1)];
+
 	while(EncoContext.instance.update())
 	{
 		state = Keyboard.getState();
@@ -74,6 +79,15 @@ void main()
 		target.depth.bind(2);
 
 		renderer.renderMesh(m);
+		
+		gui.begin();
+		
+		for(int x = 0; x < 16; x++)
+			for(int y = 0; y < 9; y++)
+				if(x == 0 || x == 15 || y == 0 || y == 8)
+					gui.renderRectangle(vec2(x * 100, y * 100), vec2(100, 100), guitex[(x + y) % guitex.length], colors[(x + y) % colors.length]);
+
+		gui.end();
 
 		renderer.endFrame();
 

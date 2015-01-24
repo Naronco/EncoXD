@@ -231,6 +231,7 @@
    <File path="Network\Tcp.d" />
   </Folder>
   <Folder name="Render">
+   <File path="Render\GUIRenderer.d" />
    <File path="Render\IRenderer.d" />
    <File path="Render\IRenderTarget.d" />
    <File path="Render\ITexture.d" />
