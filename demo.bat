@@ -1,1 +1,2 @@
 dub run
+pause
