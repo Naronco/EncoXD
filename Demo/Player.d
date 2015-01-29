@@ -21,9 +21,6 @@ class Player : IComponent
 	{
 		state = Keyboard.getState();
 
-		if(deltaTime == 0)
-			Logger.warnln("DeltaTime = 0!");
-
 		vec3 off = vec3(0);
 
 		if (state.isKeyDown(SDLK_w)) off += vec3(cos(-object.transform.rotation.y - 1.57079633f) * cos(-object.transform.rotation.x), -sin(-object.transform.rotation.x), sin(-object.transform.rotation.y - 1.57079633f) * cos(-object.transform.rotation.x));
