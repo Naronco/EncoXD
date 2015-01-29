@@ -38,6 +38,7 @@ public
 	import Enco.Shared.Render.MeshObject;
 	import Enco.Shared.Render.Mesh;
 	import Enco.Shared.Render.Shader;
+	import Enco.Shared.Render.Color;
 
 	import Enco.Shared.Scripting.LuaExt;
 	
