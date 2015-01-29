@@ -27,6 +27,11 @@ interface IRenderer
 	@property void enableDepthTest(bool value);
 	@property bool enableDepthTest();
 
+	@property void enableBlend(bool value);
+	@property bool enableBlend();
+	
+	@property GUIRenderer gui();
+
 	void makeCurrent(); /// OpenGL only
 
 	final void setClearColor(vec3 color) { setClearColor(color.r, color.g, color.b); }
@@ -39,6 +44,8 @@ interface IRenderer
 	Mesh createMesh(Mesh mesh);
 	void deleteMesh(Mesh mesh);
 	void renderMesh(Mesh mesh);
+	
+	void resize(u32 width, u32 height);
 
 	ShaderProgram createShader(Shader[] shaders);
 }
