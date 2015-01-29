@@ -103,6 +103,8 @@ class GL3Renderer : IRenderer
 			DerelictGL3.reload();
 
 			m_valid = true;
+			m_gui = new GUIRenderer(this, GLMaterial.load(this, "materials/gui.json"));
+			m_gui.resize(width, height);
 		}
 	}
 
@@ -244,10 +246,38 @@ class GL3Renderer : IRenderer
 		return m_depthTest;
 	}
 
+	@property void enableBlend(bool value)
+	{
+		m_blend = value;
+		if(value)
+			glEnable(GL_BLEND);
+		else
+			glDisable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+	@property bool enableBlend()
+	{
+		return m_blend;
+	}
+
 	public @property bool valid() { return m_valid; }
+
+	@property GUIRenderer gui()
+	{
+		return m_gui;
+	}
+	
+	void resize(u32 width, u32 height)
+	{
+		m_gui.resize(width, height);
+		glViewport(0, 0, width, height);
+	}
 
 	private bool m_valid = false;
 	private bool m_depthTest = false;
+	private bool m_blend = false;
+	private GUIRenderer m_gui;
 
 	public SDL_Window* m_window;
 	public SDL_GLContext m_context;
