@@ -55,9 +55,13 @@ void main()
 	MouseState* mstate = Mouse.getState();
 	Mouse.capture();
 
-	GUIRenderer gui = new GUIRenderer(renderer, GLMaterial.load(renderer, "materials/gui.json"), EncoContext.instance.view.width, EncoContext.instance.view.height);
+	Random random = new Random();
+
 	GLTexture[] guitex = [GLTexturePool.load("tex/test.png"), GLTexturePool.load("tex/test2.png")];
-	vec4[] colors = [vec4(1, 0, 0, 1), vec4(0, 1, 0, 1), vec4(0, 0, 1, 1)];
+	vec4[] colors = new vec4[16 * 9];
+	for(int x = 0; x < 16; x++)
+		for(int y = 0; y < 9; y++)
+			colors[x + y * 16] = vec4(random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
 
 	while(EncoContext.instance.update())
 	{
@@ -80,14 +84,14 @@ void main()
 
 		renderer.renderMesh(m);
 		
-		gui.begin();
+		renderer.gui.begin();
 		
 		for(int x = 0; x < 16; x++)
 			for(int y = 0; y < 9; y++)
-				if(x == 0 || x == 15 || y == 0 || y == 8)
-					gui.renderRectangle(vec2(x * 100, y * 100), vec2(100, 100), guitex[(x + y) % guitex.length], colors[(x + y) % colors.length]);
+				if(x <= 1 || x >= 14 || y <= 1 || y >= 7)
+					renderer.gui.renderRectangle(vec2(x * 100, y * 100), vec2(100, 100), guitex[(x + y) % guitex.length], colors[(x + y * 16) % colors.length]);
 
-		gui.end();
+		renderer.gui.end();
 
 		renderer.endFrame();
 
