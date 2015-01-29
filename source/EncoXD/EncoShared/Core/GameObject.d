@@ -13,6 +13,8 @@ class GameObject
 
 	protected void draw(RenderContext context, IRenderer renderer) {}
 
+	protected void draw2D(GUIRenderer renderer) {}
+
 	public void performUpdate(f64 deltaTime)
 	{
 		foreach(IComponent com; m_components)
@@ -40,6 +42,19 @@ class GameObject
 		foreach(IComponent com; m_components)
 		{
 			com.draw(context, renderer);
+		}
+
+		
+		foreach(IComponent com; m_components)
+		{
+			com.preDraw2D(renderer.gui);
+		}
+
+		draw2D(renderer.gui);
+
+		foreach(IComponent com; m_components)
+		{
+			com.draw2D(renderer.gui);
 		}
 	}
 

@@ -8,16 +8,16 @@ class Player : IComponent
 	GameObject object;
 	KeyboardState* state;
 
-	void add(GameObject object)
+	override void add(GameObject object)
 	{
 		this.object = object;
 	}
 
-	void preUpdate(f64 deltaTime)
+	override void preUpdate(f64 deltaTime)
 	{
 	}
 
-	void update(f64 deltaTime)
+	override void update(f64 deltaTime)
 	{
 		state = Keyboard.getState();
 
@@ -37,11 +37,11 @@ class Player : IComponent
 			object.transform.position += off.normalized() * deltaTime * 10;
 	}
 
-	void preDraw(RenderContext context, IRenderer renderer)
+	override void preDraw(RenderContext context, IRenderer renderer)
 	{
 	}
 
-	void draw(RenderContext context, IRenderer renderer)
+	override void draw(RenderContext context, IRenderer renderer)
 	{
 	}
 }
