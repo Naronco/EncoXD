@@ -1,5 +1,7 @@
 module Enco.Shared.Render.Color;
 
+import EncoShared;
+
 struct Color
 {
 	public static const Color AliceBlue = Color.fromHex(0xF0F8FF);
