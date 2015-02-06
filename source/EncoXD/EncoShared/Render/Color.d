@@ -146,7 +146,7 @@ struct Color
 	public static const Color Yellow = Color.fromHex(0xFFFF00);
 	public static const Color YellowGreen = Color.fromHex(0x9ACD32);
 
-	public this(i8 r, i8 g, i8 b)
+	public this(u8 r, u8 g, u8 b)
 	{
 		m_r = r;
 		m_g = g;
@@ -157,10 +157,78 @@ struct Color
 	{
 		return Color((hex >> 16) & 0xFF, (hex >> 8) & 0xFF, hex & 0xFF);
 	}
+
+	/// <summary>
+	/// Converts from HSL to RGB
+	/// <param name="hue">Hue in range 0 - 1</param>
+	/// <param name="saturation">Saturation in range 0 - 1</param>
+	/// <param name="lightness">Lightness in range 0 - 1</param>
+	/// </summary>
+	public void fromHSL(f64 hue, f64 saturation, f64 lightness)
+	{
+		f64 v = lightness <= 0.5 ? (lightness * (1 + saturation)) : (1 + saturation - lightness * saturation);
+		f64 r, g, b;
+		r = g = b = 1;
+
+		if(v > 0)
+		{
+			f64 m;
+			f64 sv;
+			i32 sextant;
+			f64 fract, vsf, mid1, mid2;
+ 
+			m = lightness + lightness - v;
+			sv = (v - m) / v;
+			hue *= 6.0;
+			sextant = cast(i32)hue;
+			fract = hue - sextant;
+			vsf = v * sv * fract;
+			mid1 = m + vsf;
+			mid2 = v - vsf;
+			switch (sextant)
+			{
+				case 0:
+					r = v;
+					g = mid1;
+					b = m;
+					break;
+				case 1:
+					r = mid2;
+					g = v;
+					b = m;
+					break;
+				case 2:
+					r = m;
+					g = v;
+					b = mid1;
+					break;
+				case 3:
+					r = m;
+					g = mid2;
+					b = v;
+					break;
+				case 4:
+					r = mid1;
+					g = m;
+					b = v;
+					break;
+				case 5:
+					r = v;
+					g = m;
+					b = mid2;
+					break;
+				default:
+					break;
+			}
+		}
+		m_r = cast(u8)(r * 255);
+		m_g = cast(u8)(g * 255);
+		m_b = cast(u8)(b * 255);
+	}
 	
-	public @property ref i8 R() { return m_r; }
-	public @property ref i8 G() { return m_g; }
-	public @property ref i8 B() { return m_b; }
+	public @property ref u8 R() { return m_r; }
+	public @property ref u8 G() { return m_g; }
+	public @property ref u8 B() { return m_b; }
 	
 	public @property f32 fR() { return m_r * 0.00392156862f; }
 	public @property f32 fG() { return m_g * 0.00392156862f; }
@@ -168,5 +236,5 @@ struct Color
 
 	public @property vec3 f() { return vec3(fR, fG, fB); }
 
-	private i8 m_r, m_g, m_b;
+	private u8 m_r, m_g, m_b;
 }

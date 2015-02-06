@@ -22,22 +22,26 @@ enum TextureClampMode : i32
 
 class GLTexture : ITexture
 {
-	public ~this()
+	public this()
 	{
-		glDeleteTextures(1, &m_id);
 	}
 
-	public void create(u32 width, u32 height, void* pixels)
+	public ~this()
+	{
+		destroy();
+	}
+
+	public void create(u32 width, u32 height, void[] pixels)
 	{
 		create(width, height, GL_RGBA, pixels);
 	}
 	
-	public void create(u32 width, u32 height, i32 mode, void* pixels)
+	public void create(u32 width, u32 height, i32 mode, void[] pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
 
 		applyParameters();
 		
@@ -45,12 +49,12 @@ class GLTexture : ITexture
 		this.mode = mode;
 	}
 
-	public void create(u32 width, u32 height, i32 inMode, i32 mode, void* pixels, int type = GL_UNSIGNED_BYTE)
+	public void create(u32 width, u32 height, i32 inMode, i32 mode, void[] pixels, int type = GL_UNSIGNED_BYTE)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, type, pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, type, pixels.ptr);
 
 		applyParameters();
 		
@@ -112,15 +116,15 @@ class GLTexture : ITexture
 			return;
 		}
 		
-		create(surface.w, surface.h, mode, surface.pixels);
+		create(surface.w, surface.h, mode, surface.pixels[0 .. surface.w * surface.h * 4]);
 		
 		SDL_FreeSurface(surface);
 	}
 
-	public void resize(u32 width, u32 height, void* pixels = null)
+	public void resize(u32 width, u32 height, void[] pixels = null)
 	{
 		bind(0);
-		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
 	}
 
 	public void destroy()
@@ -146,12 +150,12 @@ class GLTexture : ITexture
 
 class GLTexture3D : ITexture3D
 {
-	public void create(u32 width, u32 height, u32 depth, void* pixels)
+	public void create(u32 width, u32 height, u32 depth, void[] pixels)
 	{
 		create(width, height, depth, GL_RGBA, pixels);
 	}
 
-	public void create(u32 width, u32 height, u32 depth, i32 mode, void* pixels)
+	public void create(u32 width, u32 height, u32 depth, i32 mode, void[] pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_3D, m_id);
@@ -162,7 +166,7 @@ class GLTexture3D : ITexture3D
 			return;
 		}
 
-		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels);
+		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
 		this.mode = mode;
 
 		applyParameters();
@@ -217,15 +221,15 @@ class GLTexture3D : ITexture3D
 			mode = GL_RGBA;
 		}
 		
-		create(surface.w, surface.w, surface.h / surface.w, mode, surface.pixels);
+		create(surface.w, surface.w, surface.h / surface.w, mode, surface.pixels[0 .. surface.w * surface.w * (surface.h / surface.w) * 4]);
 		
 		SDL_FreeSurface(surface);
 	}
 
-	public void resize(u32 width, u32 height, u32 depth, void* pixels = null)
+	public void resize(u32 width, u32 height, u32 depth, void[] pixels = null)
 	{
 		bind(0);
-		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels);
+		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
 	}
 
 	public void destroy()
