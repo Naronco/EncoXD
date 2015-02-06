@@ -179,6 +179,13 @@ class EncoContext
 			m_scene.draw(context, m_renderer);
 	}
 
+	public void draw2D()
+	{
+		luaEmitSingle("draw2D");
+		if(m_scene !is null)
+			m_scene.draw2D(m_renderer.gui);
+	}
+
 	public void endUpdate()
 	{
 		sw.stop();

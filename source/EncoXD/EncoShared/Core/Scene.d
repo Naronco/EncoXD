@@ -13,6 +13,9 @@ class RenderLayer
 	
 	protected void preDraw(RenderContext context, IRenderer renderer) {}
 	protected void draw(RenderContext context, IRenderer renderer) {}
+	
+	protected void preDraw2D(GUIRenderer renderer) {}
+	protected void draw2D(GUIRenderer renderer) {}
 
 	public void performUpdate(f64 deltaTime)
 	{
@@ -32,6 +35,16 @@ class RenderLayer
 			obj.performDraw(context, renderer);
 		}
 		draw(context, renderer);
+	}
+
+	public void performDraw2D(GUIRenderer renderer)
+	{
+		preDraw2D(renderer);
+		foreach(GameObject obj; m_gameObjects)
+		{
+			obj.performDraw2D(renderer);
+		}
+		draw2D(renderer);
 	}
 
 	public GameObject addGameObject(GameObject object)
@@ -78,6 +91,14 @@ class Scene
 		foreach(RenderLayer layer; m_layers)
 		{
 			layer.performDraw(context, renderer);
+		}
+	}
+
+	public void draw2D(GUIRenderer renderer)
+	{
+		foreach(RenderLayer layer; m_layers)
+		{
+			layer.performDraw2D(renderer);
 		}
 	}
 

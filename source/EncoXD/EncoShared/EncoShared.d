@@ -29,7 +29,6 @@ public
 	import Enco.Shared.Core.TemplateParser;
 	import Enco.Shared.Core.Logger;
 	
-	import Enco.Shared.Render.GUIRenderer;
 	import Enco.Shared.Render.IRenderer;
 	import Enco.Shared.Render.ITexture;
 	import Enco.Shared.Render.Material;
@@ -39,8 +38,13 @@ public
 	import Enco.Shared.Render.Mesh;
 	import Enco.Shared.Render.Shader;
 	import Enco.Shared.Render.Color;
+	import Enco.Shared.Render.GUIRenderer;
 
 	import Enco.Shared.Scripting.LuaExt;
+	
+	import Enco.Shared.GUI.Control;
+	import Enco.Shared.GUI.PictureControl;
+	import Enco.Shared.GUI.DynamicColorControl;
 	
 	import Enco.Shared.Ext.String;
 	

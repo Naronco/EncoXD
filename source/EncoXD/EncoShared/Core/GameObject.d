@@ -58,6 +58,22 @@ class GameObject
 		}
 	}
 
+	public void performDraw2D(GUIRenderer renderer)
+	{
+		
+		foreach(IComponent com; m_components)
+		{
+			com.preDraw2D(renderer);
+		}
+
+		draw2D(renderer);
+
+		foreach(IComponent com; m_components)
+		{
+			com.draw2D(renderer);
+		}
+	}
+
 	public void destroy() {  }
 
 	public Transform transform = Transform();

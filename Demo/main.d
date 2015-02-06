@@ -85,11 +85,8 @@ void main()
 		renderer.renderMesh(m);
 		
 		renderer.gui.begin();
-		
-		for(int x = 0; x < 16; x++)
-			for(int y = 0; y < 9; y++)
-				if(x <= 1 || x >= 14 || y <= 1 || y >= 7)
-					renderer.gui.renderRectangle(vec2(x * 100, y * 100), vec2(100, 100), guitex[(x + y) % guitex.length], colors[(x + y * 16) % colors.length]);
+
+		EncoContext.instance.draw2D();
 
 		renderer.gui.end();
 
