@@ -29,6 +29,7 @@ public
 	import Enco.Shared.Core.Scene;
 	import Enco.Shared.Core.TemplateParser;
 	import Enco.Shared.Core.Logger;
+	import Enco.Shared.Core.Event;
 	
 	import Enco.Shared.Render.IRenderer;
 	import Enco.Shared.Render.ITexture;

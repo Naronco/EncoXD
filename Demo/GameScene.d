@@ -78,7 +78,7 @@ class DebugLayer : RenderLayer
 		TextControl!GLTexture txt = new TextControl!GLTexture(font);
 		txt.text = "EncoXD " ~ ENCO_VERSION ~ " (" ~ to!string(ENCO_VERSION_ID) ~ ")\n" ~
 				   "Compiler: " ~ compiler ~ "\n" ~
-				   "Compiler-Platform: " ~ os;
+				   "Compiler-Platform: " ~ os ~ "\n";
 		txt.x = 20;
 		txt.y = 60;
 		addGameObject(txt);

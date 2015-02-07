@@ -90,24 +90,33 @@ class DesktopView : IView
 			while (SDL_PollEvent(&event)) {
 				switch (event.type) {
 				case SDL_QUIT:
+					EncoContext.instance.onClose(this, true);
 					return false;
 				case SDL_WINDOWEVENT_RESIZED:
 					size = u32vec2(event.window.data1, event.window.data2);
+					EncoContext.instance.onResize(this, size);
 					break;
 				case SDL_KEYDOWN:
 					Keyboard.setKey(event.key.keysym.sym, true);
+					EncoContext.instance.onKeyDown(this, event.key.keysym.sym);
 					break;
 				case SDL_KEYUP:
 					Keyboard.setKey(event.key.keysym.sym, false);
+					EncoContext.instance.onKeyUp(this, event.key.keysym.sym);
 					break;
 				case SDL_MOUSEMOTION:
 					Mouse.setPosition(event.motion.x, event.motion.y);
 					Mouse.addOffset(event.motion.xrel, event.motion.yrel);
+					EncoContext.instance.onMouseMove(this, MouseEvent(vec2(event.motion.x, event.motion.y), vec2(event.motion.xrel, event.motion.yrel), 255));
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
 					Mouse.setPosition(event.button.x, event.button.y);
 					Mouse.setButton(event.button.button, event.button.state == SDL_PRESSED);
+					if(event.button.state == SDL_PRESSED)
+						EncoContext.instance.onMouseButtonDown(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
+					else
+						EncoContext.instance.onMouseButtonUp(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
 					break;
 				default: break;
 				}

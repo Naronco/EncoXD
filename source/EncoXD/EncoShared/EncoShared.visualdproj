@@ -211,6 +211,7 @@
   <Folder name="Core">
    <File path="Core\Camera.d" />
    <File path="Core\EncoContext.d" />
+   <File path="Core\Event.d" />
    <File path="Core\GameObject.d" />
    <File path="Core\IComponent.d" />
    <File path="Core\IView.d" />

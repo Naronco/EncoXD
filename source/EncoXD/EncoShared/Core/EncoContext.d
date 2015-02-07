@@ -10,11 +10,26 @@ enum DynamicLibrary
 	Assimp, SDL2, SDL2Image, SDL2TTF, Lua,
 }
 
+struct MouseEvent
+{
+	vec2 position;
+	vec2 offset;
+	u8 button;
+}
+
 class EncoContext
 {
 	public static EncoContext instance;
 	public string settings;
 	public LuaState lua;
+
+	public Event!bool onClose = new Event!bool;
+	public Event!u32vec2 onResize = new Event!u32vec2;
+	public Event!u32 onKeyDown = new Event!u32;
+	public Event!u32 onKeyUp = new Event!u32;
+	public Event!MouseEvent onMouseMove = new Event!MouseEvent;
+	public Event!MouseEvent onMouseButtonDown = new Event!MouseEvent;
+	public Event!MouseEvent onMouseButtonUp = new Event!MouseEvent;
 
 	public DynamicLibrary[] loaded;
 
