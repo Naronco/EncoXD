@@ -66,4 +66,6 @@ class GUIRenderer
 
 		renderer.renderMesh(quad);
 	}
+
+	public @property ITexture white() { return renderer.white; }
 }

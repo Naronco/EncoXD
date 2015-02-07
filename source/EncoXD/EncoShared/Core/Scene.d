@@ -27,7 +27,7 @@ class RenderLayer
 		update(deltaTime);
 	}
 
-	public void performDraw(RenderContext context, IRenderer renderer)
+	public void performDraw3D(RenderContext context, IRenderer renderer)
 	{
 		preDraw(context, renderer);
 		foreach(GameObject obj; m_gameObjects)
@@ -86,11 +86,11 @@ class Scene
 		return m_next is null;
 	}
 
-	public void draw(RenderContext context, IRenderer renderer)
+	public void draw3D(RenderContext context, IRenderer renderer)
 	{
 		foreach(RenderLayer layer; m_layers)
 		{
-			layer.performDraw(context, renderer);
+			layer.performDraw3D(context, renderer);
 		}
 	}
 

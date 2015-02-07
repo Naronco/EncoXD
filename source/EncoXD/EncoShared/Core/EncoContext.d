@@ -7,7 +7,7 @@ import EncoShared;
 
 enum DynamicLibrary
 {
-	Assimp, SDL2, SDL2Image, Lua,
+	Assimp, SDL2, SDL2Image, SDL2TTF, Lua,
 }
 
 class EncoContext
@@ -15,6 +15,8 @@ class EncoContext
 	public static EncoContext instance;
 	public string settings;
 	public LuaState lua;
+
+	public DynamicLibrary[] loaded;
 
 	private StopWatch sw;
 	private TickDuration delta;
@@ -46,6 +48,7 @@ class EncoContext
 
 	public void useDynamicLibraries(const DynamicLibrary[] libs)
 	{
+		loaded ~= libs;
 		foreach(DynamicLibrary lib; libs)
 		{
 			switch(lib)
@@ -55,6 +58,14 @@ class EncoContext
 				break;
 			case DynamicLibrary.SDL2:
 				DerelictSDL2.load();
+				SDL_Init(SDL_INIT_EVERYTHING);
+				break;
+			case DynamicLibrary.SDL2TTF:
+				DerelictSDL2ttf.load();
+				if(TTF_Init() == -1)
+				{
+					Logger.errln("Error Initializing SDL_TTF: ", TTF_GetError());
+				}
 				break;
 			case DynamicLibrary.SDL2Image:
 				DerelictSDL2Image.load();
@@ -172,11 +183,11 @@ class EncoContext
 			return false;
 	}
 
-	public void draw(RenderContext context)
+	public void draw3D(RenderContext context)
 	{
-		luaEmitSingle("draw");
+		luaEmitSingle("draw3D");
 		if(m_scene !is null)
-			m_scene.draw(context, m_renderer);
+			m_scene.draw3D(context, m_renderer);
 	}
 
 	public void draw2D()

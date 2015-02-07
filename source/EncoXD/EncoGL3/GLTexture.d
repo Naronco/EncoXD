@@ -22,6 +22,18 @@ enum TextureClampMode : i32
 
 class GLTexture : ITexture
 {
+	public bool enableMipMaps = false;
+	
+	public TextureFilterMode minFilter = TextureFilterMode.Linear;
+	public TextureFilterMode magFilter = TextureFilterMode.Linear;
+	
+	public TextureClampMode wrapX = TextureClampMode.Repeat;
+	public TextureClampMode wrapY = TextureClampMode.Repeat;
+
+	private i32 inMode, mode;
+	private u32 m_id;
+	private u32 m_width, m_height;
+
 	public this()
 	{
 	}
@@ -47,6 +59,8 @@ class GLTexture : ITexture
 		
 		this.inMode = mode;
 		this.mode = mode;
+		m_width = width;
+		m_height = height;
 	}
 
 	public void create(u32 width, u32 height, i32 inMode, i32 mode, void[] pixels, int type = GL_UNSIGNED_BYTE)
@@ -60,6 +74,8 @@ class GLTexture : ITexture
 		
 		this.inMode = inMode;
 		this.mode = mode;
+		m_width = width;
+		m_height = height;
 	}
 
 	public void applyParameters()
@@ -87,11 +103,14 @@ class GLTexture : ITexture
 
 	public void load(string file)
 	{
-		auto surface = IMG_Load((file ~ '\0').ptr);
+		fromSurface(IMG_Load((file ~ '\0').ptr), file);
+	}
 
+	public void fromSurface(SDL_Surface* surface, string name = "Surface")
+	{
 		if(surface is null || surface.pixels is null)
 		{
-			Logger.errln("Can't load Texture ", file);
+			Logger.errln("Can't load Texture ", name);
 			i32 i = 0;
 			const char* err = IMG_GetError();
 			for(i32 x = 0; x < 1024; x++)
@@ -125,26 +144,30 @@ class GLTexture : ITexture
 	{
 		bind(0);
 		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
+		m_width = width;
+		m_height = height;
 	}
 
 	public void destroy()
 	{
 		glDeleteTextures(1, &m_id);
 	}
-
-	public bool enableMipMaps = false;
 	
-	public TextureFilterMode minFilter = TextureFilterMode.Linear;
-	public TextureFilterMode magFilter = TextureFilterMode.Linear;
-	
-	public TextureClampMode wrapX = TextureClampMode.Repeat;
-	public TextureClampMode wrapY = TextureClampMode.Repeat;
-
-	private i32 inMode, mode;
-
-	
-	public u32 m_id;
 	public @property u32 id() { return m_id; }
+
+	public @property u32 width() { return m_width; }
+
+	public @property u32 height() { return m_height; }
+
+	public static @property ITexture white() { return m_white; }
+
+	private static ITexture m_white;
+
+	public static void init()
+	{
+		m_white = new GLTexture();
+		m_white.create(1, 1, cast(ubyte[])[255, 255, 255, 255]);
+	}
 }
 
 

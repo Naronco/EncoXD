@@ -31,6 +31,7 @@ interface IRenderer
 	@property bool enableBlend();
 	
 	@property GUIRenderer gui();
+	@property ITexture white();
 
 	void makeCurrent(); /// OpenGL only
 
@@ -44,7 +45,7 @@ interface IRenderer
 	Mesh createMesh(Mesh mesh);
 	void deleteMesh(Mesh mesh);
 	void renderMesh(Mesh mesh);
-	
+
 	void resize(u32 width, u32 height);
 
 	ShaderProgram createShader(Shader[] shaders);

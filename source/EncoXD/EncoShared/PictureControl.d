@@ -9,6 +9,8 @@ class PictureControl : Control
 	public this(ITexture texture)
 	{
 		m_texture = texture;
+		width = texture.width;
+		height = texture.height;
 	}
 
 	public static PictureControl fromColor(T : ITexture)(Color color)

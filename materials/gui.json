@@ -2,6 +2,7 @@
 	"Name": "GUI",
 	"Textures": {},
 	"Blend": true,
+	"DepthTest": false,
 	"Vertex": "default",
 	"Fragment": "gui"
 }

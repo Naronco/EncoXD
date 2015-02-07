@@ -1,0 +1,13 @@
+{
+	"Name": "Sky",
+	"Textures":
+	{
+		"0": { "File": "tex/sky.png", "MipMap": true }
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "texture",
+		"Color": "tex(slot0)"
+	}
+}

@@ -225,6 +225,8 @@ struct Color
 		m_g = cast(u8)(g * 255);
 		m_b = cast(u8)(b * 255);
 	}
+
+	public @property SDL_Color sdl_color() { return SDL_Color(m_r, m_g, m_b, 255); }
 	
 	public @property ref u8 R() { return m_r; }
 	public @property ref u8 G() { return m_g; }

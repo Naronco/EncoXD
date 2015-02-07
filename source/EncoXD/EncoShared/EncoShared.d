@@ -4,6 +4,7 @@ public
 {
 	import derelict.sdl2.sdl;
 	import derelict.sdl2.image;
+	import derelict.sdl2.ttf;
 	import derelict.assimp3.assimp;
 
 	import luad.all;
@@ -39,6 +40,7 @@ public
 	import Enco.Shared.Render.Shader;
 	import Enco.Shared.Render.Color;
 	import Enco.Shared.Render.GUIRenderer;
+	import Enco.Shared.Render.Font;
 
 	import Enco.Shared.Scripting.LuaExt;
 	
@@ -46,6 +48,7 @@ public
 	import Enco.Shared.GUI.PictureControl;
 	import Enco.Shared.GUI.DynamicColorControl;
 	
+	import Enco.Shared.Ext.Array;
 	import Enco.Shared.Ext.String;
 	
 	import Enco.Shared.Network.Network;
@@ -73,4 +76,7 @@ public
 	alias double f64, float64;
 
 	alias Vector!(u32, 2) u32vec2;
+
+	enum ENCO_VERSION = "1.0.0";
+	enum ENCO_VERSION_ID = 1;
 }

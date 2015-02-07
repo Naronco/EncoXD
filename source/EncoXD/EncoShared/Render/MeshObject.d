@@ -21,7 +21,10 @@ class MeshObject : GameObject
 
 		m_material.bind(renderer, context);
 
-		m_material.program.set("modelview", context.camera.viewMatrix * modelMatrix);
+		if(m_relative)
+			m_material.program.set("modelview", context.camera.rotationMatrix * modelMatrix);
+		else
+			m_material.program.set("modelview", context.camera.viewMatrix * modelMatrix);
 		m_material.program.set("projection", context.camera.projectionMatrix);
 		m_material.program.set("normalmatrix", modelMatrix().transposed().inverse());
 
@@ -37,12 +40,11 @@ class MeshObject : GameObject
 				mat4.identity.scale(transform.scale.x, transform.scale.y, transform.scale.z);
 	}
 	
-	public @property Mesh mesh() { return m_mesh; }
-	public @property void mesh(Mesh mesh) { m_mesh = mesh; }
-	
-	public @property Material material() { return m_material; }
-	public @property void material(Material material) { m_material = material; }
+	public @property ref Mesh mesh() { return m_mesh; }
+	public @property ref bool renderRelative() { return m_relative; }
+	public @property ref Material material() { return m_material; }
 
 	protected Mesh m_mesh;
 	protected Material m_material;
+	protected bool m_relative = false;
 }

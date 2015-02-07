@@ -5,8 +5,9 @@ import EncoShared;
 struct Material
 {
 	public string name;
-
+	
 	public bool blend = false;
+	public bool depth = true;
 
 	public ITexture[int] textures;
 
@@ -22,6 +23,7 @@ struct Material
 		program.set("l_direction", context.lightDirection);
 		program.set("cam_translation", context.camera.transform.position);
 		renderer.enableBlend = blend;
+		renderer.enableDepthTest = depth;
 	}
 
 	public void bind(IRenderer renderer)
@@ -32,5 +34,6 @@ struct Material
 		}
 		program.bind();
 		renderer.enableBlend = blend;
+		renderer.enableDepthTest = depth;
 	}
 }

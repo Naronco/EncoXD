@@ -219,6 +219,7 @@
    <File path="Core\TemplateParser.d" />
   </Folder>
   <Folder name="Ext">
+   <File path="Ext\Array.d" />
    <File path="Ext\String.d" />
   </Folder>
   <Folder name="GUI">
@@ -237,6 +238,7 @@
   </Folder>
   <Folder name="Render">
    <File path="Render\Color.d" />
+   <File path="Render\Font.d" />
    <File path="Render\GUIRenderer.d" />
    <File path="Render\IRenderer.d" />
    <File path="Render\IRenderTarget.d" />

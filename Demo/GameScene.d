@@ -17,6 +17,17 @@ class Game3DLayer : RenderLayer
 		addGameObject(new MeshObject(meshes[1], GLMaterial.load(scene.renderer, "materials/brick.json")));
 		addGameObject(new MeshObject(meshes[2], GLMaterial.load(scene.renderer, "materials/yard_decoration.json")));
 		addGameObject(new MeshObject(meshes[3], GLMaterial.load(scene.renderer, "materials/tree.json")));
+
+		auto clouds = Mesh.loadFromObj("meshes/cloudPlane.obj", 0)[0];
+		MeshObject cloudsObj = new MeshObject(clouds, GLMaterial.load(scene.renderer, "materials/clouds.json"));
+		cloudsObj.transform.scale = vec3(600, 400, 600);
+		cloudsObj.renderRelative = true;
+		addGameObject(cloudsObj);
+
+		MeshObject cloudsObj2 = new MeshObject(clouds, GLMaterial.load(scene.renderer, "materials/clouds2.json"));
+		cloudsObj2.transform.scale = vec3(600, 300, 600);
+		cloudsObj2.renderRelative = true;
+		addGameObject(cloudsObj2);
 		
 		
 		carY = new AnimatedProperty!float(0.0f);
@@ -58,22 +69,22 @@ class UILayer : RenderLayer
 		c.fromHSL(0.0, 1.0, 0.5);
 
 
-		left = DynamicColorControl.create!GLTexture(c);
+		left = new DynamicColorControl(c);
 		left.width = BORDER_SIZE;
 		left.height = scene.view.height >> 2;
 		left.alignment = Alignment.MiddleLeft;
 
-		right = DynamicColorControl.create!GLTexture(c);
+		right = new DynamicColorControl(c);
 		right.width = BORDER_SIZE;
 		right.height = scene.view.height >> 2;
 		right.alignment = Alignment.MiddleRight;
 
-		top = DynamicColorControl.create!GLTexture(c);
+		top = new DynamicColorControl(c);
 		top.width = scene.view.width >> 2;
 		top.height = BORDER_SIZE;
 		top.alignment = Alignment.TopCenter;
 
-		bottom = DynamicColorControl.create!GLTexture(c);
+		bottom = new DynamicColorControl(c);
 		bottom.width = scene.view.width >> 2;
 		bottom.height = BORDER_SIZE;
 		bottom.alignment = Alignment.BottomCenter;
@@ -119,10 +130,22 @@ class DebugLayer : RenderLayer
 {
 	public override void init(Scene scene)
 	{
-		version(Windows) addVersion("win");
-		version(linux) addVersion("lin");
-		version(OSX) addVersion("osx");
-		version(Android) addVersion("android");
+		string os = "unknown";
+		version(Windows) addVersion(os = "win");
+		version(linux) addVersion(os = "lin");
+		version(OSX) addVersion(os = "osx");
+		version(Android) addVersion(os = "android");
+
+		Font font = new Font("fonts/Roboto/Roboto-Regular.ttf", 16);
+		string compiler = "Unknown Compiler";
+		version(DigitalMars) compiler = "DMD";
+		version(GNU) compiler = "GDC";
+		version(LDC) compiler = "LDC";
+		version(SDC) compiler = "SDC";
+		PictureControl fnt = new PictureControl(font.render!GLTexture("EncoXD " ~ ENCO_VERSION ~ " (" ~ to!string(ENCO_VERSION_ID) ~ ")\nCompiler: " ~ compiler ~ "\nCompiler-Platform: " ~ os, Color.White, 250));
+		fnt.x = 20;
+		fnt.y = 60;
+		addGameObject(fnt);
 	}
 
 	public void addVersion(string ver)

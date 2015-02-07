@@ -18,12 +18,12 @@ void main()
 				game);
 
 
-	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
+	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
 
 	Camera camera = new Camera();
-	camera.farClip = 100;
+	camera.farClip = 600;
 	camera.fov = 45;
 
 	camera.transform.position = vec3(0, 1, 2);
@@ -72,7 +72,7 @@ void main()
 
 		target.bind();
 
-		EncoContext.instance.draw(render);
+		EncoContext.instance.draw3D(render);
 
 		target.unbind();
 

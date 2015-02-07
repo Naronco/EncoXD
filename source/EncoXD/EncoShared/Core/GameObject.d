@@ -43,19 +43,6 @@ class GameObject
 		{
 			com.draw(context, renderer);
 		}
-
-		
-		foreach(IComponent com; m_components)
-		{
-			com.preDraw2D(renderer.gui);
-		}
-
-		draw2D(renderer.gui);
-
-		foreach(IComponent com; m_components)
-		{
-			com.draw2D(renderer.gui);
-		}
 	}
 
 	public void performDraw2D(GUIRenderer renderer)

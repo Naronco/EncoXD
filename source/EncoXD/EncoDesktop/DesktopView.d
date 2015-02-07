@@ -18,8 +18,6 @@ class DesktopView : IView
 		assert(renderer !is null);
 
 		m_renderer = renderer;
-		
-		SDL_Init(SDL_INIT_VIDEO);
 
 		auto flags = SDL_WINDOW_SHOWN;
 

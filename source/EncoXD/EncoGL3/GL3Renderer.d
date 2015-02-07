@@ -105,6 +105,8 @@ class GL3Renderer : IRenderer
 			m_valid = true;
 			m_gui = new GUIRenderer(this, GLMaterial.load(this, "materials/gui.json"));
 			m_gui.resize(width, height);
+
+			GLTexture.init();
 		}
 	}
 
@@ -249,6 +251,7 @@ class GL3Renderer : IRenderer
 
 	@property void enableBlend(bool value)
 	{
+		if(m_blend == value) return;
 		m_blend = value;
 		if(value)
 			glEnable(GL_BLEND);
@@ -274,6 +277,8 @@ class GL3Renderer : IRenderer
 		m_gui.resize(width, height);
 		glViewport(0, 0, width, height);
 	}
+
+	public @property ITexture white() { return GLTexture.white; }
 
 	private bool m_valid = false;
 	private bool m_depthTest = false;
