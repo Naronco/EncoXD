@@ -29,17 +29,18 @@ class Font
 		}
 	}
 
-	public ITexture render(T : ITexture)(string text, Color color, u32 lineWidth = 1000)
+	public ITexture render(T : ITexture)(string text, Color color)
 	{
 		ITexture tex = new T();
-		tex.fromSurface(TTF_RenderUTF8_Blended_Wrapped(handle, (text ~ "\0").ptr, color.sdl_color, lineWidth), "Blended Text: " ~ text);
-		return tex;
-	}
-
-	public ITexture renderFast(T : ITexture)(string text, Color color, u32 lineWidth = 1000)
-	{
-		ITexture tex = new T();
-		tex.fromSurface(SDL_ConvertSurfaceFormat(TTF_RenderUTF8_Solid_Wrapped(handle, (text ~ "\0").ptr, color.sdl_color, lineWidth), SDL_PIXELFORMAT_RGBA8888, 0), "Solid Text: " ~ text);
+		string[] lines = text.split('\n');
+		i32 maxWidth;
+		foreach(string line; lines)
+		{
+			i32 w, h;
+			TTF_SizeText(handle, (line ~ "\0").ptr, &w, &h);
+			maxWidth = max(w, maxWidth);
+		}
+		tex.fromSurface(TTF_RenderUTF8_Blended_Wrapped(handle, (text ~ "\0").ptr, color.sdl_color, maxWidth), "Blended Text: " ~ text);
 		return tex;
 	}
 }

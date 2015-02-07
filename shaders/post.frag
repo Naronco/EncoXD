@@ -12,7 +12,7 @@ vec3 addFog(vec3 color)
 {
 	float depth = texture(slot2, texCoord).r;
 	float f = clamp(pow(depth, 1000), 0, 1);
-	return color * (1 - f) + vec3(0.5f, 0.8f, 1.0f) * f;
+	return color * (1 - f) + vec3(0.5294117647, 0.80784313725, 0.92156862745) * f;
 }
 
 void main()

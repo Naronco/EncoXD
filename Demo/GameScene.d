@@ -52,77 +52,10 @@ class Game3DLayer : RenderLayer
 	}
 }
 
-const enum BORDER_SIZE = 100;
-
 class UILayer : RenderLayer
 {
-	float t = 0;
-	Color c = Color(0, 0, 0);
-	DynamicColorControl left, right, top, bottom;
-
 	public override void init(Scene scene)
 	{
-		addSolid(8, scene.view.height - 110, 69, 102, Color.fromHex(0x37474F));
-		for(int i = 0; i < 5; i++)
-			addSolid(10, scene.view.height - 108 + i * 20, 65, 18, Color.fromHex(0x80CBC4));
-
-		c.fromHSL(0.0, 1.0, 0.5);
-
-
-		left = new DynamicColorControl(c);
-		left.width = BORDER_SIZE;
-		left.height = scene.view.height >> 2;
-		left.alignment = Alignment.MiddleLeft;
-
-		right = new DynamicColorControl(c);
-		right.width = BORDER_SIZE;
-		right.height = scene.view.height >> 2;
-		right.alignment = Alignment.MiddleRight;
-
-		top = new DynamicColorControl(c);
-		top.width = scene.view.width >> 2;
-		top.height = BORDER_SIZE;
-		top.alignment = Alignment.TopCenter;
-
-		bottom = new DynamicColorControl(c);
-		bottom.width = scene.view.width >> 2;
-		bottom.height = BORDER_SIZE;
-		bottom.alignment = Alignment.BottomCenter;
-		
-		addGameObject(left);
-		addGameObject(right);
-		addGameObject(top);
-		addGameObject(bottom);
-	}
-
-	private void addSolid(float x, float y, float width, float height, Color color)
-	{
-		PictureControl pic = PictureControl.fromColor!GLTexture(color);
-		pic.x = x;
-		pic.y = y;
-		pic.width = width;
-		pic.height = height;
-		addGameObject(pic);
-	}
-
-	private void addImage(float x, float y, float width, float height, ITexture tex)
-	{
-		PictureControl pic = new PictureControl(tex);
-		pic.x = x;
-		pic.y = y;
-		pic.width = width;
-		pic.height = height;
-		addGameObject(pic);
-	}
-
-	override protected void update(f64 deltaTime)
-	{
-		t += deltaTime;
-		c.fromHSL(t % 1, 1.0, 0.5);
-		left.color = c;
-		right.color = c;
-		top.color = c;
-		bottom.color = c;
 	}
 }
 
@@ -142,10 +75,13 @@ class DebugLayer : RenderLayer
 		version(GNU) compiler = "GDC";
 		version(LDC) compiler = "LDC";
 		version(SDC) compiler = "SDC";
-		PictureControl fnt = new PictureControl(font.render!GLTexture("EncoXD " ~ ENCO_VERSION ~ " (" ~ to!string(ENCO_VERSION_ID) ~ ")\nCompiler: " ~ compiler ~ "\nCompiler-Platform: " ~ os, Color.White, 250));
-		fnt.x = 20;
-		fnt.y = 60;
-		addGameObject(fnt);
+		TextControl!GLTexture txt = new TextControl!GLTexture(font);
+		txt.text = "EncoXD " ~ ENCO_VERSION ~ " (" ~ to!string(ENCO_VERSION_ID) ~ ")\n" ~
+				   "Compiler: " ~ compiler ~ "\n" ~
+				   "Compiler-Platform: " ~ os;
+		txt.x = 20;
+		txt.y = 60;
+		addGameObject(txt);
 	}
 
 	public void addVersion(string ver)
