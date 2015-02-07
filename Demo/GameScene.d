@@ -115,6 +115,27 @@ class UILayer : RenderLayer
 	}
 }
 
+class DebugLayer : RenderLayer
+{
+	public override void init(Scene scene)
+	{
+		version(Windows) addVersion("win");
+		version(linux) addVersion("lin");
+		version(OSX) addVersion("osx");
+		version(Android) addVersion("android");
+	}
+
+	public void addVersion(string ver)
+	{
+		PictureControl verPic = new PictureControl(GLTexturePool.load("tex/" ~ ver ~ ".png"));
+		verPic.x = 20;
+		verPic.y = 20;
+		verPic.width = 200;
+		verPic.height = 100;
+		addGameObject(verPic);
+	}
+}
+
 class GameScene : Scene
 {
 	public Game3DLayer game3DLayer;
@@ -123,5 +144,6 @@ class GameScene : Scene
 	{
 		addLayer(game3DLayer = new Game3DLayer());
 		addLayer(new UILayer());
+		addLayer(new DebugLayer());
 	}
 }

@@ -19,7 +19,7 @@ class MeshObject : GameObject
 			m_mesh = renderer.createMesh(m_mesh);
 		}
 
-		m_material.bind(context);
+		m_material.bind(renderer, context);
 
 		m_material.program.set("modelview", context.camera.viewMatrix * modelMatrix);
 		m_material.program.set("projection", context.camera.projectionMatrix);

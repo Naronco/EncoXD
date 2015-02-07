@@ -10,7 +10,6 @@ class GUIRenderer
 	private Mesh quad;
 	private Material material;
 	private bool depthTestState = false;
-	private bool blendState = false;
 
 	private float iwidth, iheight;
 	private vec2 m_size;
@@ -47,20 +46,17 @@ class GUIRenderer
 	public void begin()
 	{
 		depthTestState = renderer.enableDepthTest;
-		blendState = renderer.enableBlend;
 		renderer.enableDepthTest = false;
-		renderer.enableBlend = true;
 	}
 
 	public void end()
 	{
 		renderer.enableDepthTest = depthTestState;
-		renderer.enableBlend = blendState;
 	}
 
 	public void renderRectangle(vec2 position, vec2 size, ITexture texture, vec4 color = vec4(1, 1, 1, 1))
 	{
-		material.program.bind();
+		material.bind(renderer);
 
 		material.program.set("color", color);
 		material.program.set("modelview", mat4.identity.translate(position.x * iwidth * 2 - 1, -(position.y * iheight * 2 + size.y * iheight * 2 - 1), 0) * mat4.identity.scale(size.x * iwidth * 2, size.y * iheight * 2, 1));

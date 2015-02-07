@@ -8,7 +8,7 @@ import std.conv;
 
 class GLMaterial
 {
-	/// Loads JSON Material File in format {Name:str, Textures:string->texture, Vertex:str/shader, Fragment:str/shader}
+	/// Loads JSON Material File in format {Name:str, Textures:string->texture, Blend:bool?, Vertex:str/shader, Fragment:str/shader}
 	public static Material load(IRenderer renderer, string file)
 	{
 		JSONValue value = parseJSON!string(std.file.readText(file));
@@ -21,6 +21,8 @@ class GLMaterial
 
 		Material mat = Material();
 		mat.name = value["Name"].str;
+
+		mat.blend = "Blend" in value && value["Blend"].type == JSON_TYPE.TRUE;
 
 		JSONValue[string] textures = value["Textures"].object;
 

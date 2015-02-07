@@ -234,6 +234,7 @@ class GL3Renderer : IRenderer
 
 	@property void enableDepthTest(bool value)
 	{
+		if(m_depthTest == value) return;
 		m_depthTest = value;
 		if(value)
 			glEnable(GL_DEPTH_TEST);

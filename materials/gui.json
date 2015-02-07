@@ -1,6 +1,7 @@
 {
 	"Name": "GUI",
 	"Textures": {},
+	"Blend": true,
 	"Vertex": "default",
 	"Fragment": "gui"
 }

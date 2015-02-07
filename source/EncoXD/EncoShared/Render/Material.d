@@ -6,11 +6,13 @@ struct Material
 {
 	public string name;
 
+	public bool blend = false;
+
 	public ITexture[int] textures;
 
 	public ShaderProgram program;
 
-	public void bind(RenderContext context)
+	public void bind(IRenderer renderer, RenderContext context)
 	{
 		foreach(int id, ITexture texture; textures)
 		{
@@ -19,5 +21,16 @@ struct Material
 		program.bind();
 		program.set("l_direction", context.lightDirection);
 		program.set("cam_translation", context.camera.transform.position);
+		renderer.enableBlend = blend;
+	}
+
+	public void bind(IRenderer renderer)
+	{
+		foreach(int id, ITexture texture; textures)
+		{
+			texture.bind(id);
+		}
+		program.bind();
+		renderer.enableBlend = blend;
 	}
 }
