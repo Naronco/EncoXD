@@ -60,21 +60,23 @@ class UILayer : RenderLayer
 
 		left = DynamicColorControl.create!GLTexture(c);
 		left.width = BORDER_SIZE;
-		left.height = scene.view.height;
+		left.height = scene.view.height >> 2;
+		left.alignment = Alignment.MiddleLeft;
 
 		right = DynamicColorControl.create!GLTexture(c);
 		right.width = BORDER_SIZE;
-		right.height = scene.view.height;
-		right.x = scene.view.width - BORDER_SIZE;
+		right.height = scene.view.height >> 2;
+		right.alignment = Alignment.MiddleRight;
 
 		top = DynamicColorControl.create!GLTexture(c);
-		top.width = scene.view.width;
+		top.width = scene.view.width >> 2;
 		top.height = BORDER_SIZE;
+		top.alignment = Alignment.TopCenter;
 
 		bottom = DynamicColorControl.create!GLTexture(c);
-		bottom.width = scene.view.width;
+		bottom.width = scene.view.width >> 2;
 		bottom.height = BORDER_SIZE;
-		bottom.y = scene.view.height - BORDER_SIZE;
+		bottom.alignment = Alignment.BottomCenter;
 		
 		addGameObject(left);
 		addGameObject(right);

@@ -2,7 +2,7 @@ module Enco.Shared.Ext.String;
 
 import std.algorithm;
 
-pure bool contains(string source, string str)
+public pure bool contains(string source, string str)
 {
 	return canFind(source, str);
 }

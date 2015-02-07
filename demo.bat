@@ -1,1 +1,1 @@
-dub run
+dub test

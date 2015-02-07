@@ -13,6 +13,7 @@ class GUIRenderer
 	private bool blendState = false;
 
 	private float iwidth, iheight;
+	private vec2 m_size;
 
 	public this(IRenderer renderer, Material material)
 	{
@@ -24,16 +25,23 @@ class GUIRenderer
 
 		iwidth = 1.0f;
 		iheight = 1.0f;
+		m_size = vec2(1, 1);
 
 		material.program.registerUniforms(["slot0", "color"]);
 		material.program.set("slot0", 0);
 		material.program.set("color", vec4(1, 1, 1, 1));
 	}
 
+	public @property vec2 size()
+	{
+		return m_size;
+	}
+
 	public void resize(u32 width, u32 height)
 	{
 		iwidth = 1.0f / width;
 		iheight = 1.0f / height;
+		m_size = vec2(width, height);
 	}
 
 	public void begin()
