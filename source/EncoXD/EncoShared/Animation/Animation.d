@@ -49,6 +49,8 @@ class Animation
 
 	public f64[string] properties;
 	public f64 time = 0;
+	private bool m_done = false;
+	public @property bool done() { return m_done; }
 
 	public this(int ms, string storyboard)
 	{
@@ -112,34 +114,44 @@ class Animation
 
 	public void update(f64 delta)
 	{
-		currentTime += delta;
-		time = currentTime * iLengthInSec;
-
-		if(time > 1)
-			time = 1;
-
-		foreach(prop; props)
+		if(!m_done)
 		{
-			for(u32 i = cast(u32)prop.keyframes.length - 2; i >= 0; i--)
+			currentTime += delta;
+			time = currentTime * iLengthInSec;
+
+			if(time > 1)
 			{
-				DoubleDoublePair kv = prop.keyframes[i];
+				time = 1;
+				m_done = true;
+			}
 
-				if(kv.a <= time)
+			foreach(prop; props)
+			{
+				for(u32 i = cast(u32)prop.keyframes.length - 2; i >= 0; i--)
 				{
-					f64 a = kv.b;
-					f64 b = prop.keyframes[i + 1].b;
+					DoubleDoublePair kv = prop.keyframes[i];
 
-					f64 t = (time - kv.a) / cast(f64)(prop.keyframes[i + 1].a - kv.a);
-
-					string type = prop.functions[i + 1];
-					if(type == "start")
+					if(kv.a <= time)
 					{
-						properties[prop.name] = a;
-						break;
-					}
+						f64 a = kv.b;
+						f64 b = prop.keyframes[i + 1].b;
 
-					properties[prop.name] = call(type, b - a, a, t);
+						f64 t = (time - kv.a) / cast(f64)(prop.keyframes[i + 1].a - kv.a);
+
+						string type = prop.functions[i + 1];
+						if(type == "start")
+						{
+							properties[prop.name] = a;
+							break;
+						}
+
+						properties[prop.name] = call(type, b - a, a, t);
+					}
 				}
+			}
+			if(m_done)
+			{
+
 			}
 		}
 	}
