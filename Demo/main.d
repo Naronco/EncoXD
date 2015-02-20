@@ -62,6 +62,15 @@ void main()
 	for(int x = 0; x < 16; x++)
 		for(int y = 0; y < 9; y++)
 			colors[x + y * 16] = vec4(random.nextFloat(), random.nextFloat(), random.nextFloat(), random.nextFloat());
+			
+	EncoContext.instance.onKeyUp += (sender, key) {
+		if(key == SDLK_p)
+		{
+			SDL_Surface* surf = target.color.toSurface();
+			SDL_SaveBMP(surf, "screen.bmp\0".ptr);
+			SDL_FreeSurface(surf);
+		}
+	};
 
 	while(EncoContext.instance.update())
 	{

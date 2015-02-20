@@ -11,6 +11,8 @@ interface ITexture
 
 	void fromSurface(SDL_Surface* surface, string name = "Surface");
 
+	SDL_Surface* toSurface();
+
 	void destroy();
 
 	void resize(u32 width, u32 height, void[] pixels = null);
