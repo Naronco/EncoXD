@@ -155,13 +155,11 @@ class GLTexture : ITexture
 	
 	public SDL_Surface* toSurface()
 	{
-		Logger.writeln("Converting...");
 		bind(0);
 		u8[] pixels = new u8[width * height];
 		glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixels.ptr);
 		//u8[] px = (cast(u8*)pixels)[0 .. width * height];
 		SDL_Surface* surf = SDL_CreateRGBSurfaceFrom(pixels.ptr, cast(i32)width, cast(i32)height, 32, cast(i32)width * 4, 0, 0, 0, 0);
-		Logger.writeln("Converted");
 		return surf;
 	}
 	

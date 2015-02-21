@@ -52,6 +52,8 @@ class Animation
 	private bool m_done = false;
 	public @property bool done() { return m_done; }
 
+	public Trigger onDone = new Trigger();
+
 	public this(int ms, string storyboard)
 	{
 		string[] lines = storyboard.split('\n');
@@ -151,7 +153,7 @@ class Animation
 			}
 			if(m_done)
 			{
-
+				onDone();
 			}
 		}
 	}

@@ -8,6 +8,7 @@ class Game3DLayer : RenderLayer
 {
 	AnimatedProperty!float carY;
 	GameObject carObj, carGlassObj;
+	bool up = false;
 
 	public override void init(Scene scene)
 	{
@@ -34,6 +35,11 @@ class Game3DLayer : RenderLayer
 		carY.easingType = "quadratic";
 		carY.value = 5.0f;
 		carY.length = 3000;
+
+		carY.onDone += {
+			up = !up;
+			carY.value = up ? 0 : 5;
+		};
 
 		auto car = Mesh.loadFromObj("meshes/car.obj", 0);
 		carGlassObj = addGameObject(new MeshObject(car[0], GLMaterial.load(scene.renderer, "materials/glass.json")));

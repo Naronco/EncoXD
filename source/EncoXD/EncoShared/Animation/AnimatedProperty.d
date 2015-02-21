@@ -17,6 +17,8 @@ class AnimatedProperty(T)
 	private AnimationState state = AnimationState.Still;
 	private string easeType = "linear";
 
+	public Trigger onDone = new Trigger();
+
 	public this()
 	{
 	}
@@ -63,6 +65,7 @@ class AnimatedProperty(T)
 			{
 				intVal = finishVal;
 				state = AnimationState.Still;
+				onDone();
 			}
 		}
 	}
