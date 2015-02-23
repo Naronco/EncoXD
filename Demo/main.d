@@ -66,9 +66,9 @@ void main()
 	EncoContext.instance.onKeyUp += (sender, key) {
 		if(key == SDLK_p)
 		{
-			SDL_Surface* surf = target.color.toSurface();
-			SDL_SaveBMP(surf, "screen.bmp\0".ptr);
-			SDL_FreeSurface(surf);
+			Bitmap surf = renderer.getComputed();
+			surf.save("screen.bmp");
+			surf.destroy();
 		}
 	};
 

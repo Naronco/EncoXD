@@ -9,9 +9,9 @@ interface ITexture
 
 	void load(string file);
 
-	void fromSurface(SDL_Surface* surface, string name = "Surface");
+	void fromSurface(Bitmap surface, string name = "Surface");
 
-	SDL_Surface* toSurface();
+	Bitmap toSurface();
 
 	void destroy();
 

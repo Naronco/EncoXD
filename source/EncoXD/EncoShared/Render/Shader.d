@@ -2,7 +2,7 @@ module Enco.Shared.Render.Shader;
 
 import EncoShared;
 
-enum ShaderType : int
+enum ShaderType : u8
 {
 	Vertex, TessControl, TessEvaluation, Geometry, Fragment
 }

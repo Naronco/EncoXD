@@ -106,6 +106,9 @@ class GL3Renderer : IRenderer
 			m_gui = new GUIRenderer(this, GLMaterial.load(this, "materials/gui.json"));
 			m_gui.resize(width, height);
 
+			m_width = width;
+			m_height = height;
+
 			GLTexture.init();
 		}
 	}
@@ -234,7 +237,14 @@ class GL3Renderer : IRenderer
 		return program;
 	}
 
-	@property void enableDepthTest(bool value)
+	public Bitmap getComputed()
+	{
+		u8[] pixels = new u8[3 * m_width * m_height];
+		glReadPixels(0, 0, m_width, m_height, GL_BGR, GL_UNSIGNED_BYTE, pixels.ptr);
+		return new Bitmap(pixels, m_width, m_height, 24);
+	}
+
+	public @property void enableDepthTest(bool value)
 	{
 		if(m_depthTest == value) return;
 		m_depthTest = value;
@@ -244,12 +254,9 @@ class GL3Renderer : IRenderer
 			glDisable(GL_DEPTH_TEST);
 	}
 
-	@property bool enableDepthTest()
-	{
-		return m_depthTest;
-	}
+	public @property bool enableDepthTest() { return m_depthTest; }
 
-	@property void enableBlend(bool value)
+	public @property void enableBlend(bool value)
 	{
 		if(m_blend == value) return;
 		m_blend = value;
@@ -260,20 +267,16 @@ class GL3Renderer : IRenderer
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	@property bool enableBlend()
-	{
-		return m_blend;
-	}
+	public @property bool enableBlend() { return m_blend; }
 
 	public @property bool valid() { return m_valid; }
 
-	@property GUIRenderer gui()
-	{
-		return m_gui;
-	}
+	public @property GUIRenderer gui() { return m_gui; }
 	
-	void resize(u32 width, u32 height)
+	public void resize(u32 width, u32 height)
 	{
+		m_width = width;
+		m_height = height;
 		m_gui.resize(width, height);
 		glViewport(0, 0, width, height);
 	}
@@ -283,6 +286,7 @@ class GL3Renderer : IRenderer
 	private bool m_valid = false;
 	private bool m_depthTest = false;
 	private bool m_blend = false;
+	private u32 m_width, m_height;
 	private GUIRenderer m_gui;
 
 	public SDL_Window* m_window;

@@ -56,6 +56,9 @@ class AnimatedProperty(T)
 	/// ditto
 	public @property void length(int ms) { iTimeSec = 1000.0 / ms; }
 
+	/// Update
+	/// Params:
+	///		delta = Delta time in seconds
 	public void update(f64 delta)
 	{
 		if(state == AnimationState.Animating)

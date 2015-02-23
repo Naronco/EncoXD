@@ -103,41 +103,26 @@ class GLTexture : ITexture
 
 	public void load(string file)
 	{
-		fromSurface(IMG_Load((file ~ '\0').ptr), file);
+		fromSurface(Bitmap.load(file), file);
 	}
 
-	public void fromSurface(SDL_Surface* surface, string name = "Surface")
+	public void fromSurface(Bitmap bitmap, string name = "Surface")
 	{
-		if(surface is null || surface.pixels is null)
+		if(!bitmap.valid)
 		{
-			Logger.errln("Can't load Texture ", name);
-			i32 i = 0;
-			const char* err = IMG_GetError();
-			for(i32 x = 0; x < 1024; x++)
-			{
-				i = x;
-				if(err[x] == '\0') break;
-			}
-			Logger.errln(err[0 .. i]);
+			Logger.errln(name, " is invalid!");
 			return;
 		}
 
 		i32 mode = GL_RGB;
 
-		if(surface.format.BytesPerPixel == 4)
+		if(bitmap.surface.format.BytesPerPixel == 4)
 		{
 			mode = GL_RGBA;
 		}
-
-		if(surface.pixels == null)
-		{
-			Logger.errln("Can't load Texture(", surface.w, "x", surface.h, ")");
-			return;
-		}
 		
-		create(surface.w, surface.h, mode, surface.pixels[0 .. surface.w * surface.h * 4]);
-		
-		SDL_FreeSurface(surface);
+		create(bitmap.width, bitmap.height, mode, bitmap.surface.pixels[0 .. bitmap.width * bitmap.height * bitmap.surface.format.BytesPerPixel]);
+		bitmap.destroy();
 	}
 
 	public void resize(u32 width, u32 height, void[] pixels = null)
@@ -153,14 +138,16 @@ class GLTexture : ITexture
 		glDeleteTextures(1, &m_id);
 	}
 	
-	public SDL_Surface* toSurface()
+	public Bitmap toSurface()
 	{
 		bind(0);
 		u8[] pixels = new u8[width * height];
 		glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixels.ptr);
-		//u8[] px = (cast(u8*)pixels)[0 .. width * height];
-		SDL_Surface* surf = SDL_CreateRGBSurfaceFrom(pixels.ptr, cast(i32)width, cast(i32)height, 32, cast(i32)width * 4, 0, 0, 0, 0);
-		return surf;
+		scope(exit)
+		{
+			delete pixels; // Otherwise program crashes after second time and destroy, pixels = null, pixels[] = 0 doesnt work
+		}
+		return new Bitmap(pixels, cast(i32)width, cast(i32)height, 32);
 	}
 	
 	public @property u32 id() { return m_id; }
@@ -231,32 +218,23 @@ class GLTexture3D : ITexture3D
 
 	public void load(string file)
 	{
-		auto surface = IMG_Load((file ~ '\0').ptr);
+		Bitmap bitmap = Bitmap.load(file);
 
-		if(surface is null || surface.pixels is null)
+		if(!bitmap.valid)
 		{
-			Logger.errln("Can't load Texture ", file);
-			i32 i = 0;
-			const char* err = IMG_GetError();
-			for(i32 x = 0; x < 1024; x++)
-			{
-				i = x;
-				if(err[x] == '\0') break;
-			}
-			Logger.errln(err[0 .. i]);
+			Logger.errln(file, " is invalid!");
 			return;
 		}
 
 		i32 mode = GL_RGB;
 
-		if(surface.format.BytesPerPixel == 4)
+		if(bitmap.surface.format.BytesPerPixel == 4)
 		{
 			mode = GL_RGBA;
 		}
 		
-		create(surface.w, surface.w, surface.h / surface.w, mode, surface.pixels[0 .. surface.w * surface.w * (surface.h / surface.w) * 4]);
-		
-		SDL_FreeSurface(surface);
+		create(bitmap.width, bitmap.width, bitmap.height / bitmap.width, mode, bitmap.surface.pixels[0 .. bitmap.width * bitmap.width * (bitmap.height / bitmap.width) * bitmap.surface.format.BytesPerPixel]);
+		bitmap.destroy();
 	}
 
 	public void resize(u32 width, u32 height, u32 depth, void[] pixels = null)

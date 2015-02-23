@@ -48,5 +48,7 @@ interface IRenderer
 
 	void resize(u32 width, u32 height);
 
+	Bitmap getComputed();
+
 	ShaderProgram createShader(Shader[] shaders);
 }

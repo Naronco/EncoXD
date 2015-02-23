@@ -33,6 +33,7 @@ public
 	
 	import Enco.Shared.Render.IRenderer;
 	import Enco.Shared.Render.ITexture;
+	import Enco.Shared.Render.Bitmap;
 	import Enco.Shared.Render.Material;
 	import Enco.Shared.Render.RenderContext;
 	import Enco.Shared.Render.IRenderTarget;

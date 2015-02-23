@@ -224,10 +224,10 @@
    <File path="Ext\String.d" />
   </Folder>
   <Folder name="GUI">
-   <File path="Control.d" />
-   <File path="DynamicColorControl.d" />
-   <File path="PictureControl.d" />
-   <File path="TextControl.d" />
+   <File path="GUI\Control.d" />
+   <File path="GUI\DynamicColorControl.d" />
+   <File path="GUI\PictureControl.d" />
+   <File path="GUI\TextControl.d" />
   </Folder>
   <Folder name="Math">
    <File path="Math\Frustum.d" />
@@ -239,6 +239,7 @@
    <File path="Network\Tcp.d" />
   </Folder>
   <Folder name="Render">
+   <File path="Render\Bitmap.d" />
    <File path="Render\Color.d" />
    <File path="Render\Font.d" />
    <File path="Render\GUIRenderer.d" />
