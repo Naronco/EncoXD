@@ -12,8 +12,8 @@ and 3D rendering with OpenGL 3.2
 * Interfaces for easily scripting own modules
 * Render to texture
 * Shader templates and Material files
-* Advanced networking for game packets (WIP)
-* Gamepad support (WIP)
+* Networking using game packets (WIP)
+* Gamepad support
 
 ## Planned Features
 * Box2D physics
