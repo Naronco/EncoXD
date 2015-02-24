@@ -7,6 +7,54 @@ import EncoGL3;
 
 class GL3Renderer : IRenderer
 {
+	public @property void enableDepthTest(bool value)
+	{
+		if(m_depthTest == value) return;
+		m_depthTest = value;
+		if(value)
+			glEnable(GL_DEPTH_TEST);
+		else
+			glDisable(GL_DEPTH_TEST);
+	}
+
+	public @property bool enableDepthTest() { return m_depthTest; }
+
+	public @property void enableBlend(bool value)
+	{
+		if(m_blend == value) return;
+		m_blend = value;
+		if(value)
+			glEnable(GL_BLEND);
+		else
+			glDisable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+	public @property bool enableBlend() { return m_blend; }
+
+	public @property bool valid() { return m_valid; }
+
+	public @property GUIRenderer gui() { return m_gui; }
+	
+	public void resize(u32 width, u32 height)
+	{
+		m_width = width;
+		m_height = height;
+		m_gui.resize(width, height);
+		glViewport(0, 0, width, height);
+	}
+
+	public @property ITexture white() { return GLTexture.white; }
+
+	private bool m_valid = false;
+	private bool m_depthTest = false;
+	private bool m_blend = false;
+	private u32 m_width, m_height;
+	private GUIRenderer m_gui;
+
+	public Window m_window;
+	public SDL_GLContext m_context;
+
 	public this()
 	{
 
@@ -83,13 +131,13 @@ class GL3Renderer : IRenderer
 		}
 	}
 
-	public void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, SDL_Window* sdlWindow = null)
+	public void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window)
 	{
-		if(sdlWindow != null)
+		if(window !is null)
 		{
 			DerelictGL3.load();
 
-			m_window = sdlWindow;
+			m_window = window;
 
 			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, cast(i32)depthBits);
 			SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, cast(i32)stencilBits);
@@ -98,7 +146,7 @@ class GL3Renderer : IRenderer
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 
-			m_context = SDL_GL_CreateContext(m_window);
+			m_context = SDL_GL_CreateContext(m_window.window);
 
 			DerelictGL3.reload();
 
@@ -135,7 +183,7 @@ class GL3Renderer : IRenderer
 	{
 		if(valid)
 		{
-			SDL_GL_SwapWindow(m_window);
+			SDL_GL_SwapWindow(m_window.window);
 		}
 	}
 
@@ -144,7 +192,7 @@ class GL3Renderer : IRenderer
 	{
 		if(valid)
 		{
-			SDL_GL_MakeCurrent(m_window, m_context);
+			SDL_GL_MakeCurrent(m_window.window, m_context);
 		}
 	}
 
@@ -243,52 +291,4 @@ class GL3Renderer : IRenderer
 		glReadPixels(0, 0, m_width, m_height, GL_BGR, GL_UNSIGNED_BYTE, pixels.ptr);
 		return new Bitmap(pixels, m_width, m_height, 24);
 	}
-
-	public @property void enableDepthTest(bool value)
-	{
-		if(m_depthTest == value) return;
-		m_depthTest = value;
-		if(value)
-			glEnable(GL_DEPTH_TEST);
-		else
-			glDisable(GL_DEPTH_TEST);
-	}
-
-	public @property bool enableDepthTest() { return m_depthTest; }
-
-	public @property void enableBlend(bool value)
-	{
-		if(m_blend == value) return;
-		m_blend = value;
-		if(value)
-			glEnable(GL_BLEND);
-		else
-			glDisable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-
-	public @property bool enableBlend() { return m_blend; }
-
-	public @property bool valid() { return m_valid; }
-
-	public @property GUIRenderer gui() { return m_gui; }
-	
-	public void resize(u32 width, u32 height)
-	{
-		m_width = width;
-		m_height = height;
-		m_gui.resize(width, height);
-		glViewport(0, 0, width, height);
-	}
-
-	public @property ITexture white() { return GLTexture.white; }
-
-	private bool m_valid = false;
-	private bool m_depthTest = false;
-	private bool m_blend = false;
-	private u32 m_width, m_height;
-	private GUIRenderer m_gui;
-
-	public SDL_Window* m_window;
-	public SDL_GLContext m_context;
 }

@@ -8,6 +8,13 @@ import EncoShared;
 
 class DesktopView : IView
 {
+	public @property Window window() { return m_window; }
+	public @property bool valid() { return m_valid; }
+
+	private bool m_valid = false;
+	private Window m_window;
+	private IRenderer m_renderer;
+
 	public this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
 	public this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
 	public this() { this("", 0, 0); }
@@ -33,8 +40,8 @@ class DesktopView : IView
 			flags = SDL_WINDOW_BORDERLESS;
 		}
 
-		m_window = SDL_CreateWindow(m_name.ptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, cast(int)m_size.x, cast(int)m_size.y, flags | cast(uint)renderer.getSDLOptions());
-		if(!m_window)
+		m_window = new Window(m_name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, cast(int)m_size.x, cast(int)m_size.y, flags | cast(uint)renderer.getSDLOptions());
+		if(!m_window.valid)
 		{
 			throw new Exception("Window failed");
 		}
@@ -71,9 +78,9 @@ class DesktopView : IView
 		{
 			m_renderer.deleteContext();
 
-			if(m_window)
+			if(m_window !is null && m_window.valid)
 			{
-				SDL_DestroyWindow(m_window);
+				m_window.destroy();
 				m_window = null;
 			}
 
@@ -130,7 +137,7 @@ class DesktopView : IView
 	{
 		if(valid)
 		{
-			SDL_SetWindowSize(m_window, cast(int)m_size.x, cast(int)m_size.y);
+			m_window.size = m_size;
 		}
 	}
 
@@ -138,14 +145,7 @@ class DesktopView : IView
 	{
 		if(valid)
 		{
-			SDL_SetWindowTitle(m_window, m_name.ptr);
+			m_window.title = m_name;
 		}
 	}
-
-	public @property SDL_Window* handle() { return m_window; }
-	public @property bool valid() { return m_valid; }
-
-	private bool m_valid = false;
-	private SDL_Window* m_window;
-	private IRenderer m_renderer;
 }
