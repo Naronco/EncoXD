@@ -40,7 +40,7 @@ class Font
 			TTF_SizeText(handle, (line ~ "\0").ptr, &w, &h);
 			maxWidth = max(w, maxWidth);
 		}
-		tex.fromSurface(Bitmap.fromSurface(TTF_RenderUTF8_Blended_Wrapped(handle, (text ~ "\0").ptr, color.sdl_color, maxWidth)), "Blended Text: " ~ text);
+		tex.fromBitmap(Bitmap.fromSurface(TTF_RenderUTF8_Blended_Wrapped(handle, (text ~ "\0").ptr, color.sdl_color, maxWidth)), "Blended Text: " ~ text);
 		return tex;
 	}
 }

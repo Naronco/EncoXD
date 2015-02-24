@@ -7,11 +7,9 @@ interface ITexture
 {
 	void create(u32 width, u32 height, void[] pixels);
 
-	void load(string file);
+	void fromBitmap(Bitmap bitmap, string name = "Bitmap");
 
-	void fromSurface(Bitmap surface, string name = "Surface");
-
-	Bitmap toSurface();
+	Bitmap toBitmap();
 
 	void destroy();
 
@@ -32,7 +30,7 @@ interface ITexture3D
 {
 	void create(u32 width, u32 height, u32 depth, void[] pixels);
 
-	void load(string file);
+	void fromBitmap(Bitmap bitmap, string name = "Bitmap");
 
 	void destroy();
 
@@ -41,4 +39,10 @@ interface ITexture3D
 	void bind(u32 unit);
 
 	@property u32 id();
+
+	@property u32 width();
+
+	@property u32 height();
+
+	@property u32 depth();
 }

@@ -40,7 +40,7 @@ void main()
 	tex.wrapX = TextureClampMode.ClampToEdge;
 	tex.wrapY = TextureClampMode.ClampToEdge;
 	tex.wrapZ = TextureClampMode.ClampToEdge;
-	tex.load("tex/pallete16_mod.png");
+	tex.fromBitmap(Bitmap.load("tex/pallete16_mod.png"));
 
 	GLRenderTarget target = new GLRenderTarget();
 	target.init(EncoContext.instance.view.width, EncoContext.instance.view.height, true);

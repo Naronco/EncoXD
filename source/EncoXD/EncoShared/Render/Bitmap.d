@@ -67,4 +67,24 @@ class Bitmap
 	{
 		SDL_SaveBMP(m_handle, (file ~ "\0").ptr);
 	}
+
+	public Bitmap convert(const SDL_PixelFormat* format)
+	{
+		return new Bitmap(SDL_ConvertSurface(m_handle, format, 0));
+	}
+
+	public u32 mapRGB(Color color)
+	{
+		return SDL_MapRGB(m_handle.format, color.R, color.G, color.B);
+	}
+
+	public void fill(Color color)
+	{
+		SDL_FillRect(m_handle, null, mapRGB(color));
+	}
+
+	public void fill(i32 x, i32 y, i32 width, i32 height, Color color)
+	{
+		SDL_FillRect(m_handle, new SDL_Rect(x, y, width, height), mapRGB(color));
+	}
 }
