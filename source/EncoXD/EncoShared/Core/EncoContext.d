@@ -24,12 +24,30 @@ class EncoContext
 	public LuaState lua;
 
 	public Event!bool onClose = new Event!bool;
+	public Trigger onShow = new Trigger;
+	public Trigger onHide = new Trigger;
+	public Trigger onExpose = new Trigger;
+	public Trigger onMinimize = new Trigger;
+	public Trigger onMaximize = new Trigger;
+	public Trigger onRestore = new Trigger;
+	public Trigger onEnter = new Trigger;
+	public Trigger onLeave = new Trigger;
+	public Trigger onFocusGain = new Trigger;
+	public Trigger onFocusLost = new Trigger;
 	public Event!u32vec2 onResize = new Event!u32vec2;
+	public Event!u32vec2 onMove = new Event!u32vec2;
+	public Event!i32vec2 onScroll = new Event!i32vec2;
 	public Event!u32 onKeyDown = new Event!u32;
 	public Event!u32 onKeyUp = new Event!u32;
 	public Event!MouseEvent onMouseMove = new Event!MouseEvent;
 	public Event!MouseEvent onMouseButtonDown = new Event!MouseEvent;
 	public Event!MouseEvent onMouseButtonUp = new Event!MouseEvent;
+	public Event!string onFileDrop = new Event!string;
+	public Event!i32 onControllerAdded = new Event!i32;
+	public Event!i32 onControllerRemoved = new Event!i32;
+	public Event!(Tuple!(i32, u8, i16)) onControllerAxis = new Event!(Tuple!(i32, u8, i16));
+	public Event!(Tuple!(i32, i8)) onControllerButtonDown = new Event!(Tuple!(i32, i8));
+	public Event!(Tuple!(i32, i8)) onControllerButtonUp = new Event!(Tuple!(i32, i8));
 
 	public DynamicLibrary[] loaded;
 

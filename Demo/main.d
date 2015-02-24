@@ -72,6 +72,26 @@ void main()
 		}
 	};
 
+	EncoContext.instance.onControllerAdded += (sender, id) {
+		Logger.writeln("Added controller #", id);
+	};
+
+	EncoContext.instance.onControllerRemoved += (sender, id) {
+		Logger.writeln("Removed controller #", id);
+	};
+
+	EncoContext.instance.onControllerButtonDown += (sender, evt) {
+		Logger.writeln("#", cast(i32)evt[0], " down ", cast(i32)evt[1]);
+	};
+
+	EncoContext.instance.onControllerButtonUp += (sender, evt) {
+		Logger.writeln("#", cast(i32)evt[0], " up ", cast(i32)evt[1]);
+	};
+
+	EncoContext.instance.onControllerAxis += (sender, button) {
+		Logger.writeln("#", cast(i32)button[0], " axis ", cast(i32)button[1], " -> ", (button[2] * 0.00003051757));
+	};
+
 	while(EncoContext.instance.update())
 	{
 		state = Keyboard.getState();

@@ -6,8 +6,17 @@ import EncoDesktop;
 struct ControllerState
 {
 	public bool[] keys = new bool[SDL_CONTROLLER_BUTTON_MAX];
-	public f32[] axis = new float[SDL_CONTROLLER_AXIS_MAX];
-	
+	public f64[] axis = new float[SDL_CONTROLLER_AXIS_MAX];
+	public bool isConnected = false;
+
+	public static ControllerState* init()
+	{
+		ControllerState* state = new ControllerState();
+		state.axis[] = 0;
+		state.keys[] = false;
+		return state;
+	}
+
 	public bool isKeyDown(u8 key)
 	{
 		return keys[key];
@@ -17,26 +26,42 @@ struct ControllerState
 	{
 		return !keys[key];
 	}
+
+	public f64 getAxis(i8 index)
+	{
+		return axis[index];
+	}
 }
 
 class Controller
 {
-	public static ControllerState* getState(u8 index) { return states[index]; }
-
-	public static void setKey(u8 index, u8 key, bool state)
+	public static ControllerState* getState(i32 index)
 	{
+		if((index in states) == null)
+			states[index] = ControllerState.init();
+		return states[index];
+	}
+
+	public static void setKey(i32 index, u8 key, bool state)
+	{
+		if((index in states) is null)
+			states[index] = ControllerState.init();
 		states[index].keys[key] = state;
 	}
 
-	public static void setAxis(u8 index, u8 axis, i16 value)
+	public static void setAxis(i32 index, u8 axis, i16 value)
 	{
-		states[index].axis[axis] = value * 0.0000305185; // 1 / 32767
+		if((index in states) is null)
+			states[index] = ControllerState.init();
+		states[index].axis[axis] = value * 0.00003051757; // 1 / 32768
 	}
 
-	public static ControllerState*[4] states;
-
-	static this()
+	public static void setConnected(i32 index, bool connected)
 	{
-		states = [new ControllerState(), new ControllerState(), new ControllerState(), new ControllerState()];
+		if((index in states) is null)
+			states[index] = ControllerState.init();
+		states[index].isConnected = connected;
 	}
+
+	public static ControllerState*[i32] states;
 }

@@ -39,19 +39,12 @@ class Bitmap
 
 	public static Bitmap load(string file)
 	{
-		Bitmap bmp = new Bitmap(IMG_Load((file ~ '\0').ptr));
+		Bitmap bmp = new Bitmap(IMG_Load(file.toStringz()));
 
 		if(!bmp.valid)
 		{
 			Logger.errln("Can't load texture ", file);
-			i32 i = 0;
-			const char* err = IMG_GetError();
-			for(i32 x = 0; x < 1024; x++)
-			{
-				i = x;
-				if(err[x] == '\0') break;
-			}
-			Logger.errln(err[0 .. i]);
+			Logger.errln(IMG_GetError().fromStringz());
 		}
 
 		return bmp;
@@ -65,7 +58,7 @@ class Bitmap
 
 	public void save(string file)
 	{
-		SDL_SaveBMP(m_handle, (file ~ "\0").ptr);
+		SDL_SaveBMP(m_handle, file.toStringz());
 	}
 
 	public Bitmap convert(const SDL_PixelFormat* format)

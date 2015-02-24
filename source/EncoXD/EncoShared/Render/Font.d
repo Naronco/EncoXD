@@ -13,7 +13,7 @@ class Font
 			Logger.errln("SDL2TTF not initialized (EncoContext.useDynamicLibraries)");
 			return;
 		}
-		handle = TTF_OpenFont((font ~ "\0").ptr, sizeInPt);
+		handle = TTF_OpenFont(font.toStringz(), sizeInPt);
 		if(handle is null)
 		{
 			Logger.errln("Error initializing ", font, ": ", TTF_GetError());
@@ -37,10 +37,10 @@ class Font
 		foreach(string line; lines)
 		{
 			i32 w, h;
-			TTF_SizeText(handle, (line ~ "\0").ptr, &w, &h);
+			TTF_SizeText(handle, line.toStringz(), &w, &h);
 			maxWidth = max(w, maxWidth);
 		}
-		tex.fromBitmap(Bitmap.fromSurface(TTF_RenderUTF8_Blended_Wrapped(handle, (text ~ "\0").ptr, color.sdl_color, maxWidth)), "Blended Text: " ~ text);
+		tex.fromBitmap(Bitmap.fromSurface(TTF_RenderUTF8_Blended_Wrapped(handle, text.toStringz(), color.sdl_color, maxWidth)), "Blended Text: " ~ text);
 		return tex;
 	}
 }

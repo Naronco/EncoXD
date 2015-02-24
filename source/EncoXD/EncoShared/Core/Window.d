@@ -11,7 +11,7 @@ class Window
 
 	public this(string title, i32 x, i32 y, i32 w, i32 h, u32 flags)
 	{
-		m_handle = SDL_CreateWindow(title.ptr, x, y, w, h, flags);
+		m_handle = SDL_CreateWindow(title.toStringz(), x, y, w, h, flags);
 	}
 
 	public ~this()
@@ -26,16 +26,13 @@ class Window
 
 	public @property void title(string title)
 	{
-		SDL_SetWindowTitle(m_handle, title.ptr);
+		SDL_SetWindowTitle(m_handle, title.toStringz());
 	}
 
 	public @property string title()
 	{
-		const(char)* title = SDL_GetWindowTitle(m_handle);
-		i32 i;
-		for(i = 0; i < 1024; i++)
-			if(title[i] == '\0') break;
-		return cast(string)(title[0 .. i]);
+		string title = SDL_GetWindowTitle(m_handle).fromStringz().dup;
+		return title;
 	}
 
 	public @property void size(u32vec2 size)

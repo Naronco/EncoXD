@@ -50,7 +50,7 @@ class Mesh
 	
 	public static Mesh[] loadFromObj(string file, u32 flags)
 	{
-		const aiScene* scene = aiImportFile(file.ptr, aiProcess_GenNormals |
+		const aiScene* scene = aiImportFile(file.toStringz(), aiProcess_GenNormals |
 				aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs | flags);
 		Mesh[] meshes;
 		meshes.length = scene.mNumMeshes;

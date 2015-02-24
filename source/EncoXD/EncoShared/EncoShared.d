@@ -78,8 +78,9 @@ public
 
 	alias float f32, float32;
 	alias double f64, float64;
-
+	
 	alias Vector!(u32, 2) u32vec2;
+	alias Vector!(i32, 2) i32vec2;
 
 	enum ENCO_VERSION = "1.0.0";
 	enum ENCO_VERSION_ID = 1;
