@@ -1,6 +1,7 @@
 {
 	"Name": "GUI",
-	"Textures": {},
+	"Textures":
+	{},
 	"Blend": true,
 	"DepthTest": false,
 	"Vertex": "default",

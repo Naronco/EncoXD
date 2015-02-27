@@ -2,7 +2,11 @@
 	"Name": "Clouds",
 	"Textures":
 	{
-		"0": { "File": "tex/clouds.png", "MipMap": true }
+		"0":
+		{
+			"File": "tex/clouds.png",
+			"MipMap": true
+		}
 	},
 	"Vertex": "default",
 	"Blend": true,

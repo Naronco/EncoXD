@@ -1,0 +1,11 @@
+<DProject>
+ <ProjectGuid>c78d923d-86a3-4a6b-8614-ba0e62b7c427</ProjectGuid>
+ <Config name="Debug">
+  <!-- default to defaults -->
+ </Config>
+ <Config name="Release">
+  </Config>
+ <Folder name="Game">
+  <File path="main.d" />
+ </Folder>
+</DProject>

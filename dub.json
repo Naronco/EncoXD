@@ -6,36 +6,47 @@
 	"targetPath": "bin",
 	"targetType": "executable",
 	"license": "GPL-2.0",
-	"buildTypes": {
-		"debug": {
+	"buildTypes":
+	{
+		"debug":
+		{
 			"buildOptions": ["debugMode", "debugInfo", "debugInfoC", "alwaysStackFrame", "stackStomping"]
 		},
-		"debug-profile": {
+		"debug-profile":
+		{
 			"buildOptions": ["debugMode", "debugInfo", "debugInfoC", "profile", "alwaysStackFrame", "stackStomping"]
 		},
-		"release": {
+		"release":
+		{
 			"buildOptions": ["releaseMode", "inline", "optimize"]
 		},
-		"docs": {
+		"docs":
+		{
 			"buildOptions": ["syntaxOnly"],
 			"dflags": ["-c", "-Dddocs"]
 		}
 	},
 	"configurations": [
-		{
-			"name": "Demo",
-			"targetType": "executable",
-			"sourcePaths": ["Demo/", "source/"],
-			"importPaths": ["Demo/", "source/"]
-		},
-		{
-			"name": "Server",
-			"targetType": "executable",
-			"sourcePaths": ["Examples/ScriptedServer/", "source/"],
-			"importPaths": ["Examples/ScriptedServer/", "source/"]
-		}
-	],
-	"dependencies": {
+	{
+		"name": "Demo",
+		"targetType": "executable",
+		"sourcePaths": ["Demo/", "source/"],
+		"importPaths": ["Demo/", "source/"]
+	},
+	{
+		"name": "Server",
+		"targetType": "executable",
+		"sourcePaths": ["Examples/ScriptedServer/", "source/"],
+		"importPaths": ["Examples/ScriptedServer/", "source/"]
+	},
+	{
+		"name": "Game",
+		"targetType": "executable",
+		"sourcePaths": ["Examples/Game/", "source/"],
+		"importPaths": ["Examples/Game/", "source/"]
+	}],
+	"dependencies":
+	{
 		"derelict-sdl2": ">=1.2.8",
 		"derelict-gl3": ">=1.0.10",
 		"gl3n": ">=1.0.0",

@@ -5,7 +5,7 @@
 		"Height": 900,
 		"Title": "EncoXD Demo"
 	},
-	"Context": 
+	"Context":
 	{
 		"ClearColor": [0.5294117647, 0.80784313725, 0.92156862745],
 		"DepthTest": true,

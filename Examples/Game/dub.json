@@ -1,6 +1,6 @@
 {
-	"name": "Scripted Server Example",
-	"description": "Example for EncoX",
+	"name": "Game Example",
+	"description": "Example Game for EncoX",
 	"authors": ["NaroncoNexo", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoX",
 	"license": "GPL-2.0",

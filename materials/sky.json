@@ -2,7 +2,11 @@
 	"Name": "Sky",
 	"Textures":
 	{
-		"0": { "File": "tex/sky.png", "MipMap": true }
+		"0":
+		{
+			"File": "tex/sky.png",
+			"MipMap": true
+		}
 	},
 	"Vertex": "default",
 	"Fragment":

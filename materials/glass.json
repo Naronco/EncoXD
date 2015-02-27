@@ -1,8 +1,7 @@
 {
 	"Name": "CarGlass (R)",
 	"Textures":
-	{
-	},
+	{},
 	"Vertex": "default",
 	"Fragment":
 	{

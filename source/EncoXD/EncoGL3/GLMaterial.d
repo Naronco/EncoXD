@@ -8,7 +8,7 @@ import std.conv;
 
 class GLMaterial
 {
-	/// Loads JSON Material File in format {Name:str, Textures:string->texture, Blend:bool?, DepthTest:bool?, Vertex:str/shader, Fragment:str/shader}
+	/// Loads JSON Material File in format {Name:str, Textures:str->{File:str,MipMap:bool?,Smooth:bool?}, Blend:bool?, DepthTest:bool?, Vertex:str/shader, Fragment:str/shader}
 	public static Material load(IRenderer renderer, string file)
 	{
 		JSONValue value = parseJSON!string(std.file.readText(file));
@@ -44,10 +44,15 @@ class GLMaterial
 				int i = parse!int(id);
 
 				GLTexture tex = GLTexturePool.load(texture["File"].str);
-				if(texture["MipMap"].type == JSON_TYPE.TRUE)
+				if(("MipMap" in texture) !is null && texture["MipMap"].type == JSON_TYPE.TRUE)
 				{
 					tex.enableMipMaps = true;
 					tex.minFilter = TextureFilterMode.LinearMipmapLinear;
+				}
+				if(("Smooth" in texture) !is null && texture["Smooth"].type == JSON_TYPE.FALSE)
+				{
+					tex.minFilter = TextureFilterMode.Nearest;
+					tex.magFilter = TextureFilterMode.Nearest;
 				}
 				tex.applyParameters();
 

@@ -2,7 +2,11 @@
 	"Name": "Car",
 	"Textures":
 	{
-		"0": { "File": "tex/car.png", "MipMap": true }
+		"0":
+		{
+			"File": "tex/car.png",
+			"MipMap": true
+		}
 	},
 	"Vertex": "default",
 	"Fragment":

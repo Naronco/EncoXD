@@ -1,11 +1,12 @@
 {
-	"Name": "Bricks",
+	"Name": "Floor",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/bricks.png",
-			"MipMap": true
+			"File": "tex/orthoFloor.png",
+			"MipMap": false,
+			"Smooth": false
 		}
 	},
 	"Vertex": "default",
@@ -13,6 +14,6 @@
 	{
 		"Base": "diffuse",
 		"Ambient": "vec3(0.1, 0.1, 0.1)",
-		"Color": "tex(slot0, 40, 40)"
+		"Color": "tex(slot0, 1, 1)"
 	}
 }

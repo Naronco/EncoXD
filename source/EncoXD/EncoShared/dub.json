@@ -7,7 +7,8 @@
 	"targetType": "library",
 	"sourcePaths": ["."],
 	"importPaths": ["."],
-	"dependencies": {
+	"dependencies":
+	{
 		"derelict-sdl2": ">=1.2.8",
 		"derelict-gl3": ">=1.0.10",
 		"gl3n": ">=1.0.0"
