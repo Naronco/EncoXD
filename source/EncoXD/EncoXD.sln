@@ -16,6 +16,11 @@ EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "ScriptedServer", "..\..\Examples\ScriptedServer\ScriptedServer.visualdproj", "{BFD3BD68-9251-4219-954D-A17D76F9D5D0}"
 EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Game", "..\..\Examples\Game\Game.visualdproj", "{C78D923D-86A3-4A6B-8614-BA0E62B7C427}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28} = {A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}
+		{37BE5994-E9EF-43A6-8D9A-36013711E25E} = {37BE5994-E9EF-43A6-8D9A-36013711E25E}
+		{FA53AFDD-B5F2-4B46-8784-27FE8F562AA2} = {FA53AFDD-B5F2-4B46-8784-27FE8F562AA2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
