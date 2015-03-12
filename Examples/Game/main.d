@@ -2,44 +2,28 @@ import EncoShared;
 import EncoDesktop;
 import EncoGL3;
 
-import DragTableX;
+import DragTable;
+import Level;
+import Player;
 
 class Game3DLayer : RenderLayer
 {
-	AnimatedProperty!float carY;
-	GameObject carObj, carGlassObj;
-	bool up = false;
-	
+	private Player player;
+
 	public override void init(Scene scene)
 	{
-		auto meshes = Mesh.loadFromObj("meshes/floor.obj", 0);
-		
-		addGameObject(new MeshObject(meshes[0], GLMaterial.load(scene.renderer, "materials/orthoFloor.json")));
-		
-		carY = new AnimatedProperty!float(0.0f);
-		carY.easingType = "sinusoidal";
-		carY.value = 5.0f;
-		carY.length = 3000;
+		Level level = new Level();
+		if(!level.fromBitmap("levels/level0.png", GLMaterial.load(scene.renderer, "materials/metal.json"), scene.renderer))
+			throw new Exception("Invalid Level!");
+		level.setPlayer(player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "materials/player.json")));
+		addGameObject(level);
 
-		carY.onDone += {
-			up = !up;
-			carY.value = up ? 0 : 5;
-		};
-
-		auto car = Mesh.loadFromObj("meshes/car.obj", 0);
-		carGlassObj = addGameObject(new MeshObject(car[0], GLMaterial.load(scene.renderer, "materials/glass.json")));
-		carObj = addGameObject(new MeshObject(car[1], GLMaterial.load(scene.renderer, "materials/car.json")));
+		Logger.writeln("Loaded Game3DLayer");
 	}
 
-	override protected void update(f64 deltaTime)
+	public void applyCamera(Camera camera)
 	{
-		carY.update(deltaTime);
-	}
-	
-	override protected void preDraw(RenderContext context, IRenderer renderer)
-	{
-		carObj.transform.position.y = cast(float)carY;
-		carGlassObj.transform.position.y = cast(float)carY;
+		camera.addComponent(new PlayerLock(player, camera));
 	}
 }
 
@@ -59,7 +43,6 @@ void main(string[] args)
 	GameScene game = new GameScene();
 	EncoContext.create(new DesktopView(), renderer, game);
 
-
 	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
@@ -72,12 +55,22 @@ void main(string[] args)
 	camera.nearClip = -1000;
 	camera.width = EncoContext.instance.view.width;
 	camera.height = EncoContext.instance.view.height;
+	camera.zoom = 10;
 	camera.projectionMode = ProjectionMode.Orthographic3D;
 
+	EncoContext.instance.onKeyDown += (sender, key) {
+		if(key == Key.F1)
+		{
+			Logger.writeln("Rotation: ", camera.transform.rotation.y);
+		}
+	};
+	
 	camera.addComponent(new DragTableX());
+	camera.addComponent(new DragTableHalfY());
+	game.game3DLayer.applyCamera(camera);
 
 	camera.transform.position = vec3(0, 0, 0);
-	camera.transform.rotation = vec3(-0.785398163, 0.785398163, 0);
+	camera.transform.rotation = vec3(-0.9, 0.785398163, 0);
 	
 	RenderContext context = RenderContext(camera, vec3(1, 0.5, 0));
 
@@ -107,7 +100,7 @@ void main(string[] args)
 
 		renderer.endFrame();
 
-		if (state.isKeyDown(SDLK_ESCAPE)) break;
+		if (state.isKeyDown(Key.Escape)) break;
 
 		EncoContext.instance.endUpdate();
 	}
