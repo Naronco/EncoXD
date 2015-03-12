@@ -6,7 +6,8 @@ import EncoShared;
 
 class RenderLayer
 {
-	public void init(Scene scene) {}
+	protected void init(Scene scene) { }
+	public void doInit(Scene scene) { m_scene = scene; init(scene); }
 
 	protected void preUpdate(f64 deltaTime) {}
 	protected void update(f64 deltaTime) {}
@@ -51,6 +52,7 @@ class RenderLayer
 	{
 		m_gameObjects.length++;
 		m_gameObjects[m_gameObjects.length - 1] = object;
+		object.add(m_scene.renderer);
 		return object;
 	}
 
@@ -70,6 +72,8 @@ class RenderLayer
 		m_gameObjects = null;
 	}
 
+	protected @property Scene scene() { return m_scene; }
+	private Scene m_scene;
 	private GameObject[] m_gameObjects;
 }
 
@@ -109,7 +113,7 @@ class Scene
 	{
 		m_layers.length++;
 		m_layers[m_layers.length - 1] = layer;
-		layer.init(this);
+		layer.doInit(this);
 	}
 
 	public void destroy()
