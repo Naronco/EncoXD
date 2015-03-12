@@ -226,6 +226,11 @@ struct Color
 		m_b = cast(u8)(b * 255);
 	}
 
+	public override bool opEquals()(auto ref const Color color) const
+	{
+		return m_r == color.m_r && m_g == color.m_g && m_b == color.m_b;
+	}
+
 	public @property SDL_Color sdl_color() { return SDL_Color(m_r, m_g, m_b, 255); }
 	
 	public @property ref u8 R() { return m_r; }
