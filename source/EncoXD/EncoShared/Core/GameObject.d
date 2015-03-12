@@ -4,9 +4,21 @@ import EncoShared;
 
 class GameObject
 {
+	private GameObject[] children;
+
 	public this()
 	{
-		
+	}
+
+	public void add(IRenderer renderer)
+	{
+		m_renderer = renderer;
+	}
+
+	public void addChild(GameObject child)
+	{
+		if(child == this) return;
+		children ~= child;
 	}
 	
 	protected void update(f64 deltaTime) {}
@@ -22,6 +34,8 @@ class GameObject
 			com.preUpdate(deltaTime);
 		}
 
+		foreach(ref GameObject child; children)
+			child.performUpdate(deltaTime);
 		update(deltaTime);
 
 		foreach(IComponent com; m_components)
@@ -32,11 +46,15 @@ class GameObject
 
 	public void performDraw(RenderContext context, IRenderer renderer)
 	{
+		m_renderer = renderer;
+
 		foreach(IComponent com; m_components)
 		{
 			com.preDraw(context, renderer);
 		}
-
+		
+		foreach(ref GameObject child; children)
+			child.performDraw(context, renderer);
 		draw(context, renderer);
 
 		foreach(IComponent com; m_components)
@@ -47,12 +65,13 @@ class GameObject
 
 	public void performDraw2D(GUIRenderer renderer)
 	{
-		
 		foreach(IComponent com; m_components)
 		{
 			com.preDraw2D(renderer);
 		}
-
+		
+		foreach(ref GameObject child; children)
+			child.performDraw2D(renderer);
 		draw2D(renderer);
 
 		foreach(IComponent com; m_components)
@@ -64,7 +83,7 @@ class GameObject
 	public void destroy() {  }
 
 	public Transform transform = Transform();
-	public void* data = null;
+	public void[] data = null;
 
 	public void addComponent(IComponent component)
 	{
@@ -72,6 +91,9 @@ class GameObject
 		m_components[m_components.length - 1] = component;
 		component.add(this);
 	}
+
+	protected @property IRenderer renderer() { return m_renderer; }
+	private IRenderer m_renderer;
 
 	private IComponent[] m_components;
 }
