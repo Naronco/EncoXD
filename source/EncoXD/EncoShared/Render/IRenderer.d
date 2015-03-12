@@ -29,7 +29,7 @@ interface IRenderer
 
 	@property void enableBlend(bool value);
 	@property bool enableBlend();
-	
+
 	@property GUIRenderer gui();
 	@property ITexture white();
 

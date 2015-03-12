@@ -20,7 +20,7 @@ class GameObject
 		if(child == this) return;
 		children ~= child;
 	}
-	
+
 	protected void update(f64 deltaTime) {}
 
 	protected void draw(RenderContext context, IRenderer renderer) {}
@@ -52,7 +52,7 @@ class GameObject
 		{
 			com.preDraw(context, renderer);
 		}
-		
+
 		foreach(ref GameObject child; children)
 			child.performDraw(context, renderer);
 		draw(context, renderer);
@@ -69,7 +69,7 @@ class GameObject
 		{
 			com.preDraw2D(renderer);
 		}
-		
+
 		foreach(ref GameObject child; children)
 			child.performDraw2D(renderer);
 		draw2D(renderer);

@@ -32,24 +32,24 @@ class Camera : GameObject
 		}
 		return m_projectionMatrix;
 	}
-	
+
 	public @property mat4 viewMatrix()
 	{
 		return m_viewMatrix = rotationMatrix * translationMatrix;
 	}
-	
+
 	public @property mat4 rotationMatrix()
 	{
 		return mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
 				mat4.identity.rotate(transform.rotation.y, vec3(0, 1, 0)) *
 				mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1));
 	}
-	
+
 	public @property mat4 translationMatrix()
 	{
 		return mat4.identity.translate(-transform.position.x, -transform.position.y, -transform.position.z);
 	}
-	
+
 	public @property f32 nearClip() { return m_near; }
 	public @property f32 farClip() { return m_far; }
 	public @property f32 width() { return m_width; }
@@ -59,7 +59,7 @@ class Camera : GameObject
 	/// Zoom for Orthographic3D (Defaults to 7)
 	public @property f32 zoom() { return 1 / m_iZoom; }
 	public @property ProjectionMode projectionMode() { return m_mode; }
-	
+
 	public @property void nearClip(f32 value) { m_needUpdate = m_needUpdate || m_near != value; m_near = value; }
 	public @property void farClip(f32 value) { m_needUpdate = m_needUpdate || m_far != value; m_far = value; }
 	public @property void width(f32 value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
@@ -69,7 +69,7 @@ class Camera : GameObject
 	/// Zoom for Orthographic3D (Defaults to 7)
 	public @property void zoom(f32 value) { m_needUpdate = true; m_iZoom = 1 / value; }
 	public @property void projectionMode(ProjectionMode value) { m_needUpdate = m_needUpdate || m_mode != value; m_mode = value; }
-	
+
 	private f32 m_near = 0.1f;
 	private f32 m_far = 100;
 	private f32 m_width = 1;

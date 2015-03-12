@@ -11,7 +11,7 @@ interface IRenderTarget
 	void bind();
 
 	void unbind();
-	
+
 	@property ITexture color();
 	@property ITexture depth();
 }

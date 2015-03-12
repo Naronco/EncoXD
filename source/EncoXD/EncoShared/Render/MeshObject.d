@@ -39,7 +39,7 @@ class MeshObject : GameObject
 				mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1)) *
 				mat4.identity.scale(transform.scale.x, transform.scale.y, transform.scale.z);
 	}
-	
+
 	public @property ref Mesh mesh() { return m_mesh; }
 	public @property ref bool renderRelative() { return m_relative; }
 	public @property ref Material material() { return m_material; }

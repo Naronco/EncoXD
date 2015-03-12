@@ -176,7 +176,7 @@ struct Color
 			f64 sv;
 			i32 sextant;
 			f64 fract, vsf, mid1, mid2;
- 
+
 			m = lightness + lightness - v;
 			sv = (v - m) / v;
 			hue *= 6.0;
@@ -232,11 +232,11 @@ struct Color
 	}
 
 	public @property SDL_Color sdl_color() { return SDL_Color(m_r, m_g, m_b, 255); }
-	
+
 	public @property ref u8 R() { return m_r; }
 	public @property ref u8 G() { return m_g; }
 	public @property ref u8 B() { return m_b; }
-	
+
 	public @property f32 fR() { return m_r * 0.00392156862f; }
 	public @property f32 fG() { return m_g * 0.00392156862f; }
 	public @property f32 fB() { return m_b * 0.00392156862f; }

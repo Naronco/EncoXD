@@ -15,7 +15,7 @@ class GLRenderTarget : IRenderTarget
 		m_color.magFilter = TextureFilterMode.Nearest;
 		m_color.create(width, height, GL_RGB, null);
 
-		
+
 		if(depth)
 		{
 			m_depth = new GLTexture();
@@ -23,17 +23,17 @@ class GLRenderTarget : IRenderTarget
 			m_depth.magFilter = TextureFilterMode.Nearest;
 			m_depth.create(width, height, GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, null, GL_FLOAT);
 		}
-		
+
 		glGenRenderbuffers(1, &drb);
 		glBindRenderbuffer(GL_RENDERBUFFER, drb);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, drb);
-	
+
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_color.id, 0);
 		if(depth)
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depth.id, 0);
 
-			
+
 		if(depth)
 			glDrawBuffers(2, [GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT].ptr);
 		else
@@ -66,7 +66,7 @@ class GLRenderTarget : IRenderTarget
 		glViewport(0, 0, EncoContext.instance.view.width, EncoContext.instance.view.height);
 		EncoContext.instance.renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
 	}
-	
+
 	public @property ITexture color()
 	{
 		return cast(ITexture)m_color;

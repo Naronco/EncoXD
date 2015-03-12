@@ -8,7 +8,7 @@ struct MouseState
 	public vec2 position = vec2(0, 0);
 	public vec2 offset = vec2(0, 0);
 	public bool[] buttons = new bool[8];
-	
+
 	public bool isButtonDown(u8 button)
 	{
 		return buttons[button];
@@ -26,13 +26,13 @@ class Mouse
 	{
 		return state;
 	}
-	
+
 	public static void capture()
 	{
 		SDL_SetRelativeMouseMode(true);
 		SDL_ShowCursor(false);
 	}
-	
+
 	public static void release()
 	{
 		SDL_SetRelativeMouseMode(false);
@@ -61,7 +61,7 @@ class Mouse
 		state.offset.x = x;
 		state.offset.y = y;
 	}
-	
+
 	public static MouseState* state;
 
 	static this()

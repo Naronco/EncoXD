@@ -5,7 +5,7 @@ import EncoShared;
 struct Material
 {
 	public string name;
-	
+
 	public bool blend = false;
 	public bool depth = true;
 

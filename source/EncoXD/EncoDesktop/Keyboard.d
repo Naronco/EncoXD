@@ -6,7 +6,7 @@ import EncoDesktop;
 struct KeyboardState
 {
 	public bool[int] keys;
-	
+
 	public bool isKeyDown(u32 key)
 	{
 		return (key in keys) !is null;

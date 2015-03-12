@@ -74,7 +74,7 @@ class Random
 	{
 		return nextInt(2) == 0;
 	}
-	
+
 	private u64 m_x = 56447;
 	private u64 m_y = 48914;
 	private u64 m_z = 84792;

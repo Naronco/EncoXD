@@ -23,17 +23,17 @@ enum TextureClampMode : i32
 class GLTexture : ITexture
 {
 	public bool enableMipMaps = false;
-	
+
 	public TextureFilterMode minFilter = TextureFilterMode.Linear;
 	public TextureFilterMode magFilter = TextureFilterMode.Linear;
-	
+
 	public TextureClampMode wrapX = TextureClampMode.Repeat;
 	public TextureClampMode wrapY = TextureClampMode.Repeat;
 
 	private i32 inMode, mode;
 	private u32 m_id;
 	private u32 m_width, m_height;
-	
+
 	public @property u32 id() { return m_id; }
 
 	public @property u32 width() { return m_width; }
@@ -63,7 +63,7 @@ class GLTexture : ITexture
 	{
 		create(width, height, GL_RGBA, pixels);
 	}
-	
+
 	public void create(u32 width, u32 height, i32 mode, void[] pixels)
 	{
 		glGenTextures(1, &m_id);
@@ -72,7 +72,7 @@ class GLTexture : ITexture
 		glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
 
 		applyParameters();
-		
+
 		this.inMode = mode;
 		this.mode = mode;
 		m_width = width;
@@ -87,7 +87,7 @@ class GLTexture : ITexture
 		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, type, pixels.ptr);
 
 		applyParameters();
-		
+
 		this.inMode = inMode;
 		this.mode = mode;
 		m_width = width;
@@ -97,7 +97,7 @@ class GLTexture : ITexture
 	public void applyParameters()
 	{
 		bind(0);
-		
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
 
@@ -131,7 +131,7 @@ class GLTexture : ITexture
 		{
 			mode = GL_RGBA;
 		}
-		
+
 		create(bitmap.width, bitmap.height, mode, bitmap.surface.pixels[0 .. bitmap.width * bitmap.height * bitmap.surface.format.BytesPerPixel]);
 	}
 
@@ -147,7 +147,7 @@ class GLTexture : ITexture
 	{
 		glDeleteTextures(1, &m_id);
 	}
-	
+
 	public Bitmap toBitmap()
 	{
 		bind(0);
@@ -173,10 +173,10 @@ class GLTexture3D : ITexture3D
 	private u32 m_width, m_height, m_depth;
 
 	public bool enableMipMaps = false;
-	
+
 	public TextureFilterMode minFilter = TextureFilterMode.Linear;
 	public TextureFilterMode magFilter = TextureFilterMode.Linear;
-	
+
 	public TextureClampMode wrapX = TextureClampMode.Repeat;
 	public TextureClampMode wrapY = TextureClampMode.Repeat;
 	public TextureClampMode wrapZ = TextureClampMode.Repeat;

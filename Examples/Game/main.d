@@ -47,7 +47,7 @@ void main(string[] args)
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
 	// You can now call renderer functions
-				
+
 	renderer.setClearColor(0.8f, 0.8f, 0.8f);
 
 	Camera camera = new Camera();
@@ -64,14 +64,14 @@ void main(string[] args)
 			Logger.writeln("Rotation: ", camera.transform.rotation.y);
 		}
 	};
-	
+
 	camera.addComponent(new DragTableX());
 	camera.addComponent(new DragTableHalfY());
 	game.game3DLayer.applyCamera(camera);
 
 	camera.transform.position = vec3(0, 0, 0);
 	camera.transform.rotation = vec3(-0.9, 0.785398163, 0);
-	
+
 	RenderContext context = RenderContext(camera, vec3(1, 0.5, 0));
 
 	game.game3DLayer.addGameObject(camera);
@@ -87,11 +87,11 @@ void main(string[] args)
 		mstate = Mouse.getState();
 
 		renderer.beginFrame();
-		
+
 		renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
 
 		EncoContext.instance.draw3D(context);
-		
+
 		renderer.gui.begin();
 
 		EncoContext.instance.draw2D();

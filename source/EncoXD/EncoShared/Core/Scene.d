@@ -11,10 +11,10 @@ class RenderLayer
 
 	protected void preUpdate(f64 deltaTime) {}
 	protected void update(f64 deltaTime) {}
-	
+
 	protected void preDraw(RenderContext context, IRenderer renderer) {}
 	protected void draw(RenderContext context, IRenderer renderer) {}
-	
+
 	protected void preDraw2D(GUIRenderer renderer) {}
 	protected void draw2D(GUIRenderer renderer) {}
 
@@ -124,7 +124,7 @@ class Scene
 		}
 		m_layers = null;
 	}
-	
+
 	public IRenderer renderer;
 	public IView view;
 

@@ -32,7 +32,7 @@ class TcpSocket
 		if(!splits[1].isNumeric())
 			return false;
 		port = parse!i16(splits[1]);
-		
+
 		ipaddress = new std.socket.InternetAddress(hostname, port);
 		return true;
 	}

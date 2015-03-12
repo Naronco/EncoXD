@@ -35,7 +35,7 @@ class GL3Renderer : IRenderer
 	public @property bool valid() { return m_valid; }
 
 	public @property GUIRenderer gui() { return m_gui; }
-	
+
 	public void resize(u32 width, u32 height)
 	{
 		m_width = width;

@@ -87,7 +87,7 @@ class Control : GameObject
 	}
 
 	protected abstract void drawGUI(GUIRenderer renderer) {}
-	
+
 	private f32 computeX(f32 x, f32 parentWidth)
 	{
 		if(m_align.getHorizontal() == -1) return x;
@@ -101,24 +101,24 @@ class Control : GameObject
 		else if(m_align.getVertical() == 1) return parentHeight - y - height;
 		else return (cast(i32)(parentHeight - height) >> 1) + y;
 	}
-	
+
 	public @property f32 x() { if(m_parent !is null) return computeX(m_x, m_parent.width) + m_parent.x; return computeX(m_x, m_guiSize.x); }
 	public @property f32 y() { if(m_parent !is null) return computeY(m_y, m_parent.height) + m_parent.y; return computeY(m_y, m_guiSize.y); }
-	
+
 	public @property void x(f32 value) { m_x = value; }
 	public @property void y(f32 value) { m_y = value; }
-	
+
 	public @property ref f32 width() { return m_width; }
 	public @property ref f32 height() { return m_height; }
-	
+
 	public @property ref Color background() { return m_background; }
 	public @property ref Color foreground() { return m_foreground; }
 
 	public @property ref bool visible() { return m_visible; }
 	public @property ref Alignment alignment() { return m_align; }
-	
+
 	public @property Control parent() { return m_parent; }
-	
+
 	private f32 m_x, m_y;
 	private f32 m_width, m_height;
 	private bool m_visible;

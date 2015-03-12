@@ -12,7 +12,7 @@ class GLMaterial
 	public static Material load(IRenderer renderer, string file)
 	{
 		JSONValue value = parseJSON!string(std.file.readText(file));
-		
+
 		assert(value.type == JSON_TYPE.OBJECT);
 		assert(value["Name"].type == JSON_TYPE.STRING);
 		assert(value["Textures"].type == JSON_TYPE.OBJECT);
@@ -21,7 +21,7 @@ class GLMaterial
 
 		Material mat = Material();
 		mat.name = value["Name"].str;
-		
+
 		mat.blend = "Blend" in value && value["Blend"].type == JSON_TYPE.TRUE;
 
 		if("DepthTest" in value)
@@ -76,7 +76,7 @@ class GLMaterial
 
 			vertex = TemplateParser.parse(std.file.readText("shaders/" ~ value["Vertex"]["Base"].str ~ ".vert"), vars);
 		}
-		
+
 		string fragment;
 		if(value["Fragment"].type == JSON_TYPE.STRING)
 		{

@@ -17,10 +17,10 @@ class Player : GameObject
 	private bool m_double;
 
 	public @property bool isDouble() { return m_double; }
-	
+
 	public ref @property int x() { return m_x; }
 	public ref @property int y() { return m_y; }
-	
+
 	public ref @property int topX() { return m_topX; }
 	public ref @property int topY() { return m_topY; }
 
@@ -29,10 +29,10 @@ class Player : GameObject
 	public @property vec3 topPosition() { return m_top.transform.position; }
 
 	public ref @property bool isEnabled() { return m_enabled; }
-	
+
 	public @property i32vec2 respawnPosition() { return i32vec2(m_respawnX, m_respawnY); }
 	public @property void respawnPosition(i32vec2 pos) { m_respawnX = pos.x; m_respawnY = pos.y; }
-	
+
 	public @property i32vec2 finishPosition() { return i32vec2(m_targetX, m_targetY); }
 	public @property void finishPosition(i32vec2 pos) { m_targetX = pos.x; m_targetY = pos.y; }
 
@@ -44,7 +44,7 @@ class Player : GameObject
 		m_respawnX = 0;
 		m_respawnY = 0;
 		m_enabled = true;
-		
+
 		addChild(m_bottom = new MeshObject(mesh, material));
 		addChild(m_top = new MeshObject(mesh, material));
 
@@ -143,7 +143,7 @@ class Player : GameObject
 			}
 		};
 	}
-	
+
 	override protected void update(f64 deltaTime)
 	{
 		transform.position.x = m_x + 0.5f;
@@ -221,16 +221,16 @@ class PlayerLock : IComponent
 	{
 		this.object = object;
 	}
-	
+
 	public override void draw(RenderContext context, IRenderer renderer) {
 	}
-	
+
 	public override void preDraw(RenderContext context, IRenderer renderer) {
 	}
-	
+
 	public override void preUpdate(f64 deltaTime) {
 	}
-	
+
 	public override void update(f64 deltaTime)
 	{
 		pos = (player.transform.position + player.topPosition) * 0.5f;
@@ -241,7 +241,7 @@ class PlayerLock : IComponent
 		object.transform.position = camMovement.value;
 		camera.zoom = zoom.value;
 	}
-	
+
 	private Player player;
 	public GameObject object;
 }

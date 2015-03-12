@@ -9,16 +9,16 @@ class FPSRotation : IComponent
 	{
 		this.object = object;
 	}
-	
+
 	public override void draw(RenderContext context, IRenderer renderer) {
 	}
-	
+
 	public override void preDraw(RenderContext context, IRenderer renderer) {
 	}
-	
+
 	public override void preUpdate(f64 deltaTime) {
 	}
-	
+
 	public override void update(f64 deltaTime)
 	{
 		mstate = Mouse.getState();
@@ -28,7 +28,7 @@ class FPSRotation : IComponent
 		if(object.transform.rotation.x > 1.5707963f) object.transform.rotation.x = 1.5707963f;
 		if(object.transform.rotation.x < -1.5707963f) object.transform.rotation.x = -1.5707963f;
 	}
-	
+
 	private MouseState* mstate;
 	private ControllerState* cstate;
 	public GameObject object;

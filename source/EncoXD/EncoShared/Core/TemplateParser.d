@@ -15,7 +15,7 @@ class TemplateParser
 		{
 			content = replace(content, regex(r"@\{" ~ name ~ r"(?::.*?)?\}", "g"), value);
 		}
-		
+
 		content = replace(content, regex(r"@\{.*?:(.*?)\}", "g"), "$1");
 		auto m = match(content, regex(r"@\{(.*?)\}"));
 		if(m)

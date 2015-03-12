@@ -47,7 +47,7 @@ class MeshUtils
 		m.addIndices([0, 1, 2, 0, 2, 3]);
 		return m;
 	}
-	
+
 	public static Mesh createPlaneZ(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
 	{
 		Mesh m = new Mesh();
@@ -77,7 +77,7 @@ class MeshUtils
 		m.addIndices([2, 1, 0, 3, 2, 0]);
 		return m;
 	}
-	
+
 	public static Mesh createPlaneZInv(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
 	{
 		Mesh m = new Mesh();
@@ -117,10 +117,10 @@ class MeshUtils
 		m.addNormals([
 			vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1),
 			vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1),
-			
+
 			vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0),
 			vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0),
-			
+
 			vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0),
 			vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0)
 		]);
@@ -173,7 +173,7 @@ class Mesh
 
 	public void addTexCoord(vec2 texCoord) { m_texCoords.length++; m_texCoords[m_texCoords.length - 1] = texCoord; }
 	public void addTexCoords(const vec2[] texCoords) { m_texCoords ~= texCoords; }
-	
+
 	public static Mesh[] loadFromObj(string file, u32 flags)
 	{
 		const aiScene* scene = aiImportFile(file.toStringz(), aiProcess_GenNormals |
@@ -201,7 +201,7 @@ class Mesh
 
 			meshes[j] = mesh;
 		}
-		
+
 		return meshes.reverse;
 	}
 

@@ -33,7 +33,7 @@ class DesktopView : IView
 			SDL_DisplayMode current;
 
 			SDL_GetCurrentDisplayMode(0, &current);
-			
+
 			m_size.x = current.w;
 			m_size.y = current.h;
 
@@ -210,7 +210,7 @@ class DesktopView : IView
 		}
 		return false;
 	}
-	
+
 	protected override void onResize()
 	{
 		if(valid)

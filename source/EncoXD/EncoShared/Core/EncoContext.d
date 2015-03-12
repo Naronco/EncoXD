@@ -53,7 +53,7 @@ class EncoContext
 
 	private StopWatch sw;
 	private TickDuration delta;
-	
+
 	public LuaFunction[][string] lua_events;
 
 	public static void create(IView mainView, IRenderer renderer, Scene scene)
@@ -166,7 +166,7 @@ class EncoContext
 	{
 		settings = jsonStr;
 		JSONValue json = parseJSON(jsonStr);
-		
+
 		if(m_renderer !is null)
 			m_renderer.importSettings(json);
 		if(m_mainView !is null)
@@ -177,7 +177,7 @@ class EncoContext
 	{
 		if(m_renderer !is null)
 			m_mainView.create(m_renderer);
-		
+
 		if(m_scene !is null)
 		{
 			if(m_renderer !is null)
@@ -186,7 +186,7 @@ class EncoContext
 				m_scene.view = m_mainView;
 			m_scene.init();
 		}
-		
+
 		if(m_renderer !is null)
 			m_renderer.postImportSettings(parseJSON(settings));
 	}

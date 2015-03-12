@@ -8,7 +8,7 @@ class Bitmap
 
 	public @property SDL_Surface* surface() { return m_handle; }
 	public @property bool valid() { return m_handle !is null; }
-	
+
 	public @property i32 width() { return m_handle.w; }
 	public @property i32 height() { return m_handle.h; }
 

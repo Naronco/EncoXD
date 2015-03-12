@@ -7,10 +7,10 @@ import Player;
 class Block : GameObject
 {
 	protected int m_x, m_y;
-	
+
 	public @property int x() { return m_x; }
 	public @property int y() { return m_y; }
-	
+
 	public @property bool willFall() { return false; }
 
 	public this(int x, int y, Mesh regularPlane, Material material)
@@ -23,7 +23,7 @@ class Block : GameObject
 		mesh.transform.position = vec3(m_x, 0, m_y);
 		addChild(mesh);
 	}
-	
+
 	public void onPlayerStateChange(Player player) {}
 	public void onPlayerRespawn(Player player) {}
 }
