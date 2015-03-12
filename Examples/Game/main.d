@@ -72,7 +72,7 @@ void main(string[] args)
 	camera.transform.position = vec3(0, 0, 0);
 	camera.transform.rotation = vec3(-0.9, 0.785398163, 0);
 
-	RenderContext context = RenderContext(camera, vec3(1, 0.5, 0));
+	RenderContext context = RenderContext(camera, vec3(1, 0.5, 0.3));
 
 	game.game3DLayer.addGameObject(camera);
 
