@@ -27,6 +27,132 @@ class MeshUtils
 		m.addIndices([0, 1, 2, 0, 2, 3]);
 		return m;
 	}
+
+	public static Mesh createPlaneX(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	{
+		Mesh m = new Mesh();
+		m.addVertices([vec3(offset, left, top), vec3(offset, right, top), vec3(offset, right, bottom), vec3(offset, left, bottom)]);
+		m.addTexCoords([vec2(uvX1, uvY1), vec2(uvX2, uvY1), vec2(uvX2, uvY2), vec2(uvX1, uvY2)]);
+		m.addNormals([vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0)]);
+		m.addIndices([0, 1, 2, 0, 2, 3]);
+		return m;
+	}
+
+	public static Mesh createPlaneY(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	{
+		Mesh m = new Mesh();
+		m.addVertices([vec3(left, offset, top), vec3(right, offset, top), vec3(right, offset, bottom), vec3(left, offset, bottom)]);
+		m.addTexCoords([vec2(uvX1, uvY1), vec2(uvX2, uvY1), vec2(uvX2, uvY2), vec2(uvX1, uvY2)]);
+		m.addNormals([vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0)]);
+		m.addIndices([0, 1, 2, 0, 2, 3]);
+		return m;
+	}
+	
+	public static Mesh createPlaneZ(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	{
+		Mesh m = new Mesh();
+		m.addVertices([vec3(left, top, offset), vec3(right, top, offset), vec3(right, bottom, offset), vec3(left, bottom, offset)]);
+		m.addTexCoords([vec2(uvX1, uvY1), vec2(uvX2, uvY1), vec2(uvX2, uvY2), vec2(uvX1, uvY2)]);
+		m.addNormals([vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1)]);
+		m.addIndices([0, 1, 2, 0, 2, 3]);
+		return m;
+	}
+
+	public static Mesh createPlaneXInv(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	{
+		Mesh m = new Mesh();
+		m.addVertices([vec3(offset, left, top), vec3(offset, right, top), vec3(offset, right, bottom), vec3(offset, left, bottom)]);
+		m.addTexCoords([vec2(uvX1, uvY1), vec2(uvX2, uvY1), vec2(uvX2, uvY2), vec2(uvX1, uvY2)]);
+		m.addNormals([vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0)]);
+		m.addIndices([2, 1, 0, 3, 2, 0]);
+		return m;
+	}
+
+	public static Mesh createPlaneYInv(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	{
+		Mesh m = new Mesh();
+		m.addVertices([vec3(left, offset, top), vec3(right, offset, top), vec3(right, offset, bottom), vec3(left, offset, bottom)]);
+		m.addTexCoords([vec2(uvX1, uvY1), vec2(uvX2, uvY1), vec2(uvX2, uvY2), vec2(uvX1, uvY2)]);
+		m.addNormals([vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0)]);
+		m.addIndices([2, 1, 0, 3, 2, 0]);
+		return m;
+	}
+	
+	public static Mesh createPlaneZInv(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	{
+		Mesh m = new Mesh();
+		m.addVertices([vec3(left, top, offset), vec3(right, top, offset), vec3(right, bottom, offset), vec3(left, bottom, offset)]);
+		m.addTexCoords([vec2(uvX1, uvY1), vec2(uvX2, uvY1), vec2(uvX2, uvY2), vec2(uvX1, uvY2)]);
+		m.addNormals([vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1)]);
+		m.addIndices([2, 1, 0, 3, 2, 0]);
+		return m;
+	}
+
+
+	public static Mesh createCube(f32 diaX = 1, f32 diaY = 1, f32 diaZ = 1, f32 offX = 0, f32 offY = 0, f32 offZ = 0)
+	{
+		Mesh m = new Mesh();
+		vec3 off = vec3(offX, offY, offZ);
+		m.addVertices([
+			vec3(-diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(-diaX, diaY, -diaZ) + off,
+
+			vec3(-diaX, -diaY, diaZ) + off, vec3(diaX, -diaY, diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(-diaX, diaY, diaZ) + off,
+
+			vec3(-diaX, -diaY, -diaZ) + off, vec3(-diaX, diaY, -diaZ) + off, vec3(-diaX, diaY, diaZ) + off, vec3(-diaX, -diaY, diaZ) + off,
+
+			vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(diaX, -diaY, diaZ) + off,
+
+			vec3(-diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, diaZ) + off, vec3(-diaX, -diaY, diaZ) + off,
+
+			vec3(-diaX, diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(-diaX, diaY, diaZ) + off
+		]);
+		m.addTexCoords([
+			vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
+			vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
+			vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
+			vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
+			vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
+			vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1)
+		]);
+		m.addNormals([
+			vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1),
+			vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1),
+			
+			vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0),
+			vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0),
+			
+			vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0),
+			vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0)
+		]);
+		m.addIndices([
+			2, 1, 0, 3, 2, 0,
+			4, 5, 6, 4, 6, 7,
+			10, 9, 8, 11, 10, 8,
+			12, 13, 14, 12, 14, 15,
+			16, 17, 18, 16, 18, 19,
+			22, 21, 20, 23, 22, 20
+		]);
+		return m;
+	}
+
+	public static Mesh merge(Mesh[] meshes)
+	{
+		Mesh m = new Mesh();
+		u32 maxIndex = 0;
+		foreach(ref Mesh mesh; meshes)
+		{
+			m.addVertices(mesh.vertices);
+			m.addTexCoords(mesh.texCoords);
+			m.addNormals(mesh.normals);
+			u32 off = maxIndex;
+			foreach(ref u32 index; mesh.indices)
+			{
+				m.addIndex(index + off);
+				maxIndex = max(maxIndex, index);
+			}
+		}
+		return m;
+	}
 }
 
 class Mesh
