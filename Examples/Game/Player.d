@@ -52,96 +52,286 @@ class Player : GameObject
 		{
 			if(key == Key.D)
 			{
-				if(m_topState == 0)
-				{
-					m_topState = 1;
-					m_x++;
-				}
-				else if(m_topState == 1)
-				{
-					m_x += 2;
-					m_topState = 0;
-				}
-				else if(m_topState == 2)
-				{
-					m_x += 1;
-					m_topState = 0;
-				}
-				else
-				{
-					m_x++;
-				}
+				moveRight();
 			}
 
 			if(key == Key.S)
 			{
-				if(m_topState == 0)
-				{
-					m_topState = 3;
-					m_y++;
-				}
-				else if(m_topState == 3)
-				{
-					m_y += 2;
-					m_topState = 0;
-				}
-				else if(m_topState == 4)
-				{
-					m_y += 1;
-					m_topState = 0;
-				}
-				else
-				{
-					m_y++;
-				}
+				moveBack();
 			}
 
 			if(key == Key.A)
 			{
-				if(m_topState == 0)
-				{
-					m_topState = 2;
-					m_x--;
-				}
-				else if(m_topState == 1)
-				{
-					m_x -= 1;
-					m_topState = 0;
-				}
-				else if(m_topState == 2)
-				{
-					m_x -= 2;
-					m_topState = 0;
-				}
-				else
-				{
-					m_x--;
-				}
+				moveLeft();
 			}
 
 			if(key == Key.W)
 			{
-				if(m_topState == 0)
-				{
-					m_topState = 4;
-					m_y--;
-				}
-				else if(m_topState == 4)
-				{
-					m_y -= 2;
-					m_topState = 0;
-				}
-				else if(m_topState == 3)
-				{
-					m_y -= 1;
-					m_topState = 0;
-				}
-				else
-				{
-					m_y--;
-				}
+				moveFront();
 			}
 		};
+	}
+
+	public int getDirection()
+	{
+		float rota = radToDeg(((m_camRotation % PI2) + PI2) % PI2);
+		if(rota >= 45 && rota < 135) return 1;
+		if(rota >= 135 && rota < 225) return 2;
+		if(rota >= 225 && rota < 315) return 3;
+		return 0;
+	}
+
+	public void moveRight()
+	{
+		int dir = getDirection();
+
+		int steps = 1;
+
+		if(m_topState == 0)
+		{
+			if(dir == 0) m_topState = 1;
+			if(dir == 1) m_topState = 4;
+			if(dir == 2) m_topState = 2;
+			if(dir == 3) m_topState = 3;
+		}
+		else if(m_topState == 1)
+		{
+			if(dir == 0)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 2) m_topState = 0;
+		}
+		else if(m_topState == 2)
+		{
+			if(dir == 0) m_topState = 0;
+			if(dir == 2)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+		else if(m_topState == 3)
+		{
+			if(dir == 1) m_topState = 0;
+			if(dir == 3)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+		else if(m_topState == 4)
+		{
+			if(dir == 1)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 3) m_topState = 0;
+		}
+
+		moveRelativeX(steps);
+	}
+
+	public void moveLeft()
+	{
+		int dir = getDirection();
+
+		int steps = 1;
+
+		if(m_topState == 0)
+		{
+			if(dir == 0) m_topState = 2;
+			if(dir == 1) m_topState = 3;
+			if(dir == 2) m_topState = 1;
+			if(dir == 3) m_topState = 4;
+		}
+		else if(m_topState == 1)
+		{
+			if(dir == 0) m_topState = 0;
+			if(dir == 2)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+		else if(m_topState == 2)
+		{
+			if(dir == 0)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 2) m_topState = 0;
+		}
+		else if(m_topState == 3)
+		{
+			if(dir == 1)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 3) m_topState = 0;
+		}
+		else if(m_topState == 4)
+		{
+			if(dir == 1) m_topState = 0;
+			if(dir == 3)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+
+		moveRelativeX(-steps);
+	}
+
+	public void moveFront()
+	{
+		int dir = getDirection();
+
+		int steps = 1;
+
+		
+		if(m_topState == 0)
+		{
+			if(dir == 0) m_topState = 4;
+			if(dir == 1) m_topState = 2;
+			if(dir == 2) m_topState = 3;
+			if(dir == 3) m_topState = 1;
+		}
+		else if(m_topState == 2)
+		{
+			if(dir == 1)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 3) m_topState = 0;
+		}
+		else if(m_topState == 1)
+		{
+			if(dir == 1) m_topState = 0;
+			if(dir == 3)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+		else if(m_topState == 4)
+		{
+			if(dir == 0)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 2) m_topState = 0;
+		}
+		else if(m_topState == 3)
+		{
+			if(dir == 0) m_topState = 0;
+			if(dir == 2)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+
+		moveRelativeY(-steps);
+	}
+
+	public void moveBack()
+	{
+		int dir = getDirection();
+
+		int steps = 1;
+
+		if(m_topState == 0)
+		{
+			if(dir == 0) m_topState = 3;
+			if(dir == 1) m_topState = 1;
+			if(dir == 2) m_topState = 4;
+			if(dir == 3) m_topState = 2;
+		}
+		else if(m_topState == 1)
+		{
+			if(dir == 1)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 3) m_topState = 0;
+		}
+		else if(m_topState == 2)
+		{
+			if(dir == 1) m_topState = 0;
+			if(dir == 3)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+		else if(m_topState == 3)
+		{
+			if(dir == 0)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+			if(dir == 2) m_topState = 0;
+		}
+		else if(m_topState == 4)
+		{
+			if(dir == 0) m_topState = 0;
+			if(dir == 2)
+			{
+				m_topState = 0;
+				steps = 2;
+			}
+		}
+
+		moveRelativeY(steps);
+	}
+
+	private void moveRelativeX(int steps)
+	{
+		int dir = getDirection();
+
+		if(dir == 2) steps = -steps;
+
+		if(dir == 3)
+		{
+			m_y += steps;
+		}
+		else if(dir == 1)
+		{
+			m_y -= steps;
+		}
+		else
+		{
+			m_x += steps;
+		}
+	}
+
+	private void moveRelativeY(int steps)
+	{
+		int dir = getDirection();
+		
+		if(dir == 2) steps = -steps;
+		
+		if(dir == 1)
+		{
+			m_x += steps;
+		}
+		else if(dir == 3)
+		{
+			m_x -= steps;
+		}
+		else
+		{
+			m_y += steps;
+		}
 	}
 
 	override protected void update(f64 deltaTime)
@@ -188,7 +378,7 @@ class PlayerLock : IComponent
 {
 	AnimatedFunctionValue!vec3 camMovement;
 	AnimatedProperty!f64 zoom;
-	f64 zoomVal = 5;
+	f64 zoomVal = 8;
 	Camera camera;
 	vec3 pos;
 
@@ -202,12 +392,11 @@ class PlayerLock : IComponent
 		};
 		camMovement.length = 300;
 
-		zoom = new AnimatedProperty!f64(10);
+		zoom = new AnimatedProperty!f64(zoomVal);
 		zoom.length = 30;
 		zoom.easingType = "quadratic";
 
 		EncoContext.instance.onScroll += (s, v) {
-			Logger.writeln("SCROLL ", v.x, " ", v.y);
 			zoomVal += v.y * -0.5f;
 			if(zoomVal < 2) zoomVal = 2;
 			if(zoomVal > 20) zoomVal = 20;
@@ -235,6 +424,7 @@ class PlayerLock : IComponent
 	{
 		pos = (player.transform.position + player.topPosition) * 0.5f;
 		pos.y = 0.5f;
+		player.camRotation = camera.transform.rotation.y;
 		camMovement.value = pos;
 		camMovement.update(deltaTime);
 		zoom.update(deltaTime);
