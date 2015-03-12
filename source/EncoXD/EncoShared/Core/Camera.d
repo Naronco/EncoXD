@@ -55,6 +55,8 @@ class Camera : GameObject
 	public @property f32 width() { return m_width; }
 	public @property f32 height() { return m_height; }
 	public @property f32 fov() { return m_fov; }
+
+	/// Zoom for Orthographic3D (Defaults to 7)
 	public @property f32 zoom() { return 1 / m_iZoom; }
 	public @property ProjectionMode projectionMode() { return m_mode; }
 	
@@ -63,7 +65,9 @@ class Camera : GameObject
 	public @property void width(f32 value) { m_needUpdate = m_needUpdate || m_width != value; m_width = value; }
 	public @property void height(f32 value) { m_needUpdate = m_needUpdate || m_height != value; m_height = value; }
 	public @property void fov(f32 value) { m_needUpdate = m_needUpdate || m_fov != value; m_fov = value; }
-	public @property void zoom(f32 value) { m_iZoom = 1 / value; }
+
+	/// Zoom for Orthographic3D (Defaults to 7)
+	public @property void zoom(f32 value) { m_needUpdate = true; m_iZoom = 1 / value; }
 	public @property void projectionMode(ProjectionMode value) { m_needUpdate = m_needUpdate || m_mode != value; m_mode = value; }
 	
 	private f32 m_near = 0.1f;
