@@ -80,4 +80,16 @@ class Bitmap
 	{
 		SDL_FillRect(m_handle, new SDL_Rect(x, y, width, height), mapRGB(color));
 	}
+
+	public Color getPixel(i32 x, i32 y)
+	{
+		u8 r, g, b;
+		SDL_GetRGB((cast(u32*)m_handle.pixels)[x + y * width], m_handle.format, &r, &g, &b);
+		return Color(r, g, b);
+	}
+
+	public void setPixel(i32 x, i32 y, Color color)
+	{
+		(cast(u32*)m_handle.pixels)[x + y * width] = mapRGB(color);
+	}
 }
