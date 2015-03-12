@@ -31,6 +31,7 @@ public
 	import Enco.Shared.Core.Logger;
 	import Enco.Shared.Core.Event;
 	import Enco.Shared.Core.Window;
+	import Enco.Shared.Core.TimeHelper;
 	
 	import Enco.Shared.Render.IRenderer;
 	import Enco.Shared.Render.ITexture;
@@ -84,4 +85,7 @@ public
 
 	enum ENCO_VERSION = "1.0.0";
 	enum ENCO_VERSION_ID = 1;
+	
+	static float degToRad(float f) { return f * 0.0174532925f; }
+	static float radToDeg(float f) { return f * 57.2957795f; }
 }

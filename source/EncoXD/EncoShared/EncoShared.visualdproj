@@ -218,6 +218,7 @@
    <File path="Core\Logger.d" />
    <File path="Core\Scene.d" />
    <File path="Core\TemplateParser.d" />
+   <File path="Core\TimeHelper.d" />
    <File path="Core\Window.d" />
   </Folder>
   <Folder name="Ext">
