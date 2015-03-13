@@ -5,7 +5,8 @@
 		"0":
 		{
 			"File": "tex/tree.png",
-			"MipMap": true
+			"MipMap": false,
+			"Smooth": false
 		}
 	},
 	"Vertex": "default",
