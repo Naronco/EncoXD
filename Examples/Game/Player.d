@@ -50,22 +50,19 @@ class Player : GameObject
 
 		EncoContext.instance.onKeyDown += (sender, key)
 		{
-			if(key == Key.D)
+			if(key == Key.D || key == Key.Right)
 			{
 				moveRight();
 			}
-
-			if(key == Key.S)
+			if(key == Key.S || key == Key.Down)
 			{
 				moveBack();
 			}
-
-			if(key == Key.A)
+			if(key == Key.A || key == Key.Left)
 			{
 				moveLeft();
 			}
-
-			if(key == Key.W)
+			if(key == Key.W || key == Key.Up)
 			{
 				moveFront();
 			}
