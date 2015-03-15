@@ -203,6 +203,12 @@
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
  <Folder name="Game">
+  <Folder name="Blocks">
+   <File path="..\..\blocks\default.lua" />
+  </Folder>
+  <Folder name="Plugins">
+   <File path="..\..\plugins\default.lua" />
+  </Folder>
   <File path="DragTable.d" />
   <File path="Level.d" />
   <File path="main.d" />

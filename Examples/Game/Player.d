@@ -15,11 +15,16 @@ class Player : GameObject
 	private f32 m_camRotation = 0;
 
 	private bool m_double;
+	
+	public Trigger onStateChange = new Trigger;
+	public Trigger onRespawn = new Trigger;
 
 	public @property bool isDouble() { return m_double; }
 
 	public ref @property int x() { return m_x; }
 	public ref @property int y() { return m_y; }
+
+	public @property int topState() { return m_topState; }
 
 	public ref @property int topX() { return m_topX; }
 	public ref @property int topY() { return m_topY; }
@@ -44,6 +49,8 @@ class Player : GameObject
 		m_respawnX = 0;
 		m_respawnY = 0;
 		m_enabled = true;
+		m_topX = 0;
+		m_topY = 0;
 
 		addChild(m_bottom = new MeshObject(mesh, material));
 		addChild(m_top = new MeshObject(mesh, material));
@@ -67,6 +74,15 @@ class Player : GameObject
 				moveFront();
 			}
 		};
+	}
+
+	public void respawn()
+	{
+		m_x = m_respawnX;
+		m_y = m_respawnY;
+		m_double = true;
+		m_topState = 0;
+		onRespawn();
 	}
 
 	public int getDirection()
@@ -309,6 +325,8 @@ class Player : GameObject
 		{
 			m_x += steps;
 		}
+
+		onStateChange();
 	}
 
 	private void moveRelativeY(int steps)
@@ -329,6 +347,8 @@ class Player : GameObject
 		{
 			m_y += steps;
 		}
+		
+		onStateChange();
 	}
 
 	override protected void update(f64 deltaTime)

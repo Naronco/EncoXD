@@ -6,24 +6,93 @@ import DragTable;
 import Level;
 import Player;
 
+import std.file;
+
 class Game3DLayer : RenderLayer
 {
 	private Player player;
+	private int currentLevel = 1;
+	private Material[] materials;
 
 	public override void init(Scene scene)
 	{
-		Level level = new Level();
-		if(!level.fromBitmap("levels/level0.png", GLMaterial.load(scene.renderer, "materials/metal.json"), scene.renderer))
-			throw new Exception("Invalid Level!");
-		level.setPlayer(player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "materials/player.json")));
-		addGameObject(level);
-
-		Logger.writeln("Loaded Game3DLayer");
 	}
 
 	public void applyCamera(Camera camera)
 	{
 		camera.addComponent(new PlayerLock(player, camera));
+	}
+
+	public void setLua(LuaState lua)
+	{
+		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "materials/player.json"));
+		Level level = new Level(lua, player);
+
+		materials ~= GLMaterial.load(scene.renderer, "materials/metal.json");
+
+		auto blocks = dirEntries("blocks/", SpanMode.shallow, false);
+
+		auto plugins = dirEntries("plugins/", SpanMode.shallow, false);
+		
+		lua["registerBlock"] = &level.registerBlock;
+
+		lua["onRespawn"] = &level.onRespawn;
+
+		lua["onStateChange"] = &level.onStateChange;
+
+		lua["hasBlock"] = &level.hasBlock;
+
+		LuaTable playerTable = lua.newTable();
+
+		playerTable["isDouble"] = () { return player.isDouble; };
+
+		playerTable["getState"] = () { return player.topState; };
+
+		playerTable["getX"] = () { return player.x; };
+		playerTable["getY"] = () { return player.y; };
+		playerTable["setX"] = (int v) { player.x = v; };
+		playerTable["setY"] = (int v) { player.y = v; };
+
+		playerTable["setRespawnX"] = (int v) { player.respawnPosition = i32vec2(v, player.respawnPosition.y); };
+		playerTable["setRespawnY"] = (int v) { player.respawnPosition = i32vec2(player.respawnPosition.x, v); };
+		playerTable["getRespawnX"] = () { return player.respawnPosition.x; };
+		playerTable["getRespawnY"] = () { return player.respawnPosition.y; };
+		
+		playerTable["setFinishX"] = (int v) { player.finishPosition = i32vec2(v, player.finishPosition.y); };
+		playerTable["setFinishY"] = (int v) { player.finishPosition = i32vec2(player.finishPosition.x, v); };
+		playerTable["getFinishX"] = () { return player.finishPosition.x; };
+		playerTable["getFinishY"] = () { return player.finishPosition.y; };
+		
+		playerTable["respawn"] = &player.respawn;
+
+		lua["player"] = playerTable;
+
+		lua["win"] = () {
+			if(!level.fromBitmap("levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
+				throw new Exception("Invalid Level!");
+		};
+
+		foreach(string file; plugins)
+		{
+			if(file.endsWith(".lua"))
+			{
+				lua.doFile(file);
+				Logger.writeln("Loaded plugin from ", file);
+			}
+		}
+
+		foreach(string file; blocks)
+		{
+			if(file.endsWith(".lua"))
+			{
+				lua.doFile(file);
+				Logger.writeln("Loaded blocks from ", file);
+			}
+		}
+
+		if(!level.fromBitmap("levels/level0.png", materials, scene.renderer))
+			throw new Exception("Invalid Level!");
+		addGameObject(level);
 	}
 }
 
@@ -43,12 +112,13 @@ void main(string[] args)
 	GameScene game = new GameScene();
 	EncoContext.create(new DesktopView(), renderer, game);
 
-	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
+	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.Lua, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
 	// You can now call renderer functions
 
 	renderer.setClearColor(0.8f, 0.8f, 0.8f);
+	auto lua = EncoContext.instance.createLuaState();
 
 	Camera camera = new Camera();
 	camera.farClip = 1000;
@@ -67,13 +137,14 @@ void main(string[] args)
 
 	camera.addComponent(new DragTableX());
 	camera.addComponent(new DragTableHalfY());
-	game.game3DLayer.applyCamera(camera);
 
 	camera.transform.position = vec3(0, 0, 0);
 	camera.transform.rotation = vec3(-0.9, 0.785398163, 0);
 
 	RenderContext context = RenderContext(camera, vec3(1, 0.5, 0.3));
-
+	
+	game.game3DLayer.setLua(lua);
+	game.game3DLayer.applyCamera(camera);
 	game.game3DLayer.addGameObject(camera);
 
 	KeyboardState* state = Keyboard.getState();

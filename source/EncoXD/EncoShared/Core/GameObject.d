@@ -1,10 +1,12 @@
 module Enco.Shared.Core.GameObject;
 
+import std.algorithm;
+
 import EncoShared;
 
 class GameObject
 {
-	private GameObject[] children;
+	private GameObject[] m_children;
 
 	public this()
 	{
@@ -18,7 +20,17 @@ class GameObject
 	public void addChild(GameObject child)
 	{
 		if(child == this) return;
-		children ~= child;
+		m_children ~= child;
+	}
+
+	public void removeChild(GameObject child)
+	{
+		m_children = remove!(c => c == child)(m_children);
+	}
+
+	public @property GameObject[] children()
+	{
+		return m_children;
 	}
 
 	protected void update(f64 deltaTime) {}
@@ -34,7 +46,7 @@ class GameObject
 			com.preUpdate(deltaTime);
 		}
 
-		foreach(ref GameObject child; children)
+		foreach(ref GameObject child; m_children)
 			child.performUpdate(deltaTime);
 		update(deltaTime);
 
@@ -53,7 +65,7 @@ class GameObject
 			com.preDraw(context, renderer);
 		}
 
-		foreach(ref GameObject child; children)
+		foreach(ref GameObject child; m_children)
 			child.performDraw(context, renderer);
 		draw(context, renderer);
 
@@ -70,7 +82,7 @@ class GameObject
 			com.preDraw2D(renderer);
 		}
 
-		foreach(ref GameObject child; children)
+		foreach(ref GameObject child; m_children)
 			child.performDraw2D(renderer);
 		draw2D(renderer);
 

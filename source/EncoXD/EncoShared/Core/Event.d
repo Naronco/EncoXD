@@ -2,7 +2,7 @@ module Enco.Shared.Core.Event;
 
 import EncoShared;
 
-class Event(T)
+class Event(T...)
 {
 	alias EventMethod = void delegate(const Object, const T);
 	private EventMethod[] funcs;

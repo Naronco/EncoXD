@@ -1,5 +1,7 @@
 module Level;
 
+import std.file;
+
 import EncoShared;
 
 import Player;
@@ -28,90 +30,131 @@ class Block : GameObject
 	public void onPlayerRespawn(Player player) {}
 }
 
+class LuaBlock : Block
+{
+	private LuaFunction m_playerStateChange;
+	private LuaFunction m_playerRespawn;
+
+	public this(int x, int y, Mesh regularPlane, Material material, LuaFunction playerStateChange, LuaFunction playerRespawn)
+	{
+		super(x, y, regularPlane, material);
+		m_playerStateChange = playerStateChange;
+		m_playerRespawn = playerRespawn;
+	}
+
+	override public void onPlayerStateChange(Player player)
+	{
+		m_playerStateChange(x - 1, y - 1);
+	}
+
+	override public void onPlayerRespawn(Player player)
+	{
+		m_playerRespawn(x - 1, y - 1);
+	}
+}
+
+struct BlockRegister
+{
+	int rgb;
+	u8 mid;
+	LuaFunction added;
+	LuaFunction playerStateChange;
+	LuaFunction playerRespawn;
+}
+
 class Level : GameObject
 {
 	private i32vec2 m_finish, m_start;
+	private LuaState m_lua;
+	private BlockRegister[] m_registered;
+	private Block[] m_blocks;
+	private LuaFunction[] m_respawnEvents;
+	private LuaFunction[] m_stateEvents;
+	private Player player;
 
-	public this()
+	public this(LuaState lua, Player player)
 	{
+		m_lua = lua;
+		this.player = player;
+		addChild(player);
+
+		player.onRespawn += () {
+			foreach(ref Block block; m_blocks)
+				block.onPlayerRespawn(player);
+			foreach(ref LuaFunction evt; m_respawnEvents)
+				evt();
+		};
+
+		player.onStateChange += () {
+			foreach(ref Block block; m_blocks)
+				block.onPlayerStateChange(player);
+			foreach(ref LuaFunction evt; m_stateEvents)
+				evt();
+		};
 	}
 
-	public bool fromBitmap(string path, Material material, IRenderer renderer)
+	private void registerBlock(u8 r, u8 g, u8 b, u8 mid, LuaFunction added, LuaFunction playerStateChange, LuaFunction playerRespawn)
 	{
+		m_registered ~= BlockRegister(r << 16 | g << 8 | b, mid, added, playerStateChange, playerRespawn);
+	}
+
+	private void onRespawn(LuaFunction f)
+	{
+		m_respawnEvents ~= f;
+	}
+
+	private void onStateChange(LuaFunction f)
+	{
+		m_stateEvents ~= f;
+	}
+
+	public bool hasBlock(int x, int y)
+	{
+		foreach(ref Block block; m_blocks)
+			if(block.x - 1 == x && block.y - 1 == y)
+				return true;
+		return false;
+	}
+
+	public bool fromBitmap(string path, Material materials[], IRenderer renderer)
+	{
+		if(!exists(path))
+		{
+			Logger.errln(path, " doesn't exist");
+			return false;
+		}
+		foreach(ref Block block; m_blocks)
+		{
+			removeChild(block);
+		}
+		m_blocks.length = 0;
 		Bitmap bmp = Bitmap.load(path);
 		scope(exit) bmp.destroy();
 		Mesh boxes = MeshUtils.createCube(0.5f, 0.2f, 0.5f, -0.5f, -0.2f, -0.5f);
 		boxes = renderer.createMesh(boxes);
 		for(int x = 0; x < bmp.width; x++)
 		{
-			for(int y = 0; y < bmp.height; y++)
+			PxLoop: for(int y = 0; y < bmp.height; y++)
 			{
 				Color pixel = bmp.getPixel(x, y);
-				if(pixel.R == 0) // Block
+				if(pixel.RGB == 16777215) continue PxLoop; // #FFFFFF
+				foreach(ref BlockRegister block; m_registered)
 				{
-					if(pixel.G == 0) // Regular Block
+					if(pixel.RGB == block.rgb)
 					{
-						addChild(new Block(x, y, boxes, material));
-					}
-					else if(pixel.G == 32) // Donut Block
-					{
-						addChild(new Block(x, y, boxes, material));
-					}
-					else
-					{
-						Logger.errln("Invalid Color at ", x, "-", y, " (", pixel.R, ", ", pixel.G, ", ", pixel.B, ")");
-						return false;
+						block.added(x - 1, y - 1);
+						Block b = new LuaBlock(x, y, boxes, materials[block.mid], block.playerStateChange, block.playerRespawn);
+						m_blocks ~= b;
+						addChild(b);
+						continue PxLoop;
 					}
 				}
-				else if(pixel.R == 32) // Switch / Path
-				{
-
-				}
-				else if(pixel.R == 64) // Splitter
-				{
-
-				}
-				else if(pixel.R == 96) // Trigger
-				{
-					if(pixel.B == 0)
-					{
-						m_start = i32vec2(x, y);
-						addChild(new Block(x, y, boxes, material));
-					}
-					else if(pixel.B == 127)
-					{
-
-					}
-					else if(pixel.B == 255)
-					{
-						m_finish = i32vec2(x, y);
-						addChild(new Block(x, y, boxes, material));
-					}
-					else
-					{
-						Logger.errln("Invalid Color at ", x, "-", y, " (", pixel.R, ", ", pixel.G, ", ", pixel.B, ")");
-						return false;
-					}
-				}
-				else if(pixel.R == 255) {} // Air
-				else
-				{
-					Logger.errln("Invalid Color at ", x, "-", y, " (", pixel.R, ", ", pixel.G, ", ", pixel.B, ")");
-					return false;
-				}
+				Logger.errln("Invalid Block at ", x, ", ", y, ": #", format("%06x", pixel.RGB), " (", pixel.RGB, ") RGB: ", pixel.R, ", ", pixel.G, ", ", pixel.B);
+				return false;
 			}
 		}
+
+		player.respawn();
 		return true;
-	}
-
-	public Level setPlayer(Player player)
-	{
-		player.x = m_start.x;
-		player.y = m_start.y;
-		player.finishPosition = m_finish;
-
-		addChild(player);
-
-		return this;
 	}
 }
