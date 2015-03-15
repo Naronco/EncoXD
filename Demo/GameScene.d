@@ -41,9 +41,9 @@ class Game3DLayer : RenderLayer
 			carY.value = up ? 0 : 5;
 		};
 
-		auto car = Mesh.loadFromObj("meshes/car.obj", 0);
+		auto car = Mesh.loadFromObj("meshes/lamborghini.obj", 0);
 		carGlassObj = addGameObject(new MeshObject(car[0], GLMaterial.load(scene.renderer, "materials/glass.json")));
-		carObj = addGameObject(new MeshObject(car[1], GLMaterial.load(scene.renderer, "materials/car.json")));
+		carObj = addGameObject(new MeshObject(car[1], GLMaterial.load(scene.renderer, "materials/lamborghini.json")));
 	}
 
 	override protected void update(f64 deltaTime)

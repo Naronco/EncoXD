@@ -1,0 +1,19 @@
+{
+	"Name": "Car",
+	"Textures":
+	{
+		"0":
+		{
+			"File": "tex/lamborghini.png",
+			"MipMap": true
+		}
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "specular",
+		"Ambient": "vec3(0.1, 0.1, 0.1)",
+		"Color": "tex(slot0)",
+		"Shininess": "50"
+	}
+}
