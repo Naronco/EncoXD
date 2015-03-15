@@ -112,7 +112,7 @@ void main(string[] args)
 	GameScene game = new GameScene();
 	EncoContext.create(new DesktopView(), renderer, game);
 
-	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.Lua, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
+	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Lua, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
 	// You can now call renderer functions
