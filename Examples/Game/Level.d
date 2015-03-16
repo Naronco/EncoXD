@@ -112,8 +112,15 @@ class Level : GameObject
 	{
 		foreach(ref Block block; m_blocks)
 			if(block.x - 1 == x && block.y - 1 == y)
-				return true;
+				return block.enabled;
 		return false;
+	}
+
+	public void setEnabled(int x, int y, bool val)
+	{
+		foreach(ref Block block; m_blocks)
+			if(block.x - 1 == x && block.y - 1 == y)
+				block.enabled = val;
 	}
 
 	public bool fromBitmap(string path, Material materials[], IRenderer renderer)

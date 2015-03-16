@@ -27,8 +27,11 @@ class Game3DLayer : RenderLayer
 	{
 		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "materials/player.json"));
 		Level level = new Level(lua, player);
-
+		
 		materials ~= GLMaterial.load(scene.renderer, "materials/metal.json");
+		materials ~= GLMaterial.load(scene.renderer, "materials/start.json");
+		materials ~= GLMaterial.load(scene.renderer, "materials/finish.json");
+		materials ~= GLMaterial.load(scene.renderer, "materials/checkpoint.json");
 
 		auto blocks = dirEntries("blocks/", SpanMode.shallow, false);
 
@@ -41,6 +44,12 @@ class Game3DLayer : RenderLayer
 		lua["onStateChange"] = &level.onStateChange;
 
 		lua["hasBlock"] = &level.hasBlock;
+
+		lua["setBlockEnabled"] = &level.setEnabled;
+
+		Random rnd = new Random();
+
+		lua["random"] = &rnd.nextInt;
 
 		LuaTable playerTable = lua.newTable();
 
