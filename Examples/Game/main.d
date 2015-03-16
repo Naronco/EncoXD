@@ -11,8 +11,9 @@ import std.file;
 class Game3DLayer : RenderLayer
 {
 	private Player player;
-	private int currentLevel = 1;
+	private int currentLevel = 0;
 	private Material[] materials;
+	private Level level;
 
 	public override void init(Scene scene)
 	{
@@ -23,10 +24,16 @@ class Game3DLayer : RenderLayer
 		camera.addComponent(new PlayerLock(player, camera));
 	}
 
+	public void nextLevel()
+	{
+		if(!level.fromBitmap("levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
+			throw new Exception("Invalid Level!");
+	}
+
 	public void setLua(LuaState lua)
 	{
 		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "materials/player.json"));
-		Level level = new Level(lua, player);
+		level = new Level(lua, player);
 		
 		materials ~= GLMaterial.load(scene.renderer, "materials/metal.json");
 		materials ~= GLMaterial.load(scene.renderer, "materials/start.json");
@@ -38,6 +45,8 @@ class Game3DLayer : RenderLayer
 		auto plugins = dirEntries("plugins/", SpanMode.shallow, false);
 		
 		lua["registerBlock"] = &level.registerBlock;
+
+		lua["registerBlockImportant"] = &level.registerBlockImportant;
 
 		lua["onRespawn"] = &level.onRespawn;
 
@@ -77,8 +86,7 @@ class Game3DLayer : RenderLayer
 		lua["player"] = playerTable;
 
 		lua["win"] = () {
-			if(!level.fromBitmap("levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
-				throw new Exception("Invalid Level!");
+			nextLevel();
 		};
 
 		foreach(string file; plugins)
@@ -99,8 +107,7 @@ class Game3DLayer : RenderLayer
 			}
 		}
 
-		if(!level.fromBitmap("levels/level0.png", materials, scene.renderer))
-			throw new Exception("Invalid Level!");
+		nextLevel();
 		addGameObject(level);
 	}
 }
@@ -141,6 +148,10 @@ void main(string[] args)
 		if(key == Key.F1)
 		{
 			Logger.writeln("Rotation: ", camera.transform.rotation.y);
+		}
+		if(key == Key.F2)
+		{
+			game.game3DLayer.nextLevel();
 		}
 	};
 

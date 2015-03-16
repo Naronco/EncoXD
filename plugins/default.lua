@@ -1,5 +1,4 @@
---onStateChange(function()
-function derp()
+onStateChange(function()
 	if not hasBlock(player.getX(), player.getY()) then
 		player.respawn()
 	end
@@ -15,4 +14,4 @@ function derp()
 	if player.getState() == 4 and not hasBlock(player.getX(), player.getY() - 1) then
 		player.respawn()
 	end
-end
+end)

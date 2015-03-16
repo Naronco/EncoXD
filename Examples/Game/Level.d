@@ -67,6 +67,7 @@ class Level : GameObject
 	private i32vec2 m_finish, m_start;
 	private LuaState m_lua;
 	private BlockRegister[] m_registered;
+	private BlockRegister[] m_registeredI;
 	private Block[] m_blocks;
 	private LuaFunction[] m_respawnEvents;
 	private LuaFunction[] m_stateEvents;
@@ -96,6 +97,11 @@ class Level : GameObject
 	private void registerBlock(u8 r, u8 g, u8 b, u8 mid, LuaFunction added, LuaFunction playerStateChange, LuaFunction playerRespawn)
 	{
 		m_registered ~= BlockRegister(r << 16 | g << 8 | b, mid, added, playerStateChange, playerRespawn);
+	}
+
+	private void registerBlockImportant(u8 r, u8 g, u8 b, u8 mid, LuaFunction added, LuaFunction playerStateChange, LuaFunction playerRespawn)
+	{
+		m_registeredI ~= BlockRegister(r << 16 | g << 8 | b, mid, added, playerStateChange, playerRespawn);
 	}
 
 	private void onRespawn(LuaFunction f)
@@ -141,6 +147,25 @@ class Level : GameObject
 		boxes = renderer.createMesh(boxes);
 		for(int x = 0; x < bmp.width; x++)
 		{
+			PxLoopI: for(int y = 0; y < bmp.height; y++)
+			{
+				Color pixel = bmp.getPixel(x, y);
+				if(pixel.RGB == 16777215) continue PxLoopI;
+				foreach(ref BlockRegister block; m_registeredI)
+				{
+					if(pixel.RGB == block.rgb)
+					{
+						block.added(x - 1, y - 1);
+						Block b = new LuaBlock(x, y, boxes, materials[block.mid], block.playerStateChange, block.playerRespawn);
+						m_blocks ~= b;
+						addChild(b);
+						continue PxLoopI;
+					}
+				}
+			}
+		}
+		for(int x = 0; x < bmp.width; x++)
+		{
 			PxLoop: for(int y = 0; y < bmp.height; y++)
 			{
 				Color pixel = bmp.getPixel(x, y);
@@ -156,8 +181,6 @@ class Level : GameObject
 						continue PxLoop;
 					}
 				}
-				Logger.errln("Invalid Block at ", x, ", ", y, ": #", format("%06x", pixel.RGB), " (", pixel.RGB, ") RGB: ", pixel.R, ", ", pixel.G, ", ", pixel.B);
-				return false;
 			}
 		}
 
