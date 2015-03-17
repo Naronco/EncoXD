@@ -162,7 +162,7 @@ void main(string[] args)
 	camera.zoom = 10;
 	camera.projectionMode = ProjectionMode.Orthographic3D;
 
-	EncoContext.instance.onKeyDown += (sender, key) {
+	debug EncoContext.instance.onKeyDown += (sender, key) {
 		if(key == Key.F1)
 		{
 			Logger.writeln("Rotation: ", camera.transform.rotation.y);

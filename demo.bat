@@ -1,1 +1,1 @@
-dub test
+dub test %*

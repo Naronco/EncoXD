@@ -1,1 +1,1 @@
-dub run --config=Server
+dub run --config=Server %*
