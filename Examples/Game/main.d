@@ -6,6 +6,7 @@ import DragTable;
 import Level;
 import Player;
 
+import luad.error;
 import std.file;
 
 class Game3DLayer : RenderLayer
@@ -27,7 +28,7 @@ class Game3DLayer : RenderLayer
 	public void nextLevel()
 	{
 		if(!level.fromBitmap("levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
-			throw new Exception("Invalid Level!");
+			Logger.writeln(new Exception("Invalid Level!"));
 	}
 
 	public void setLua(LuaState lua)
@@ -39,6 +40,9 @@ class Game3DLayer : RenderLayer
 		materials ~= GLMaterial.load(scene.renderer, "materials/start.json");
 		materials ~= GLMaterial.load(scene.renderer, "materials/finish.json");
 		materials ~= GLMaterial.load(scene.renderer, "materials/checkpoint.json");
+		materials ~= GLMaterial.load(scene.renderer, "materials/light_plate.json");
+		materials ~= GLMaterial.load(scene.renderer, "materials/heavy_plate.json");
+		materials ~= GLMaterial.load(scene.renderer, "materials/bridge.json");
 
 		auto blocks = dirEntries("blocks/", SpanMode.shallow, false);
 
@@ -47,6 +51,8 @@ class Game3DLayer : RenderLayer
 		lua["registerBlock"] = &level.registerBlock;
 
 		lua["registerBlockImportant"] = &level.registerBlockImportant;
+
+		lua["makeUniqueFromXY"] = (int x, int y) { return cast(i32)((x & 0xFFFF) << 16 | (y & 0xFFFF)); }; 
 
 		lua["onRespawn"] = &level.onRespawn;
 
@@ -85,15 +91,20 @@ class Game3DLayer : RenderLayer
 
 		lua["player"] = playerTable;
 
-		lua["win"] = () {
-			nextLevel();
-		};
+		lua["win"] = &nextLevel;
 
 		foreach(string file; plugins)
 		{
 			if(file.endsWith(".lua"))
 			{
-				lua.doFile(file);
+				try
+				{
+					lua.doFile(file);
+				}
+				catch(LuaErrorException e)
+				{
+					Logger.errln(e);
+				}
 				Logger.writeln("Loaded plugin from ", file);
 			}
 		}
@@ -102,7 +113,14 @@ class Game3DLayer : RenderLayer
 		{
 			if(file.endsWith(".lua"))
 			{
-				lua.doFile(file);
+				try
+				{
+					lua.doFile(file);
+				}
+				catch(LuaErrorException e)
+				{
+					Logger.errln(e);
+				}
 				Logger.writeln("Loaded blocks from ", file);
 			}
 		}
