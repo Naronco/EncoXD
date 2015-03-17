@@ -1,0 +1,16 @@
+R: 0 - Block
+  G: 32 - Donut Block (Mario)
+R: 32 - Switch or Conditional Path
+  B: 0-127 - Path
+    G: 0 - First off
+    G: 255 - First on
+  B: 128-255 - Switch
+    G: 0 - One Time Light
+    G: 32 - Toggle Light
+    G: 64 - One Time Heavy
+    G: 96 - Toggle Heavy
+R: 64 - Splitter
+R: 96 - Trigger
+  B: 0 - Start
+  B: 127 - Checkpoint
+  B: 255 - Finish
