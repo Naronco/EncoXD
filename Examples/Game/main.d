@@ -15,6 +15,7 @@ class Game3DLayer : RenderLayer
 	private int currentLevel = 0;
 	private Material[] materials;
 	private Level level;
+	private LuaTable playerTable;
 
 	public override void init(Scene scene)
 	{
@@ -30,6 +31,26 @@ class Game3DLayer : RenderLayer
 		if(!level.fromBitmap("levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
 			Logger.writeln(new Exception("Invalid Level!"));
 	}
+	
+	private bool isDouble() { return player.isDouble; }
+	private int getState() { return player.topState; }
+	
+	private int getX() { return player.x; }
+	private int getY() { return player.y; }
+	private void setX(int v) { player.x = v; }
+	private void setY(int v) { player.y = v; }
+	
+	private int getRespawnX() { return player.respawnPosition.x; }
+	private int getRespawnY() { return player.respawnPosition.y; }
+	private void setRespawnX(int v) { player.respawnPosition = i32vec2(v, player.respawnPosition.y); }
+	private void setRespawnY(int v) { player.respawnPosition = i32vec2(player.respawnPosition.x, v); }
+	
+	private int getFinishX() { return player.finishPosition.x; }
+	private int getFinishY() { return player.finishPosition.y; }
+	private void setFinishX(int v) { player.finishPosition = i32vec2(v, player.finishPosition.y); }
+	private void setFinishY(int v) { player.finishPosition = i32vec2(player.finishPosition.x, v); }
+
+
 
 	public void setLua(LuaState lua)
 	{
@@ -66,27 +87,27 @@ class Game3DLayer : RenderLayer
 
 		lua["random"] = &rnd.nextInt;
 
-		LuaTable playerTable = lua.newTable();
+		playerTable = lua.newTable();
 
-		playerTable["isDouble"] = () { return player.isDouble; };
+		playerTable["isDouble"] = &isDouble;
 
-		playerTable["getState"] = () { return player.topState; };
+		playerTable["getState"] = &getState;
 
-		playerTable["getX"] = () { return player.x; };
-		playerTable["getY"] = () { return player.y; };
-		playerTable["setX"] = (int v) { player.x = v; };
-		playerTable["setY"] = (int v) { player.y = v; };
-
-		playerTable["setRespawnX"] = (int v) { player.respawnPosition = i32vec2(v, player.respawnPosition.y); };
-		playerTable["setRespawnY"] = (int v) { player.respawnPosition = i32vec2(player.respawnPosition.x, v); };
-		playerTable["getRespawnX"] = () { return player.respawnPosition.x; };
-		playerTable["getRespawnY"] = () { return player.respawnPosition.y; };
+		playerTable["getX"] = &getX;
+		playerTable["getY"] = &getY;
+		playerTable["setX"] = &setX;
+		playerTable["setY"] = &setY;
 		
-		playerTable["setFinishX"] = (int v) { player.finishPosition = i32vec2(v, player.finishPosition.y); };
-		playerTable["setFinishY"] = (int v) { player.finishPosition = i32vec2(player.finishPosition.x, v); };
-		playerTable["getFinishX"] = () { return player.finishPosition.x; };
-		playerTable["getFinishY"] = () { return player.finishPosition.y; };
+		playerTable["getRespawnX"] = &getRespawnX;
+		playerTable["getRespawnY"] = &getRespawnY;
+		playerTable["setRespawnX"] = &setRespawnX;
+		playerTable["setRespawnY"] = &setRespawnY;
 		
+		playerTable["getFinishX"] = &getFinishX;
+		playerTable["getFinishY"] = &getFinishY;
+		playerTable["setFinishX"] = &setFinishX;
+		playerTable["setFinishY"] = &setFinishY;
+
 		playerTable["respawn"] = &player.respawn;
 
 		lua["player"] = playerTable;
@@ -177,7 +198,7 @@ void main(string[] args)
 	camera.addComponent(new DragTableHalfY());
 
 	camera.transform.position = vec3(0, 0, 0);
-	camera.transform.rotation = vec3(-0.9, 0.785398163, 0);
+	camera.transform.rotation = vec3(-0.9, -0.2, 0);
 
 	RenderContext context = RenderContext(camera, vec3(1, 0.5, 0.3));
 	

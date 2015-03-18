@@ -72,3 +72,5 @@ local.properties
 # TeXlipse plugin
 .texlipse
 screen.bmp
+ExampleGame/
+ExampleGame.zip

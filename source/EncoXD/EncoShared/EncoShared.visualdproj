@@ -204,58 +204,58 @@
  </Config>
  <Folder name="EncoShared">
   <Folder name="Animation">
-   <File path="Animation\AnimatedProperty.d" />
-   <File path="Animation\Animation.d" />
-   <File path="Animation\BasicEaseFunctions.d" />
+   <File path="Enco\Shared\Animation\AnimatedProperty.d" />
+   <File path="Enco\Shared\Animation\Animation.d" />
+   <File path="Enco\Shared\Animation\BasicEaseFunctions.d" />
   </Folder>
   <Folder name="Core">
-   <File path="Core\Camera.d" />
-   <File path="Core\EncoContext.d" />
-   <File path="Core\Event.d" />
-   <File path="Core\GameObject.d" />
-   <File path="Core\IComponent.d" />
-   <File path="Core\IView.d" />
-   <File path="Core\Logger.d" />
-   <File path="Core\Scene.d" />
-   <File path="Core\TemplateParser.d" />
-   <File path="Core\TimeHelper.d" />
-   <File path="Core\Window.d" />
+   <File path="Enco\Shared\Core\Camera.d" />
+   <File path="Enco\Shared\Core\EncoContext.d" />
+   <File path="Enco\Shared\Core\Event.d" />
+   <File path="Enco\Shared\Core\GameObject.d" />
+   <File path="Enco\Shared\Core\IComponent.d" />
+   <File path="Enco\Shared\Core\IView.d" />
+   <File path="Enco\Shared\Core\Logger.d" />
+   <File path="Enco\Shared\Core\Scene.d" />
+   <File path="Enco\Shared\Core\TemplateParser.d" />
+   <File path="Enco\Shared\Core\TimeHelper.d" />
+   <File path="Enco\Shared\Core\Window.d" />
   </Folder>
   <Folder name="Ext">
-   <File path="Ext\Array.d" />
-   <File path="Ext\String.d" />
+   <File path="Enco\Shared\Ext\Array.d" />
+   <File path="Enco\Shared\Ext\String.d" />
   </Folder>
   <Folder name="GUI">
-   <File path="GUI\Control.d" />
-   <File path="GUI\DynamicColorControl.d" />
-   <File path="GUI\PictureControl.d" />
-   <File path="GUI\TextControl.d" />
+   <File path="Enco\Shared\GUI\Control.d" />
+   <File path="Enco\Shared\GUI\DynamicColorControl.d" />
+   <File path="Enco\Shared\GUI\PictureControl.d" />
+   <File path="Enco\Shared\GUI\TextControl.d" />
   </Folder>
   <Folder name="Math">
-   <File path="Math\Frustum.d" />
-   <File path="Math\Random.d" />
-   <File path="Math\Transform.d" />
+   <File path="Enco\Shared\Math\Frustum.d" />
+   <File path="Enco\Shared\Math\Random.d" />
+   <File path="Enco\Shared\Math\Transform.d" />
   </Folder>
   <Folder name="Network">
-   <File path="Network\Network.d" />
-   <File path="Network\Tcp.d" />
+   <File path="Enco\Shared\Network\Network.d" />
+   <File path="Enco\Shared\Network\Tcp.d" />
   </Folder>
   <Folder name="Render">
-   <File path="Render\Bitmap.d" />
-   <File path="Render\Color.d" />
-   <File path="Render\Font.d" />
-   <File path="Render\GUIRenderer.d" />
-   <File path="Render\IRenderer.d" />
-   <File path="Render\IRenderTarget.d" />
-   <File path="Render\ITexture.d" />
-   <File path="Render\Material.d" />
-   <File path="Render\Mesh.d" />
-   <File path="Render\MeshObject.d" />
-   <File path="Render\RenderContext.d" />
-   <File path="Render\Shader.d" />
+   <File path="Enco\Shared\Render\Bitmap.d" />
+   <File path="Enco\Shared\Render\Color.d" />
+   <File path="Enco\Shared\Render\Font.d" />
+   <File path="Enco\Shared\Render\GUIRenderer.d" />
+   <File path="Enco\Shared\Render\IRenderer.d" />
+   <File path="Enco\Shared\Render\IRenderTarget.d" />
+   <File path="Enco\Shared\Render\ITexture.d" />
+   <File path="Enco\Shared\Render\Material.d" />
+   <File path="Enco\Shared\Render\Mesh.d" />
+   <File path="Enco\Shared\Render\MeshObject.d" />
+   <File path="Enco\Shared\Render\RenderContext.d" />
+   <File path="Enco\Shared\Render\Shader.d" />
   </Folder>
   <Folder name="Scripting">
-   <File path="Scripting\LuaExt.d" />
+   <File path="Enco\Shared\Scripting\LuaExt.d" />
   </Folder>
   <File path="EncoShared.d" />
  </Folder>

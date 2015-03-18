@@ -204,12 +204,12 @@
  </Config>
  <Folder name="EncoDesktop">
   <Folder name="Input">
-   <File path="Controller.d" />
-   <File path="Keyboard.d" />
-   <File path="Mouse.d" />
+   <File path="Enco\Desktop\Input\Controller.d" />
+   <File path="Enco\Desktop\Input\Keyboard.d" />
+   <File path="Enco\Desktop\Input\Mouse.d" />
   </Folder>
-  <File path="DesktopView.d" />
-  <File path="EncoDesktop.d" />
-  <File path="FPSRotation.d" />
+  <File path="Enco\Desktop\DesktopView.d" />
+  <File path="Enco\Desktop\EncoDesktop.d" />
+  <File path="Enco\Desktop\FPSRotation.d" />
  </Folder>
 </DProject>
