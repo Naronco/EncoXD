@@ -50,6 +50,7 @@ class Game3DLayer : RenderLayer
 	private void setFinishX(int v) { player.finishPosition = i32vec2(v, player.finishPosition.y); }
 	private void setFinishY(int v) { player.finishPosition = i32vec2(player.finishPosition.x, v); }
 
+	private int makeUniqueFromXY(int x, int y) { return cast(i32)((x & 0xFFFF) << 16 | (y & 0xFFFF)); }
 
 
 	public void setLua(LuaState lua)
@@ -73,7 +74,7 @@ class Game3DLayer : RenderLayer
 
 		lua["registerBlockImportant"] = &level.registerBlockImportant;
 
-		lua["makeUniqueFromXY"] = (int x, int y) { return cast(i32)((x & 0xFFFF) << 16 | (y & 0xFFFF)); }; 
+		lua["makeUniqueFromXY"] = &makeUniqueFromXY; 
 
 		lua["onRespawn"] = &level.onRespawn;
 
