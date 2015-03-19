@@ -36,7 +36,7 @@ class Game3DLayer : RenderLayer
 		carY.value = 5.0f;
 		carY.length = 3000;
 
-		carY.onDone += {
+		carY.onDone += (e) {
 			up = !up;
 			carY.value = up ? 0 : 5;
 		};

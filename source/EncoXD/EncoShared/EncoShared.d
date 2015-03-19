@@ -68,6 +68,8 @@ public
 	import Enco.Shared.Input.Mouse;
 	import Enco.Shared.Input.Controller;
 	
+	import Enco.Shared.Components.FPSRotation;
+	
 	import std.algorithm;
 	import std.string;
 	import std.conv;

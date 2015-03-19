@@ -5,7 +5,7 @@ import EncoGL3;
 
 class GLRenderTarget : IRenderTarget
 {
-	public void init(u32 width, u32 height, bool depth, Window view)
+	public void init(u32 width, u32 height, bool depth, IView view)
 	{
 		m_view = view;
 
@@ -65,7 +65,7 @@ class GLRenderTarget : IRenderTarget
 	public void unbind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, view.size.x, view.size.y);
+		glViewport(0, 0, view.width, view.height);
 		EncoContext.instance.renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
 	}
 
@@ -79,7 +79,7 @@ class GLRenderTarget : IRenderTarget
 		return cast(ITexture)m_depth;
 	}
 
-	public @property Window view()
+	public @property IView view()
 	{
 		return m_view;
 	}
@@ -87,5 +87,5 @@ class GLRenderTarget : IRenderTarget
 	private u32 width, height;
 	public u32 fbo, drb;
 	private GLTexture m_color, m_depth;
-	private Window m_view;
+	private IView m_view;
 }
