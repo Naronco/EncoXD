@@ -1,7 +1,6 @@
-module Enco.Desktop.Input.Keyboard;
+module Enco.Shared.Input.Keyboard;
 
 import EncoShared;
-import EncoDesktop;
 
 struct KeyboardState
 {

@@ -1,7 +1,6 @@
-module Enco.Desktop.FPSRotation;
+module Enco.Shared.Components.FPSRotation;
 
 import EncoShared;
-import EncoDesktop;
 
 class FPSRotation : IComponent
 {

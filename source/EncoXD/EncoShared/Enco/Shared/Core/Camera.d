@@ -9,15 +9,6 @@ enum ProjectionMode
 
 class Camera : GameObject
 {
-	public this()
-	{
-		if(EncoContext.instance !is null && EncoContext.instance.view !is null)
-		{
-			width = EncoContext.instance.view.width;
-			height = EncoContext.instance.view.height;
-		}
-	}
-
 	public @property mat4 projectionMatrix()
 	{
 		if(m_needUpdate)

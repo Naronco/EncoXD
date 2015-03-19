@@ -3,240 +3,91 @@ import EncoDesktop;
 import EncoGL3;
 
 import DragTable;
-import Level;
-import Player;
 
-import luad.error;
-import std.file;
+import GameScene;
 
-class Game3DLayer : RenderLayer
+class GameWindow : DesktopView
 {
-	private Player player;
-	private int currentLevel = 0;
-	private Material[] materials;
-	private Level level;
-	private LuaTable playerTable;
+	RenderContext context;
+	GameScene game;
 
-	public override void init(Scene scene)
+	public this()
 	{
+		scene = game = new GameScene();
 	}
 
-	public void applyCamera(Camera camera)
+	public void init()
 	{
-		camera.addComponent(new PlayerLock(player, camera));
-	}
+		Camera camera = new Camera();
+		renderer.setClearColor(0.8f, 0.8f, 0.8f);
+		auto lua = EncoContext.instance.createLuaState();
+		camera.farClip = 1000;
+		camera.nearClip = -1000;
+		camera.width = width;
+		camera.height = height;
+		camera.zoom = 10;
+		camera.projectionMode = ProjectionMode.Orthographic3D;
 
-	public void nextLevel()
-	{
-		if(!level.fromBitmap("levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
-			Logger.writeln(new Exception("Invalid Level!"));
-	}
-	
-	private bool isDouble() { return player.isDouble; }
-	private int getState() { return player.topState; }
-	
-	private int getX() { return player.x; }
-	private int getY() { return player.y; }
-	private void setX(int v) { player.x = v; }
-	private void setY(int v) { player.y = v; }
-	
-	private int getRespawnX() { return player.respawnPosition.x; }
-	private int getRespawnY() { return player.respawnPosition.y; }
-	private void setRespawnX(int v) { player.respawnPosition = i32vec2(v, player.respawnPosition.y); }
-	private void setRespawnY(int v) { player.respawnPosition = i32vec2(player.respawnPosition.x, v); }
-	
-	private int getFinishX() { return player.finishPosition.x; }
-	private int getFinishY() { return player.finishPosition.y; }
-	private void setFinishX(int v) { player.finishPosition = i32vec2(v, player.finishPosition.y); }
-	private void setFinishY(int v) { player.finishPosition = i32vec2(player.finishPosition.x, v); }
-
-	private int makeUniqueFromXY(int x, int y) { return cast(i32)((x & 0xFFFF) << 16 | (y & 0xFFFF)); }
-
-
-	public void setLua(LuaState lua)
-	{
-		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "materials/player.json"));
-		level = new Level(lua, player);
-		
-		materials ~= GLMaterial.load(scene.renderer, "materials/metal.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/start.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/finish.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/checkpoint.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/light_plate.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/heavy_plate.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/bridge.json");
-
-		auto blocks = dirEntries("blocks/", SpanMode.shallow, false);
-
-		auto plugins = dirEntries("plugins/", SpanMode.shallow, false);
-		
-		lua["registerBlock"] = &level.registerBlock;
-
-		lua["registerBlockImportant"] = &level.registerBlockImportant;
-
-		lua["makeUniqueFromXY"] = &makeUniqueFromXY; 
-
-		lua["onRespawn"] = &level.onRespawn;
-
-		lua["onStateChange"] = &level.onStateChange;
-
-		lua["hasBlock"] = &level.hasBlock;
-
-		lua["setBlockEnabled"] = &level.setEnabled;
-
-		Random rnd = new Random();
-
-		lua["random"] = &rnd.nextInt;
-
-		playerTable = lua.newTable();
-
-		playerTable["isDouble"] = &isDouble;
-
-		playerTable["getState"] = &getState;
-
-		playerTable["getX"] = &getX;
-		playerTable["getY"] = &getY;
-		playerTable["setX"] = &setX;
-		playerTable["setY"] = &setY;
-		
-		playerTable["getRespawnX"] = &getRespawnX;
-		playerTable["getRespawnY"] = &getRespawnY;
-		playerTable["setRespawnX"] = &setRespawnX;
-		playerTable["setRespawnY"] = &setRespawnY;
-		
-		playerTable["getFinishX"] = &getFinishX;
-		playerTable["getFinishY"] = &getFinishY;
-		playerTable["setFinishX"] = &setFinishX;
-		playerTable["setFinishY"] = &setFinishY;
-
-		playerTable["respawn"] = &player.respawn;
-
-		lua["player"] = playerTable;
-
-		lua["win"] = &nextLevel;
-
-		foreach(string file; plugins)
-		{
-			if(file.endsWith(".lua"))
+		debug EncoContext.instance.onKeyDown += (sender, key) {
+			if(key == Key.F1)
 			{
-				try
-				{
-					lua.doFile(file);
-				}
-				catch(LuaErrorException e)
-				{
-					Logger.errln(e);
-				}
-				Logger.writeln("Loaded plugin from ", file);
+				Logger.writeln("Rotation: ", camera.transform.rotation.y);
 			}
-		}
-
-		foreach(string file; blocks)
-		{
-			if(file.endsWith(".lua"))
+			if(key == Key.F2)
 			{
-				try
-				{
-					lua.doFile(file);
-				}
-				catch(LuaErrorException e)
-				{
-					Logger.errln(e);
-				}
-				Logger.writeln("Loaded blocks from ", file);
+				game.game3DLayer.nextLevel();
 			}
-		}
+		};
 
-		nextLevel();
-		addGameObject(level);
+		camera.addComponent(new DragTableX());
+		camera.addComponent(new DragTableHalfY());
+
+		camera.transform.position = vec3(0, 0, 0);
+		camera.transform.rotation = vec3(-0.9, -0.2, 0);
+
+		context = RenderContext(camera, vec3(1, 0.5, 0.3));
+	
+		game.game3DLayer.setLua(lua);
+		game.game3DLayer.applyCamera(camera);
+		game.game3DLayer.addGameObject(camera);
 	}
-}
 
-class GameScene : Scene
-{
-	public Game3DLayer game3DLayer;
-
-	public override void init()
+	override protected void onDraw()
 	{
-		addLayer(game3DLayer = new Game3DLayer());
+		renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
+
+		draw3D(context);
+		draw2D();
+	}
+	
+	override protected void onUpdate(f64 delta)
+	{
+		update(delta);
 	}
 }
 
 void main(string[] args)
 {
-	GL3Renderer renderer = new GL3Renderer();
-	GameScene game = new GameScene();
-	EncoContext.create(new DesktopView(), renderer, game);
-
-	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Lua, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
-	EncoContext.instance.importSettings(import("demo.json"));
-	EncoContext.instance.start();
-	// You can now call renderer functions
-
-	renderer.setClearColor(0.8f, 0.8f, 0.8f);
-	auto lua = EncoContext.instance.createLuaState();
-
-	Camera camera = new Camera();
-	camera.farClip = 1000;
-	camera.nearClip = -1000;
-	camera.width = EncoContext.instance.view.width;
-	camera.height = EncoContext.instance.view.height;
-	camera.zoom = 10;
-	camera.projectionMode = ProjectionMode.Orthographic3D;
-
-	debug EncoContext.instance.onKeyDown += (sender, key) {
-		if(key == Key.F1)
-		{
-			Logger.writeln("Rotation: ", camera.transform.rotation.y);
-		}
-		if(key == Key.F2)
-		{
-			game.game3DLayer.nextLevel();
-		}
-	};
-
-	camera.addComponent(new DragTableX());
-	camera.addComponent(new DragTableHalfY());
-
-	camera.transform.position = vec3(0, 0, 0);
-	camera.transform.rotation = vec3(-0.9, -0.2, 0);
-
-	RenderContext context = RenderContext(camera, vec3(1, 0.5, 0.3));
+	EncoContext.create([DynamicLibrary.Lua, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
 	
-	game.game3DLayer.setLua(lua);
-	game.game3DLayer.applyCamera(camera);
-	game.game3DLayer.addGameObject(camera);
+	GameWindow window = new GameWindow();
+	EncoContext.instance.addView!GL3Renderer(window);
+	EncoContext.instance.importSettings(import("game.json"));
+	EncoContext.instance.start();
+	scope(exit) EncoContext.instance.stop();
+
+	window.init();
 
 	KeyboardState* state = Keyboard.getState();
-	MouseState* mstate = Mouse.getState();
-
-	Random random = new Random();
 
 	while(EncoContext.instance.update())
 	{
 		state = Keyboard.getState();
-		mstate = Mouse.getState();
 
-		renderer.beginFrame();
-
-		renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
-
-		EncoContext.instance.draw3D(context);
-
-		renderer.gui.begin();
-
-		EncoContext.instance.draw2D();
-
-		renderer.gui.end();
-
-		renderer.endFrame();
+		EncoContext.instance.draw();
 
 		if (state.isKeyDown(Key.Escape)) break;
 
 		EncoContext.instance.endUpdate();
 	}
-
-	Mouse.release();
-
-	EncoContext.instance.stop();
 }

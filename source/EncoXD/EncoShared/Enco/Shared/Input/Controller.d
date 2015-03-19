@@ -1,7 +1,6 @@
-module Enco.Desktop.Input.Controller;
+module Enco.Shared.Input.Controller;
 
 import EncoShared;
-import EncoDesktop;
 
 struct ControllerState
 {

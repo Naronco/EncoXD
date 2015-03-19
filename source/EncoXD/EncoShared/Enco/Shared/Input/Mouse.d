@@ -1,7 +1,6 @@
-module Enco.Desktop.Input.Mouse;
+module Enco.Shared.Input.Mouse;
 
 import EncoShared;
-import EncoDesktop;
 
 struct MouseState
 {

@@ -135,8 +135,6 @@ class GL3Renderer : IRenderer
 	{
 		if(window !is null)
 		{
-			DerelictGL3.load();
-
 			m_window = window;
 
 			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, cast(i32)depthBits);

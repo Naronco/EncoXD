@@ -5,13 +5,16 @@ import EncoShared;
 class Window
 {
 	private SDL_Window* m_handle;
+	private int m_id;
 
 	public @property SDL_Window* window() { return m_handle; }
 	public @property bool valid() { return m_handle !is null; }
+	public @property int id() { return m_id; }
 
 	public this(string title, i32 x, i32 y, i32 w, i32 h, u32 flags)
 	{
 		m_handle = SDL_CreateWindow(title.toStringz(), x, y, w, h, flags);
+		m_id = SDL_GetWindowID(m_handle);
 	}
 
 	public ~this()

@@ -12,10 +12,9 @@ void main()
 {
 	GL3Renderer renderer = new GL3Renderer();
 	GameScene game = new GameScene();
-	EncoContext.create(new DesktopView(), renderer, game);
+	EncoContext.create(renderer, game, [DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
 
-
-	EncoContext.instance.useDynamicLibraries([DynamicLibrary.Assimp, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
+	EncoContext.instance.addView(new DesktopView());
 	EncoContext.instance.importSettings(import("demo.json"));
 	EncoContext.instance.start();
 

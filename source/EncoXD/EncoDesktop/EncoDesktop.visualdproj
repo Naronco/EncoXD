@@ -203,13 +203,7 @@
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
  <Folder name="EncoDesktop">
-  <Folder name="Input">
-   <File path="Enco\Desktop\Input\Controller.d" />
-   <File path="Enco\Desktop\Input\Keyboard.d" />
-   <File path="Enco\Desktop\Input\Mouse.d" />
-  </Folder>
   <File path="Enco\Desktop\DesktopView.d" />
-  <File path="Enco\Desktop\EncoDesktop.d" />
-  <File path="Enco\Desktop\FPSRotation.d" />
+  <File path="EncoDesktop.d" />
  </Folder>
 </DProject>

@@ -42,7 +42,7 @@ class Event(T...)
 /// Event without arguments
 class Trigger
 {
-	alias EventMethod = void delegate();
+	alias EventMethod = void delegate(const Object);
 	private EventMethod[] funcs;
 
 	public this()
@@ -70,9 +70,9 @@ class Trigger
 		}
 	}
 
-	void opCall()
+	void opCall(const Object sender)
 	{
 		foreach(ref func; funcs)
-			func();
+			func(sender);
 	}
 }

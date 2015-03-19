@@ -79,14 +79,14 @@ class Level : GameObject
 		this.player = player;
 		addChild(player);
 
-		player.onRespawn += () {
+		player.onRespawn += (s) {
 			foreach(ref Block block; m_blocks)
 				block.onPlayerRespawn(player);
 			foreach(ref LuaFunction evt; m_respawnEvents)
 				evt();
 		};
 
-		player.onStateChange += () {
+		player.onStateChange += (s) {
 			foreach(ref Block block; m_blocks)
 				block.onPlayerStateChange(player);
 			foreach(ref LuaFunction evt; m_stateEvents)

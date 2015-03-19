@@ -6,25 +6,36 @@ import std.stdio;
 import EncoDesktop;
 import EncoShared;
 
-class DesktopView : IView
+abstract class DesktopView : IView
 {
 	public @property Window window() { return m_window; }
 	public @property bool valid() { return m_valid; }
 
 	private bool m_valid = false;
 	private Window m_window;
-	private IRenderer m_renderer;
+	
+	public Event!bool onClose = new Event!bool;
+	public Event!u32vec2 onResized = new Event!u32vec2;
+	public Event!u32vec2 onMove = new Event!u32vec2;
+	public Trigger onShow = new Trigger;
+	public Trigger onHide = new Trigger;
+	public Trigger onExpose = new Trigger;
+	public Trigger onMinimize = new Trigger;
+	public Trigger onMaximize = new Trigger;
+	public Trigger onRestore = new Trigger;
+	public Trigger onEnter = new Trigger;
+	public Trigger onLeave = new Trigger;
+	public Trigger onFocusGain = new Trigger;
+	public Trigger onFocusLost = new Trigger;
 
 	public this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
 	public this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
 	public this() { this("", 0, 0); }
 	public ~this() {}
 
-	public override void create(IRenderer renderer)
+	public override void create()
 	{
-		assert(renderer !is null);
-
-		m_renderer = renderer;
+		assert(m_renderer !is null);
 
 		auto flags = SDL_WINDOW_SHOWN;
 
@@ -84,131 +95,63 @@ class DesktopView : IView
 				m_window = null;
 			}
 
-			SDL_Quit();
+			if(m_scene !is null)
+			{
+				m_scene.destroy();
+				m_scene = null;
+			}
 		}
 	}
 
-	public override bool update(f64 deltaTime)
+	public override void handleEvent(ref SDL_Event event)
 	{
 		if(valid)
 		{
-			Mouse.setOffset(0, 0);
-			SDL_Event event;
-			while (SDL_PollEvent(&event)) {
-				switch (event.type) {
-				case SDL_QUIT:
-					EncoContext.instance.onClose(this, true);
-					return false;
-				case SDL_WINDOWEVENT:
-					switch(event.window.event)
-					{
-						case SDL_WINDOWEVENT_SHOWN:
-							EncoContext.instance.onShow();
-							break;
-						case SDL_WINDOWEVENT_HIDDEN:
-							EncoContext.instance.onHide();
-							break;
-						case SDL_WINDOWEVENT_EXPOSED:
-							EncoContext.instance.onExpose();
-							break;
-						case SDL_WINDOWEVENT_MOVED:
-							EncoContext.instance.onMove(this, u32vec2(event.window.data1, event.window.data2));
-							break;
-						case SDL_WINDOWEVENT_RESIZED:
-							size = u32vec2(event.window.data1, event.window.data2);
-							EncoContext.instance.onResize(this, size);
-							break;
-						case SDL_WINDOWEVENT_MINIMIZED:
-							EncoContext.instance.onMinimize();
-							break;
-						case SDL_WINDOWEVENT_MAXIMIZED:
-							EncoContext.instance.onMaximize();
-							break;
-						case SDL_WINDOWEVENT_RESTORED:
-							EncoContext.instance.onRestore();
-							break;
-						case SDL_WINDOWEVENT_ENTER:
-							EncoContext.instance.onEnter();
-							break;
-						case SDL_WINDOWEVENT_LEAVE:
-							EncoContext.instance.onLeave();
-							break;
-						case SDL_WINDOWEVENT_FOCUS_GAINED:
-							EncoContext.instance.onFocusGain();
-							break;
-						case SDL_WINDOWEVENT_FOCUS_LOST:
-							EncoContext.instance.onFocusLost();
-							break;
-						default: break;
-					}
-					break;
-				case SDL_KEYDOWN:
-					Keyboard.setKey(event.key.keysym.sym, true);
-					EncoContext.instance.onKeyDown(this, event.key.keysym.sym);
-					break;
-				case SDL_KEYUP:
-					Keyboard.setKey(event.key.keysym.sym, false);
-					EncoContext.instance.onKeyUp(this, event.key.keysym.sym);
-					break;
-				case SDL_MOUSEWHEEL:
-					EncoContext.instance.onScroll(this, i32vec2(event.wheel.x, event.wheel.y));
-					break;
-				case SDL_MOUSEMOTION:
-					Mouse.setPosition(event.motion.x, event.motion.y);
-					Mouse.addOffset(event.motion.xrel, event.motion.yrel);
-					EncoContext.instance.onMouseMove(this, MouseEvent(vec2(event.motion.x, event.motion.y), vec2(event.motion.xrel, event.motion.yrel), 255));
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-				case SDL_MOUSEBUTTONUP:
-					Mouse.setPosition(event.button.x, event.button.y);
-					Mouse.setButton(event.button.button, event.button.state == SDL_PRESSED);
-					if(event.button.state == SDL_PRESSED)
-						EncoContext.instance.onMouseButtonDown(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
-					else
-						EncoContext.instance.onMouseButtonUp(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
-					break;
-				case SDL_DROPFILE:
-					string file = fromStringz(event.drop.file).dup;
-					SDL_free(event.drop.file);
-					EncoContext.instance.onFileDrop(this, file);
-					break;
-				case SDL_CONTROLLERDEVICEADDED:
-					EncoContext.instance.onControllerAdded(this, event.cdevice.which);
-					Controller.setConnected(event.cdevice.which, true);
-					SDL_GameControllerOpen(event.cdevice.which);
-					break;
-				case SDL_CONTROLLERDEVICEREMOVED:
-					EncoContext.instance.onControllerRemoved(this, event.cdevice.which);
-					Controller.setConnected(event.cdevice.which, false);
-					break;
-				case SDL_CONTROLLERBUTTONDOWN:
-				case SDL_CONTROLLERBUTTONUP:
-					Controller.setKey(event.cbutton.which, event.cbutton.button, event.cbutton.state == SDL_PRESSED);
-					if(event.cbutton.state == SDL_PRESSED)
-						EncoContext.instance.onControllerButtonDown(this, Tuple!(i32, i8)(event.cbutton.which, event.cbutton.button));
-					else
-						EncoContext.instance.onControllerButtonUp(this, Tuple!(i32, i8)(event.cbutton.which, event.cbutton.button));
-					break;
-				case SDL_CONTROLLERAXISMOTION:
-					i16 value = event.caxis.value;
-					if(value < -32767) value = -32767;
-					if(event.caxis.axis < 4 && abs(value) < 4000)
-					{
-						value = 0;
-					}
-					if(event.caxis.axis > 3 && abs(value) < 800)
-					{
-						value = 0;
-					}
-					Controller.setAxis(event.caxis.which, event.caxis.axis, value);
-					EncoContext.instance.onControllerAxis(this, Tuple!(i32, u8, i16)(event.caxis.which, event.caxis.axis, value));
-					break;
-				default: break;
+			if(event.type == SDL_WINDOWEVENT && event.window.windowID == window.id)
+			{
+				switch(event.window.event)
+				{
+					case SDL_WINDOWEVENT_SHOWN:
+						onShow(this);
+						break;
+					case SDL_WINDOWEVENT_HIDDEN:
+						onHide(this);
+						break;
+					case SDL_WINDOWEVENT_EXPOSED:
+						onExpose(this);
+						break;
+					case SDL_WINDOWEVENT_MOVED:
+						onMove(this, u32vec2(event.window.data1, event.window.data2));
+						break;
+					case SDL_WINDOWEVENT_RESIZED:
+						size = u32vec2(event.window.data1, event.window.data2);
+						onResized(this, size);
+						break;
+					case SDL_WINDOWEVENT_MINIMIZED:
+						onMinimize(this);
+						break;
+					case SDL_WINDOWEVENT_MAXIMIZED:
+						onMaximize(this);
+						break;
+					case SDL_WINDOWEVENT_RESTORED:
+						onRestore(this);
+						break;
+					case SDL_WINDOWEVENT_ENTER:
+						onEnter(this);
+						break;
+					case SDL_WINDOWEVENT_LEAVE:
+						onLeave(this);
+						break;
+					case SDL_WINDOWEVENT_FOCUS_GAINED:
+						onFocusGain(this);
+						break;
+					case SDL_WINDOWEVENT_FOCUS_LOST:
+						onFocusLost(this);
+						break;
+					default: break;
 				}
 			}
-			return true;
 		}
-		return false;
 	}
 
 	protected override void onResize()

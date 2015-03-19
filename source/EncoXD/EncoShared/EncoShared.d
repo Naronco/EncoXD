@@ -6,6 +6,7 @@ public
 	import derelict.sdl2.image;
 	import derelict.sdl2.ttf;
 	import derelict.assimp3.assimp;
+	import derelict.opengl3.gl3;
 
 	import luad.all;
 
@@ -62,6 +63,10 @@ public
 	import Enco.Shared.Animation.Animation;
 	import Enco.Shared.Animation.BasicEaseFunctions;
 	import Enco.Shared.Animation.AnimatedProperty;
+	
+	import Enco.Shared.Input.Keyboard;
+	import Enco.Shared.Input.Mouse;
+	import Enco.Shared.Input.Controller;
 	
 	import std.algorithm;
 	import std.string;

@@ -82,7 +82,7 @@ class Player : GameObject
 		m_y = m_respawnY;
 		m_double = true;
 		m_topState = 0;
-		onRespawn();
+		onRespawn(this);
 	}
 
 	public int getDirection()
@@ -326,7 +326,7 @@ class Player : GameObject
 			m_x += steps;
 		}
 
-		onStateChange();
+		onStateChange(this);
 	}
 
 	private void moveRelativeY(int steps)
@@ -348,7 +348,7 @@ class Player : GameObject
 			m_y += steps;
 		}
 		
-		onStateChange();
+		onStateChange(this);
 	}
 
 	override protected void update(f64 deltaTime)

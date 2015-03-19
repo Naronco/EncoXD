@@ -8,6 +8,4 @@ public
 	import Enco.GL3.GLTexture;
 	import Enco.GL3.GLMaterial;
 	import Enco.GL3.GLRenderTarget;
-
-	import derelict.opengl3.gl3;
 }

@@ -73,7 +73,7 @@ class AnimatedProperty(T)
 			{
 				intVal = finishVal;
 				state = AnimationState.Still;
-				onDone();
+				onDone(this);
 			}
 		}
 	}
@@ -153,7 +153,7 @@ class AnimatedFunctionValue(T)
 			{
 				intVal = finishVal;
 				state = AnimationState.Still;
-				onDone();
+				onDone(this);
 			}
 		}
 	}

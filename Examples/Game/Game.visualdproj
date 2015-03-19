@@ -206,10 +206,14 @@
   <Folder name="Blocks">
    <File path="..\..\blocks\default.lua" />
   </Folder>
+  <Folder name="Views">
+   <File path="..\..\views\game.json" />
+  </Folder>
   <Folder name="Plugins">
    <File path="..\..\plugins\default.lua" />
   </Folder>
   <File path="DragTable.d" />
+  <File path="GameScene.d" />
   <File path="Level.d" />
   <File path="main.d" />
   <File path="Player.d" />

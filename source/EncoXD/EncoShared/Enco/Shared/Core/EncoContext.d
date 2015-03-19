@@ -22,32 +22,28 @@ class EncoContext
 	public static EncoContext instance;
 	public string settings;
 	public LuaState lua;
-
-	public Event!bool onClose = new Event!bool;
-	public Trigger onShow = new Trigger;
-	public Trigger onHide = new Trigger;
-	public Trigger onExpose = new Trigger;
-	public Trigger onMinimize = new Trigger;
-	public Trigger onMaximize = new Trigger;
-	public Trigger onRestore = new Trigger;
-	public Trigger onEnter = new Trigger;
-	public Trigger onLeave = new Trigger;
-	public Trigger onFocusGain = new Trigger;
-	public Trigger onFocusLost = new Trigger;
-	public Event!u32vec2 onResize = new Event!u32vec2;
-	public Event!u32vec2 onMove = new Event!u32vec2;
+	
+	public Trigger onClose = new Trigger;
 	public Event!i32vec2 onScroll = new Event!i32vec2;
+	public Event!string onFileDrop = new Event!string;
 	public Event!u32 onKeyDown = new Event!u32;
 	public Event!u32 onKeyUp = new Event!u32;
 	public Event!MouseEvent onMouseMove = new Event!MouseEvent;
 	public Event!MouseEvent onMouseButtonDown = new Event!MouseEvent;
 	public Event!MouseEvent onMouseButtonUp = new Event!MouseEvent;
-	public Event!string onFileDrop = new Event!string;
 	public Event!i32 onControllerAdded = new Event!i32;
 	public Event!i32 onControllerRemoved = new Event!i32;
 	public Event!(Tuple!(i32, u8, i16)) onControllerAxis = new Event!(Tuple!(i32, u8, i16));
 	public Event!(Tuple!(i32, i8)) onControllerButtonDown = new Event!(Tuple!(i32, i8));
 	public Event!(Tuple!(i32, i8)) onControllerButtonUp = new Event!(Tuple!(i32, i8));
+
+	public @property f64 deltaTime() { return delta.to!("seconds", f64); }
+
+	public @property IRenderer renderer() { return view.renderer; }
+	public @property IView view() { return m_currentView; }
+
+	private IView[] m_views;
+	private IView m_currentView;
 
 	public DynamicLibrary[] loaded;
 
@@ -56,23 +52,16 @@ class EncoContext
 
 	public LuaFunction[][string] lua_events;
 
-	public static void create(IView mainView, IRenderer renderer, Scene scene)
+	public static void create(const DynamicLibrary[] libs)
 	{
 		assert(instance is null);
-		instance = new EncoContext(mainView, renderer, scene);
+		instance = new EncoContext(libs);
 	}
 
-	public static void create()
+	private this(const DynamicLibrary[] libs)
 	{
-		assert(instance is null);
-		instance = new EncoContext(null, null, null);
-	}
-
-	private this(IView mainView, IRenderer renderer, Scene scene)
-	{
-		m_mainView = mainView;
-		m_renderer = renderer;
-		m_scene = scene;
+		DerelictGL3.load();
+		useDynamicLibraries(libs);
 	}
 
 	public ~this()
@@ -167,67 +156,150 @@ class EncoContext
 		settings = jsonStr;
 		JSONValue json = parseJSON(jsonStr);
 
-		if(m_renderer !is null)
-			m_renderer.importSettings(json);
-		if(m_mainView !is null)
-			m_mainView.importSettings(json);
+		foreach(ref IView view; m_views)
+		{
+			m_currentView = view;
+			view.renderer.importSettings(json);
+			view.importSettings(json);
+		}
 	}
 
 	public void start()
 	{
-		if(m_renderer !is null)
-			m_mainView.create(m_renderer);
-
-		if(m_scene !is null)
+		foreach(ref IView view; m_views)
 		{
-			if(m_renderer !is null)
-				m_scene.renderer = m_renderer;
-			if(m_mainView !is null)
-				m_scene.view = m_mainView;
-			m_scene.init();
-		}
+			m_currentView = view;
+			view.create();
 
-		if(m_renderer !is null)
-			m_renderer.postImportSettings(parseJSON(settings));
+			view.scene.view = view;
+
+			if(view.scene !is null)
+			{
+				if(view.renderer !is null)
+					view.scene.renderer = view.renderer;
+				view.scene.init();
+			}
+		
+			if(view.renderer !is null)
+				view.renderer.postImportSettings(parseJSON(settings));
+		}
 	}
 
 	public void stop()
 	{
-		if(m_scene !is null)
-			m_scene.destroy();
-		if(m_mainView !is null)
-			m_mainView.destroy();
+		foreach(ref IView view; m_views)
+			view.destroy();
+	}
+
+	public void addView(TRenderer : IRenderer)(IView view)
+	{
+		view.renderer = new TRenderer();
+		m_views ~= view;
 	}
 
 	public bool update()
 	{
 		sw.start();
-		if(m_scene !is null)
-			if(!m_scene.update(delta.to!("seconds", f64)))
-			{
-				m_scene.destroy();
-				m_scene = m_scene.next;
-				m_scene.init();
-			}
+		foreach(ref IView view; m_views)
+		{
+			m_currentView = view;
+			view.performUpdate(delta.to!("seconds", f64));
+		}
 		luaEmitSingle("update");
-		if(m_mainView !is null)
-			return m_mainView.update(delta.to!("seconds", f64));
-		else
-			return false;
+
+		Mouse.setOffset(0, 0);
+		SDL_Event event;
+		while (SDL_PollEvent(&event)) {
+			if(event.type == SDL_QUIT)
+			{
+				onClose(this);
+				return false;
+			}
+			else
+			{
+				foreach(ref IView view; m_views)
+					view.handleEvent(event);
+				switch(event.type)
+				{
+					case SDL_DROPFILE:
+						string file = fromStringz(event.drop.file).dup;
+						SDL_free(event.drop.file);
+						onFileDrop(this, file);
+						break;
+					case SDL_KEYDOWN:
+						Keyboard.setKey(event.key.keysym.sym, true);
+						onKeyDown(this, event.key.keysym.sym);
+						break;
+					case SDL_KEYUP:
+						Keyboard.setKey(event.key.keysym.sym, false);
+						onKeyUp(this, event.key.keysym.sym);
+						break;
+					case SDL_MOUSEWHEEL:
+						onScroll(this, i32vec2(event.wheel.x, event.wheel.y));
+						break;
+					case SDL_MOUSEMOTION:
+						Mouse.setPosition(event.motion.x, event.motion.y);
+						Mouse.addOffset(event.motion.xrel, event.motion.yrel);
+						onMouseMove(this, MouseEvent(vec2(event.motion.x, event.motion.y), vec2(event.motion.xrel, event.motion.yrel), 255));
+						break;
+					case SDL_MOUSEBUTTONDOWN:
+					case SDL_MOUSEBUTTONUP:
+						Mouse.setPosition(event.button.x, event.button.y);
+						Mouse.setButton(event.button.button, event.button.state == SDL_PRESSED);
+						if(event.button.state == SDL_PRESSED)
+							onMouseButtonDown(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
+						else
+							onMouseButtonUp(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
+						break;
+					case SDL_CONTROLLERDEVICEADDED:
+						onControllerAdded(this, event.cdevice.which);
+						Controller.setConnected(event.cdevice.which, true);
+						SDL_GameControllerOpen(event.cdevice.which);
+						break;
+					case SDL_CONTROLLERDEVICEREMOVED:
+						onControllerRemoved(this, event.cdevice.which);
+						Controller.setConnected(event.cdevice.which, false);
+						break;
+					case SDL_CONTROLLERBUTTONDOWN:
+					case SDL_CONTROLLERBUTTONUP:
+						Controller.setKey(event.cbutton.which, event.cbutton.button, event.cbutton.state == SDL_PRESSED);
+						if(event.cbutton.state == SDL_PRESSED)
+							onControllerButtonDown(this, Tuple!(i32, i8)(event.cbutton.which, event.cbutton.button));
+						else
+							onControllerButtonUp(this, Tuple!(i32, i8)(event.cbutton.which, event.cbutton.button));
+						break;
+					case SDL_CONTROLLERAXISMOTION:
+						i16 value = event.caxis.value;
+						if(value < -32767) value = -32767;
+						if((event.caxis.axis == 0 || event.caxis.axis == 1) && abs(value) < 7849)
+						{
+							value = 0;
+						}
+						if((event.caxis.axis == 2 || event.caxis.axis == 3) && abs(value) < 8689)
+						{
+							value = 0;
+						}
+						if((event.caxis.axis == 4 || event.caxis.axis == 5) && abs(value) < 30)
+						{
+							value = 0;
+						}
+						Controller.setAxis(event.caxis.which, event.caxis.axis, value);
+						onControllerAxis(this, Tuple!(i32, u8, i16)(event.caxis.which, event.caxis.axis, value));
+						break;
+					default: break;
+				}
+			}
+		}
+		return true;
 	}
 
-	public void draw3D(RenderContext context)
+	public void draw()
 	{
-		luaEmitSingle("draw3D");
-		if(m_scene !is null)
-			m_scene.draw3D(context, m_renderer);
-	}
-
-	public void draw2D()
-	{
-		luaEmitSingle("draw2D");
-		if(m_scene !is null)
-			m_scene.draw2D(m_renderer.gui);
+		foreach(ref IView view; m_views)
+		{
+			m_currentView = view;
+			view.performDraw();
+		}
 	}
 
 	public void endUpdate()
@@ -236,14 +308,4 @@ class EncoContext
 		delta = sw.peek();
 		sw.reset();
 	}
-
-	public @property f64 deltaTime() { return delta.to!("seconds", f64); }
-
-	public @property Scene scene() { return m_scene; }
-	public @property IView view() { return m_mainView; }
-	public @property IRenderer renderer() { return m_renderer; }
-
-	private IView m_mainView;
-	private IRenderer m_renderer;
-	private Scene m_scene;
 }

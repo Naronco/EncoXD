@@ -1,0 +1,15 @@
+{
+	"Window":
+	{
+		"Width": 1024,
+		"Height": 600,
+		"Title": "Example Game"
+	},
+	"Context":
+	{
+		"ClearColor": [0.8, 0.8, 0.8],
+		"DepthTest": true,
+		"CullFace": true,
+		"Blend": false
+	}
+}

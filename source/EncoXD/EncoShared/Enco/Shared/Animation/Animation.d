@@ -153,7 +153,7 @@ class Animation
 			}
 			if(m_done)
 			{
-				onDone();
+				onDone(this);
 			}
 		}
 	}
