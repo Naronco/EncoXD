@@ -13,8 +13,8 @@ abstract class DesktopView : IView
 
 	private bool m_valid = false;
 	private Window m_window;
+	private bool m_closed = false;
 	
-	public Event!bool onClose = new Event!bool;
 	public Event!u32vec2 onResized = new Event!u32vec2;
 	public Event!u32vec2 onMove = new Event!u32vec2;
 	public Trigger onShow = new Trigger;
@@ -27,6 +27,7 @@ abstract class DesktopView : IView
 	public Trigger onLeave = new Trigger;
 	public Trigger onFocusGain = new Trigger;
 	public Trigger onFocusLost = new Trigger;
+	public Trigger onClose = new Trigger;
 
 	public this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
 	public this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
@@ -105,7 +106,7 @@ abstract class DesktopView : IView
 
 	public override void handleEvent(ref SDL_Event event)
 	{
-		if(valid)
+		if(valid && !m_closed)
 		{
 			if(event.type == SDL_WINDOWEVENT && event.window.windowID == window.id)
 			{
@@ -147,6 +148,12 @@ abstract class DesktopView : IView
 						break;
 					case SDL_WINDOWEVENT_FOCUS_LOST:
 						onFocusLost(this);
+						break;
+					case SDL_WINDOWEVENT_CLOSE:
+						onClose(this);
+						EncoContext.instance.removeView(this);
+						m_closed = true;
+						window.hide();
 						break;
 					default: break;
 				}

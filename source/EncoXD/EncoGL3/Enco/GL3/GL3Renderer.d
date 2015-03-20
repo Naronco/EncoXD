@@ -53,16 +53,14 @@ class GL3Renderer : IRenderer
 	private GUIRenderer m_gui;
 
 	public Window m_window;
-	public SDL_GLContext m_context;
+	public static SDL_GLContext glContext = null;
 
 	public this()
 	{
-
 	}
 
 	public ~this()
 	{
-
 	}
 
 	public void importSettings(JSONValue json)
@@ -137,16 +135,19 @@ class GL3Renderer : IRenderer
 		{
 			m_window = window;
 
-			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, cast(i32)depthBits);
-			SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, cast(i32)stencilBits);
+			if(glContext is null)
+			{
+				SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, cast(i32)depthBits);
+				SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, cast(i32)stencilBits);
 
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+				SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+				SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+				SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+			
+				glContext = SDL_GL_CreateContext(m_window.window);
 
-			m_context = SDL_GL_CreateContext(m_window.window);
-
-			DerelictGL3.reload();
+				DerelictGL3.reload();
+			}
 
 			m_valid = true;
 			m_gui = new GUIRenderer(this, GLMaterial.load(this, "materials/gui.json"));
@@ -163,8 +164,8 @@ class GL3Renderer : IRenderer
 	{
 		if(valid)
 		{
-			SDL_GL_DeleteContext(m_context);
-			m_context = null;
+			SDL_GL_DeleteContext(glContext);
+			glContext = null;
 		}
 	}
 
@@ -190,7 +191,10 @@ class GL3Renderer : IRenderer
 	{
 		if(valid)
 		{
-			SDL_GL_MakeCurrent(m_window.window, m_context);
+			if(SDL_GL_MakeCurrent(m_window.window, glContext) < 0)
+			{
+				Logger.writeln(fromStringz(SDL_GetError()));
+			}
 		}
 	}
 

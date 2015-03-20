@@ -13,7 +13,7 @@ enum RenderingBuffer : int
 
 interface IRenderer
 {
-	void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window); // TODO: Replace SDL_Window / Make IView renderable
+	void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window);
 	void deleteContext();
 
 	void importSettings(JSONValue json);

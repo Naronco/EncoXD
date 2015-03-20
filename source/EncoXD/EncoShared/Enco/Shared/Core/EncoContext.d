@@ -60,7 +60,6 @@ class EncoContext
 
 	private this(const DynamicLibrary[] libs)
 	{
-		DerelictGL3.load();
 		useDynamicLibraries(libs);
 	}
 
@@ -80,6 +79,7 @@ class EncoContext
 				break;
 			case DynamicLibrary.SDL2:
 				DerelictSDL2.load();
+				DerelictGL3.load();
 				SDL_Init(SDL_INIT_EVERYTHING);
 				break;
 			case DynamicLibrary.SDL2TTF:
@@ -195,6 +195,18 @@ class EncoContext
 	{
 		view.renderer = new TRenderer();
 		m_views ~= view;
+	}
+
+	public void removeView(IView view)
+	{
+		m_views = remove!(v => v == view)(m_views);
+
+		if(m_views.length == 0)
+		{
+			SDL_Event evt;
+			evt.type = SDL_QUIT;
+			SDL_PushEvent(&evt);
+		}
 	}
 
 	public bool update()

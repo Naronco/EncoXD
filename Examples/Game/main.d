@@ -10,7 +10,7 @@ class GameWindow : DesktopView
 {
 	RenderContext context;
 	GameScene game;
-
+	
 	public this()
 	{
 		scene = game = new GameScene();
@@ -75,7 +75,7 @@ void main(string[] args)
 	EncoContext.instance.importSettings(import("game.json"));
 	EncoContext.instance.start();
 	scope(exit) EncoContext.instance.stop();
-
+	
 	window.init();
 
 	KeyboardState* state = Keyboard.getState();
