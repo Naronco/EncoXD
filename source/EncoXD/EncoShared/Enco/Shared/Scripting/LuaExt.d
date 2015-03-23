@@ -6,6 +6,7 @@ import std.socket;
 
 import EncoShared;
 
+/// Thread creatable from Lua using thread.start(function)
 class LuaThread : Thread
 {
 	public LuaFunction fnc;
@@ -16,6 +17,7 @@ class LuaThread : Thread
 		this.fnc = fnc;
 	}
 
+	/// Starts a new thread running fnc
 	public static void createThread(LuaFunction fnc)
 	{
 		new LuaThread(fnc).start();
@@ -28,6 +30,7 @@ class LuaThread : Thread
 	}
 }
 
+/// Class containing lua functions
 class LuaExt
 {
 	public static LuaTable threadModule(LuaState lua)

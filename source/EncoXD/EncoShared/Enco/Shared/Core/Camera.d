@@ -31,9 +31,7 @@ class Camera : GameObject
 
 	public @property mat4 rotationMatrix()
 	{
-		return mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
-				mat4.identity.rotate(transform.rotation.y, vec3(0, 1, 0)) *
-				mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1));
+		return transform.rotation.to_matrix!(4, 4)();
 	}
 
 	public @property mat4 translationMatrix()

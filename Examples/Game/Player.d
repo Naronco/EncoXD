@@ -15,6 +15,11 @@ class Player : GameObject
 	private f32 m_camRotation = 0;
 
 	private bool m_double;
+
+	private AnimatedProperty!f32 m_rotation;
+	private int m_prevX, m_prevY;
+	private int m_prevState;
+	private bool m_locked = false;
 	
 	public Trigger onStateChange = new Trigger;
 	public Trigger onRespawn = new Trigger;
@@ -52,26 +57,31 @@ class Player : GameObject
 		m_topX = 0;
 		m_topY = 0;
 
+		m_rotation = new AnimatedProperty!f32(0);
+
 		addChild(m_bottom = new MeshObject(mesh, material));
 		addChild(m_top = new MeshObject(mesh, material));
 
 		EncoContext.instance.onKeyDown += (sender, key)
 		{
-			if(key == Key.D || key == Key.Right)
+			if(!m_locked)
 			{
-				moveRight();
-			}
-			if(key == Key.S || key == Key.Down)
-			{
-				moveBack();
-			}
-			if(key == Key.A || key == Key.Left)
-			{
-				moveLeft();
-			}
-			if(key == Key.W || key == Key.Up)
-			{
-				moveFront();
+				if(key == Key.D || key == Key.Right)
+				{
+					moveRight();
+				}
+				if(key == Key.S || key == Key.Down)
+				{
+					moveBack();
+				}
+				if(key == Key.A || key == Key.Left)
+				{
+					moveLeft();
+				}
+				if(key == Key.W || key == Key.Up)
+				{
+					moveFront();
+				}
 			}
 		};
 	}
@@ -87,7 +97,7 @@ class Player : GameObject
 
 	public int getDirection()
 	{
-		float rota = radToDeg(((m_camRotation % PI2) + PI2) % PI2);
+		float rota = degrees(((m_camRotation % PI2) + PI2) % PI2);
 		if(rota >= 45 && rota < 135) return 1;
 		if(rota >= 135 && rota < 225) return 2;
 		if(rota >= 225 && rota < 315) return 3;
@@ -353,40 +363,47 @@ class Player : GameObject
 
 	override protected void update(f64 deltaTime)
 	{
-		transform.position.x = m_x + 0.5f;
-		transform.position.y = 0.5f;
-		transform.position.z = m_y + 0.5f;
-		m_bottom.transform.position = transform.position;
-		if(m_topState == 0) // Upright
+		if(m_rotation.isAnimating)
 		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.y = 1.5f;
+
 		}
-		if(m_topState == 1) // Towards +X
+		else
 		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.x += 1.0f;
-		}
-		if(m_topState == 2) // Towards -X
-		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.x -= 1.0f;
-		}
-		if(m_topState == 3) // Towards +Z
-		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.z += 1.0f;
-		}
-		if(m_topState == 4) // Towards -Z
-		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.z -= 1.0f;
-		}
-		if(m_topState == 5) // Splitted
-		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.x = m_topX;
-			m_top.transform.position.z = m_topX;
+			transform.position.x = m_x + 0.5f;
+			transform.position.y = 0.5f;
+			transform.position.z = m_y + 0.5f;
+			m_bottom.transform.position = transform.position;
+			if(m_topState == 0) // Upright
+			{
+				m_top.transform.position = transform.position;
+				m_top.transform.position.y = 1.5f;
+			}
+			if(m_topState == 1) // Towards +X
+			{
+				m_top.transform.position = transform.position;
+				m_top.transform.position.x += 1.0f;
+			}
+			if(m_topState == 2) // Towards -X
+			{
+				m_top.transform.position = transform.position;
+				m_top.transform.position.x -= 1.0f;
+			}
+			if(m_topState == 3) // Towards +Z
+			{
+				m_top.transform.position = transform.position;
+				m_top.transform.position.z += 1.0f;
+			}
+			if(m_topState == 4) // Towards -Z
+			{
+				m_top.transform.position = transform.position;
+				m_top.transform.position.z -= 1.0f;
+			}
+			if(m_topState == 5) // Splitted
+			{
+				m_top.transform.position = transform.position;
+				m_top.transform.position.x = m_topX;
+				m_top.transform.position.z = m_topX;
+			}
 		}
 	}
 }
@@ -441,7 +458,7 @@ class PlayerLock : IComponent
 	{
 		pos = (player.transform.position + player.topPosition) * 0.5f;
 		pos.y = 0.5f;
-		player.camRotation = camera.transform.rotation.y;
+		player.camRotation = camera.transform.rotation.pitch;
 		camMovement.value = pos;
 		camMovement.update(deltaTime);
 		zoom.update(deltaTime);

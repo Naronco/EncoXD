@@ -27,15 +27,15 @@ class DragTableX : IComponent
 			if(!wasDown && mstate.isButtonDown(0))
 			{
 				startMousePos = mstate.position.x;
-				startRotation = object.transform.rotation.y;
+				startRotation = object.transform.rotation.pitch;
 			}
 			if(mstate.isButtonDown(0))
 			{
-				object.transform.rotation.y = startRotation + (startMousePos - mstate.position.x) * 0.004;
+				object.transform.rotation = object.transform.rotation.euler_rotation(object.transform.rotation.yaw, startRotation + (startMousePos - mstate.position.x) * 0.004, object.transform.rotation.roll);
 			}
 			wasDown = mstate.isButtonDown(0);
 		}
-		if(cstate.isConnected) object.transform.rotation -= vec3(0, cstate.getAxis(2), 0) * deltaTime * 2;
+		if(cstate.isConnected) object.transform.rotation = object.transform.rotation.euler_rotation(object.transform.rotation.yaw, object.transform.rotation.pitch - cstate.getAxis(2) * deltaTime * 2, object.transform.rotation.roll);
 		mstate = Mouse.getState();
 	}
 
@@ -71,17 +71,17 @@ class DragTableHalfY : IComponent
 			if(!wasDown && mstate.isButtonDown(0))
 			{
 				startMousePos = mstate.position.y;
-				startRotation = object.transform.rotation.x;
+				startRotation = object.transform.rotation.yaw;
 			}
 			if(mstate.isButtonDown(0))
 			{
-				object.transform.rotation.x = startRotation + (startMousePos - mstate.position.y) * 0.004;
+				object.transform.rotation = object.transform.rotation.euler_rotation(startRotation + (startMousePos - mstate.position.y) * 0.004, object.transform.rotation.pitch, object.transform.rotation.roll);
 			}
 			wasDown = mstate.isButtonDown(0);
 		}
-		if(cstate.isConnected) object.transform.rotation -= vec3(cstate.getAxis(3), 0, 0) * deltaTime * 2;
-		if(object.transform.rotation.x > -0.4f) object.transform.rotation.x = -0.4f;
-		if(object.transform.rotation.x < -1.57f) object.transform.rotation.x = -1.57f;
+		if(cstate.isConnected) object.transform.rotation = object.transform.rotation.euler_rotation(object.transform.rotation.yaw - cstate.getAxis(3) * deltaTime * 2, object.transform.rotation.pitch, object.transform.rotation.roll);
+		if(object.transform.rotation.yaw > -0.4f) object.transform.rotation = object.transform.rotation.euler_rotation(-0.4f, object.transform.rotation.pitch, object.transform.rotation.roll);
+		if(object.transform.rotation.yaw < -1.57f) object.transform.rotation.rotate_euler(-1.57f, object.transform.rotation.pitch, object.transform.rotation.roll);
 		mstate = Mouse.getState();
 	}
 

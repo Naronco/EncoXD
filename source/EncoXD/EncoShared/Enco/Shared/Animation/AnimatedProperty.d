@@ -44,6 +44,8 @@ class AnimatedProperty(T)
 		time = 0;
 	}
 
+	public @property bool isAnimating() { return state == AnimationState.Animating; }
+
 	/// Current animation state
 	public @property AnimationState animationState() { return state; }
 

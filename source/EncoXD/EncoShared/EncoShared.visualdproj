@@ -208,6 +208,9 @@
    <File path="Enco\Shared\Animation\Animation.d" />
    <File path="Enco\Shared\Animation\BasicEaseFunctions.d" />
   </Folder>
+  <Folder name="Components">
+   <File path="FPSRotation.d" />
+  </Folder>
   <Folder name="Core">
    <File path="Enco\Shared\Core\Camera.d" />
    <File path="Enco\Shared\Core\EncoContext.d" />
@@ -223,15 +226,8 @@
   </Folder>
   <Folder name="Ext">
    <File path="Enco\Shared\Ext\Array.d" />
+   <File path="Math.d" />
    <File path="Enco\Shared\Ext\String.d" />
-  </Folder>
-  <Folder name="Components">
-   <File path="FPSRotation.d" />
-  </Folder>
-  <Folder name="Input">
-   <File path="Enco\Shared\Input\Controller.d" />
-   <File path="Enco\Shared\Input\Keyboard.d" />
-   <File path="Enco\Shared\Input\Mouse.d" />
   </Folder>
   <Folder name="GUI">
    <File path="Enco\Shared\GUI\Control.d" />
@@ -239,10 +235,15 @@
    <File path="Enco\Shared\GUI\PictureControl.d" />
    <File path="Enco\Shared\GUI\TextControl.d" />
   </Folder>
+  <Folder name="Input">
+   <File path="Enco\Shared\Input\Controller.d" />
+   <File path="Enco\Shared\Input\Keyboard.d" />
+   <File path="Enco\Shared\Input\Mouse.d" />
+  </Folder>
   <Folder name="Math">
    <File path="Enco\Shared\Math\Frustum.d" />
    <File path="Enco\Shared\Math\Random.d" />
-   <File path="Enco\Shared\Math\Transform.d" />
+   <File path="Transform.d" />
   </Folder>
   <Folder name="Network">
    <File path="Enco\Shared\Network\Network.d" />

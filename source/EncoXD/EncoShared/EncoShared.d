@@ -56,6 +56,7 @@ public
 	
 	import Enco.Shared.Ext.Array;
 	import Enco.Shared.Ext.String;
+	import Enco.Shared.Ext.Math;
 	
 	import Enco.Shared.Network.Network;
 	import Enco.Shared.Network.Tcp;
@@ -93,8 +94,6 @@ public
 	enum ENCO_VERSION = "1.0.0";
 	enum ENCO_VERSION_ID = 1;
 
+	/// Pi times 2
 	enum PI2 = 6.28318530718;
-	
-	static float degToRad(float f) { return f * 0.0174532925f; }
-	static float radToDeg(float f) { return f * 57.2957795f; }
 }

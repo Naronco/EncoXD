@@ -13,8 +13,6 @@ Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Demo", "..\..\Demo\Demo.vis
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{C16654BE-29FA-463F-85D5-550AE536522A}"
 EndProject
-Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "ScriptedServer", "..\..\Examples\ScriptedServer\ScriptedServer.visualdproj", "{BFD3BD68-9251-4219-954D-A17D76F9D5D0}"
-EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Game", "..\..\Examples\Game\Game.visualdproj", "{C78D923D-86A3-4A6B-8614-BA0E62B7C427}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28} = {A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}

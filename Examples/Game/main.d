@@ -31,7 +31,7 @@ class GameWindow : DesktopView
 		debug EncoContext.instance.onKeyDown += (sender, key) {
 			if(key == Key.F1)
 			{
-				Logger.writeln("Rotation: ", camera.transform.rotation.y);
+				Logger.writeln("Rotation: ", camera.transform.rotation.pitch);
 			}
 			if(key == Key.F2)
 			{
@@ -43,7 +43,7 @@ class GameWindow : DesktopView
 		camera.addComponent(new DragTableHalfY());
 
 		camera.transform.position = vec3(0, 0, 0);
-		camera.transform.rotation = vec3(-0.9, -0.2, 0);
+		camera.transform.rotation = camera.transform.rotation.euler_rotation(-0.9, -0.2, 0);
 
 		context = RenderContext(camera, vec3(1, 0.5, 0.3));
 	
