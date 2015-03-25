@@ -9,7 +9,7 @@ struct Transform
 	public @property vec3 position() { return vec3(transform.matrix[3][0], transform.matrix[3][1], transform.matrix[3][2]); }
 	public @property void position(vec3 v) { transform.matrix[3][0] = v.x; transform.matrix[3][1] = v.y; transform.matrix[3][2] = v.z; }
 	
-	public @property quat rotation() { return quat.from_matrix(transform.get_rotation()); }
+	public @property quat rotation() { assert(transform.isFinite); return quat.from_matrix(mat3(transform)); }
 	public @property void rotation(quat v) { transform.set_rotation(v.to_matrix!(3, 3)()); }
 	
 	public @property vec3 scale()

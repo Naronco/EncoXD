@@ -21,12 +21,10 @@ class GameWindow : DesktopView
 		Camera camera = new Camera();
 		renderer.setClearColor(0.8f, 0.8f, 0.8f);
 		auto lua = EncoContext.instance.createLuaState();
-		camera.farClip = 1000;
-		camera.nearClip = -1000;
+		camera.farClip = 100;
 		camera.width = width;
 		camera.height = height;
-		camera.zoom = 10;
-		camera.projectionMode = ProjectionMode.Orthographic3D;
+		camera.fov = 45;
 
 		debug EncoContext.instance.onKeyDown += (sender, key) {
 			if(key == Key.F1)
@@ -42,8 +40,8 @@ class GameWindow : DesktopView
 		camera.addComponent(new DragTableX());
 		camera.addComponent(new DragTableHalfY());
 
-		camera.transform.position = vec3(0, 0, 0);
-		camera.transform.rotation = camera.transform.rotation.euler_rotation(-0.9, -0.2, 0);
+		camera.transform.position = vec3(0, 2, 0);
+		//camera.transform.rotation = camera.transform.rotation.euler_rotation(-0.9, -0.2, 0);
 
 		context = RenderContext(camera, vec3(1, 0.5, 0.3));
 	

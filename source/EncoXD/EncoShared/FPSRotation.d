@@ -22,7 +22,8 @@ class FPSRotation : IComponent
 	{
 		mstate = Mouse.getState();
 		cstate = Controller.getState(0);
-		object.transform.rotation = object.transform.rotation.euler_rotation(-mstate.offset.x * deltaTime * 0.5, 0, -mstate.offset.y * deltaTime * 0.5) * object.transform.rotation;
+		object.transform.rotation = object.transform.rotation.rotate_axis(mstate.offset.x * deltaTime * 0.5, vec3(0, 1, 0) * object.transform.rotation);
+		object.transform.rotation = object.transform.rotation.rotatex(mstate.offset.y * deltaTime * 0.5);
 		//if(cstate.isConnected) object.transform.rotation = object.transform.rotation.euler_rotation(object.transform.rotation.yaw - cstate.getAxis(3) * deltaTime * 2, object.transform.rotation.pitch - cstate.getAxis(2) * deltaTime * 2, object.transform.rotation.roll);
 		//if(object.transform.rotation.yaw > 1.5707963f) object.transform.rotation = object.transform.rotation.euler_rotation(1.5707963f, object.transform.rotation.pitch, object.transform.rotation.roll);
 		//if(object.transform.rotation.yaw < -1.5707963f) object.transform.rotation = object.transform.rotation.euler_rotation(-1.5707963f, object.transform.rotation.pitch, object.transform.rotation.roll);

@@ -25,11 +25,11 @@ class Player : IComponent
 
 		vec3 off = vec3(0);
 
-		if (state.isKeyDown(SDLK_w)) off += object.transform.rotation * vec3(0, 0, -1);
+		if (state.isKeyDown(SDLK_w)) off += object.transform.rotation.inverse * vec3(0, 0, -1);
 		if (controller.isConnected && abs(controller.getAxis(1)) > 0.3) off += vec3(cos(-object.transform.rotation.y - 1.57079633f) * cos(-object.transform.rotation.x), -sin(-object.transform.rotation.x), sin(-object.transform.rotation.y - 1.57079633f) * cos(-object.transform.rotation.x)) * -controller.getAxis(1);
-		if (state.isKeyDown(SDLK_s)) off += object.transform.rotation * vec3(0, 0, 1);
-		if (state.isKeyDown(SDLK_a)) off += object.transform.rotation * vec3(-1, 0, 0);
-		if (state.isKeyDown(SDLK_d)) off += object.transform.rotation * vec3(1, 0, 0);
+		if (state.isKeyDown(SDLK_s)) off += object.transform.rotation.inverse * vec3(0, 0, 1);
+		if (state.isKeyDown(SDLK_a)) off += object.transform.rotation.inverse * vec3(-1, 0, 0);
+		if (state.isKeyDown(SDLK_d)) off += object.transform.rotation.inverse * vec3(1, 0, 0);
 		if (controller.isConnected && abs(controller.getAxis(0)) > 0.3) off += vec3(cos(-object.transform.rotation.y), 0, sin(-object.transform.rotation.y)) * controller.getAxis(0);
 		if (state.isKeyDown(SDLK_SPACE)) off += vec3(0, 1, 0);
 		if (state.isKeyDown(SDLK_LSHIFT)) off -= vec3(0, 1, 0);
