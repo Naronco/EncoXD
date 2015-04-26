@@ -1,5 +1,7 @@
 module Enco.Shared.Render.Mesh;
 
+import std.algorithm;
+
 import EncoShared;
 
 class RenderableMesh
@@ -202,7 +204,9 @@ class Mesh
 			meshes[j] = mesh;
 		}
 
-		return meshes.reverse;
+		reverse(meshes);
+		
+		return meshes;
 	}
 
 	public RenderableMesh renderable = null;

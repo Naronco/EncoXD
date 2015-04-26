@@ -129,7 +129,7 @@ class Level : GameObject
 				block.enabled = val;
 	}
 
-	public bool fromBitmap(string path, Material materials[], IRenderer renderer)
+	public bool fromBitmap(string path, Material[] materials, IRenderer renderer)
 	{
 		if(!exists(path))
 		{

@@ -181,7 +181,7 @@ class Animation
 
 	static this()
 	{
-		string funcs[];
+		string[] funcs;
 
 		foreach (member_string; __traits(allMembers, AnimationFunctions))
 		{

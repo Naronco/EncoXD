@@ -2,6 +2,7 @@ module Enco.Shared.Core.EncoContext;
 
 import std.json;
 import std.datetime;
+import std.typecons;
 
 import EncoShared;
 
