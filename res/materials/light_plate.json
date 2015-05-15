@@ -1,11 +1,12 @@
 {
-	"Name": "Grass",
+	"Name": "Metal Floor",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/grass.png",
-			"MipMap": true
+			"File": "res/tex/light_switch.png",
+			"MipMap": true,
+			"Smooth": true
 		}
 	},
 	"Vertex": "default",
@@ -13,6 +14,6 @@
 	{
 		"Base": "diffuse",
 		"Ambient": "vec3(0.1, 0.1, 0.1)",
-		"Color": "tex(slot0, 10, 10)"
+		"Color": "tex(slot0, 1, 1)"
 	}
 }

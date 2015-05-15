@@ -1,12 +1,11 @@
 {
-	"Name": "Metal Floor",
+	"Name": "Bricks",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/metal.png",
-			"MipMap": true,
-			"Smooth": true
+			"File": "res/tex/bricks.png",
+			"MipMap": true
 		}
 	},
 	"Vertex": "default",
@@ -14,6 +13,6 @@
 	{
 		"Base": "diffuse",
 		"Ambient": "vec3(0.1, 0.1, 0.1)",
-		"Color": "tex(slot0, 1, 1)"
+		"Color": "tex(slot0, 40, 40)"
 	}
 }

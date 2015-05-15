@@ -28,7 +28,7 @@ class Game3DLayer : RenderLayer
 
 	public void nextLevel()
 	{
-		if(!level.fromBitmap("levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
+		if(!level.fromBitmap("res/levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
 			Logger.writeln(new Exception("Invalid Level!"));
 	}
 	
@@ -55,20 +55,20 @@ class Game3DLayer : RenderLayer
 
 	public void setLua(LuaState lua)
 	{
-		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "materials/player.json"));
+		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "res/materials/player.json"));
 		level = new Level(lua, player);
 		
-		materials ~= GLMaterial.load(scene.renderer, "materials/metal.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/start.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/finish.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/checkpoint.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/light_plate.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/heavy_plate.json");
-		materials ~= GLMaterial.load(scene.renderer, "materials/bridge.json");
+		materials ~= GLMaterial.load(scene.renderer, "res/materials/metal.json");
+		materials ~= GLMaterial.load(scene.renderer, "res/materials/start.json");
+		materials ~= GLMaterial.load(scene.renderer, "res/materials/finish.json");
+		materials ~= GLMaterial.load(scene.renderer, "res/materials/checkpoint.json");
+		materials ~= GLMaterial.load(scene.renderer, "res/materials/light_plate.json");
+		materials ~= GLMaterial.load(scene.renderer, "res/materials/heavy_plate.json");
+		materials ~= GLMaterial.load(scene.renderer, "res/materials/bridge.json");
 
-		auto blocks = dirEntries("blocks/", SpanMode.shallow, false);
+		auto blocks = dirEntries("res/blocks/", SpanMode.shallow, false);
 
-		auto plugins = dirEntries("plugins/", SpanMode.shallow, false);
+		auto plugins = dirEntries("res/plugins/", SpanMode.shallow, false);
 		
 		lua["registerBlock"] = &level.registerBlock;
 

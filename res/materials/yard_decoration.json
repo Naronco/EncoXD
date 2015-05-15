@@ -1,18 +1,17 @@
 {
-	"Name": "Tree",
+	"Name": "Yard Decoration",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/tree.png",
-			"MipMap": false,
-			"Smooth": false
+			"File": "res/tex/yard.png",
+			"MipMap": true
 		}
 	},
 	"Vertex": "default",
 	"Fragment":
 	{
-		"Base": "texture",
+		"Base": "diffuse",
 		"Ambient": "vec3(0.1, 0.1, 0.1)",
 		"Color": "tex(slot0)"
 	}

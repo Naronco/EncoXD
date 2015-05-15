@@ -1,10 +1,10 @@
 {
-	"Name": "Player",
+	"Name": "Metal Floor",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/player.png",
+			"File": "res/tex/metal.png",
 			"MipMap": true,
 			"Smooth": true
 		}

@@ -12,20 +12,20 @@ class Game3DLayer : RenderLayer
 
 	public override void init(Scene scene)
 	{
-		auto meshes = Mesh.loadFromObj("meshes/yard.obj", 0);
+		auto meshes = Mesh.loadFromObj("res/meshes/yard.obj", 0);
 		
-		addGameObject(new MeshObject(meshes[0], GLMaterial.load(scene.renderer, "materials/grass.json")));
-		addGameObject(new MeshObject(meshes[1], GLMaterial.load(scene.renderer, "materials/brick.json")));
-		addGameObject(new MeshObject(meshes[2], GLMaterial.load(scene.renderer, "materials/yard_decoration.json")));
-		addGameObject(new MeshObject(meshes[3], GLMaterial.load(scene.renderer, "materials/tree.json")));
+		addGameObject(new MeshObject(meshes[0], GLMaterial.load(scene.renderer, "res/materials/grass.json")));
+		addGameObject(new MeshObject(meshes[1], GLMaterial.load(scene.renderer, "res/materials/brick.json")));
+		addGameObject(new MeshObject(meshes[2], GLMaterial.load(scene.renderer, "res/materials/yard_decoration.json")));
+		addGameObject(new MeshObject(meshes[3], GLMaterial.load(scene.renderer, "res/materials/tree.json")));
 
-		auto clouds = Mesh.loadFromObj("meshes/cloudPlane.obj", 0)[0];
-		MeshObject cloudsObj = new MeshObject(clouds, GLMaterial.load(scene.renderer, "materials/clouds.json"));
+		auto clouds = Mesh.loadFromObj("res/meshes/cloudPlane.obj", 0)[0];
+		MeshObject cloudsObj = new MeshObject(clouds, GLMaterial.load(scene.renderer, "res/materials/clouds.json"));
 		cloudsObj.transform.scale = vec3(600, 400, 600);
 		cloudsObj.renderRelative = true;
 		addGameObject(cloudsObj);
 
-		MeshObject cloudsObj2 = new MeshObject(clouds, GLMaterial.load(scene.renderer, "materials/clouds2.json"));
+		MeshObject cloudsObj2 = new MeshObject(clouds, GLMaterial.load(scene.renderer, "res/materials/clouds2.json"));
 		cloudsObj2.transform.scale = vec3(600, 300, 600);
 		cloudsObj2.renderRelative = true;
 		addGameObject(cloudsObj2);
@@ -41,9 +41,9 @@ class Game3DLayer : RenderLayer
 			carY.value = up ? 0 : 5;
 		};
 
-		auto car = Mesh.loadFromObj("meshes/lamborghini.obj", 0);
-		carGlassObj = addGameObject(new MeshObject(car[0], GLMaterial.load(scene.renderer, "materials/glass.json")));
-		carObj = addGameObject(new MeshObject(car[1], GLMaterial.load(scene.renderer, "materials/lamborghini.json")));
+		auto car = Mesh.loadFromObj("res/meshes/lamborghini.obj", 0);
+		carGlassObj = addGameObject(new MeshObject(car[0], GLMaterial.load(scene.renderer, "res/materials/glass.json")));
+		carObj = addGameObject(new MeshObject(car[1], GLMaterial.load(scene.renderer, "res/materials/lamborghini.json")));
 	}
 
 	override protected void update(f64 deltaTime)
@@ -75,7 +75,7 @@ class DebugLayer : RenderLayer
 		version(OSX) addVersion(os = "osx");
 		version(Android) addVersion(os = "android");
 
-		Font font = new Font("fonts/Roboto/Roboto-Regular.ttf", 16);
+		Font font = new Font("res/fonts/Roboto/Roboto-Regular.ttf", 16);
 		string compiler = "Unknown Compiler";
 		version(DigitalMars) compiler = "DMD";
 		version(GNU) compiler = "GDC";
@@ -92,7 +92,7 @@ class DebugLayer : RenderLayer
 
 	public void addVersion(string ver)
 	{
-		PictureControl verPic = new PictureControl(GLTexturePool.load("tex/" ~ ver ~ ".png"));
+		PictureControl verPic = new PictureControl(GLTexturePool.load("res/tex/" ~ ver ~ ".png"));
 		verPic.x = 20;
 		verPic.y = 20;
 		verPic.width = 200;

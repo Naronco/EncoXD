@@ -63,7 +63,7 @@ class GLMaterial
 		string vertex;
 		if(value["Vertex"].type == JSON_TYPE.STRING)
 		{
-			vertex = std.file.readText("shaders/" ~ value["Vertex"].str ~ ".vert");
+			vertex = std.file.readText("res/shaders/" ~ value["Vertex"].str ~ ".vert");
 		}
 		else
 		{
@@ -74,13 +74,13 @@ class GLMaterial
 			}
 			vars["TextureSlots"] = textureSlots;
 
-			vertex = TemplateParser.parse(std.file.readText("shaders/" ~ value["Vertex"]["Base"].str ~ ".vert"), vars);
+			vertex = TemplateParser.parse(std.file.readText("res/shaders/" ~ value["Vertex"]["Base"].str ~ ".vert"), vars);
 		}
 
 		string fragment;
 		if(value["Fragment"].type == JSON_TYPE.STRING)
 		{
-			fragment = std.file.readText("shaders/" ~ value["Fragment"].str ~ ".frag");
+			fragment = std.file.readText("res/shaders/" ~ value["Fragment"].str ~ ".frag");
 		}
 		else
 		{
@@ -91,7 +91,7 @@ class GLMaterial
 			}
 			vars["TextureSlots"] = textureSlots;
 
-			fragment = TemplateParser.parse(std.file.readText("shaders/" ~ value["Fragment"]["Base"].str ~ ".frag"), vars);
+			fragment = TemplateParser.parse(std.file.readText("res/shaders/" ~ value["Fragment"]["Base"].str ~ ".frag"), vars);
 		}
 
 		GLShader vs = new GLShader();

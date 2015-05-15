@@ -1,1 +1,0 @@
-dub run --config=Game %*

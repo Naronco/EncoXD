@@ -150,7 +150,7 @@ class GL3Renderer : IRenderer
 			}
 
 			m_valid = true;
-			m_gui = new GUIRenderer(this, GLMaterial.load(this, "materials/gui.json"));
+			m_gui = new GUIRenderer(this, GLMaterial.load(this, "res/materials/gui.json"));
 			m_gui.resize(width, height);
 
 			m_width = width;

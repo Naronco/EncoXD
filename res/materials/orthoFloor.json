@@ -1,12 +1,12 @@
 {
-	"Name": "Metal Floor",
+	"Name": "Floor",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/heavy_switch.png",
-			"MipMap": true,
-			"Smooth": true
+			"File": "res/tex/orthoFloor.png",
+			"MipMap": false,
+			"Smooth": false
 		}
 	},
 	"Vertex": "default",

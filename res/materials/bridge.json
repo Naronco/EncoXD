@@ -4,7 +4,7 @@
 	{
 		"0":
 		{
-			"File": "tex/metal.png",
+			"File": "res/tex/metal.png",
 			"MipMap": true,
 			"Smooth": true
 		}
@@ -14,6 +14,6 @@
 	{
 		"Base": "diffuse",
 		"Ambient": "vec3(0.1, 0.1, 0.1)",
-		"Color": "tex(slot0, 1, 1) * vec4(1, 1, 0.5, 1)"
+		"Color": "tex(slot0, 1, 1) * vec4(1.0, 0.6, 0.3, 1)"
 	}
 }

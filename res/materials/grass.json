@@ -1,12 +1,11 @@
 {
-	"Name": "Floor",
+	"Name": "Grass",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/orthoFloor.png",
-			"MipMap": false,
-			"Smooth": false
+			"File": "res/tex/grass.png",
+			"MipMap": true
 		}
 	},
 	"Vertex": "default",
@@ -14,6 +13,6 @@
 	{
 		"Base": "diffuse",
 		"Ambient": "vec3(0.1, 0.1, 0.1)",
-		"Color": "tex(slot0, 1, 1)"
+		"Color": "tex(slot0, 10, 10)"
 	}
 }

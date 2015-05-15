@@ -1,17 +1,18 @@
 {
-	"Name": "Sky",
+	"Name": "Clouds",
 	"Textures":
 	{
 		"0":
 		{
-			"File": "tex/sky.png",
+			"File": "res/tex/clouds.png",
 			"MipMap": true
 		}
 	},
 	"Vertex": "default",
+	"Blend": true,
 	"Fragment":
 	{
 		"Base": "texture",
-		"Color": "tex(slot0)"
+		"Color": "tex(slot0, 10, 10)"
 	}
 }

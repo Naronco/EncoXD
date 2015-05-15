@@ -44,12 +44,12 @@ class GameWindow : DesktopView
 		palette.wrapX = TextureClampMode.ClampToEdge;
 		palette.wrapY = TextureClampMode.ClampToEdge;
 		palette.wrapZ = TextureClampMode.ClampToEdge;
-		palette.fromBitmap(Bitmap.load("tex/pallete16_mod.png"));
+		palette.fromBitmap(Bitmap.load("res/tex/pallete16_mod.png"));
 
 		target = new GLRenderTarget();
 		target.init(width, height, true, this);
 
-		program = cast(GLShaderProgram)GLShaderProgram.fromVertexFragmentFiles(cast(GL3Renderer)renderer, "shaders/post.vert", "shaders/post.frag");
+		program = cast(GLShaderProgram)GLShaderProgram.fromVertexFragmentFiles(cast(GL3Renderer)renderer, "res/shaders/post.vert", "res/shaders/post.frag");
 		program.registerUniforms(["slot0", "slot1", "slot2"]);
 		program.set("slot0", 0);
 		program.set("slot1", 1);
