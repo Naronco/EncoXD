@@ -1,6 +1,6 @@
 {
-	"name": "Game Example",
-	"description": "Example Game for EncoX",
+	"name": "Transformations Example",
+	"description": "Shows parenting and transformations",
 	"authors": ["shirookad", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoXD",
 	"license": "GPL-2.0",

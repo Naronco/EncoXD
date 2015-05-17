@@ -1,7 +1,7 @@
 {
 	"name": "EncoX",
 	"description": "Naronco open source 3D engine",
-	"authors": ["NaroncoNexo", "WebFreak001"],
+	"authors": ["shirookad", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoX",
 	"targetPath": "bin",
 	"targetType": "executable",
@@ -34,10 +34,10 @@
 		"importPaths": ["Demo/", "source/"]
 	},
 	{
-		"name": "Server",
+		"name": "Transformations",
 		"targetType": "executable",
-		"sourcePaths": ["Examples/ScriptedServer/", "source/"],
-		"importPaths": ["Examples/ScriptedServer/", "source/"]
+		"sourcePaths": ["Examples/Transformations/", "source/"],
+		"importPaths": ["Examples/Transformations/", "source/"]
 	},
 	{
 		"name": "Game",

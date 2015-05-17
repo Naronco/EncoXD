@@ -1,9 +1,9 @@
 <DProject>
- <ProjectGuid>{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}</ProjectGuid>
+ <ProjectGuid>{57769092-62F9-4E6A-B37B-5C2A94103544}</ProjectGuid>
  <Config name="Debug" platform="Win32">
   <obj>0</obj>
   <link>0</link>
-  <lib>1</lib>
+  <lib>0</lib>
   <subsystem>0</subsystem>
   <multiobj>0</multiobj>
   <singleFileCompilation>0</singleFileCompilation>
@@ -44,7 +44,7 @@
   <pic>0</pic>
   <cov>0</cov>
   <nofloat>0</nofloat>
-  <Dversion>2</Dversion>
+  <Dversion>2.043</Dversion>
   <ignoreUnsupportedPragmas>0</ignoreUnsupportedPragmas>
   <allinst>0</allinst>
   <stackStomp>0</stackStomp>
@@ -53,7 +53,7 @@
   <cccmd>$(CC) -c</cccmd>
   <ccTransOpt>1</ccTransOpt>
   <program>$(DMDInstallDir)windows\bin\dmd.exe</program>
-  <imppath />
+  <imppath>../../source/EncoXD/EncoDesktop;../../source/EncoXD/EncoGL3;../../source/EncoXD/EncoShared</imppath>
   <fileImppath />
   <outdir>$(ConfigurationName)</outdir>
   <objdir>$(OutDir)</objdir>
@@ -93,7 +93,7 @@
   <libpaths />
   <deffile />
   <resfile />
-  <exefile>$(OutDir)\$(ProjectName).lib</exefile>
+  <exefile>$(OutDir)\$(ProjectName).exe</exefile>
   <useStdLibPath>1</useStdLibPath>
   <cRuntime>2</cRuntime>
   <privatePhobos>0</privatePhobos>
@@ -105,7 +105,7 @@
  <Config name="Release" platform="Win32">
   <obj>0</obj>
   <link>0</link>
-  <lib>1</lib>
+  <lib>0</lib>
   <subsystem>0</subsystem>
   <multiobj>0</multiobj>
   <singleFileCompilation>0</singleFileCompilation>
@@ -195,7 +195,7 @@
   <libpaths />
   <deffile />
   <resfile />
-  <exefile>$(OutDir)\$(ProjectName).lib</exefile>
+  <exefile>$(OutDir)\$(ProjectName).exe</exefile>
   <useStdLibPath>1</useStdLibPath>
   <cRuntime>1</cRuntime>
   <privatePhobos>0</privatePhobos>
@@ -204,73 +204,7 @@
   <postBuildCommand />
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
- <Folder name="EncoShared">
-  <Folder name="Animation">
-   <File path="Enco\Shared\Animation\AnimatedProperty.d" />
-   <File path="Enco\Shared\Animation\Animation.d" />
-   <File path="Enco\Shared\Animation\BasicEaseFunctions.d" />
-  </Folder>
-  <Folder name="Components">
-   <File path="Enco\Shared\Components\FPSRotation.d" />
-   <File path="Enco\Shared\Components\FreeMove.d" />
-  </Folder>
-  <Folder name="Core">
-   <File path="Enco\Shared\Core\Camera.d" />
-   <File path="Enco\Shared\Core\EncoContext.d" />
-   <File path="Enco\Shared\Core\Event.d" />
-   <File path="Enco\Shared\Core\GameObject.d" />
-   <File path="Enco\Shared\Core\IComponent.d" />
-   <File path="Enco\Shared\Core\IView.d" />
-   <File path="Enco\Shared\Core\Logger.d" />
-   <File path="Enco\Shared\Core\Scene.d" />
-   <File path="Enco\Shared\Core\TemplateParser.d" />
-   <File path="Enco\Shared\Core\TimeHelper.d" />
-   <File path="Enco\Shared\Core\Window.d" />
-  </Folder>
-  <Folder name="Ext">
-   <File path="Enco\Shared\Ext\Array.d" />
-   <File path="Enco\Shared\Ext\String.d" />
-  </Folder>
-  <Folder name="Level">
-   <File path="Enco\Shared\Level\LevelLoader.d" />
-  </Folder>
-  <Folder name="GUI">
-   <File path="Enco\Shared\GUI\Control.d" />
-   <File path="Enco\Shared\GUI\DynamicColorControl.d" />
-   <File path="Enco\Shared\GUI\PictureControl.d" />
-   <File path="Enco\Shared\GUI\TextControl.d" />
-  </Folder>
-  <Folder name="Input">
-   <File path="Enco\Shared\Input\Controller.d" />
-   <File path="Enco\Shared\Input\Keyboard.d" />
-   <File path="Enco\Shared\Input\Mouse.d" />
-  </Folder>
-  <Folder name="Math">
-   <File path="Enco\Shared\Math\Frustum.d" />
-   <File path="Enco\Shared\Math\Random.d" />
-   <File path="Enco\Shared\Math\Transform.d" />
-  </Folder>
-  <Folder name="Network">
-   <File path="Enco\Shared\Network\Network.d" />
-   <File path="Enco\Shared\Network\Tcp.d" />
-  </Folder>
-  <Folder name="Render">
-   <File path="Enco\Shared\Render\Bitmap.d" />
-   <File path="Enco\Shared\Render\Color.d" />
-   <File path="Enco\Shared\Render\Font.d" />
-   <File path="Enco\Shared\Render\GUIRenderer.d" />
-   <File path="Enco\Shared\Render\IRenderer.d" />
-   <File path="Enco\Shared\Render\IRenderTarget.d" />
-   <File path="Enco\Shared\Render\ITexture.d" />
-   <File path="Enco\Shared\Render\Material.d" />
-   <File path="Enco\Shared\Render\Mesh.d" />
-   <File path="Enco\Shared\Render\MeshObject.d" />
-   <File path="Enco\Shared\Render\RenderContext.d" />
-   <File path="Enco\Shared\Render\Shader.d" />
-  </Folder>
-  <Folder name="Scripting">
-   <File path="Enco\Shared\Scripting\LuaExt.d" />
-  </Folder>
-  <File path="EncoShared.d" />
+ <Folder name="Transformations">
+  <File path="main.d" />
  </Folder>
 </DProject>

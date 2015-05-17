@@ -21,6 +21,7 @@ class GameObject
 	public void addChild(GameObject child)
 	{
 		if(child == this) return;
+		child.transform.parent = &transform;
 		m_children ~= child;
 	}
 

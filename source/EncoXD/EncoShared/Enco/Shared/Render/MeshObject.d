@@ -22,22 +22,13 @@ class MeshObject : GameObject
 		m_material.bind(renderer, context);
 
 		if(m_relative)
-			m_material.program.set("modelview", context.camera.rotationMatrix * modelMatrix);
+			m_material.program.set("modelview", context.camera.rotationMatrix * transform.transform);
 		else
-			m_material.program.set("modelview", context.camera.viewMatrix * modelMatrix);
+			m_material.program.set("modelview", context.camera.viewMatrix * transform.transform);
 		m_material.program.set("projection", context.camera.projectionMatrix);
-		m_material.program.set("normalmatrix", modelMatrix().transposed().inverse());
+		m_material.program.set("normalmatrix", transform.transform.transposed().inverse());
 
 		renderer.renderMesh(m_mesh);
-	}
-
-	public @property mat4 modelMatrix()
-	{
-		return  mat4.identity.translate(transform.position.x, transform.position.y, transform.position.z) *
-				mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
-				mat4.identity.rotate(transform.rotation.y, vec3(0, 1, 0)) *
-				mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1)) *
-				mat4.identity.scale(transform.scale.x, transform.scale.y, transform.scale.z);
 	}
 
 	public @property ref Mesh mesh() { return m_mesh; }

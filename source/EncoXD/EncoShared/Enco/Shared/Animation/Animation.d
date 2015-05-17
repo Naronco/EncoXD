@@ -62,7 +62,7 @@ class Animation
 		AnimatedAnimationProperty current = AnimatedAnimationProperty();
 		current.name = null;
 
-		bool cmp(DoubleDoublePair x, DoubleDoublePair y) @safe pure nothrow { return x.a < y.a; }
+		bool cmp(DoubleDoublePair x, DoubleDoublePair y) @safe nothrow { return x.a < y.a; }
 
 		foreach(int i, string line; lines)
 		{
@@ -99,7 +99,6 @@ class Animation
 		{
 			assert(current.keyframes.length > 1, "At least 2 keyframes needed!");
 			sort!(cmp)(current.keyframes);
-			assert(isSorted!cmp(current.keyframes));
 			props ~= current.dup;
 		}
 

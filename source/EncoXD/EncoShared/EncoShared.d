@@ -67,8 +67,11 @@ public
 	import Enco.Shared.Input.Keyboard;
 	import Enco.Shared.Input.Mouse;
 	import Enco.Shared.Input.Controller;
-	
+
 	import Enco.Shared.Components.FPSRotation;
+	import Enco.Shared.Components.FreeMove;
+
+	import Enco.Shared.Level.LevelLoader;
 	
 	import std.algorithm;
 	import std.string;

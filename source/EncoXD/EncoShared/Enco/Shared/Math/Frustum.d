@@ -2,7 +2,7 @@ module Enco.Shared.Math.Frustum;
 
 import EncoShared;
 
-pure int intersectsPoint(Frustum f, vec3 v)
+int intersectsPoint(Frustum f, vec3 v)
 {
 	foreach(plane; f.planes)
 	{

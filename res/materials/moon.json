@@ -1,0 +1,19 @@
+{
+	"Name": "Tree",
+	"Textures":
+	{
+		"0":
+		{
+			"File": "res/tex/moon.png",
+			"MipMap": true,
+			"Smooth": true
+		}
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "diffuse",
+		"Ambient": "vec3(0, 0, 0)",
+		"Color": "tex(slot0)"
+	}
+}

@@ -20,7 +20,7 @@ enum Alignment
 	BottomCenter = Bottom | Left | Right,
 }
 
-public pure int getHorizontal(Alignment alignment)
+public int getHorizontal(Alignment alignment)
 {
 	if((alignment & Alignment.Left) == Alignment.Left && (alignment & Alignment.Right) != Alignment.Right)
 		return -1;
@@ -39,7 +39,7 @@ unittest
 	assert(Alignment.Top.getHorizontal() == -1);
 }
 
-public pure int getVertical(Alignment alignment)
+public int getVertical(Alignment alignment)
 {
 	if((alignment & Alignment.Top) == Alignment.Top && (alignment & Alignment.Bottom) != Alignment.Bottom)
 		return -1;

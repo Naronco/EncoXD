@@ -1,8 +1,8 @@
 {
 	"name": "EncoDesktop",
 	"description": "Windows and desktop specific code for EncoX",
-	"authors": ["NaroncoNexo", "WebFreak001"],
-	"homepage": "https://github.com/Naronco/EncoX",
+	"authors": ["shirookad", "WebFreak001"],
+	"homepage": "https://github.com/Naronco/EncoXD",
 	"license": "GPL-2.0",
 	"targetType": "library",
 	"sourcePaths": ["."],

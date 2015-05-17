@@ -1,0 +1,18 @@
+{
+	"Name": "Tree",
+	"Textures":
+	{
+		"0":
+		{
+			"File": "res/tex/sun.png",
+			"MipMap": true,
+			"Smooth": true
+		}
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "texture",
+		"Color": "tex(slot0)"
+	}
+}
