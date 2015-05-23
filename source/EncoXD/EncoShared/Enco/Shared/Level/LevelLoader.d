@@ -181,7 +181,7 @@ public:
 			code ~= //entryType ~ " " ~
 				stack[stack.length - 1]
 				~ " = new " ~ entryType
-				~ "().builder()" ~ arguments.join() ~ ";\n";
+				~ "()" ~ arguments.join() ~ ";\n";
 			arguments.length = 0;
 			if(stack.length > 1)
 			{
@@ -242,11 +242,6 @@ unittest
 		public void addChild(A a)
 		{
 			children ~= a;
-		}
-
-		public A builder()
-		{
-			return this;
 		}
 
 		public @property int value()
