@@ -37,6 +37,10 @@ class GameWindow : DesktopView
 			{
 				game.game3DLayer.nextLevel();
 			}
+			if(key == Key.F3)
+			{
+				Logger.writeln("Position: ", game.game3DLayer.player.transform.position);
+			}
 		};
 
 		camera.addComponent(new DragTableX());

@@ -51,7 +51,7 @@ class Game3DLayer : RenderLayer
 		carY.update(deltaTime);
 	}
 	
-	override protected void preDraw(RenderContext context, IRenderer renderer)
+	override protected void draw(RenderContext context, IRenderer renderer)
 	{
 		carObj.transform.position.y = cast(float)carY;
 		carGlassObj.transform.position.y = cast(float)carY;

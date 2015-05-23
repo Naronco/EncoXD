@@ -15,12 +15,14 @@ private enum InterpretingState
 	ArgumentName
 }
 
-private class LevelCompiler
+class LevelCompiler
 {
 private:
 	import std.string;
+	import std.algorithm;
 	import std.conv;
 	import std.ascii;
+	import std.regex;
 
 	ParsingState currentParsingState = ParsingState.Text;
 	InterpretingState currentInterpretingState = InterpretingState.Type;
@@ -33,6 +35,8 @@ private:
 	int loopCount = 0;
 	string code = "";
 	int nameIndex = 1;
+	bool writeType = false;
+	string root = "";
 
 	void parseType()
 	{
@@ -133,88 +137,109 @@ private:
 
 public:
 
-	string compileLevel(string content_)
-{
-	content = content_.strip();
-	while(true)
+	this(bool writeType = false, string root = "")
 	{
-		content = content.strip();
-		if(content.length == 0)
-			break;
-
-		// std.stdio.writefln("stack [%(%s, %)], type \"%s\", arguments \"%s\"\nparse \"%s\", interpret \"%s\"\nremaining \"%s\"\ncode \"%s\"\n", stack, entryType, arguments.join(), currentParsingState, currentInterpretingState, content, code);
-
-		loopCount++;
-		if(loopCount > 1000000)
-			throw new Exception("Stuck in compiling level, Aborting!");
-
-		if(currentParsingState == ParsingState.Text)
-		{
-			if(currentInterpretingState == InterpretingState.Type)
-			{
-				parseType();
-				continue;
-			}
-			else if(currentInterpretingState == InterpretingState.Name)
-			{
-				parseName();
-				continue;
-			}
-			else if(currentInterpretingState == InterpretingState.ArgumentName)
-			{
-				parseArgumentName();
-				continue;
-			}
-			else if(currentInterpretingState == InterpretingState.ArgumentValue)
-			{
-				parseArgumentValue();
-				continue;
-			}
-		}
-		else if(currentParsingState == ParsingState.Identifier)
-		{
-			parseIdentifier();
-			continue;
-		}
-		else
-		{
-			code ~= //entryType ~ " " ~
-				stack[stack.length - 1]
-				~ " = new " ~ entryType
-				~ "()" ~ arguments.join() ~ ";\n";
-			arguments.length = 0;
-			if(stack.length > 1)
-			{
-				code ~= stack[stack.length - 2] ~ ".addChild(" ~ stack[stack.length - 1] ~ ");\n";
-			}
-			currentParsingState = ParsingState.Text;
-			currentInterpretingState = InterpretingState.Type;
-
-		Stacker:
-			while(true)
-			{
-				if(content.length == 0) break Stacker;
-				if(content[0] == '{')
-				{
-					content = content[1 .. $];
-					content = content.strip();
-					stack.length++;
-				}
-				else if(content[0] == '}')
-				{
-					content = content[1 .. $];
-					content = content.strip();
-					stack.length--;
-				}
-				else
-				{
-					break Stacker;
-				}
-			}
-		}
+		this.writeType = writeType;
+		this.root = root;
 	}
-	return code;
-}
+
+	string compileLevel(string content_)
+	{
+		content = content_.strip();
+		while(content.indexOf("//") != -1)
+		{
+			int start = content.indexOf("//");
+			int end = content.indexOf('\n', start);
+			int[] rng;
+			char[] ncontent = content.dup;
+			for(int i = 0; i < end - start; i++)
+				ncontent[start + i] = ' ';
+			content = cast(string)ncontent;
+		}
+		if(root.length > 0)
+		{
+			stack.length++;
+			stack[stack.length - 1] = root;
+		}
+		while(true)
+		{
+			content = content.strip();
+			if(content.length == 0)
+				break;
+
+			// std.stdio.writefln("stack [%(%s, %)], type \"%s\", arguments \"%s\"\nparse \"%s\", interpret \"%s\"\nremaining \"%s\"\ncode \"%s\"\n", stack, entryType, arguments.join(), currentParsingState, currentInterpretingState, content, code);
+
+			loopCount++;
+			if(loopCount > 1000000)
+				throw new Exception("Stuck in compiling level, Aborting!");
+
+			if(currentParsingState == ParsingState.Text)
+			{
+				if(currentInterpretingState == InterpretingState.Type)
+				{
+					parseType();
+					continue;
+				}
+				else if(currentInterpretingState == InterpretingState.Name)
+				{
+					parseName();
+					continue;
+				}
+				else if(currentInterpretingState == InterpretingState.ArgumentName)
+				{
+					parseArgumentName();
+					continue;
+				}
+				else if(currentInterpretingState == InterpretingState.ArgumentValue)
+				{
+					parseArgumentValue();
+					continue;
+				}
+			}
+			else if(currentParsingState == ParsingState.Identifier)
+			{
+				parseIdentifier();
+				continue;
+			}
+			else
+			{
+				code ~= (writeType ? entryType ~ " " : "") ~
+					stack[stack.length - 1]
+					~ " = new " ~ entryType
+					~ "()" ~ arguments.join() ~ ";\n";
+				arguments.length = 0;
+				if(stack.length > 1)
+				{
+					code ~= stack[stack.length - 2] ~ ".addChild(" ~ stack[stack.length - 1] ~ ");\n";
+				}
+				currentParsingState = ParsingState.Text;
+				currentInterpretingState = InterpretingState.Type;
+
+			Stacker:
+				while(true)
+				{
+					if(content.length == 0) break Stacker;
+					if(content[0] == '{')
+					{
+						content = content[1 .. $];
+						content = content.strip();
+						stack.length++;
+					}
+					else if(content[0] == '}')
+					{
+						content = content[1 .. $];
+						content = content.strip();
+						stack.length--;
+					}
+					else
+					{
+						break Stacker;
+					}
+				}
+			}
+		}
+		return code;
+	}
 }
 
 mixin template compileLevel(string content_, string append = "")

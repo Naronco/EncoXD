@@ -66,20 +66,14 @@ class Control : GameObject
 		m_y = 0;
 		m_width = 100;
 		m_height = 100;
-		m_parent = null;
 		m_background = Color.White;
 		m_foreground = Color.Black;
 		m_align = Alignment.TopLeft;
 	}
 
-	public void makeParent(Control child)
-	{
-		child.m_parent = this;
-	}
-
 	override protected void draw2D(GUIRenderer renderer)
 	{
-		if(parent !is null && m_x <= parent.width && m_y <= parent.height && x >= -width && y >= -height && m_visible)
+		if(!m_visible)
 			return;
 		m_guiSize.x = renderer.size.x;
 		m_guiSize.y = renderer.size.y;
@@ -102,8 +96,19 @@ class Control : GameObject
 		else return (cast(i32)(parentHeight - height) >> 1) + y;
 	}
 
-	public @property f32 x() { if(m_parent !is null) return computeX(m_x, m_parent.width) + m_parent.x; return computeX(m_x, m_guiSize.x); }
-	public @property f32 y() { if(m_parent !is null) return computeY(m_y, m_parent.height) + m_parent.y; return computeY(m_y, m_guiSize.y); }
+	public @property f32 x()
+	{
+		if(cast(Control)parent)
+			return computeX(m_x, (cast(Control)parent).x);
+		return computeX(m_x, m_guiSize.x);
+	}
+
+	public @property f32 y()
+	{
+		if(cast(Control)parent)
+			return computeX(m_y, (cast(Control)parent).y);
+		return computeX(m_y, m_guiSize.y);
+	}
 
 	public @property void x(f32 value) { m_x = value; }
 	public @property void y(f32 value) { m_y = value; }
@@ -117,14 +122,10 @@ class Control : GameObject
 	public @property ref bool visible() { return m_visible; }
 	public @property ref Alignment alignment() { return m_align; }
 
-	public @property Control parent() { return m_parent; }
-
 	private f32 m_x, m_y;
 	private f32 m_width, m_height;
 	private bool m_visible;
 	private Color m_background, m_foreground;
 	private vec2 m_guiSize;
 	private Alignment m_align;
-
-	private Control m_parent;
 }

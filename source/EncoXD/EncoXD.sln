@@ -13,8 +13,6 @@ Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Demo", "..\..\Demo\Demo.vis
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{C16654BE-29FA-463F-85D5-550AE536522A}"
 EndProject
-Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Failed to load ScriptedServer", "..\..\Examples\ScriptedServer\ScriptedServer.visualdproj", "{BFD3BD68-9251-4219-954D-A17D76F9D5D0}"
-EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Game", "..\..\Examples\Game\Game.visualdproj", "{C78D923D-86A3-4A6B-8614-BA0E62B7C427}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A1499960-E5C4-48AF-8DCB-EFFDB87C6A28} = {A1499960-E5C4-48AF-8DCB-EFFDB87C6A28}
@@ -23,6 +21,8 @@ Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Game", "..\..\Examples\Game
 	EndProjectSection
 EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "Transformations", "..\..\Examples\Transformations\Transformations.visualdproj", "{57769092-62F9-4E6A-B37B-5C2A94103544}"
+EndProject
+Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "levelc", "..\..\levelc\levelc.visualdproj", "{9D5FCB61-673F-423B-A986-8E5B27B35A5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +58,10 @@ Global
 		{57769092-62F9-4E6A-B37B-5C2A94103544}.Debug|Win32.Build.0 = Debug|Win32
 		{57769092-62F9-4E6A-B37B-5C2A94103544}.Release|Win32.ActiveCfg = Release|Win32
 		{57769092-62F9-4E6A-B37B-5C2A94103544}.Release|Win32.Build.0 = Release|Win32
+		{9D5FCB61-673F-423B-A986-8E5B27B35A5D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9D5FCB61-673F-423B-A986-8E5B27B35A5D}.Debug|Win32.Build.0 = Debug|Win32
+		{9D5FCB61-673F-423B-A986-8E5B27B35A5D}.Release|Win32.ActiveCfg = Release|Win32
+		{9D5FCB61-673F-423B-A986-8E5B27B35A5D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

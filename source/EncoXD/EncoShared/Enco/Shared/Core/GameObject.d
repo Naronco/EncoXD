@@ -7,22 +7,27 @@ import EncoShared;
 class GameObject
 {
 	private GameObject[] m_children;
+	private GameObject m_parent;
 	private bool m_enabled = true;
 
 	public this()
 	{
 	}
 
-	public void add(IRenderer renderer)
+	public void setRenderer(IRenderer renderer)
 	{
 		m_renderer = renderer;
 	}
 
-	public void addChild(GameObject child)
+	alias addGameObject = addChild;
+
+	public GameObject addChild(GameObject child)
 	{
-		if(child == this) return;
+		if(child == this) return child;
+		child.m_parent = this;
 		child.transform.parent = &transform;
 		m_children ~= child;
+		return child;
 	}
 
 	public void removeChild(GameObject child)
@@ -40,6 +45,8 @@ class GameObject
 	protected void draw(RenderContext context, IRenderer renderer) {}
 
 	protected void draw2D(GUIRenderer renderer) {}
+
+	protected @property GameObject parent() { return m_parent; }
 
 	public void performUpdate(f64 deltaTime)
 	{
@@ -117,8 +124,52 @@ class GameObject
 
 	public ref @property bool enabled() { return m_enabled; }
 
-	protected @property IRenderer renderer() { return m_renderer; }
+	public @property IRenderer renderer() { return m_renderer; }
 	private IRenderer m_renderer;
 
 	private IComponent[] m_components;
+}
+
+alias Layer = RenderLayer;
+
+class RenderLayer : GameObject
+{
+	protected void init(Scene scene) { }
+	public void doInit(Scene scene) { m_scene = scene; init(scene); }
+
+	public override GameObject addChild(GameObject child)
+	{
+		if(child == this) return child;
+		child.setRenderer(m_renderer);
+		child.m_parent = this;
+		m_children ~= child;
+		return child;
+	}
+
+	protected @property Scene scene() { return m_scene; }
+	private Scene m_scene;
+}
+
+class Scene : GameObject
+{
+	public @property void next(Scene scene) { m_next = scene; }
+	public @property Scene next() { return m_next; }
+
+	public void init() {}
+
+	alias addLayer = addChild;
+
+	public override GameObject addChild(GameObject child)
+	{
+		if(child == this) return child;
+		if(cast(RenderLayer)child) (cast(RenderLayer)child).doInit(this);
+		child.setRenderer(m_renderer);
+		child.m_parent = this;
+		m_children ~= child;
+		return child;
+	}
+
+	public IView view;
+
+	private Scene m_next = null;
 }

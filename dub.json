@@ -44,6 +44,12 @@
 		"targetType": "executable",
 		"sourcePaths": ["Examples/Game/", "source/"],
 		"importPaths": ["Examples/Game/", "source/"]
+	},
+	{
+		"name": "levelc",
+		"targetType": "executable",
+		"sourcePaths": ["levelc/", "source/"],
+		"importPaths": ["levelc/", "source/"]
 	}],
 	"dependencies":
 	{

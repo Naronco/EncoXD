@@ -177,7 +177,7 @@ class EncoContext
 			if(view.scene !is null)
 			{
 				if(view.renderer !is null)
-					view.scene.renderer = view.renderer;
+					view.scene.setRenderer(view.renderer);
 				view.scene.init();
 			}
 		

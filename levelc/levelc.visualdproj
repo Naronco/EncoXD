@@ -1,0 +1,11 @@
+<DProject>
+ <ProjectGuid>9d5fcb61-673f-423b-a986-8e5b27b35a5d</ProjectGuid>
+ <Config name="Debug">
+  <!-- default to defaults -->
+ </Config>
+ <Config name="Release">
+  </Config>
+ <Folder name="levelc">
+  <File path="main.d" />
+ </Folder>
+</DProject>

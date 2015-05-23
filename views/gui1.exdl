@@ -1,0 +1,27 @@
+//#module test
+//#entry void GenerateExampleGui()
+
+//#import EncoShared
+
+Scene<menu>
+{
+	Layer<gui>
+	{
+		Button<button1>(x=5, y=5, w=100, h=30, onClick=&button1_click)
+		{
+			Text(w=100, h=30, size=24, halign="center", valign="center", content="Text")
+		}
+		Button
+		Text(content="Derp")
+		Text<text>
+		Button
+		{
+			Text(content="A")
+			{}
+			Text<Bob>
+			{
+				Icon
+			}
+		}
+	}
+}

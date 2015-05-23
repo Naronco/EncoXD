@@ -44,19 +44,19 @@ abstract class IView
 	protected void draw3D(RenderContext context)
 	{
 		if(scene !is null)
-			scene.draw3D(context, renderer);
+			scene.performDraw(context, renderer);
 	}
 
 	protected void draw2D()
 	{
 		if(scene !is null)
-			scene.draw2D(renderer.gui);
+			scene.performDraw2D(renderer.gui);
 	}
 
 	public void update(f64 delta)
 	{
 		if(m_scene !is null)
-			m_scene.update(delta);
+			m_scene.performUpdate(delta);
 	}
 	
 	protected abstract void onDraw() {}

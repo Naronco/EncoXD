@@ -11,7 +11,7 @@ import std.file;
 
 class Game3DLayer : RenderLayer
 {
-	private Player player;
+	public Player player;
 	private int currentLevel = 0;
 	private Material[] materials;
 	private Level level;

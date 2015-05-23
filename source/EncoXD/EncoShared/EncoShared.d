@@ -27,7 +27,6 @@ public
 	import Enco.Shared.Core.Camera;
 	import Enco.Shared.Core.GameObject;
 	import Enco.Shared.Core.IComponent;
-	import Enco.Shared.Core.Scene;
 	import Enco.Shared.Core.TemplateParser;
 	import Enco.Shared.Core.Logger;
 	import Enco.Shared.Core.Event;
