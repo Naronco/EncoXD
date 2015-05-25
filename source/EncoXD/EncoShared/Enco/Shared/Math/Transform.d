@@ -36,6 +36,15 @@ public:
 		else
 			return format("[\n P: %s\n R: %s\n S: %s\n]", position, rotation, scale);
 	}
+
+	@property vec3 appliedPosition() { return (transform * vec4(0, 0, 0, 1)).xyz; }
+
+	void setIdentity()
+	{
+		m_position = vec3(0);
+		m_rotation = vec3(0);
+		m_scale = vec3(1);
+	}
 	
 	@property ref vec3 position() { return m_position; }
 	@property ref vec3 rotation() { return m_rotation; }
@@ -54,7 +63,7 @@ unittest
 	}
 
 	Transform transform;
-	assert((transform.transform * vec4(0, 0, 0, 1)).xyz == vec3(0), "Invalid matrix");
+	assert(transform.appliedPosition == vec3(0), "Invalid matrix");
 
 	transform.position = vec3(3, 2, 0);
 	assert((transform.transform * vec4(1, 0, 1, 1)).xyz == vec3(4, 2, 1), "Invalid matrix");
@@ -68,5 +77,5 @@ unittest
 
 	parent.rotation = vec3(0, 0, 1.57079633);
 
-	assert(aboutEqual((transform.transform * vec4(0, 0, 0, 1)).xyz, vec3(3, -3, 0)), "Invalid parent rotation");
+	assert(aboutEqual(transform.appliedPosition, vec3(3, -3, 0)), "Invalid parent rotation");
 }
