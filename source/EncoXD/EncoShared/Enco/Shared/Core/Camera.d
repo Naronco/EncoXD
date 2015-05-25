@@ -18,7 +18,7 @@ class Camera : GameObject
 			else if(m_mode == ProjectionMode.Orthographic2D)
 				m_projectionMatrix = mat4.orthographic(0, m_width, m_height, 0, m_near, m_far);
 			else if(m_mode == ProjectionMode.Orthographic3D)
-				m_projectionMatrix = mat4.orthographic(-1, 1, -1, 1, m_near, m_far) * mat4.identity.scale(m_iZoom, m_iZoom, m_iZoom * m_aspect);
+				m_projectionMatrix = mat4.orthographic(-m_aspect, m_aspect, -1, 1, m_near, m_far) * mat4.identity.scale(m_iZoom, m_iZoom, m_iZoom);
 			m_needUpdate = false;
 		}
 		return m_projectionMatrix;
