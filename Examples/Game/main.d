@@ -41,6 +41,10 @@ class GameWindow : DesktopView
 			{
 				Logger.writeln("Position: ", game.game3DLayer.player.transform.position);
 			}
+			if(key == Key.F4)
+			{
+				Logger.writeln("Transform: ", game.game3DLayer.player.transform);
+			}
 		};
 
 		camera.addComponent(new DragTableX());

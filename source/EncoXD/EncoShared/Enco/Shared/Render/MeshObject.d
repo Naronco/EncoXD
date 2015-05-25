@@ -26,7 +26,7 @@ class MeshObject : GameObject
 		else
 			m_material.program.set("modelview", context.camera.viewMatrix * transform.transform);
 		m_material.program.set("projection", context.camera.projectionMatrix);
-		m_material.program.set("normalmatrix", transform.transform.transposed().inverse());
+		m_material.program.set("normalmatrix", transform.transform.transposed.inverse);
 
 		renderer.renderMesh(m_mesh);
 	}

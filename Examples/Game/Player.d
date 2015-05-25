@@ -53,7 +53,9 @@ class Player : GameObject
 		m_topY = 0;
 
 		addChild(m_bottom = new MeshObject(mesh, material));
+		m_bottom.transform.parent = null;
 		addChild(m_top = new MeshObject(mesh, material));
+		m_top.transform.parent = null;
 
 		EncoContext.instance.onKeyDown += (sender, key)
 		{
