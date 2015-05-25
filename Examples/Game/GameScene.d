@@ -31,6 +31,12 @@ class Game3DLayer : RenderLayer
 		if(!level.fromBitmap("res/levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
 			Logger.writeln(new Exception("Invalid Level!"));
 	}
+
+	public void debugLevel()
+	{
+		if(!level.fromBitmap("res/levels/debug.png", materials, scene.renderer))
+			Logger.writeln(new Exception("Invalid Level!"));
+	}
 	
 	private bool isDouble() { return player.isDouble; }
 	private int getState() { return player.topState; }

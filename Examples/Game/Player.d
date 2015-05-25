@@ -3,16 +3,27 @@ module Player;
 import EncoDesktop;
 import EncoShared;
 
+enum AnimationType : u8
+{
+	Still,
+	X,
+	NX,
+	Z,
+	NZ,
+}
+
 class Player : GameObject
 {
 	private int m_x, m_y;
 	private int m_topX, m_topY;
 	private int m_respawnX, m_respawnY;
 	private int m_targetX, m_targetY;
-	private bool m_enabled;
+	private f32 m_animationProgress = 0;
+	private AnimationType m_animationType = AnimationType.Still;
 	private MeshObject m_bottom, m_top;
 	private int m_topState = 0;
 	private f32 m_camRotation = 0;
+	private Transform m_origin;
 
 	private bool m_double;
 	
@@ -33,7 +44,8 @@ class Player : GameObject
 
 	public @property vec3 topPosition() { return m_top.transform.position; }
 
-	public ref @property bool isEnabled() { return m_enabled; }
+	public @property Transform bottomTransform() { return m_bottom.transform; }
+	public @property Transform topTransform() { return m_top.transform; }
 
 	public @property i32vec2 respawnPosition() { return i32vec2(m_respawnX, m_respawnY); }
 	public @property void respawnPosition(i32vec2 pos) { m_respawnX = pos.x; m_respawnY = pos.y; }
@@ -48,18 +60,18 @@ class Player : GameObject
 		m_y = 0;
 		m_respawnX = 0;
 		m_respawnY = 0;
-		m_enabled = true;
 		m_topX = 0;
 		m_topY = 0;
 
 		addChild(m_bottom = new MeshObject(mesh, material));
 		m_bottom.transform.parent = null;
 		addChild(m_top = new MeshObject(mesh, material));
-		m_top.transform.parent = null;
+		m_bottom.transform.position.y = 0.5f;
+		m_bottom.transform.parent = &m_origin;
 
 		EncoContext.instance.onKeyDown += (sender, key)
 		{
-			if(m_enabled)
+			if(m_animationType == AnimationType.Still)
 			{
 				if(key == Key.D || key == Key.Right)
 				{
@@ -107,34 +119,49 @@ class Player : GameObject
 
 		if(m_topState == 0)
 		{
-			if(dir == 0) m_topState = 1;
-			if(dir == 1) m_topState = 4;
-			if(dir == 2) m_topState = 2;
-			if(dir == 3) m_topState = 3;
+			if(dir == 0) { m_animationType = AnimationType.X; m_topState = 1; }
+			if(dir == 1) { m_animationType = AnimationType.NZ; m_topState = 4; }
+			if(dir == 2) { m_animationType = AnimationType.NX; m_topState = 2; }
+			if(dir == 3) { m_animationType = AnimationType.Z; m_topState = 3; }
 		}
 		else if(m_topState == 1)
 		{
 			if(dir == 0)
 			{
+				m_animationType = AnimationType.X; 
 				m_topState = 0;
 				steps = 2;
 			}
-			if(dir == 2) m_topState = 0;
+			if(dir == 2)
+			{
+				m_animationType = AnimationType.NX; 
+				m_topState = 0;
+			}
 		}
 		else if(m_topState == 2)
 		{
-			if(dir == 0) m_topState = 0;
+			if(dir == 0)
+			{
+				m_animationType = AnimationType.X; 
+				m_topState = 0;
+			}
 			if(dir == 2)
 			{
+				m_animationType = AnimationType.NX; 
 				m_topState = 0;
 				steps = 2;
 			}
 		}
 		else if(m_topState == 3)
 		{
-			if(dir == 1) m_topState = 0;
+			if(dir == 1)
+			{
+				m_animationType = AnimationType.NZ;
+				m_topState = 0;
+			}
 			if(dir == 3)
 			{
+				m_animationType = AnimationType.Z;
 				m_topState = 0;
 				steps = 2;
 			}
@@ -143,10 +170,15 @@ class Player : GameObject
 		{
 			if(dir == 1)
 			{
+				m_animationType = AnimationType.NZ;
 				m_topState = 0;
 				steps = 2;
 			}
-			if(dir == 3) m_topState = 0;
+			if(dir == 3)
+			{
+				m_topState = 0;
+				m_animationType = AnimationType.Z;
+			}
 		}
 
 		moveRelativeX(steps);
@@ -160,16 +192,21 @@ class Player : GameObject
 
 		if(m_topState == 0)
 		{
-			if(dir == 0) m_topState = 2;
-			if(dir == 1) m_topState = 3;
-			if(dir == 2) m_topState = 1;
-			if(dir == 3) m_topState = 4;
+			if(dir == 0) { m_animationType = AnimationType.NX; m_topState = 2; }
+			if(dir == 1) { m_animationType = AnimationType.Z; m_topState = 3; }
+			if(dir == 2) { m_animationType = AnimationType.X; m_topState = 1; }
+			if(dir == 3) { m_animationType = AnimationType.NZ; m_topState = 4; }
 		}
 		else if(m_topState == 1)
 		{
-			if(dir == 0) m_topState = 0;
+			if(dir == 0)
+			{
+				m_animationType = AnimationType.NX;
+				m_topState = 0;
+			}
 			if(dir == 2)
 			{
+				m_animationType = AnimationType.X;
 				m_topState = 0;
 				steps = 2;
 			}
@@ -179,9 +216,14 @@ class Player : GameObject
 			if(dir == 0)
 			{
 				m_topState = 0;
+				m_animationType = AnimationType.NX;
 				steps = 2;
 			}
-			if(dir == 2) m_topState = 0;
+			if(dir == 2)
+			{
+				m_animationType = AnimationType.X;
+				m_topState = 0;
+			}
 		}
 		else if(m_topState == 3)
 		{
@@ -189,16 +231,26 @@ class Player : GameObject
 			{
 				m_topState = 0;
 				steps = 2;
+				m_animationType = AnimationType.Z;
 			}
-			if(dir == 3) m_topState = 0;
+			if(dir == 3)
+			{
+				m_topState = 0;
+				m_animationType = AnimationType.NZ;
+			}
 		}
 		else if(m_topState == 4)
 		{
-			if(dir == 1) m_topState = 0;
+			if(dir == 1)
+			{
+				m_topState = 0;
+				m_animationType = AnimationType.Z;
+			}
 			if(dir == 3)
 			{
 				m_topState = 0;
 				steps = 2;
+				m_animationType = AnimationType.NZ;
 			}
 		}
 
@@ -214,25 +266,35 @@ class Player : GameObject
 		
 		if(m_topState == 0)
 		{
-			if(dir == 0) m_topState = 4;
-			if(dir == 1) m_topState = 2;
-			if(dir == 2) m_topState = 3;
-			if(dir == 3) m_topState = 1;
+			if(dir == 0) { m_animationType = AnimationType.NZ; m_topState = 4; }
+			if(dir == 1) { m_animationType = AnimationType.NX; m_topState = 2; }
+			if(dir == 2) { m_animationType = AnimationType.Z; m_topState = 3; }
+			if(dir == 3) { m_animationType = AnimationType.X; m_topState = 1; }
 		}
 		else if(m_topState == 2)
 		{
 			if(dir == 1)
 			{
+				m_animationType = AnimationType.NX;
 				m_topState = 0;
 				steps = 2;
 			}
-			if(dir == 3) m_topState = 0;
+			if(dir == 3)
+			{
+				m_animationType = AnimationType.X;
+				m_topState = 0;
+			}
 		}
 		else if(m_topState == 1)
 		{
-			if(dir == 1) m_topState = 0;
+			if(dir == 1)
+			{
+				m_animationType = AnimationType.NX;
+				m_topState = 0;
+			}
 			if(dir == 3)
 			{
+				m_animationType = AnimationType.X;
 				m_topState = 0;
 				steps = 2;
 			}
@@ -241,16 +303,26 @@ class Player : GameObject
 		{
 			if(dir == 0)
 			{
+				m_animationType = AnimationType.NZ;
 				m_topState = 0;
 				steps = 2;
 			}
-			if(dir == 2) m_topState = 0;
+			if(dir == 2)
+			{
+				m_animationType = AnimationType.Z;
+				m_topState = 0;
+			}
 		}
 		else if(m_topState == 3)
 		{
-			if(dir == 0) m_topState = 0;
+			if(dir == 0)
+			{
+				m_animationType = AnimationType.NZ;
+				m_topState = 0;
+			}
 			if(dir == 2)
 			{
+				m_animationType = AnimationType.Z;
 				m_topState = 0;
 				steps = 2;
 			}
@@ -267,10 +339,10 @@ class Player : GameObject
 
 		if(m_topState == 0)
 		{
-			if(dir == 0) m_topState = 3;
-			if(dir == 1) m_topState = 1;
-			if(dir == 2) m_topState = 4;
-			if(dir == 3) m_topState = 2;
+			if(dir == 0) { m_animationType = AnimationType.Z; m_topState = 3; }
+			if(dir == 1) { m_animationType = AnimationType.X; m_topState = 1; }
+			if(dir == 2) { m_animationType = AnimationType.NZ; m_topState = 4; }
+			if(dir == 3) { m_animationType = AnimationType.NX; m_topState = 2; }
 		}
 		else if(m_topState == 1)
 		{
@@ -278,32 +350,52 @@ class Player : GameObject
 			{
 				m_topState = 0;
 				steps = 2;
+				m_animationType = AnimationType.X;
 			}
-			if(dir == 3) m_topState = 0;
+			if(dir == 3)
+			{
+				m_topState = 0;
+				m_animationType = AnimationType.NX;
+			}
 		}
 		else if(m_topState == 2)
 		{
-			if(dir == 1) m_topState = 0;
+			if(dir == 1)
+			{
+				m_topState = 0;
+				m_animationType = AnimationType.X;
+			}
 			if(dir == 3)
 			{
 				m_topState = 0;
 				steps = 2;
+				m_animationType = AnimationType.NX;
 			}
 		}
 		else if(m_topState == 3)
 		{
 			if(dir == 0)
 			{
+				m_animationType = AnimationType.Z;
 				m_topState = 0;
 				steps = 2;
 			}
-			if(dir == 2) m_topState = 0;
+			if(dir == 2)
+			{
+				m_animationType = AnimationType.NZ;
+				m_topState = 0;
+			}
 		}
 		else if(m_topState == 4)
 		{
-			if(dir == 0) m_topState = 0;
+			if(dir == 0)
+			{
+				m_topState = 0;
+				m_animationType = AnimationType.Z;
+			}
 			if(dir == 2)
 			{
+				m_animationType = AnimationType.NZ;
 				m_topState = 0;
 				steps = 2;
 			}
@@ -316,79 +408,194 @@ class Player : GameObject
 	{
 		int dir = getDirection();
 
-		if(dir == 2) steps = -steps;
-
 		if(dir == 3)
 		{
+			if(steps == 1)
+				m_animationType = AnimationType.Z;
+			if(steps == -1)
+				m_animationType = AnimationType.NZ;
 			m_y += steps;
 		}
 		else if(dir == 1)
 		{
+			if(steps == 1)
+				m_animationType = AnimationType.NZ;
+			if(steps == -1)
+				m_animationType = AnimationType.Z;
 			m_y -= steps;
+		}
+		else if(dir == 2)
+		{
+			if(steps == 1)
+				m_animationType = AnimationType.NX;
+			if(steps == -1)
+				m_animationType = AnimationType.X;
+			m_x -= steps;
 		}
 		else
 		{
+			if(steps == 1)
+				m_animationType = AnimationType.X;
+			if(steps == -1)
+				m_animationType = AnimationType.NX;
 			m_x += steps;
 		}
-
-		onStateChange(this);
 	}
 
 	private void moveRelativeY(int steps)
 	{
 		int dir = getDirection();
 		
-		if(dir == 2) steps = -steps;
-		
 		if(dir == 1)
 		{
+			if(steps == 1)
+				m_animationType = AnimationType.X;
+			if(steps == -1)
+				m_animationType = AnimationType.NX;
 			m_x += steps;
 		}
 		else if(dir == 3)
 		{
+			if(steps == 1)
+				m_animationType = AnimationType.NX;
+			if(steps == -1)
+				m_animationType = AnimationType.X;
 			m_x -= steps;
+		}
+		else if(dir == 2)
+		{
+			if(steps == 1)
+				m_animationType = AnimationType.NZ;
+			if(steps == -1)
+				m_animationType = AnimationType.Z;
+			m_y -= steps;
 		}
 		else
 		{
+			if(steps == 1)
+				m_animationType = AnimationType.Z;
+			if(steps == -1)
+				m_animationType = AnimationType.NZ;
 			m_y += steps;
 		}
-		
-		onStateChange(this);
 	}
 
 	override protected void update(f64 deltaTime)
 	{
-		transform.position.x = m_x + 0.5f;
-		transform.position.y = 0.5f;
-		transform.position.z = m_y + 0.5f;
-		m_bottom.transform.position = transform.position;
+		if(m_animationType != AnimationType.Still)
+			m_animationProgress += deltaTime * 6.5f;
+
+		float offX = 0.5f;
+		float offY = 0.5f;
+
+		switch(m_animationType)
+		{
+		case AnimationType.X:
+			if(m_animationProgress >= 1.0f)
+			{
+				m_bottom.transform.position.x = 0;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
+				m_origin.setIdentity();
+				onStateChange(this);
+			}
+			else
+			{
+				m_bottom.transform.position.x = 0.5f;
+				offX = 0;
+				m_origin.rotation.z = Animation.call("sinusoidalIn", 1.57079633f, 0, m_animationProgress) - 1.57079633f;
+			}
+			break;
+		case AnimationType.NX:
+			if(m_animationProgress >= 1.0f)
+			{
+				m_bottom.transform.position.x = 0;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
+				m_origin.setIdentity();
+				onStateChange(this);
+			}
+			else
+			{
+				m_bottom.transform.position.x = -0.5f;
+				offX = 1;
+				m_origin.rotation.z = Animation.call("sinusoidalIn", -1.57079633f, 0, m_animationProgress) + 1.57079633f;
+			}
+			break;
+		case AnimationType.NZ:
+			if(m_animationProgress >= 1.0f)
+			{
+				m_bottom.transform.position.z = 0;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
+				m_origin.setIdentity();
+				onStateChange(this);
+			}
+			else
+			{
+				m_bottom.transform.position.z = -0.5f;
+				m_origin.position.y = 0;
+				offY = 1;
+				m_origin.rotation.x = Animation.call("sinusoidalIn", 1.57079633f, 0, m_animationProgress) - 1.57079633f;
+			}
+			break;
+		case AnimationType.Z:
+			if(m_animationProgress >= 1.0f)
+			{
+				m_bottom.transform.position.z = 0;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
+				m_origin.setIdentity();
+				onStateChange(this);
+			}
+			else
+			{
+				m_bottom.transform.position.z = 0.5f;
+				m_origin.position.y = 0;
+				offY = 0;
+				m_origin.rotation.x = Animation.call("sinusoidalIn", -1.57079633f, 0, m_animationProgress) + 1.57079633f;
+			}
+			break;
+		default:
+			break;
+		}
+
+		m_origin.position.x = m_x + offX;
+		m_origin.position.z = m_y + offY;
+
 		if(m_topState == 0) // Upright
 		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.y = 1.5f;
+			m_top.transform.parent = &m_bottom.transform;
+			m_top.transform.setIdentity();
+			m_top.transform.position.y = 1.0f;
 		}
 		if(m_topState == 1) // Towards +X
 		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.x += 1.0f;
+			m_top.transform.parent = &m_bottom.transform;
+			m_top.transform.setIdentity();
+			m_top.transform.position.x = 1.0f;
 		}
 		if(m_topState == 2) // Towards -X
 		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.x -= 1.0f;
+			m_top.transform.parent = &m_bottom.transform;
+			m_top.transform.setIdentity();
+			m_top.transform.position.x = -1.0f;
 		}
 		if(m_topState == 3) // Towards +Z
 		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.z += 1.0f;
+			m_top.transform.parent = &m_bottom.transform;
+			m_top.transform.setIdentity();
+			m_top.transform.position.z = 1.0f;
 		}
 		if(m_topState == 4) // Towards -Z
 		{
-			m_top.transform.position = transform.position;
-			m_top.transform.position.z -= 1.0f;
+			m_top.transform.parent = &m_bottom.transform;
+			m_top.transform.setIdentity();
+			m_top.transform.position.z = -1.0f;
 		}
 		if(m_topState == 5) // Splitted
 		{
+			m_top.transform.parent = null;
 			m_top.transform.position = transform.position;
 			m_top.transform.position.x = m_topX;
 			m_top.transform.position.z = m_topX;
@@ -444,7 +651,7 @@ class PlayerLock : IComponent
 
 	public override void update(f64 deltaTime)
 	{
-		pos = (player.transform.position + player.topPosition) * 0.5f;
+		pos = (player.topTransform.appliedPosition + player.bottomTransform.appliedPosition) * 0.5f;
 		pos.y = 0.5f;
 		player.camRotation = camera.transform.rotation.y;
 		camMovement.value = pos;

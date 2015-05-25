@@ -143,7 +143,7 @@ class Level : GameObject
 		m_blocks.length = 0;
 		Bitmap bmp = Bitmap.load(path);
 		scope(exit) bmp.destroy();
-		Mesh boxes = MeshUtils.createCube(0.5f, 0.2f, 0.5f, -0.5f, -0.2f, -0.5f);
+		Mesh boxes = MeshUtils.createCube(0.5f, 0.1f, 0.5f, -0.5f, -0.1f, -0.5f);
 		boxes = renderer.createMesh(boxes);
 		for(int x = 0; x < bmp.width; x++)
 		{

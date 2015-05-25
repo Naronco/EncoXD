@@ -45,6 +45,10 @@ class GameWindow : DesktopView
 			{
 				Logger.writeln("Transform: ", game.game3DLayer.player.transform);
 			}
+			if(key == Key.F5)
+			{
+				game.game3DLayer.debugLevel();
+			}
 		};
 
 		camera.addComponent(new DragTableX());
