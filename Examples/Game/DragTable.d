@@ -80,7 +80,7 @@ class DragTableHalfY : IComponent
 			wasDown = mstate.isButtonDown(0);
 		}
 		if(cstate.isConnected) object.transform.rotation -= vec3(cstate.getAxis(3), 0, 0) * deltaTime * 2;
-		if(object.transform.rotation.x > -0.4f) object.transform.rotation.x = -0.4f;
+		if(object.transform.rotation.x > -0.2f) object.transform.rotation.x = -0.2f;
 		if(object.transform.rotation.x < -1.57f) object.transform.rotation.x = -1.57f;
 		mstate = Mouse.getState();
 	}
