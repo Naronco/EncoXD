@@ -78,22 +78,57 @@ private:
 
 	void parseArgumentValue()
 	{
-		int comma = content.indexOf(",");
+		content = content.stripLeft();
+
+		if(content.length == 0)
+			throw new Exception("Unexpected EOF expecting argument value");
+
+		string argument = "";
+
+		if(content[0] == '(')
+		{
+			int depth = 1;
+			content = content[1 .. $];
+			while(depth > 0)
+			{
+				if(content[0] == '(')
+					depth++;
+				if(content[0] == ')')
+				{
+					depth--;
+					if(depth == 0)
+					{
+						content = content[1 .. $];
+						break;
+					}
+				}
+				argument ~= content[0];
+				content = content[1 .. $];
+			}
+		}
+
+		auto comma = content.indexOf(",");
 		if(comma == -1)
 			comma = ptrdiff_t.max;
-		int end = content.indexOf(")");
+		auto end = content.indexOf(")");
 		if(end == -1)
 			end = ptrdiff_t.max;
 
 		if(comma < end)
 		{
-			arguments[arguments.length - 1] ~= content[0 .. comma] ~ ")";
+			if(argument.length == 0)
+				arguments[arguments.length - 1] ~= content[0 .. comma] ~ ")";
+			else
+				arguments[arguments.length - 1] ~= argument ~ ")";
 			content = content[(comma + 1) .. $];
 			currentInterpretingState = InterpretingState.ArgumentName;
 		}
 		else
 		{
-			arguments[arguments.length - 1] ~= content[0 .. end] ~ ")";
+			if(argument.length == 0)
+				arguments[arguments.length - 1] ~= content[0 .. end] ~ ")";
+			else
+				arguments[arguments.length - 1] ~= argument ~ ")";
 			content = content[(end + 1) .. $];
 			currentParsingState = ParsingState.Identifier;
 		}
@@ -261,6 +296,8 @@ unittest
 		public A[] children;
 
 		public int _value = -1;
+		public int _a = -1;
+		public int _b = -1;
 
 		public this() {}
 
@@ -277,12 +314,19 @@ unittest
 		public @property A value(int val)
 		{
 			_value = val;
-			return this;			
+			return this;
+		}
+
+		public @property A multi(int a, int b)
+		{
+			_a = a;
+			_b = b;
+			return this;
 		}
 	}
 
 	A name1, _a1, name2, name3, name4, _a2;
-	mixin compileLevel!("A<name1> { A(value=5) A<name2>(value=4) A<name3>(value=3) { A<name4>(value=2) { A(value=1) } } }") ExampleLevel;
+	mixin compileLevel!("A<name1> { A(value=5) A<name2>(value=4) A<name3>(value=3) { A<name4>(value=2) { A(value=1, multi=(2, 3)) } } }") ExampleLevel;
 	ExampleLevel.compile();
 	assert(name1.value == -1);
 	assert(_a1.value == 5);
@@ -290,4 +334,6 @@ unittest
 	assert(name3.value == 3);
 	assert(name4.value == 2);
 	assert(_a2.value == 1);
+	assert(_a2._a == 2);
+	assert(_a2._b == 3);
 }
