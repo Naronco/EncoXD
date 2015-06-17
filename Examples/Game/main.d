@@ -21,8 +21,8 @@ class GameWindow : DesktopView
 		Camera camera = new Camera();
 		renderer.setClearColor(0.8f, 0.8f, 0.8f);
 		auto lua = EncoContext.instance.createLuaState();
-		camera.farClip = 1000;
-		camera.nearClip = -1000;
+		camera.farClip = 100;
+		camera.nearClip = -100;
 		camera.width = width;
 		camera.height = height;
 		camera.zoom = 10;
