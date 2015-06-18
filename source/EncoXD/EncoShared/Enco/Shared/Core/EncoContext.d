@@ -11,11 +11,10 @@ enum DynamicLibrary
 	Assimp, SDL2, SDL2Image, SDL2TTF, Lua,
 }
 
-struct MouseEvent
+struct FileDropEvent
 {
-	vec2 position;
-	vec2 offset;
-	u8 button;
+	u32 timestamp;
+	string file;
 }
 
 class EncoContext
@@ -25,18 +24,18 @@ class EncoContext
 	public LuaState lua;
 	
 	public Trigger onClose = new Trigger;
-	public Event!i32vec2 onScroll = new Event!i32vec2;
-	public Event!string onFileDrop = new Event!string;
-	public Event!u32 onKeyDown = new Event!u32;
-	public Event!u32 onKeyUp = new Event!u32;
-	public Event!MouseEvent onMouseMove = new Event!MouseEvent;
-	public Event!MouseEvent onMouseButtonDown = new Event!MouseEvent;
-	public Event!MouseEvent onMouseButtonUp = new Event!MouseEvent;
-	public Event!i32 onControllerAdded = new Event!i32;
-	public Event!i32 onControllerRemoved = new Event!i32;
-	public Event!(Tuple!(i32, u8, i16)) onControllerAxis = new Event!(Tuple!(i32, u8, i16));
-	public Event!(Tuple!(i32, i8)) onControllerButtonDown = new Event!(Tuple!(i32, i8));
-	public Event!(Tuple!(i32, i8)) onControllerButtonUp = new Event!(Tuple!(i32, i8));
+	public Event!MouseWheelEvent onScroll = new Event!MouseWheelEvent;
+	public Event!FileDropEvent onFileDrop = new Event!FileDropEvent;
+	public Event!KeyDownEvent onKeyDown = new Event!KeyDownEvent;
+	public Event!KeyUpEvent onKeyUp = new Event!KeyUpEvent;
+	public Event!MouseMoveEvent onMouseMove = new Event!MouseMoveEvent;
+	public Event!MouseButtonDownEvent onMouseButtonDown = new Event!MouseButtonDownEvent;
+	public Event!MouseButtonUpEvent onMouseButtonUp = new Event!MouseButtonUpEvent;
+	public Event!ControllerAddedEvent onControllerAdded = new Event!ControllerAddedEvent;
+	public Event!ControllerRemovedEvent onControllerRemoved = new Event!ControllerRemovedEvent;
+	public Event!ControllerAxisEvent onControllerAxis = new Event!ControllerAxisEvent;
+	public Event!ControllerButtonDownEvent onControllerButtonDown = new Event!ControllerButtonDownEvent;
+	public Event!ControllerButtonUpEvent onControllerButtonUp = new Event!ControllerButtonUpEvent;
 
 	public @property f64 deltaTime() { return delta.to!("seconds", f64); }
 
@@ -237,49 +236,116 @@ class EncoContext
 					case SDL_DROPFILE:
 						string file = fromStringz(event.drop.file).dup;
 						SDL_free(event.drop.file);
-						onFileDrop(this, file);
+						FileDropEvent e;
+						e.timestamp = event.drop.timestamp;
+						e.file = file;
+						onFileDrop(this, e);
 						break;
 					case SDL_KEYDOWN:
 						Keyboard.setKey(event.key.keysym.sym, true);
-						onKeyDown(this, event.key.keysym.sym);
+						KeyDownEvent e;
+						e.timestamp = event.key.timestamp;
+						e.window = event.key.windowID;
+						e.state = event.key.state;
+						e.repeat = event.key.repeat;
+						e.keyID = event.key.keysym.sym;
+						onKeyDown(this, e);
 						break;
 					case SDL_KEYUP:
 						Keyboard.setKey(event.key.keysym.sym, false);
-						onKeyUp(this, event.key.keysym.sym);
+						KeyUpEvent e;
+						e.timestamp = event.key.timestamp;
+						e.window = event.key.windowID;
+						e.state = event.key.state;
+						e.repeat = event.key.repeat;
+						e.keyID = event.key.keysym.sym;
+						onKeyUp(this, e);
 						break;
 					case SDL_MOUSEWHEEL:
-						onScroll(this, i32vec2(event.wheel.x, event.wheel.y));
+						MouseWheelEvent e;
+						e.timestamp = event.wheel.timestamp;
+						e.windowID = event.wheel.windowID;
+						e.id = event.wheel.which;
+						e.amount = i32vec2(event.wheel.x, event.wheel.y);
+						e.flipped = event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED;
+						onScroll(this, e);
 						break;
 					case SDL_MOUSEMOTION:
 						Mouse.setPosition(event.motion.x, event.motion.y);
 						Mouse.addOffset(event.motion.xrel, event.motion.yrel);
-						onMouseMove(this, MouseEvent(vec2(event.motion.x, event.motion.y), vec2(event.motion.xrel, event.motion.yrel), 255));
+						MouseMoveEvent e;
+						e.position = i32vec2(event.motion.x, event.motion.y);
+						e.offset = i32vec2(event.motion.xrel, event.motion.yrel);
+						e.id = event.motion.which;
+						e.windowID = event.motion.windowID;
+						e.timestamp = event.motion.timestamp;
+						onMouseMove(this, e);
 						break;
 					case SDL_MOUSEBUTTONDOWN:
 					case SDL_MOUSEBUTTONUP:
 						Mouse.setPosition(event.button.x, event.button.y);
 						Mouse.setButton(event.button.button, event.button.state == SDL_PRESSED);
 						if(event.button.state == SDL_PRESSED)
-							onMouseButtonDown(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
+						{
+							MouseButtonDownEvent e;
+							e.buttonID = event.button.button;
+							e.position = i32vec2(event.button.x, event.button.y);
+							e.id = event.button.which;
+							e.windowID = event.button.windowID;
+							e.timestamp = event.button.timestamp;
+							e.state = event.button.state;
+
+							onMouseButtonDown(this, e);
+						}
 						else
-							onMouseButtonUp(this, MouseEvent(vec2(event.button.x, event.button.y), vec2(0, 0), event.button.button));
+						{
+							MouseButtonUpEvent e;
+							e.buttonID = event.button.button;
+							e.position = i32vec2(event.button.x, event.button.y);
+							e.id = event.button.which;
+							e.windowID = event.button.windowID;
+							e.timestamp = event.button.timestamp;
+							e.state = event.button.state;
+
+							onMouseButtonUp(this, e);
+						}
 						break;
 					case SDL_CONTROLLERDEVICEADDED:
-						onControllerAdded(this, event.cdevice.which);
+						ControllerAddedEvent e;
+						e.timestamp = event.cdevice.timestamp;
+						e.id = event.cdevice.which;
+						onControllerAdded(this, e);
 						Controller.setConnected(event.cdevice.which, true);
 						SDL_GameControllerOpen(event.cdevice.which);
 						break;
 					case SDL_CONTROLLERDEVICEREMOVED:
-						onControllerRemoved(this, event.cdevice.which);
+						ControllerRemovedEvent e;
+						e.timestamp = event.cdevice.timestamp;
+						e.id = event.cdevice.which;
+						onControllerRemoved(this, e);
 						Controller.setConnected(event.cdevice.which, false);
 						break;
 					case SDL_CONTROLLERBUTTONDOWN:
 					case SDL_CONTROLLERBUTTONUP:
 						Controller.setKey(event.cbutton.which, event.cbutton.button, event.cbutton.state == SDL_PRESSED);
 						if(event.cbutton.state == SDL_PRESSED)
-							onControllerButtonDown(this, Tuple!(i32, i8)(event.cbutton.which, event.cbutton.button));
+						{
+							ControllerButtonDownEvent e;
+							e.timestamp = event.cbutton.timestamp;
+							e.id = event.cbutton.which;
+							e.buttonID = event.cbutton.button;
+							e.state = event.cbutton.state;
+							onControllerButtonDown(this, e);
+						}
 						else
-							onControllerButtonUp(this, Tuple!(i32, i8)(event.cbutton.which, event.cbutton.button));
+						{
+							ControllerButtonUpEvent e;
+							e.timestamp = event.cbutton.timestamp;
+							e.id = event.cbutton.which;
+							e.buttonID = event.cbutton.button;
+							e.state = event.cbutton.state;
+							onControllerButtonUp(this, e);
+						}
 						break;
 					case SDL_CONTROLLERAXISMOTION:
 						i16 value = event.caxis.value;
@@ -297,7 +363,12 @@ class EncoContext
 							value = 0;
 						}
 						Controller.setAxis(event.caxis.which, event.caxis.axis, value);
-						onControllerAxis(this, Tuple!(i32, u8, i16)(event.caxis.which, event.caxis.axis, value));
+						ControllerAxisEvent e;
+						e.timestamp = event.caxis.timestamp;
+						e.id = event.caxis.which;
+						e.axisID = event.caxis.axis;
+						e.value = value;
+						onControllerAxis(this, e);
 						break;
 					default: break;
 				}

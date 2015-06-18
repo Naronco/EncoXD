@@ -66,16 +66,16 @@ class GameWindow : DesktopView
 			Logger.writeln("Removed controller #", id);
 		};
 
-		EncoContext.instance.onControllerButtonDown += (sender, evt) {
-			Logger.writeln("#", cast(i32)evt[0], " down ", cast(i32)evt[1]);
+		EncoContext.instance.onControllerButtonDown += (sender, e) {
+			Logger.writeln("#", e.id, " down ", e.button);
 		};
 
-		EncoContext.instance.onControllerButtonUp += (sender, evt) {
-			Logger.writeln("#", cast(i32)evt[0], " up ", cast(i32)evt[1]);
+		EncoContext.instance.onControllerButtonUp += (sender, e) {
+			Logger.writeln("#", e.id, " up ", e.button);
 		};
 
-		EncoContext.instance.onControllerAxis += (sender, button) {
-			Logger.writeln("#", cast(i32)button[0], " axis ", cast(i32)button[1], " -> ", (button[2] * 0.00003051757));
+		EncoContext.instance.onControllerAxis += (sender, e) {
+			Logger.writeln("#", e.id, " axis ", e.axis, " -> ", (e.value * 0.00003051757));
 		};
 	}
 

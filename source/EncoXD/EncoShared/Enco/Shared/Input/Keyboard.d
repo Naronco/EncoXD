@@ -37,6 +37,34 @@ class Keyboard
 	}
 }
 
+struct KeyDownEvent
+{
+	u32 timestamp;
+	u32 window;
+	u8 state;
+	u8 repeat;
+
+	union
+	{
+		Key key;
+		i32 keyID;
+	}
+}
+
+struct KeyUpEvent
+{
+	u32 timestamp;
+	u32 window;
+	u8 state;
+	u8 repeat;
+
+	union
+	{
+		Key key;
+		i32 keyID;
+	}
+}
+
 enum Key: int
 {
 	Return = SDLK_RETURN,

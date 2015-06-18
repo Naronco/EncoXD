@@ -68,3 +68,60 @@ class Mouse
 		state = new MouseState();
 	}
 }
+
+struct MouseMoveEvent
+{
+	u32 id;
+	u32 windowID;
+	u32 timestamp;
+	i32vec2 position;
+	i32vec2 offset;
+}
+
+enum MouseButton : u8
+{
+	Left,
+	Middle,
+	Right,
+	X1,
+	X2
+}
+
+struct MouseButtonDownEvent
+{
+	u32 id;
+	u32 windowID;
+	u32 timestamp;
+	i32vec2 position;
+	union
+	{
+		u8 buttonID;
+		MouseButton button;
+	}
+	u8 clicks;
+	u8 state;
+}
+
+struct MouseButtonUpEvent
+{
+	u32 id;
+	u32 windowID;
+	u32 timestamp;
+	i32vec2 position;
+	union
+	{
+		u8 buttonID;
+		MouseButton button;
+	}
+	u8 clicks;
+	u8 state;
+}
+
+struct MouseWheelEvent
+{
+	u32 timestamp;
+	u32 windowID;
+	u32 id;
+	i32vec2 amount;
+	bool flipped;
+}

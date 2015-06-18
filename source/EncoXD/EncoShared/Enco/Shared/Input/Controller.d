@@ -64,3 +64,110 @@ class Controller
 
 	public static ControllerState*[i32] states;
 }
+
+enum ControllerIndex : i32
+{
+	One = 0,
+	Two,
+	Three,
+	Four
+}
+
+enum ControllerAxis : u8
+{
+	Invalid = 255,
+	LeftX = 0,
+	LeftY,
+	RightX,
+	RightY,
+	TriggerLeft,
+	TriggerRight
+}
+
+struct ControllerAxisEvent
+{
+	u32 timestamp;
+	union
+	{
+		ControllerIndex index;
+		i32 id;
+	}
+	union
+	{
+		ControllerAxis axis;
+		u8 axisID;
+	}
+	i16 value;
+}
+
+enum ControllerButton : u8
+{
+	Invalid = 255,
+	A = 0,
+	B,
+	X,
+	Y,
+	Back,
+	Select,
+	Start,
+	LeftStick,
+	RightStick,
+	LeftShoulder,
+	RightShoulder,
+	DPadUp,
+	DPadDown,
+	DPadLeft,
+	DPadRight
+}
+
+struct ControllerButtonDownEvent
+{
+	u32 timestamp;
+	union
+	{
+		ControllerIndex index;
+		i32 id;
+	}
+	union
+	{
+		ControllerButton button;
+		u8 buttonID;
+	}
+	u8 state;
+}
+
+struct ControllerButtonUpEvent
+{
+	u32 timestamp;
+	union
+	{
+		ControllerIndex index;
+		i32 id;
+	}
+	union
+	{
+		ControllerButton button;
+		u8 buttonID;
+	}
+	u8 state;
+}
+
+struct ControllerAddedEvent
+{
+	u32 timestamp;
+	union
+	{
+		ControllerIndex index;
+		i32 id;
+	}
+}
+
+struct ControllerRemovedEvent
+{
+	u32 timestamp;
+	union
+	{
+		ControllerIndex index;
+		i32 id;
+	}
+}

@@ -3,6 +3,8 @@ module Player;
 import EncoDesktop;
 import EncoShared;
 
+// TODO: Clean this mess up
+
 enum AnimationType : u8
 {
 	Still,
@@ -24,6 +26,7 @@ class Player : GameObject
 	private int m_topState = 0;
 	private f32 m_camRotation = 0;
 	private Transform m_origin;
+	private int m_nextKey = 0;
 
 	private bool m_double;
 	
@@ -73,24 +76,33 @@ class Player : GameObject
 		{
 			if(m_animationType == AnimationType.Still)
 			{
-				if(key == Key.D || key == Key.Right)
-				{
-					moveRight();
-				}
-				if(key == Key.S || key == Key.Down)
-				{
-					moveBack();
-				}
-				if(key == Key.A || key == Key.Left)
-				{
-					moveLeft();
-				}
-				if(key == Key.W || key == Key.Up)
-				{
-					moveFront();
-				}
+				handleKey(key.key);
+			}
+			else if(key.repeat == 0)
+			{
+				m_nextKey = key.key;
 			}
 		};
+	}
+
+	public void handleKey(int key)
+	{
+		if(key == Key.D || key == Key.Right)
+		{
+			moveRight();
+		}
+		if(key == Key.S || key == Key.Down)
+		{
+			moveBack();
+		}
+		if(key == Key.A || key == Key.Left)
+		{
+			moveLeft();
+		}
+		if(key == Key.W || key == Key.Up)
+		{
+			moveFront();
+		}
 	}
 
 	public void respawn()
@@ -600,6 +612,12 @@ class Player : GameObject
 			m_top.transform.position.x = m_topX;
 			m_top.transform.position.z = m_topX;
 		}
+
+		if(m_animationType == AnimationType.Still && m_nextKey != -1)
+		{
+			handleKey(m_nextKey);
+			m_nextKey = -1;
+		}
 	}
 }
 
@@ -626,7 +644,7 @@ class PlayerLock : IComponent
 		zoom.easingType = "quadratic";
 
 		EncoContext.instance.onScroll += (s, v) {
-			zoomVal += v.y * -0.5f;
+			zoomVal += v.amount.y * -0.5f;
 			if(zoomVal < 2) zoomVal = 2;
 			if(zoomVal > 20) zoomVal = 20;
 			zoom.value = zoomVal;

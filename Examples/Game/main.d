@@ -29,23 +29,23 @@ class GameWindow : DesktopView
 		camera.projectionMode = ProjectionMode.Orthographic3D;
 
 		debug EncoContext.instance.onKeyDown += (sender, key) {
-			if(key == Key.F1)
+			if(key.key == Key.F1)
 			{
 				Logger.writeln("Rotation: ", camera.transform.rotation.y);
 			}
-			if(key == Key.F2)
+			if(key.key == Key.F2)
 			{
 				game.game3DLayer.nextLevel();
 			}
-			if(key == Key.F3)
+			if(key.key == Key.F3)
 			{
 				Logger.writeln("Position: ", game.game3DLayer.player.transform.position);
 			}
-			if(key == Key.F4)
+			if(key.key == Key.F4)
 			{
 				Logger.writeln("Transform: ", game.game3DLayer.player.transform);
 			}
-			if(key == Key.F5)
+			if(key.key == Key.F5)
 			{
 				game.game3DLayer.debugLevel();
 			}
