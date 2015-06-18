@@ -27,7 +27,8 @@ mixin template Quadratic()
 	static f64 quadratic(f64 delta, f64 offset, f64 time)
 	{
 		time *= 2;
-		if (time < 1) return delta * 0.5 * time * time + offset;
+		if (time < 1)
+			return delta * 0.5 * time * time + offset;
 		time--;
 		return -delta * 0.5 * (time * (time - 2) - 1) + offset;
 	}
@@ -49,7 +50,8 @@ mixin template Cubic()
 	static f64 cubic(f64 delta, f64 offset, f64 time)
 	{
 		time *= 2;
-		if (time < 1) return delta * 0.5 * time * time * time + offset;
+		if (time < 1)
+			return delta * 0.5 * time * time * time + offset;
 		time -= 2;
 		return delta * 0.5 * (time * time * time + 2) + offset;
 	}
@@ -71,7 +73,8 @@ mixin template Quartic()
 	static f64 quartic(f64 delta, f64 offset, f64 time)
 	{
 		time *= 2;
-		if (time < 1) return delta * 0.5 * time * time * time * time + offset;
+		if (time < 1)
+			return delta * 0.5 * time * time * time * time + offset;
 		time -= 2;
 		return -delta * 0.5 * (time * time * time * time - 2) + offset;
 	}
@@ -94,7 +97,8 @@ mixin template Quintic()
 	static f64 quintic(f64 delta, f64 offset, f64 time)
 	{
 		time *= 2;
-		if (time < 1) return delta * 0.5 * time * time * time * time * time + offset;
+		if (time < 1)
+			return delta * 0.5 * time * time * time * time * time + offset;
 		time -= 2;
 		return delta * 0.5 * (time * time * time * time * time + 2) + offset;
 	}
@@ -134,7 +138,8 @@ mixin template Exponential()
 	static f64 exponential(f64 delta, f64 offset, f64 time)
 	{
 		time *= 2;
-		if (time < 1) return delta * 0.5 * pow(2, 10 * (time - 1)) + offset;
+		if (time < 1)
+			return delta * 0.5 * pow(2, 10 * (time - 1)) + offset;
 		time--;
 		return delta * 0.5 * (-pow(2, -10 * time) + 2) + offset;
 	}
@@ -156,7 +161,8 @@ mixin template Circular()
 	static f64 circular(f64 delta, f64 offset, f64 time)
 	{
 		time *= 2;
-		if (time < 1) return -delta * 0.5 * (sqrt(1 - time * time) - 1) + offset;
+		if (time < 1)
+			return -delta * 0.5 * (sqrt(1 - time * time) - 1) + offset;
 		time -= 2;
 		return delta * 0.5 * (sqrt(1 - time * time) + 1) + offset;
 	}

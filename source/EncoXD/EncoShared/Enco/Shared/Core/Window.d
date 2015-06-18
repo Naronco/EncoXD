@@ -5,16 +5,25 @@ import EncoShared;
 class Window
 {
 	private SDL_Window* m_handle;
-	private int m_id;
+	private int		  m_id;
 
-	public @property SDL_Window* window() { return m_handle; }
-	public @property bool valid() { return m_handle !is null; }
-	public @property int id() { return m_id; }
+	public @property SDL_Window* window()
+	{
+		return m_handle;
+	}
+	public @property bool valid()
+	{
+		return m_handle !is null;
+	}
+	public @property int id()
+	{
+		return m_id;
+	}
 
 	public this(string title, i32 x, i32 y, i32 w, i32 h, u32 flags)
 	{
 		m_handle = SDL_CreateWindow(title.toStringz(), x, y, w, h, flags);
-		m_id = SDL_GetWindowID(m_handle);
+		m_id	 = SDL_GetWindowID(m_handle);
 	}
 
 	public ~this()
@@ -40,50 +49,50 @@ class Window
 
 	public @property void size(u32vec2 size)
 	{
-		SDL_SetWindowSize(m_handle, cast(i32)size.x, cast(i32)size.y);
+		SDL_SetWindowSize(m_handle, cast(i32) size.x, cast(i32) size.y);
 	}
 
 	public @property u32vec2 size()
 	{
 		i32 x, y;
 		SDL_GetWindowSize(m_handle, &x, &y);
-		return u32vec2(cast(u32)x, cast(u32)y);
+		return u32vec2(cast(u32) x, cast(u32) y);
 	}
 
 	public @property void maxSize(u32vec2 size)
 	{
-		SDL_SetWindowMaximumSize(m_handle, cast(i32)size.x, cast(i32)size.y);
+		SDL_SetWindowMaximumSize(m_handle, cast(i32) size.x, cast(i32) size.y);
 	}
 
 	public @property u32vec2 maxSize()
 	{
 		i32 x, y;
 		SDL_GetWindowMaximumSize(m_handle, &x, &y);
-		return u32vec2(cast(u32)x, cast(u32)y);
+		return u32vec2(cast(u32) x, cast(u32) y);
 	}
 
 	public @property void minSize(u32vec2 size)
 	{
-		SDL_SetWindowMinimumSize(m_handle, cast(i32)size.x, cast(i32)size.y);
+		SDL_SetWindowMinimumSize(m_handle, cast(i32) size.x, cast(i32) size.y);
 	}
 
 	public @property u32vec2 minSize()
 	{
 		i32 x, y;
 		SDL_GetWindowMinimumSize(m_handle, &x, &y);
-		return u32vec2(cast(u32)x, cast(u32)y);
+		return u32vec2(cast(u32) x, cast(u32) y);
 	}
 
 	public @property void position(u32vec2 pos)
 	{
-		SDL_SetWindowPosition(m_handle, cast(i32)pos.x, cast(i32)pos.y);
+		SDL_SetWindowPosition(m_handle, cast(i32) pos.x, cast(i32) pos.y);
 	}
 
 	public @property u32vec2 position()
 	{
 		i32 x, y;
 		SDL_GetWindowPosition(m_handle, &x, &y);
-		return u32vec2(cast(u32)x, cast(u32)y);
+		return u32vec2(cast(u32) x, cast(u32) y);
 	}
 
 	public void show()

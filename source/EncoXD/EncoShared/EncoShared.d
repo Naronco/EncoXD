@@ -17,11 +17,11 @@ public
 	import gl3n.math;
 	import gl3n.plane;
 	import gl3n.util;
-	
+
 	import Enco.Shared.Math.Frustum;
 	import Enco.Shared.Math.Random;
 	import Enco.Shared.Math.Transform;
-	
+
 	import Enco.Shared.Core.IView;
 	import Enco.Shared.Core.EncoContext;
 	import Enco.Shared.Core.Camera;
@@ -32,7 +32,7 @@ public
 	import Enco.Shared.Core.Event;
 	import Enco.Shared.Core.Window;
 	import Enco.Shared.Core.TimeHelper;
-	
+
 	import Enco.Shared.Render.IRenderer;
 	import Enco.Shared.Render.ITexture;
 	import Enco.Shared.Render.Bitmap;
@@ -47,22 +47,22 @@ public
 	import Enco.Shared.Render.Font;
 
 	import Enco.Shared.Scripting.LuaExt;
-	
+
 	import Enco.Shared.GUI.Control;
 	import Enco.Shared.GUI.PictureControl;
 	import Enco.Shared.GUI.DynamicColorControl;
 	import Enco.Shared.GUI.TextControl;
-	
+
 	import Enco.Shared.Ext.Array;
 	import Enco.Shared.Ext.String;
-	
+
 	import Enco.Shared.Network.Network;
 	import Enco.Shared.Network.Tcp;
-	
+
 	import Enco.Shared.Animation.Animation;
 	import Enco.Shared.Animation.BasicEaseFunctions;
 	import Enco.Shared.Animation.AnimatedProperty;
-	
+
 	import Enco.Shared.Input.Keyboard;
 	import Enco.Shared.Input.Mouse;
 	import Enco.Shared.Input.Controller;
@@ -71,32 +71,38 @@ public
 	import Enco.Shared.Components.FreeMove;
 
 	import Enco.Shared.Level.LevelLoader;
-	
+
 	import std.algorithm;
 	import std.string;
 	import std.conv;
 
-	alias char int8, i8;
-	alias short int16, i16;
-	alias int int32, i32;
-	alias long int64, i64;
+	alias char	 int8, i8;
+	alias short	 int16, i16;
+	alias int	 int32, i32;
+	alias long	 int64, i64;
 
-	alias ubyte uchar, uint8, u8;
+	alias ubyte	 uchar, uint8, u8;
 	alias ushort uint16, u16;
-	alias uint uint32, u32;
-	alias ulong uint64, u64;
+	alias uint	 uint32, u32;
+	alias ulong	 uint64, u64;
 
-	alias float f32, float32;
+	alias float	 f32, float32;
 	alias double f64, float64;
-	
-	alias Vector!(u32, 2) u32vec2;
-	alias Vector!(i32, 2) i32vec2;
 
-	enum ENCO_VERSION = "1.0.0";
+	alias		 Vector!(u32, 2) u32vec2;
+	alias		 Vector!(i32, 2) i32vec2;
+
+	enum ENCO_VERSION	 = "1.0.0";
 	enum ENCO_VERSION_ID = 1;
 
 	enum PI2 = 6.28318530718;
-	
-	static float degToRad(float f) { return f * 0.0174532925f; }
-	static float radToDeg(float f) { return f * 57.2957795f; }
+
+	static float degToRad(float f)
+	{
+		return f * 0.0174532925f;
+	}
+	static float radToDeg(float f)
+	{
+		return f * 57.2957795f;
+	}
 }

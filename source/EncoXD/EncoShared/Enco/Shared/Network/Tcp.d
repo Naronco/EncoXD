@@ -6,7 +6,7 @@ import EncoShared;
 class TcpSocket
 {
 	private std.socket.InternetAddress ipaddress;
-	private std.socket.TcpSocket tcpsock;
+	private std.socket.TcpSocket	   tcpsock;
 
 	public this(std.socket.TcpSocket handle)
 	{
@@ -20,16 +20,16 @@ class TcpSocket
 
 	public bool bind(const string host)
 	{
-		i16 port = 0;
+		i16	   port		= 0;
 		string hostname = host;
 
-		if(!host.contains(":"))
+		if (!host.contains(":"))
 			return false;
 		string[] splits = host.split(':');
 
 		hostname = splits[0];
 
-		if(!splits[1].isNumeric())
+		if (!splits[1].isNumeric())
 			return false;
 		port = parse!i16(splits[1]);
 
@@ -39,16 +39,16 @@ class TcpSocket
 
 	public void bind(const string host, i16 fallbackPort)
 	{
-		i16 port = fallbackPort;
+		i16	   port		= fallbackPort;
 		string hostname = host;
 
-		if(host.contains(":"))
+		if (host.contains(":"))
 		{
 			string[] splits = host.split(':');
 
 			hostname = splits[0];
 
-			if(splits[1].isNumeric())
+			if (splits[1].isNumeric())
 				port = parse!i16(splits[1]);
 		}
 
@@ -82,7 +82,7 @@ class TcpSocket
 
 	public TcpSocket accept()
 	{
-		return new TcpSocket(cast(std.socket.TcpSocket)(tcpsock.accept()));
+		return new TcpSocket(cast(std.socket.TcpSocket) (tcpsock.accept()));
 	}
 
 	public ptrdiff_t send(const(void)[] data)
@@ -107,7 +107,7 @@ class TcpSocket
 	public ptrdiff_t send(IPacket packet)
 	{
 		void[] data;
-		data[0 .. 0] = [packet.length];
+		data[0 .. 0]			 = [packet.length];
 		data[1 .. packet.length] = packet.serialize()[0 .. packet.length];
 		return send(data);
 	}
@@ -115,7 +115,7 @@ class TcpSocket
 	public void receive(IPacket packet)
 	{
 		void[] lenBuf = receive(1);
-		packet.deserialize(receive((cast(u32[])lenBuf[0 .. 0])[0]));
+		packet.deserialize(receive((cast(u32[]) lenBuf[0 .. 0])[0]));
 	}
 
 	public @property bool isAlive()

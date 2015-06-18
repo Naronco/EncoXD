@@ -62,12 +62,12 @@ class Random
 
 	public f64 nextDouble()
 	{
-		return (nextLong() % u64.max) / cast(f64)u64.max;
+		return (nextLong() % u64.max) / cast(f64) u64.max;
 	}
 
 	public f32 nextFloat()
 	{
-		return cast(f32)nextDouble();
+		return cast(f32) nextDouble();
 	}
 
 	public bool nextBool()

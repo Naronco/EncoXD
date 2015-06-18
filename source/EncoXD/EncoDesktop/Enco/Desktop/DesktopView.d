@@ -8,26 +8,32 @@ import EncoShared;
 
 abstract class DesktopView : IView
 {
-	public @property Window window() { return m_window; }
-	public @property bool valid() { return m_valid; }
+	public @property Window window()
+	{
+		return m_window;
+	}
+	public @property bool valid()
+	{
+		return m_valid;
+	}
 
-	private bool m_valid = false;
+	private bool   m_valid = false;
 	private Window m_window;
-	private bool m_closed = false;
-	
-	public Event!u32vec2 onResized = new Event!u32vec2;
-	public Event!u32vec2 onMove = new Event!u32vec2;
-	public Trigger onShow = new Trigger;
-	public Trigger onHide = new Trigger;
-	public Trigger onExpose = new Trigger;
-	public Trigger onMinimize = new Trigger;
-	public Trigger onMaximize = new Trigger;
-	public Trigger onRestore = new Trigger;
-	public Trigger onEnter = new Trigger;
-	public Trigger onLeave = new Trigger;
+	private bool   m_closed = false;
+
+	public		   Event!u32vec2 onResized = new Event!u32vec2;
+	public		   Event!u32vec2 onMove = new Event!u32vec2;
+	public Trigger onShow	   = new Trigger;
+	public Trigger onHide	   = new Trigger;
+	public Trigger onExpose	   = new Trigger;
+	public Trigger onMinimize  = new Trigger;
+	public Trigger onMaximize  = new Trigger;
+	public Trigger onRestore   = new Trigger;
+	public Trigger onEnter	   = new Trigger;
+	public Trigger onLeave	   = new Trigger;
 	public Trigger onFocusGain = new Trigger;
 	public Trigger onFocusLost = new Trigger;
-	public Trigger onClose = new Trigger;
+	public Trigger onClose	   = new Trigger;
 
 	public this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
 	public this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
@@ -40,7 +46,7 @@ abstract class DesktopView : IView
 
 		auto flags = SDL_WINDOW_SHOWN;
 
-		if(m_size.x == 0 && m_size.y == 0)
+		if (m_size.x == 0 && m_size.y == 0)
 		{
 			SDL_DisplayMode current;
 
@@ -52,8 +58,8 @@ abstract class DesktopView : IView
 			flags = SDL_WINDOW_BORDERLESS;
 		}
 
-		m_window = new Window(m_name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, cast(int)m_size.x, cast(int)m_size.y, flags | cast(uint)renderer.getSDLOptions());
-		if(!m_window.valid)
+		m_window = new Window(m_name, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, cast(int) m_size.x, cast(int) m_size.y, flags | cast(uint) renderer.getSDLOptions());
+		if (!m_window.valid)
 		{
 			throw new Exception("Window failed");
 		}
@@ -66,19 +72,19 @@ abstract class DesktopView : IView
 	{
 		try
 		{
-			if(("Window" in json) !is null && json["Window"].type == JSON_TYPE.OBJECT)
+			if (("Window" in json) !is null && json["Window"].type == JSON_TYPE.OBJECT)
 			{
-				if(("Width" in json["Window"]) !is null && ("Height" in json["Window"]) !is null && json["Window"]["Width"].type == JSON_TYPE.INTEGER && json["Window"]["Height"].type == JSON_TYPE.INTEGER)
+				if (("Width" in json["Window"]) !is null && ("Height" in json["Window"]) !is null && json["Window"]["Width"].type == JSON_TYPE.INTEGER && json["Window"]["Height"].type == JSON_TYPE.INTEGER)
 				{
-					size = u32vec2(cast(u32)json["Window"]["Width"].integer, cast(u32)json["Window"]["Height"].integer);
+					size = u32vec2(cast(u32) json["Window"]["Width"].integer, cast(u32) json["Window"]["Height"].integer);
 				}
-				if(("Title" in json["Window"]) !is null && json["Window"]["Title"].type == JSON_TYPE.STRING)
+				if (("Title" in json["Window"]) !is null && json["Window"]["Title"].type == JSON_TYPE.STRING)
 				{
 					name = json["Window"]["Title"].str;
 				}
 			}
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			Logger.errln(e);
 		}
@@ -86,17 +92,17 @@ abstract class DesktopView : IView
 
 	public override void destroy()
 	{
-		if(valid)
+		if (valid)
 		{
 			m_renderer.deleteContext();
 
-			if(m_window !is null && m_window.valid)
+			if (m_window !is null && m_window.valid)
 			{
 				m_window.destroy();
 				m_window = null;
 			}
 
-			if(m_scene !is null)
+			if (m_scene !is null)
 			{
 				m_scene.destroy();
 				m_scene = null;
@@ -106,56 +112,56 @@ abstract class DesktopView : IView
 
 	public override void handleEvent(ref SDL_Event event)
 	{
-		if(valid && !m_closed)
+		if (valid && !m_closed)
 		{
-			if(event.type == SDL_WINDOWEVENT && event.window.windowID == window.id)
+			if (event.type == SDL_WINDOWEVENT && event.window.windowID == window.id)
 			{
-				switch(event.window.event)
+				switch (event.window.event)
 				{
-					case SDL_WINDOWEVENT_SHOWN:
-						onShow(this);
-						break;
-					case SDL_WINDOWEVENT_HIDDEN:
-						onHide(this);
-						break;
-					case SDL_WINDOWEVENT_EXPOSED:
-						onExpose(this);
-						break;
-					case SDL_WINDOWEVENT_MOVED:
-						onMove(this, u32vec2(event.window.data1, event.window.data2));
-						break;
-					case SDL_WINDOWEVENT_RESIZED:
-						size = u32vec2(event.window.data1, event.window.data2);
-						onResized(this, size);
-						break;
-					case SDL_WINDOWEVENT_MINIMIZED:
-						onMinimize(this);
-						break;
-					case SDL_WINDOWEVENT_MAXIMIZED:
-						onMaximize(this);
-						break;
-					case SDL_WINDOWEVENT_RESTORED:
-						onRestore(this);
-						break;
-					case SDL_WINDOWEVENT_ENTER:
-						onEnter(this);
-						break;
-					case SDL_WINDOWEVENT_LEAVE:
-						onLeave(this);
-						break;
-					case SDL_WINDOWEVENT_FOCUS_GAINED:
-						onFocusGain(this);
-						break;
-					case SDL_WINDOWEVENT_FOCUS_LOST:
-						onFocusLost(this);
-						break;
-					case SDL_WINDOWEVENT_CLOSE:
-						onClose(this);
-						EncoContext.instance.removeView(this);
-						m_closed = true;
-						window.hide();
-						break;
-					default: break;
+				case SDL_WINDOWEVENT_SHOWN:
+					onShow(this);
+					break;
+				case SDL_WINDOWEVENT_HIDDEN:
+					onHide(this);
+					break;
+				case SDL_WINDOWEVENT_EXPOSED:
+					onExpose(this);
+					break;
+				case SDL_WINDOWEVENT_MOVED:
+					onMove(this, u32vec2(event.window.data1, event.window.data2));
+					break;
+				case SDL_WINDOWEVENT_RESIZED:
+					size = u32vec2(event.window.data1, event.window.data2);
+					onResized(this, size);
+					break;
+				case SDL_WINDOWEVENT_MINIMIZED:
+					onMinimize(this);
+					break;
+				case SDL_WINDOWEVENT_MAXIMIZED:
+					onMaximize(this);
+					break;
+				case SDL_WINDOWEVENT_RESTORED:
+					onRestore(this);
+					break;
+				case SDL_WINDOWEVENT_ENTER:
+					onEnter(this);
+					break;
+				case SDL_WINDOWEVENT_LEAVE:
+					onLeave(this);
+					break;
+				case SDL_WINDOWEVENT_FOCUS_GAINED:
+					onFocusGain(this);
+					break;
+				case SDL_WINDOWEVENT_FOCUS_LOST:
+					onFocusLost(this);
+					break;
+				case SDL_WINDOWEVENT_CLOSE:
+					onClose(this);
+					EncoContext.instance.removeView(this);
+					m_closed = true;
+					window.hide();
+					break;
+				default: break;
 				}
 			}
 		}
@@ -163,7 +169,7 @@ abstract class DesktopView : IView
 
 	protected override void onResize()
 	{
-		if(valid)
+		if (valid)
 		{
 			m_window.size = m_size;
 		}
@@ -171,7 +177,7 @@ abstract class DesktopView : IView
 
 	protected override void onRename()
 	{
-		if(valid)
+		if (valid)
 		{
 			m_window.title = m_name;
 		}

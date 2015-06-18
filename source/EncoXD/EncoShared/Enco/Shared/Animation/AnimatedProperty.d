@@ -11,14 +11,14 @@ enum AnimationState
 /// Animation handler for a numeric type
 class AnimatedProperty(T)
 {
-	private T intVal = 0;
-	private T finishVal = 0;
-	private f64 time = 0;
-	private f64 iTimeSec = 1;
-	private AnimationState state = AnimationState.Still;
-	private string easeType = "linear";
+	private T			   intVal	 = 0;
+	private T			   finishVal = 0;
+	private f64			   time		 = 0;
+	private f64			   iTimeSec	 = 1;
+	private AnimationState state	 = AnimationState.Still;
+	private string		   easeType	 = "linear";
 
-	public Trigger onDone = new Trigger();
+	public Trigger		   onDone = new Trigger();
 
 	public this()
 	{
@@ -31,24 +31,32 @@ class AnimatedProperty(T)
 
 	public @property T value()
 	{
-		if(state == AnimationState.Still) return intVal;
-		return cast(T)Animation.call(easeType, cast(f64)(finishVal - intVal), cast(f64)intVal, min(1, max(0, time)));
+		if (state == AnimationState.Still)
+			return intVal;
+		return cast(T) Animation.call(easeType, cast(f64) (finishVal - intVal), cast(f64) intVal, min(1, max(0, time)));
 	}
 
 	public @property void value(T val)
 	{
-		if(finishVal == val) return;
-		intVal = value;
+		if (finishVal == val)
+			return;
+		intVal	  = value;
 		finishVal = val;
-		state = AnimationState.Animating;
-		time = 0;
+		state	  = AnimationState.Animating;
+		time	  = 0;
 	}
 
 	/// Current animation state
-	public @property AnimationState animationState() { return state; }
+	public @property AnimationState animationState()
+	{
+		return state;
+	}
 
 	/// Easing function from Animation.easingFunctions
-	public @property string easingType() { return easeType; }
+	public @property string easingType()
+	{
+		return easeType;
+	}
 	/// ditto
 	public @property void easingType(string val)
 	{
@@ -57,22 +65,28 @@ class AnimatedProperty(T)
 	}
 
 	/// Length in milliseconds
-	public @property int length() { return cast(int)round(1000.0 / iTimeSec); }
+	public @property int length()
+	{
+		return cast(int) round(1000.0 / iTimeSec);
+	}
 	/// ditto
-	public @property void length(int ms) { iTimeSec = 1000.0 / ms; }
+	public @property void length(int ms)
+	{
+		iTimeSec = 1000.0 / ms;
+	}
 
 	/// Update
 	/// Params:
 	///		delta = Delta time in seconds
 	public void update(f64 delta)
 	{
-		if(state == AnimationState.Animating)
+		if (state == AnimationState.Animating)
 		{
 			time += delta * iTimeSec;
-			if(time >= 1)
+			if (time >= 1)
 			{
 				intVal = finishVal;
-				state = AnimationState.Still;
+				state  = AnimationState.Still;
 				onDone(this);
 			}
 		}
@@ -86,7 +100,7 @@ class AnimatedProperty(T)
 
 	public U opCast(U)()
 	{
-		return cast(U)value;
+		return cast(U) value;
 	}
 
 	public U opBinary(string op)(Object b)
@@ -99,15 +113,18 @@ class AnimatedProperty(T)
 /// Animated Property with custom functions and support for more types than numerics
 class AnimatedFunctionValue(T)
 {
-	T function(T, T, f64) interpolationFunction = (T delta, T start, f64 time) { return start + delta * time; };
+	T function(T, T, f64) interpolationFunction = (T delta, T start, f64 time)
+	{
+		return start + delta * time;
+	};
 
-	private T intVal = 0;
-	private T finishVal = 0;
-	private f64 time = 0;
-	private f64 iTimeSec = 1;
-	private AnimationState state = AnimationState.Still;
+	private T			   intVal	 = 0;
+	private T			   finishVal = 0;
+	private f64			   time		 = 0;
+	private f64			   iTimeSec	 = 1;
+	private AnimationState state	 = AnimationState.Still;
 
-	public Trigger onDone = new Trigger();
+	public Trigger		   onDone = new Trigger();
 
 	public this()
 	{
@@ -120,39 +137,50 @@ class AnimatedFunctionValue(T)
 
 	public @property T value()
 	{
-		if(state == AnimationState.Still) return intVal;
+		if (state == AnimationState.Still)
+			return intVal;
 		return interpolationFunction(finishVal - intVal, intVal, min(1, max(0, time)));
 	}
 
 	public @property void value(T val)
 	{
-		if(finishVal == val) return;
-		intVal = value;
+		if (finishVal == val)
+			return;
+		intVal	  = value;
 		finishVal = val;
-		state = AnimationState.Animating;
-		time = 0;
+		state	  = AnimationState.Animating;
+		time	  = 0;
 	}
 
 	/// Current animation state
-	public @property AnimationState animationState() { return state; }
+	public @property AnimationState animationState()
+	{
+		return state;
+	}
 
 	/// Length in milliseconds
-	public @property int length() { return cast(int)round(1000.0 / iTimeSec); }
+	public @property int length()
+	{
+		return cast(int) round(1000.0 / iTimeSec);
+	}
 	/// ditto
-	public @property void length(int ms) { iTimeSec = 1000.0 / ms; }
+	public @property void length(int ms)
+	{
+		iTimeSec = 1000.0 / ms;
+	}
 
 	/// Update
 	/// Params:
 	///		delta = Delta time in seconds
 	public void update(f64 delta)
 	{
-		if(state == AnimationState.Animating)
+		if (state == AnimationState.Animating)
 		{
 			time += delta * iTimeSec;
-			if(time >= 1)
+			if (time >= 1)
 			{
 				intVal = finishVal;
-				state = AnimationState.Still;
+				state  = AnimationState.Still;
 				onDone(this);
 			}
 		}
@@ -166,7 +194,7 @@ class AnimatedFunctionValue(T)
 
 	public U opCast(U)()
 	{
-		return cast(U)value;
+		return cast(U) value;
 	}
 
 	public U opBinary(string op)(Object b)

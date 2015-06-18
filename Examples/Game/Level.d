@@ -10,10 +10,19 @@ class Block : GameObject
 {
 	protected int m_x, m_y;
 
-	public @property int x() { return m_x; }
-	public @property int y() { return m_y; }
+	public @property int x()
+	{
+		return m_x;
+	}
+	public @property int y()
+	{
+		return m_y;
+	}
 
-	public @property bool willFall() { return false; }
+	public @property bool willFall()
+	{
+		return false;
+	}
 
 	public this(int x, int y, Mesh regularPlane, Material material)
 	{
@@ -26,8 +35,12 @@ class Block : GameObject
 		addChild(mesh);
 	}
 
-	public void onPlayerStateChange(Player player) {}
-	public void onPlayerRespawn(Player player) {}
+	public void onPlayerStateChange(Player player)
+	{
+	}
+	public void onPlayerRespawn(Player player)
+	{
+	}
 }
 
 class LuaBlock : Block
@@ -39,7 +52,7 @@ class LuaBlock : Block
 	{
 		super(x, y, regularPlane, material);
 		m_playerStateChange = playerStateChange;
-		m_playerRespawn = playerRespawn;
+		m_playerRespawn		= playerRespawn;
 	}
 
 	override public void onPlayerStateChange(Player player)
@@ -55,8 +68,8 @@ class LuaBlock : Block
 
 struct BlockRegister
 {
-	int rgb;
-	u8 mid;
+	int			rgb;
+	u8			mid;
 	LuaFunction added;
 	LuaFunction playerStateChange;
 	LuaFunction playerRespawn;
@@ -64,32 +77,32 @@ struct BlockRegister
 
 class Level : GameObject
 {
-	private i32vec2 m_finish, m_start;
-	private LuaState m_lua;
+	private i32vec2			m_finish, m_start;
+	private LuaState		m_lua;
 	private BlockRegister[] m_registered;
 	private BlockRegister[] m_registeredI;
-	private Block[] m_blocks;
-	private LuaFunction[] m_respawnEvents;
-	private LuaFunction[] m_stateEvents;
-	private Player player;
+	private Block[]			m_blocks;
+	private LuaFunction[]	m_respawnEvents;
+	private LuaFunction[]	m_stateEvents;
+	private Player			player;
 
 	public this(LuaState lua, Player player)
 	{
-		m_lua = lua;
+		m_lua		= lua;
 		this.player = player;
 		addChild(player);
 
 		player.onRespawn += (s) {
-			foreach(ref Block block; m_blocks)
+			foreach (ref Block block; m_blocks)
 				block.onPlayerRespawn(player);
-			foreach(ref LuaFunction evt; m_respawnEvents)
+			foreach (ref LuaFunction evt; m_respawnEvents)
 				evt();
 		};
 
 		player.onStateChange += (s) {
-			foreach(ref Block block; m_blocks)
+			foreach (ref Block block; m_blocks)
 				block.onPlayerStateChange(player);
-			foreach(ref LuaFunction evt; m_stateEvents)
+			foreach (ref LuaFunction evt; m_stateEvents)
 				evt();
 		};
 	}
@@ -116,44 +129,45 @@ class Level : GameObject
 
 	public bool hasBlock(int x, int y)
 	{
-		foreach(ref Block block; m_blocks)
-			if(block.x - 1 == x && block.y - 1 == y)
+		foreach (ref Block block; m_blocks)
+			if (block.x - 1 == x && block.y - 1 == y)
 				return block.enabled;
 		return false;
 	}
 
 	public void setEnabled(int x, int y, bool val)
 	{
-		foreach(ref Block block; m_blocks)
-			if(block.x - 1 == x && block.y - 1 == y)
+		foreach (ref Block block; m_blocks)
+			if (block.x - 1 == x && block.y - 1 == y)
 				block.enabled = val;
 	}
 
 	public bool fromBitmap(string path, Material[] materials, IRenderer renderer)
 	{
-		if(!exists(path))
+		if (!exists(path))
 		{
 			Logger.errln(path, " doesn't exist");
 			return false;
 		}
-		foreach(ref Block block; m_blocks)
+		foreach (ref Block block; m_blocks)
 		{
 			removeChild(block);
 		}
 		m_blocks.length = 0;
 		Bitmap bmp = Bitmap.load(path);
-		scope(exit) bmp.destroy();
-		Mesh boxes = MeshUtils.createCube(0.5f, 0.1f, 0.5f, -0.5f, -0.1f, -0.5f);
+		scope (exit) bmp.destroy();
+		Mesh   boxes = MeshUtils.createCube(0.5f, 0.1f, 0.5f, -0.5f, -0.1f, -0.5f);
 		boxes = renderer.createMesh(boxes);
-		for(int x = 0; x < bmp.width; x++)
+		for (int x = 0; x < bmp.width; x++)
 		{
-			PxLoopI: for(int y = 0; y < bmp.height; y++)
+ PxLoopI: for (int y = 0; y < bmp.height; y++)
 			{
 				Color pixel = bmp.getPixel(x, y);
-				if(pixel.RGB == 16777215) continue PxLoopI;
-				foreach(ref BlockRegister block; m_registeredI)
+				if (pixel.RGB == 16777215)
+					continue PxLoopI;
+				foreach (ref BlockRegister block; m_registeredI)
 				{
-					if(pixel.RGB == block.rgb)
+					if (pixel.RGB == block.rgb)
 					{
 						block.added(x - 1, y - 1);
 						Block b = new LuaBlock(x, y, boxes, materials[block.mid], block.playerStateChange, block.playerRespawn);
@@ -164,15 +178,16 @@ class Level : GameObject
 				}
 			}
 		}
-		for(int x = 0; x < bmp.width; x++)
+		for (int x = 0; x < bmp.width; x++)
 		{
-			PxLoop: for(int y = 0; y < bmp.height; y++)
+ PxLoop: for (int y = 0; y < bmp.height; y++)
 			{
 				Color pixel = bmp.getPixel(x, y);
-				if(pixel.RGB == 16777215) continue PxLoop; // #FFFFFF
-				foreach(ref BlockRegister block; m_registered)
+				if (pixel.RGB == 16777215)
+					continue PxLoop;                       // #FFFFFF
+				foreach (ref BlockRegister block; m_registered)
 				{
-					if(pixel.RGB == block.rgb)
+					if (pixel.RGB == block.rgb)
 					{
 						block.added(x - 1, y - 1);
 						Block b = new LuaBlock(x, y, boxes, materials[block.mid], block.playerStateChange, block.playerRespawn);

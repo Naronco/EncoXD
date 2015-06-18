@@ -21,7 +21,7 @@ interface ShaderProgram
 
 	final void registerUniforms(const string[] uniforms)
 	{
-		foreach(string uniform; uniforms)
+		foreach (string uniform; uniforms)
 			registerUniform(uniform);
 	}
 

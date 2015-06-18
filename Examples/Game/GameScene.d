@@ -11,11 +11,11 @@ import std.file;
 
 class Game3DLayer : RenderLayer
 {
-	public Player player;
-	private int currentLevel = 0;
+	public Player	   player;
+	private int		   currentLevel = 0;
 	private Material[] materials;
-	private Level level;
-	private LuaTable playerTable;
+	private Level	   level;
+	private LuaTable   playerTable;
 
 	public override void init(Scene scene)
 	{
@@ -28,42 +28,87 @@ class Game3DLayer : RenderLayer
 
 	public void nextLevel()
 	{
-		if(!level.fromBitmap("res/levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
+		if (!level.fromBitmap("res/levels/level" ~ to!string(currentLevel++) ~ ".png", materials, scene.renderer))
 			Logger.writeln(new Exception("Invalid Level!"));
 	}
 
 	public void debugLevel()
 	{
-		if(!level.fromBitmap("res/levels/debug.png", materials, scene.renderer))
+		if (!level.fromBitmap("res/levels/debug.png", materials, scene.renderer))
 			Logger.writeln(new Exception("Invalid Level!"));
 	}
-	
-	private bool isDouble() { return player.isDouble; }
-	private int getState() { return player.topState; }
-	
-	private int getX() { return player.x; }
-	private int getY() { return player.y; }
-	private void setX(int v) { player.x = v; }
-	private void setY(int v) { player.y = v; }
-	
-	private int getRespawnX() { return player.respawnPosition.x; }
-	private int getRespawnY() { return player.respawnPosition.y; }
-	private void setRespawnX(int v) { player.respawnPosition = i32vec2(v, player.respawnPosition.y); }
-	private void setRespawnY(int v) { player.respawnPosition = i32vec2(player.respawnPosition.x, v); }
-	
-	private int getFinishX() { return player.finishPosition.x; }
-	private int getFinishY() { return player.finishPosition.y; }
-	private void setFinishX(int v) { player.finishPosition = i32vec2(v, player.finishPosition.y); }
-	private void setFinishY(int v) { player.finishPosition = i32vec2(player.finishPosition.x, v); }
 
-	private int makeUniqueFromXY(int x, int y) { return cast(i32)((x & 0xFFFF) << 16 | (y & 0xFFFF)); }
+	private bool isDouble()
+	{
+		return player.isDouble;
+	}
+	private int getState()
+	{
+		return player.topState;
+	}
+
+	private int getX()
+	{
+		return player.x;
+	}
+	private int getY()
+	{
+		return player.y;
+	}
+	private void setX(int v)
+	{
+		player.x = v;
+	}
+	private void setY(int v)
+	{
+		player.y = v;
+	}
+
+	private int getRespawnX()
+	{
+		return player.respawnPosition.x;
+	}
+	private int getRespawnY()
+	{
+		return player.respawnPosition.y;
+	}
+	private void setRespawnX(int v)
+	{
+		player.respawnPosition = i32vec2(v, player.respawnPosition.y);
+	}
+	private void setRespawnY(int v)
+	{
+		player.respawnPosition = i32vec2(player.respawnPosition.x, v);
+	}
+
+	private int getFinishX()
+	{
+		return player.finishPosition.x;
+	}
+	private int getFinishY()
+	{
+		return player.finishPosition.y;
+	}
+	private void setFinishX(int v)
+	{
+		player.finishPosition = i32vec2(v, player.finishPosition.y);
+	}
+	private void setFinishY(int v)
+	{
+		player.finishPosition = i32vec2(player.finishPosition.x, v);
+	}
+
+	private int makeUniqueFromXY(int x, int y)
+	{
+		return cast(i32) ((x & 0xFFFF) << 16 | (y & 0xFFFF));
+	}
 
 
 	public void setLua(LuaState lua)
 	{
 		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "res/materials/player.json"));
-		level = new Level(lua, player);
-		
+		level  = new Level(lua, player);
+
 		materials ~= GLMaterial.load(scene.renderer, "res/materials/metal.json");
 		materials ~= GLMaterial.load(scene.renderer, "res/materials/start.json");
 		materials ~= GLMaterial.load(scene.renderer, "res/materials/finish.json");
@@ -75,12 +120,12 @@ class Game3DLayer : RenderLayer
 		auto blocks = dirEntries("res/blocks/", SpanMode.shallow, false);
 
 		auto plugins = dirEntries("res/plugins/", SpanMode.shallow, false);
-		
+
 		lua["registerBlock"] = &level.registerBlock;
 
 		lua["registerBlockImportant"] = &level.registerBlockImportant;
 
-		lua["makeUniqueFromXY"] = &makeUniqueFromXY; 
+		lua["makeUniqueFromXY"] = &makeUniqueFromXY;
 
 		lua["onRespawn"] = &level.onRespawn;
 
@@ -104,12 +149,12 @@ class Game3DLayer : RenderLayer
 		playerTable["getY"] = &getY;
 		playerTable["setX"] = &setX;
 		playerTable["setY"] = &setY;
-		
+
 		playerTable["getRespawnX"] = &getRespawnX;
 		playerTable["getRespawnY"] = &getRespawnY;
 		playerTable["setRespawnX"] = &setRespawnX;
 		playerTable["setRespawnY"] = &setRespawnY;
-		
+
 		playerTable["getFinishX"] = &getFinishX;
 		playerTable["getFinishY"] = &getFinishY;
 		playerTable["setFinishX"] = &setFinishX;
@@ -121,15 +166,15 @@ class Game3DLayer : RenderLayer
 
 		lua["win"] = &nextLevel;
 
-		foreach(string file; plugins)
+		foreach (string file; plugins)
 		{
-			if(file.endsWith(".lua"))
+			if (file.endsWith(".lua"))
 			{
 				try
 				{
 					lua.doFile(file);
 				}
-				catch(LuaErrorException e)
+				catch (LuaErrorException e)
 				{
 					Logger.errln(e);
 				}
@@ -137,15 +182,15 @@ class Game3DLayer : RenderLayer
 			}
 		}
 
-		foreach(string file; blocks)
+		foreach (string file; blocks)
 		{
-			if(file.endsWith(".lua"))
+			if (file.endsWith(".lua"))
 			{
 				try
 				{
 					lua.doFile(file);
 				}
-				catch(LuaErrorException e)
+				catch (LuaErrorException e)
 				{
 					Logger.errln(e);
 				}

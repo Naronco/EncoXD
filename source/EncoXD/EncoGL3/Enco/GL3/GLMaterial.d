@@ -24,32 +24,32 @@ class GLMaterial
 
 		mat.blend = "Blend" in value && value["Blend"].type == JSON_TYPE.TRUE;
 
-		if("DepthTest" in value)
+		if ("DepthTest" in value)
 			mat.depth = value["DepthTest"].type == JSON_TYPE.TRUE;
 		else
 			mat.depth = true;
 
 		JSONValue[string] textures = value["Textures"].object;
 
-		string textureSlots = "";
+		string	 textureSlots = "";
 		string[] textureSlotUniforms;
 
-		foreach(string id, JSONValue texture; textures)
+		foreach (string id, JSONValue texture; textures)
 		{
 			textureSlots ~= "uniform sampler2D slot" ~ id ~ ";";
 			textureSlotUniforms ~= "slot" ~ id;
 
-			if(texture["File"].str != "null")
+			if (texture["File"].str != "null")
 			{
-				int i = parse!int(id);
+				int		  i = parse!int (id);
 
 				GLTexture tex = GLTexturePool.load(texture["File"].str);
-				if(("MipMap" in texture) !is null && texture["MipMap"].type == JSON_TYPE.TRUE)
+				if (("MipMap" in texture) !is null && texture["MipMap"].type == JSON_TYPE.TRUE)
 				{
 					tex.enableMipMaps = true;
-					tex.minFilter = TextureFilterMode.LinearMipmapLinear;
+					tex.minFilter	  = TextureFilterMode.LinearMipmapLinear;
 				}
-				if(("Smooth" in texture) !is null && texture["Smooth"].type == JSON_TYPE.FALSE)
+				if (("Smooth" in texture) !is null && texture["Smooth"].type == JSON_TYPE.FALSE)
 				{
 					tex.minFilter = TextureFilterMode.Nearest;
 					tex.magFilter = TextureFilterMode.Nearest;
@@ -61,14 +61,14 @@ class GLMaterial
 		}
 
 		string vertex;
-		if(value["Vertex"].type == JSON_TYPE.STRING)
+		if (value["Vertex"].type == JSON_TYPE.STRING)
 		{
 			vertex = std.file.readText("res/shaders/" ~ value["Vertex"].str ~ ".vert");
 		}
 		else
 		{
 			string[string] vars;
-			foreach(string name, JSONValue val; value["Vertex"].object)
+			foreach (string name, JSONValue val; value["Vertex"].object)
 			{
 				vars[name] = val.str;
 			}
@@ -78,14 +78,14 @@ class GLMaterial
 		}
 
 		string fragment;
-		if(value["Fragment"].type == JSON_TYPE.STRING)
+		if (value["Fragment"].type == JSON_TYPE.STRING)
 		{
 			fragment = std.file.readText("res/shaders/" ~ value["Fragment"].str ~ ".frag");
 		}
 		else
 		{
 			string[string] vars;
-			foreach(string name, JSONValue val; value["Fragment"].object)
+			foreach (string name, JSONValue val; value["Fragment"].object)
 			{
 				vars[name] = val.str;
 			}
@@ -103,7 +103,7 @@ class GLMaterial
 		fs.compile();
 
 		auto program = renderer.createShader([vs, fs]);
-		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "cam_translation"] ~ textureSlotUniforms);
+		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "cam_translation"] ~textureSlotUniforms);
 
 		mat.program = program;
 

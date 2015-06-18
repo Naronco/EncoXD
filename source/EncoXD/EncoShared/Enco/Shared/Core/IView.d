@@ -13,20 +13,44 @@ abstract class IView
 
 	public abstract void handleEvent(ref SDL_Event event);
 
-	public @property void size(u32vec2 size) { m_size = size; onResize(); }
-	public @property void name(string name) { m_name = name; onRename(); }
+	public @property void size(u32vec2 size)
+	{
+		m_size = size; onResize();
+	}
+	public @property void name(string name)
+	{
+		m_name = name; onRename();
+	}
 
-	public @property u32vec2 size() { return m_size; }
-	public @property string name() { return m_name; }
+	public @property u32vec2 size()
+	{
+		return m_size;
+	}
+	public @property string name()
+	{
+		return m_name;
+	}
 
 	protected abstract void onResize();
 	protected abstract void onRename();
 
-	public @property u32 width() { return m_size.x; }
-	public @property u32 height() { return m_size.y; }
-	
-	public ref @property Scene scene() { return m_scene; }
-	public ref @property IRenderer renderer() { return m_renderer; }
+	public @property u32 width()
+	{
+		return m_size.x;
+	}
+	public @property u32 height()
+	{
+		return m_size.y;
+	}
+
+	public ref @property Scene scene()
+	{
+		return m_scene;
+	}
+	public ref @property IRenderer renderer()
+	{
+		return m_renderer;
+	}
 
 	public void performDraw()
 	{
@@ -43,27 +67,31 @@ abstract class IView
 
 	protected void draw3D(RenderContext context)
 	{
-		if(scene !is null)
+		if (scene !is null)
 			scene.performDraw(context, renderer);
 	}
 
 	protected void draw2D()
 	{
-		if(scene !is null)
+		if (scene !is null)
 			scene.performDraw2D(renderer.gui);
 	}
 
 	public void update(f64 delta)
 	{
-		if(m_scene !is null)
+		if (m_scene !is null)
 			m_scene.performUpdate(delta);
 	}
-	
-	protected abstract void onDraw() {}
-	protected abstract void onUpdate(f64 delta) {}
 
-	protected u32vec2 m_size;
-	protected string m_name;
-	protected Scene m_scene;
+	protected abstract void onDraw()
+	{
+	}
+	protected abstract void onUpdate(f64 delta)
+	{
+	}
+
+	protected u32vec2	m_size;
+	protected string	m_name;
+	protected Scene		m_scene;
 	protected IRenderer m_renderer;
 }

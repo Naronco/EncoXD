@@ -10,12 +10,12 @@ import std.traits;
 
 class GameWindow : DesktopView
 {
-	RenderContext context;
-	GameScene game;
-	GLRenderTarget target;
-	Mesh plane;
+	RenderContext	context;
+	GameScene		game;
+	GLRenderTarget	target;
+	Mesh			plane;
 	GLShaderProgram program;
-	GLTexture3D palette;
+	GLTexture3D		palette;
 
 	public this()
 	{
@@ -26,9 +26,9 @@ class GameWindow : DesktopView
 	{
 		Camera camera = new Camera();
 		camera.farClip = 600;
-		camera.fov = 45;
-		camera.width = width;
-		camera.height = height;
+		camera.fov	   = 45;
+		camera.width   = width;
+		camera.height  = height;
 
 		camera.transform.position = vec3(0, 1, 2);
 		camera.addComponent(new FPSRotation());
@@ -40,7 +40,7 @@ class GameWindow : DesktopView
 
 		plane = renderer.createMesh(MeshUtils.createPlane());
 
-		palette = new GLTexture3D();
+		palette		  = new GLTexture3D();
 		palette.wrapX = TextureClampMode.ClampToEdge;
 		palette.wrapY = TextureClampMode.ClampToEdge;
 		palette.wrapZ = TextureClampMode.ClampToEdge;
@@ -49,7 +49,7 @@ class GameWindow : DesktopView
 		target = new GLRenderTarget();
 		target.init(width, height, true, this);
 
-		program = cast(GLShaderProgram)GLShaderProgram.fromVertexFragmentFiles(cast(GL3Renderer)renderer, "res/shaders/post.vert", "res/shaders/post.frag");
+		program = cast(GLShaderProgram) GLShaderProgram.fromVertexFragmentFiles(cast(GL3Renderer) renderer, "res/shaders/post.vert", "res/shaders/post.frag");
 		program.registerUniforms(["slot0", "slot1", "slot2"]);
 		program.set("slot0", 0);
 		program.set("slot1", 1);
@@ -84,7 +84,7 @@ class GameWindow : DesktopView
 		renderer.clearBuffer(RenderingBuffer.colorBuffer | RenderingBuffer.depthBuffer);
 
 		target.bind();
-		
+
 		draw3D(context);
 
 		target.unbind();
@@ -96,14 +96,14 @@ class GameWindow : DesktopView
 		target.depth.bind(2);
 
 		renderer.renderMesh(plane);
-		
+
 		renderer.gui.begin();
-		
+
 		draw2D();
 
 		renderer.gui.end();
 	}
-	
+
 	override protected void onUpdate(f64 delta)
 	{
 		update(delta);
@@ -117,20 +117,21 @@ void main()
 	GameWindow window = new GameWindow();
 
 	EncoContext.instance.addView!GL3Renderer(window);
-	EncoContext.instance.importSettings(import("demo.json"));
+	EncoContext.instance.importSettings(import ("demo.json"));
 	EncoContext.instance.start();
 
 	window.init();
 
 	KeyboardState* state = Keyboard.getState();
 
-	while(EncoContext.instance.update())
+	while (EncoContext.instance.update())
 	{
 		state = Keyboard.getState();
 
 		EncoContext.instance.draw();
 
-		if (state.isKeyDown(SDLK_ESCAPE)) break;
+		if (state.isKeyDown(SDLK_ESCAPE))
+			break;
 
 		EncoContext.instance.endUpdate();
 	}

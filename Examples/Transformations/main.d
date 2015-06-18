@@ -10,11 +10,11 @@ class SolarsystemLayer : RenderLayer
 	{
 		auto planets = Mesh.loadFromObj("res/meshes/planets.obj", 0);
 
-		sun = cast(MeshObject)addGameObject(new MeshObject(planets[0], GLMaterial.load(scene.renderer, "res/materials/sun.json")));
-		earth = cast(MeshObject)addGameObject(new MeshObject(planets[1], GLMaterial.load(scene.renderer, "res/materials/earth.json")));
+		sun						 = cast(MeshObject) addGameObject(new MeshObject(planets[0], GLMaterial.load(scene.renderer, "res/materials/sun.json")));
+		earth					 = cast(MeshObject) addGameObject(new MeshObject(planets[1], GLMaterial.load(scene.renderer, "res/materials/earth.json")));
 		earth.transform.position = vec3(10, 0, 0);
-		moon = cast(MeshObject)addGameObject(new MeshObject(planets[2], GLMaterial.load(scene.renderer, "res/materials/moon.json")));
-		moon.transform.position = vec3(1, 0, 0);
+		moon					 = cast(MeshObject) addGameObject(new MeshObject(planets[2], GLMaterial.load(scene.renderer, "res/materials/moon.json")));
+		moon.transform.position	 = vec3(1, 0, 0);
 
 		sun.addChild(earth);
 		earth.addChild(moon);
@@ -24,9 +24,9 @@ class SolarsystemLayer : RenderLayer
 
 	override protected void update(f64 deltaTime)
 	{
-		sun.transform.rotation = earth.transform.rotation + vec3(0, deltaTime * 0.1f, 0);
+		sun.transform.rotation	 = earth.transform.rotation + vec3(0, deltaTime * 0.1f, 0);
 		earth.transform.rotation = earth.transform.rotation + vec3(0, deltaTime * 2.1f, 0);
-		moon.transform.rotation = moon.transform.rotation + vec3(0, 0, deltaTime * 5.3f);
+		moon.transform.rotation	 = moon.transform.rotation + vec3(0, 0, deltaTime * 5.3f);
 	}
 }
 
@@ -43,7 +43,7 @@ class Solarsystem : Scene
 class GameWindow : DesktopView
 {
 	RenderContext context;
-	Solarsystem game;
+	Solarsystem	  game;
 
 	public this()
 	{
@@ -55,9 +55,9 @@ class GameWindow : DesktopView
 		Camera camera = new Camera();
 		renderer.setClearColor(0, 0, 0);
 		camera.nearClip = 0.1f;
-		camera.farClip = 100.0f;
-		camera.width = width;
-		camera.height = height;
+		camera.farClip	= 100.0f;
+		camera.width	= width;
+		camera.height	= height;
 
 		camera.addComponent(new FPSRotation());
 		camera.addComponent(new FreeMove());
@@ -87,19 +87,20 @@ void main(string[] args)
 
 	GameWindow window = new GameWindow();
 	EncoContext.instance.addView!GL3Renderer(window);
-	EncoContext.instance.importSettings(import("game.json"));
+	EncoContext.instance.importSettings(import ("game.json"));
 	EncoContext.instance.start();
-	scope(exit) EncoContext.instance.stop();
+	scope (exit) EncoContext.instance.stop();
 
 	Mouse.capture();
 
 	window.init();
 
-	while(EncoContext.instance.update())
+	while (EncoContext.instance.update())
 	{
 		EncoContext.instance.draw();
 
-		if (Keyboard.getState().isKeyDown(Key.Escape)) break;
+		if (Keyboard.getState().isKeyDown(Key.Escape))
+			break;
 
 		EncoContext.instance.endUpdate();
 	}

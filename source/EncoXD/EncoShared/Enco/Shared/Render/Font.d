@@ -8,13 +8,13 @@ class Font
 
 	public this(string font, i32 sizeInPt)
 	{
-		if(!EncoContext.instance.loaded.contains(DynamicLibrary.SDL2TTF))
+		if (!EncoContext.instance.loaded.contains(DynamicLibrary.SDL2TTF))
 		{
 			Logger.errln("SDL2TTF not initialized (EncoContext.useDynamicLibraries)");
 			return;
 		}
 		handle = TTF_OpenFont(font.toStringz(), sizeInPt);
-		if(handle is null)
+		if (handle is null)
 		{
 			Logger.errln("Error initializing ", font, ": ", TTF_GetError());
 		}
@@ -22,7 +22,7 @@ class Font
 
 	public ~this()
 	{
-		if(handle !is null)
+		if (handle !is null)
 		{
 			TTF_CloseFont(handle);
 			handle = null;
@@ -31,10 +31,10 @@ class Font
 
 	public ITexture render(T : ITexture)(string text, Color color)
 	{
-		ITexture tex = new T();
+		ITexture tex   = new T();
 		string[] lines = text.split('\n');
-		i32 maxWidth;
-		foreach(string line; lines)
+		i32		 maxWidth;
+		foreach (string line; lines)
 		{
 			i32 w, h;
 			TTF_SizeText(handle, line.toStringz(), &w, &h);

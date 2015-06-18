@@ -43,7 +43,7 @@ class GLShaderProgram : ShaderProgram
 
 	public int registerUniform(string uniform)
 	{
-		if((uniform in m_properties) !is null)
+		if ((uniform in m_properties) !is null)
 			return m_properties[uniform];
 		m_properties[uniform] = glGetUniformLocation(program, uniform.toStringz());
 		return m_properties[uniform];
@@ -89,7 +89,10 @@ class GLShaderProgram : ShaderProgram
 		glUniformMatrix4fv(m_properties[uniform], 1, 1, value.value_ptr);
 	}
 
-	public u32 id() { return program; }
+	public u32 id()
+	{
+		return program;
+	}
 
 	private u32 program;
 	private int[string] m_properties;
@@ -100,7 +103,7 @@ class GLShader : Shader
 	public bool load(ShaderType type, string content)
 	{
 		this.content = content;
-		switch(type)
+		switch (type)
 		{
 		case ShaderType.Vertex:
 			m_id = glCreateShader(GL_VERTEX_SHADER);
@@ -118,11 +121,11 @@ class GLShader : Shader
 			m_id = glCreateShader(GL_FRAGMENT_SHADER);
 			break;
 		default:
-			Logger.errln("ShaderType ", to!string(type) ," is not defined!");
+			Logger.errln("ShaderType ", to!string(type), " is not defined!");
 			return false;
 		}
 
-		const i32 len = cast(const(i32))content.length;
+		const i32 len = cast(const(i32)) content.length;
 
 		glShaderSource(m_id, 1, [content.ptr].ptr, &len);
 		return true;
@@ -134,7 +137,7 @@ class GLShader : Shader
 		i32 success = 0;
 		glGetShaderiv(m_id, GL_COMPILE_STATUS, &success);
 
-		if(success == 0)
+		if (success == 0)
 		{
 			i32 logSize = 0;
 			glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &logSize);
@@ -155,6 +158,6 @@ class GLShader : Shader
 		return m_id;
 	}
 
-	private u32 m_id = 0;
+	private u32	   m_id = 0;
 	private string content;
 }

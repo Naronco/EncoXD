@@ -6,8 +6,8 @@ import EncoShared;
 
 enum RenderingBuffer : int
 {
-	colorBuffer = 1 << 0,
-	depthBuffer = 1 << 1,
+	colorBuffer	  = 1 << 0,
+	depthBuffer	  = 1 << 1,
 	stencilBuffer = 1 << 2,
 }
 
@@ -35,7 +35,10 @@ interface IRenderer
 
 	void makeCurrent(); /// OpenGL only
 
-	final void setClearColor(vec3 color) { setClearColor(color.r, color.g, color.b); }
+	final void setClearColor(vec3 color)
+	{
+		setClearColor(color.r, color.g, color.b);
+	}
 	void setClearColor(f32 r, f32 g, f32 b);
 
 	void setClearDepth(f64 clearDepth);

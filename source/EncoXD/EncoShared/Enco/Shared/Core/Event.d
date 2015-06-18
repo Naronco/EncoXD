@@ -2,10 +2,10 @@ module Enco.Shared.Core.Event;
 
 import EncoShared;
 
-class Event(T...)
+class Event(T ...)
 {
 	alias EventMethod = void delegate(const Object, const T);
-	private EventMethod[] funcs;
+	private EventMethod[]									funcs;
 
 	public this()
 	{
@@ -13,28 +13,28 @@ class Event(T...)
 
 	public void opOpAssign(string op)(const EventMethod func) if (op == "+")
 	{
-		if(!funcs.contains(func))
+		if (!funcs.contains(func))
 			funcs ~= func;
 	}
 
 	public void opOpAssign(string op)(const EventMethod func) if (op == "-")
 	{
-		if(funcs.contains(func))
+		if (funcs.contains(func))
 		{
 			EventMethod[] newFuncs;
-			foreach(EventMethod method; funcs)
+			foreach (EventMethod method; funcs)
 			{
-				if(func != method)
+				if (func != method)
 					newFuncs ~= method;
 			}
 			funcs[] = null;
-			funcs = newFuncs;
+			funcs	= newFuncs;
 		}
 	}
 
 	void opCall(const Object sender, const T args)
 	{
-		foreach(ref func; funcs)
+		foreach (ref func; funcs)
 			func(sender, args);
 	}
 }
@@ -43,7 +43,7 @@ class Event(T...)
 class Trigger
 {
 	alias EventMethod = void delegate(const Object);
-	private EventMethod[] funcs;
+	private EventMethod[]						   funcs;
 
 	public this()
 	{
@@ -51,28 +51,28 @@ class Trigger
 
 	public void opOpAssign(string op)(const EventMethod func) if (op == "+")
 	{
-		if(!funcs.contains(func))
+		if (!funcs.contains(func))
 			funcs ~= func;
 	}
 
 	public void opOpAssign(string op)(const EventMethod func) if (op == "-")
 	{
-		if(funcs.contains(func))
+		if (funcs.contains(func))
 		{
 			EventMethod[] newFuncs;
-			foreach(EventMethod method; funcs)
+			foreach (EventMethod method; funcs)
 			{
-				if(func != method)
+				if (func != method)
 					newFuncs ~= method;
 			}
 			funcs[] = null;
-			funcs = newFuncs;
+			funcs	= newFuncs;
 		}
 	}
 
 	void opCall(const Object sender)
 	{
-		foreach(ref func; funcs)
+		foreach (ref func; funcs)
 			func(sender);
 	}
 }

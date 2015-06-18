@@ -24,27 +24,27 @@ private:
 	import std.ascii;
 	import std.regex;
 
-	ParsingState currentParsingState = ParsingState.Text;
+	ParsingState	  currentParsingState	   = ParsingState.Text;
 	InterpretingState currentInterpretingState = InterpretingState.Type;
 
-	string content;
+	string			  content;
 
-	string[] stack = [""];
-	string[] arguments;
-	string entryType = "";
-	int loopCount = 0;
-	string code = "";
-	int nameIndex = 1;
-	bool writeType = false;
-	string root = "";
+	string[]		  stack = [""];
+	string[]		  arguments;
+	string			  entryType = "";
+	int				  loopCount = 0;
+	string			  code		= "";
+	int				  nameIndex = 1;
+	bool			  writeType = false;
+	string			  root		= "";
 
 	void parseType()
 	{
 		string typeName = content.munch("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_");
-		if(typeName.length > 0)
+		if (typeName.length > 0)
 		{
-			entryType = typeName;
-			stack[stack.length - 1] = "_" ~ typeName.toLower() ~ to!string(nameIndex++);
+			entryType				= typeName;
+			stack[stack.length - 1] = "_" ~ typeName.toLower() ~to!string(nameIndex++);
 		}
 		currentParsingState = ParsingState.Identifier;
 	}
@@ -52,27 +52,27 @@ private:
 	void parseName()
 	{
 		int index = content.indexOf(">");
-		if(index == -1)
+		if (index == -1)
 		{
 			throw new Exception("Unclosed name");
 		}
 		nameIndex--;
 		stack[stack.length - 1] = content[0 .. index];
-		content = content[(index + 1) .. $];
-		currentParsingState = ParsingState.Identifier;
+		content					= content[(index + 1) .. $];
+		currentParsingState		= ParsingState.Identifier;
 	}
 
 	void parseArgumentName()
 	{
 		int index = content.indexOf("=");
 
-		if(index == -1)
+		if (index == -1)
 		{
 			throw new Exception("Invalid argument at " ~ content);
 		}
 
 		arguments ~= "." ~ content[0 .. index] ~ "(";
-		content = content[(index + 1) .. $];
+		content					 = content[(index + 1) .. $];
 		currentInterpretingState = InterpretingState.ArgumentValue;
 	}
 
@@ -80,23 +80,23 @@ private:
 	{
 		content = content.stripLeft();
 
-		if(content.length == 0)
+		if (content.length == 0)
 			throw new Exception("Unexpected EOF expecting argument value");
 
 		string argument = "";
 
-		if(content[0] == '(')
+		if (content[0] == '(')
 		{
 			int depth = 1;
 			content = content[1 .. $];
-			while(depth > 0)
+			while (depth > 0)
 			{
-				if(content[0] == '(')
+				if (content[0] == '(')
 					depth++;
-				if(content[0] == ')')
+				if (content[0] == ')')
 				{
 					depth--;
-					if(depth == 0)
+					if (depth == 0)
 					{
 						content = content[1 .. $];
 						break;
@@ -108,28 +108,28 @@ private:
 		}
 
 		auto comma = content.indexOf(",");
-		if(comma == -1)
+		if (comma == -1)
 			comma = ptrdiff_t.max;
 		auto end = content.indexOf(")");
-		if(end == -1)
+		if (end == -1)
 			end = ptrdiff_t.max;
 
-		if(comma < end)
+		if (comma < end)
 		{
-			if(argument.length == 0)
+			if (argument.length == 0)
 				arguments[arguments.length - 1] ~= content[0 .. comma] ~ ")";
 			else
 				arguments[arguments.length - 1] ~= argument ~ ")";
-			content = content[(comma + 1) .. $];
+			content					 = content[(comma + 1) .. $];
 			currentInterpretingState = InterpretingState.ArgumentName;
 		}
 		else
 		{
-			if(argument.length == 0)
+			if (argument.length == 0)
 				arguments[arguments.length - 1] ~= content[0 .. end] ~ ")";
 			else
 				arguments[arguments.length - 1] ~= argument ~ ")";
-			content = content[(end + 1) .. $];
+			content				= content[(end + 1) .. $];
 			currentParsingState = ParsingState.Identifier;
 		}
 	}
@@ -138,34 +138,34 @@ private:
 	{
 		char type = content[0];
 		currentParsingState = ParsingState.Text;
-		if(type == '<')
+		if (type == '<')
 		{
-			content = content[1 .. $];
-			content = content.strip();
+			content					 = content[1 .. $];
+			content					 = content.strip();
 			currentInterpretingState = InterpretingState.Name;
 		}
-		else if(type == '(')
+		else if (type == '(')
 		{
-			content = content[1 .. $];
-			content = content.strip();
+			content					 = content[1 .. $];
+			content					 = content.strip();
 			currentInterpretingState = InterpretingState.ArgumentName;
 		}
-		else if(type == '{')
+		else if (type == '{')
 		{
 			currentParsingState = ParsingState.Build;
 		}
-		else if(type == '}')
+		else if (type == '}')
 		{
 			currentParsingState = ParsingState.Build;
 		}
-		else if(type.isAlpha())
+		else if (type.isAlpha())
 		{
 			currentParsingState = ParsingState.Build;
 		}
 		else
 		{
-			content = content[1 .. $];
-			content = content.strip();
+			content				= content[1 .. $];
+			content				= content.strip();
 			currentParsingState = ParsingState.Build;
 		}
 	}
@@ -175,63 +175,63 @@ public:
 	this(bool writeType = false, string root = "")
 	{
 		this.writeType = writeType;
-		this.root = root;
+		this.root	   = root;
 	}
 
 	string compileLevel(string content_)
 	{
 		content = content_.strip();
-		while(content.indexOf("//") != -1)
+		while (content.indexOf("//") != -1)
 		{
-			int start = content.indexOf("//");
-			int end = content.indexOf('\n', start);
-			int[] rng;
+			int	   start = content.indexOf("//");
+			int	   end	 = content.indexOf('\n', start);
+			int[]  rng;
 			char[] ncontent = content.dup;
-			for(int i = 0; i < end - start; i++)
+			for (int i = 0; i < end - start; i++)
 				ncontent[start + i] = ' ';
-			content = cast(string)ncontent;
+			content = cast(string) ncontent;
 		}
-		if(root.length > 0)
+		if (root.length > 0)
 		{
 			stack.length++;
 			stack[stack.length - 1] = root;
 		}
-		while(true)
+		while (true)
 		{
 			content = content.strip();
-			if(content.length == 0)
+			if (content.length == 0)
 				break;
 
 			// std.stdio.writefln("stack [%(%s, %)], type \"%s\", arguments \"%s\"\nparse \"%s\", interpret \"%s\"\nremaining \"%s\"\ncode \"%s\"\n", stack, entryType, arguments.join(), currentParsingState, currentInterpretingState, content, code);
 
 			loopCount++;
-			if(loopCount > 1000000)
+			if (loopCount > 1000000)
 				throw new Exception("Stuck in compiling level, Aborting!");
 
-			if(currentParsingState == ParsingState.Text)
+			if (currentParsingState == ParsingState.Text)
 			{
-				if(currentInterpretingState == InterpretingState.Type)
+				if (currentInterpretingState == InterpretingState.Type)
 				{
 					parseType();
 					continue;
 				}
-				else if(currentInterpretingState == InterpretingState.Name)
+				else if (currentInterpretingState == InterpretingState.Name)
 				{
 					parseName();
 					continue;
 				}
-				else if(currentInterpretingState == InterpretingState.ArgumentName)
+				else if (currentInterpretingState == InterpretingState.ArgumentName)
 				{
 					parseArgumentName();
 					continue;
 				}
-				else if(currentInterpretingState == InterpretingState.ArgumentValue)
+				else if (currentInterpretingState == InterpretingState.ArgumentValue)
 				{
 					parseArgumentValue();
 					continue;
 				}
 			}
-			else if(currentParsingState == ParsingState.Identifier)
+			else if (currentParsingState == ParsingState.Identifier)
 			{
 				parseIdentifier();
 				continue;
@@ -239,28 +239,29 @@ public:
 			else
 			{
 				code ~= (writeType ? entryType ~ " " : "") ~
-					stack[stack.length - 1]
-					~ " = new " ~ entryType
-					~ "()" ~ arguments.join() ~ ";\n";
+				stack[stack.length - 1]
+				~ " = new " ~ entryType
+				~ "()" ~ arguments.join() ~ ";\n";
 				arguments.length = 0;
-				if(stack.length > 1)
+				if (stack.length > 1)
 				{
 					code ~= stack[stack.length - 2] ~ ".addChild(" ~ stack[stack.length - 1] ~ ");\n";
 				}
-				currentParsingState = ParsingState.Text;
+				currentParsingState		 = ParsingState.Text;
 				currentInterpretingState = InterpretingState.Type;
 
-			Stacker:
-				while(true)
+ Stacker:
+				while (true)
 				{
-					if(content.length == 0) break Stacker;
-					if(content[0] == '{')
+					if (content.length == 0)
+						break Stacker;
+					if (content[0] == '{')
 					{
 						content = content[1 .. $];
 						content = content.strip();
 						stack.length++;
 					}
-					else if(content[0] == '}')
+					else if (content[0] == '}')
 					{
 						content = content[1 .. $];
 						content = content.strip();
@@ -296,8 +297,8 @@ unittest
 		public A[] children;
 
 		public int _value = -1;
-		public int _a = -1;
-		public int _b = -1;
+		public int _a	  = -1;
+		public int _b	  = -1;
 
 		public this() {}
 

@@ -20,7 +20,7 @@ class StringPacket : IPacket
 
 	public @property u32 length()
 	{
-		return cast(u32)(content.length + 1);
+		return cast(u32) (content.length + 1);
 	}
 
 	public @property string text()
@@ -35,12 +35,12 @@ class StringPacket : IPacket
 
 	public void[] serialize()
 	{
-		void[] data = cast(void[])(content.idup ~ '\0');
+		void[] data = cast(void[]) (content.idup ~ '\0');
 		return data[0 .. length];
 	}
 
 	public void deserialize(void[] buf)
 	{
-		content = cast(immutable(char)[])(buf);
+		content = cast(immutable(char)[]) (buf);
 	}
 }

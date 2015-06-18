@@ -6,13 +6,25 @@ class Bitmap
 {
 	private SDL_Surface* m_handle;
 
-	public @property SDL_Surface* surface() { return m_handle; }
-	public @property bool valid() { return m_handle !is null; }
+	public @property SDL_Surface* surface()
+	{
+		return m_handle;
+	}
+	public @property bool valid()
+	{
+		return m_handle !is null;
+	}
 
-	public @property i32 width() { return m_handle.w; }
-	public @property i32 height() { return m_handle.h; }
+	public @property i32 width()
+	{
+		return m_handle.w;
+	}
+	public @property i32 height()
+	{
+		return m_handle.h;
+	}
 
-	private this(SDL_Surface* surface)
+	private this(SDL_Surface * surface)
 	{
 		m_handle = surface;
 	}
@@ -41,7 +53,7 @@ class Bitmap
 	{
 		Bitmap bmp = new Bitmap(IMG_Load(file.toStringz()));
 
-		if(!bmp.valid)
+		if (!bmp.valid)
 		{
 			Logger.errln("Can't load texture ", file);
 			Logger.errln(IMG_GetError().fromStringz());
@@ -84,12 +96,12 @@ class Bitmap
 	public Color getPixel(i32 x, i32 y)
 	{
 		u8 r, g, b;
-		SDL_GetRGB((cast(u32*)m_handle.pixels)[x + y * width], m_handle.format, &r, &g, &b);
+		SDL_GetRGB((cast(u32*) m_handle.pixels)[x + y * width], m_handle.format, &r, &g, &b);
 		return Color(r, g, b);
 	}
 
 	public void setPixel(i32 x, i32 y, Color color)
 	{
-		(cast(u32*)m_handle.pixels)[x + y * width] = mapRGB(color);
+		(cast(u32*) m_handle.pixels)[x + y * width] = mapRGB(color);
 	}
 }
