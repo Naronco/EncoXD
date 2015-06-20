@@ -24,5 +24,5 @@ void main()
 	vec4 color = @{Color:vec4(1, 0, 1, 1)};
 	if(color.a < 0.01) discard;
 	float diffuse = clamp(dot(normal, normalize(l_direction)), 0, 1);
-	out_frag_color = color * vec4(@{Ambient:vec3(0.1, 0.1, 0.1)} + vec3(diffuse), 1);
+	out_frag_color = color * clamp(vec4(@{Ambient:vec3(0.1, 0.1, 0.1)} + vec3(diffuse), 1), 0, 1);
 }
