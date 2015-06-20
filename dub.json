@@ -31,25 +31,29 @@
 		"name": "Demo",
 		"targetType": "executable",
 		"sourcePaths": ["Demo/", "source/"],
-		"importPaths": ["Demo/", "source/"]
+		"importPaths": ["Demo/", "source/"],
+		"targetName": "demo"
 	},
 	{
 		"name": "Transformations",
 		"targetType": "executable",
 		"sourcePaths": ["Examples/Transformations/", "source/"],
-		"importPaths": ["Examples/Transformations/", "source/"]
+		"importPaths": ["Examples/Transformations/", "source/"],
+		"targetName": "transformations"
 	},
 	{
 		"name": "Game",
 		"targetType": "executable",
 		"sourcePaths": ["Examples/Game/", "source/"],
-		"importPaths": ["Examples/Game/", "source/"]
+		"importPaths": ["Examples/Game/", "source/"],
+		"targetName": "game"
 	},
 	{
 		"name": "levelc",
 		"targetType": "executable",
 		"sourcePaths": ["levelc/", "source/"],
-		"importPaths": ["levelc/", "source/"]
+		"importPaths": ["levelc/", "source/"],
+		"targetName": "levelc"
 	}],
 	"dependencies":
 	{
