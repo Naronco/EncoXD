@@ -23,19 +23,19 @@ class EncoContext
 	public string			  settings;
 	public LuaState			  lua;
 
-	public Trigger			  onClose = new Trigger;
-	public					  Event!MouseWheelEvent onScroll = new Event!MouseWheelEvent;
-	public					  Event!FileDropEvent onFileDrop = new Event!FileDropEvent;
-	public					  Event!KeyDownEvent onKeyDown = new Event!KeyDownEvent;
-	public					  Event!KeyUpEvent onKeyUp = new Event!KeyUpEvent;
-	public					  Event!MouseMoveEvent onMouseMove = new Event!MouseMoveEvent;
-	public					  Event!MouseButtonDownEvent onMouseButtonDown = new Event!MouseButtonDownEvent;
-	public					  Event!MouseButtonUpEvent onMouseButtonUp = new Event!MouseButtonUpEvent;
-	public					  Event!ControllerAddedEvent onControllerAdded = new Event!ControllerAddedEvent;
-	public					  Event!ControllerRemovedEvent onControllerRemoved = new Event!ControllerRemovedEvent;
-	public					  Event!ControllerAxisEvent onControllerAxis = new Event!ControllerAxisEvent;
-	public					  Event!ControllerButtonDownEvent onControllerButtonDown = new Event!ControllerButtonDownEvent;
-	public					  Event!ControllerButtonUpEvent onControllerButtonUp = new Event!ControllerButtonUpEvent;
+	public Trigger onClose = new Trigger;
+	public Event!MouseWheelEvent onScroll = new Event!MouseWheelEvent;
+	public Event!FileDropEvent onFileDrop = new Event!FileDropEvent;
+	public Event!KeyDownEvent onKeyDown = new Event!KeyDownEvent;
+	public Event!KeyUpEvent onKeyUp = new Event!KeyUpEvent;
+	public Event!MouseMoveEvent onMouseMove = new Event!MouseMoveEvent;
+	public Event!MouseButtonDownEvent onMouseButtonDown = new Event!MouseButtonDownEvent;
+	public Event!MouseButtonUpEvent onMouseButtonUp = new Event!MouseButtonUpEvent;
+	public Event!ControllerAddedEvent onControllerAdded = new Event!ControllerAddedEvent;
+	public Event!ControllerRemovedEvent onControllerRemoved = new Event!ControllerRemovedEvent;
+	public Event!ControllerAxisEvent onControllerAxis = new Event!ControllerAxisEvent;
+	public Event!ControllerButtonDownEvent onControllerButtonDown = new Event!ControllerButtonDownEvent;
+	public Event!ControllerButtonUpEvent onControllerButtonUp = new Event!ControllerButtonUpEvent;
 
 	public @property f64 deltaTime()
 	{
@@ -179,16 +179,7 @@ class EncoContext
 		foreach (ref IView view; m_views)
 		{
 			m_currentView = view;
-			view.create();
-
-			view.scene.view = view;
-
-			if (view.scene !is null)
-			{
-				if (view.renderer !is null)
-					view.scene.setRenderer(view.renderer);
-				view.scene.init();
-			}
+			view.doCreate();
 
 			if (view.renderer !is null)
 				view.renderer.postImportSettings(parseJSON(settings));

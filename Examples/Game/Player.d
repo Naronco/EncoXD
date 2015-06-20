@@ -588,7 +588,7 @@ class Player : GameObject
 	override protected void update(f64 deltaTime)
 	{
 		if (m_animationType != AnimationType.Still)
-			m_animationProgress += deltaTime * 6.5f;
+			m_animationProgress += deltaTime * 7.0f;
 
 		float offX = 0.5f;
 		float offY = 0.5f;

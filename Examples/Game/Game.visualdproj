@@ -96,6 +96,7 @@
   <exefile>$(OutDir)\$(ProjectName).exe</exefile>
   <useStdLibPath>1</useStdLibPath>
   <cRuntime>2</cRuntime>
+  <privatePhobos>0</privatePhobos>
   <additionalOptions />
   <preBuildCommand />
   <postBuildCommand />
@@ -197,6 +198,7 @@
   <exefile>$(OutDir)\$(ProjectName).exe</exefile>
   <useStdLibPath>1</useStdLibPath>
   <cRuntime>1</cRuntime>
+  <privatePhobos>0</privatePhobos>
   <additionalOptions />
   <preBuildCommand />
   <postBuildCommand />
@@ -206,11 +208,14 @@
   <Folder name="Blocks">
    <File path="..\..\blocks\default.lua" />
   </Folder>
-  <Folder name="Views">
-   <File path="..\..\views\game.json" />
+  <Folder name="Scenes">
+   <File path="MainMenu.d" />
   </Folder>
   <Folder name="Plugins">
    <File path="..\..\plugins\default.lua" />
+  </Folder>
+  <Folder name="Views">
+   <File path="..\..\views\game.json" />
   </Folder>
   <File path="DragTable.d" />
   <File path="GameScene.d" />

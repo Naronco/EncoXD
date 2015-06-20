@@ -216,13 +216,14 @@
   </Folder>
   <Folder name="Core">
    <File path="Enco\Shared\Core\Camera.d" />
+   <File path="ContentManager.d" />
    <File path="Enco\Shared\Core\EncoContext.d" />
    <File path="Enco\Shared\Core\Event.d" />
    <File path="Enco\Shared\Core\GameObject.d" />
    <File path="Enco\Shared\Core\IComponent.d" />
+   <File path="IDevice.d" />
    <File path="Enco\Shared\Core\IView.d" />
    <File path="Enco\Shared\Core\Logger.d" />
-   <File path="Enco\Shared\Core\Scene.d" />
    <File path="Enco\Shared\Core\TemplateParser.d" />
    <File path="Enco\Shared\Core\TimeHelper.d" />
    <File path="Enco\Shared\Core\Window.d" />
@@ -230,9 +231,6 @@
   <Folder name="Ext">
    <File path="Enco\Shared\Ext\Array.d" />
    <File path="Enco\Shared\Ext\String.d" />
-  </Folder>
-  <Folder name="Level">
-   <File path="Enco\Shared\Level\LevelLoader.d" />
   </Folder>
   <Folder name="GUI">
    <File path="Enco\Shared\GUI\Control.d" />
@@ -244,6 +242,9 @@
    <File path="Enco\Shared\Input\Controller.d" />
    <File path="Enco\Shared\Input\Keyboard.d" />
    <File path="Enco\Shared\Input\Mouse.d" />
+  </Folder>
+  <Folder name="Level">
+   <File path="Enco\Shared\Level\LevelLoader.d" />
   </Folder>
   <Folder name="Math">
    <File path="Enco\Shared\Math\Frustum.d" />

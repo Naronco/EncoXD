@@ -2,6 +2,11 @@ module Enco.Shared.Render.Material;
 
 import EncoShared;
 
+interface IMaterialManager
+{
+	Material load(string file);
+}
+
 struct Material
 {
 	public string		 name;

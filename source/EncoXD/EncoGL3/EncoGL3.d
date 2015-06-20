@@ -8,4 +8,5 @@ public
 	import Enco.GL3.GLTexture;
 	import Enco.GL3.GLMaterial;
 	import Enco.GL3.GLRenderTarget;
+	import Enco.GL3.GLDevice;
 }

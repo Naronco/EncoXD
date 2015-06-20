@@ -8,12 +8,13 @@ class SolarsystemLayer : RenderLayer
 
 	public override void init(Scene scene)
 	{
+		ContentManager content = new ContentManager(new GLDevice(cast(GL3Renderer)scene.renderer));
 		auto planets = Mesh.loadFromObj("res/meshes/planets.obj", 0);
 
-		sun						 = cast(MeshObject) addGameObject(new MeshObject(planets[0], GLMaterial.load(scene.renderer, "res/materials/sun.json")));
-		earth					 = cast(MeshObject) addGameObject(new MeshObject(planets[1], GLMaterial.load(scene.renderer, "res/materials/earth.json")));
+		sun						 = cast(MeshObject) addGameObject(new MeshObject(planets[0], content.loadMaterial("res/materials/sun.json")));
+		earth					 = cast(MeshObject) addGameObject(new MeshObject(planets[1], content.loadMaterial("res/materials/earth.json")));
 		earth.transform.position = vec3(10, 0, 0);
-		moon					 = cast(MeshObject) addGameObject(new MeshObject(planets[2], GLMaterial.load(scene.renderer, "res/materials/moon.json")));
+		moon					 = cast(MeshObject) addGameObject(new MeshObject(planets[2], content.loadMaterial("res/materials/moon.json")));
 		moon.transform.position	 = vec3(1, 0, 0);
 
 		sun.addChild(earth);

@@ -19,11 +19,12 @@ class GameWindow : DesktopView
 
 	public this()
 	{
-		scene = game = new GameScene();
 	}
 
 	public void init()
 	{
+		scene = game = new GameScene(new ContentManager(new GLDevice(cast(GL3Renderer)renderer)));
+
 		Camera camera = new Camera();
 		camera.farClip = 600;
 		camera.fov	   = 45;

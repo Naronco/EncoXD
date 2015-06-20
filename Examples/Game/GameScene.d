@@ -16,6 +16,12 @@ class Game3DLayer : RenderLayer
 	private Material[] materials;
 	private Level	   level;
 	private LuaTable   playerTable;
+	private ContentManager content;
+
+	public this(ContentManager content)
+	{
+		this.content = content;
+	}
 
 	public override void init(Scene scene)
 	{
@@ -106,16 +112,16 @@ class Game3DLayer : RenderLayer
 
 	public void setLua(LuaState lua)
 	{
-		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), GLMaterial.load(scene.renderer, "res/materials/player.json"));
+		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), content.loadMaterial("res/materials/player.json"));
 		level  = new Level(lua, player);
 
-		materials ~= GLMaterial.load(scene.renderer, "res/materials/metal.json");
-		materials ~= GLMaterial.load(scene.renderer, "res/materials/start.json");
-		materials ~= GLMaterial.load(scene.renderer, "res/materials/finish.json");
-		materials ~= GLMaterial.load(scene.renderer, "res/materials/checkpoint.json");
-		materials ~= GLMaterial.load(scene.renderer, "res/materials/light_plate.json");
-		materials ~= GLMaterial.load(scene.renderer, "res/materials/heavy_plate.json");
-		materials ~= GLMaterial.load(scene.renderer, "res/materials/bridge.json");
+		materials ~= content.loadMaterial("res/materials/metal.json");
+		materials ~= content.loadMaterial("res/materials/start.json");
+		materials ~= content.loadMaterial("res/materials/finish.json");
+		materials ~= content.loadMaterial("res/materials/checkpoint.json");
+		materials ~= content.loadMaterial("res/materials/light_plate.json");
+		materials ~= content.loadMaterial("res/materials/heavy_plate.json");
+		materials ~= content.loadMaterial("res/materials/bridge.json");
 
 		auto blocks = dirEntries("res/blocks/", SpanMode.shallow, false);
 
@@ -206,9 +212,15 @@ class Game3DLayer : RenderLayer
 class GameScene : Scene
 {
 	public Game3DLayer game3DLayer;
+	private ContentManager content;
+
+	public this(ContentManager content)
+	{
+		this.content = content;
+	}
 
 	public override void init()
 	{
-		addLayer(game3DLayer = new Game3DLayer());
+		addLayer(game3DLayer = new Game3DLayer(content));
 	}
 }

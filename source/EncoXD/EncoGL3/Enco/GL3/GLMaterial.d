@@ -6,10 +6,21 @@ import std.json;
 import std.stdio;
 import std.conv;
 
-class GLMaterial
+class GLMaterialManager : IMaterialManager
 {
+private:
+	GL3Renderer m_renderer;
+
+public:
+
+	this(GL3Renderer renderer)
+	{
+		assert(renderer !is null, "Passed null as renderer");
+		m_renderer = renderer;
+	}
+
 	/// Loads JSON Material File in format {Name:str, Textures:str->{File:str,MipMap:bool?,Smooth:bool?}, Blend:bool?, DepthTest:bool?, Vertex:str/shader, Fragment:str/shader}
-	public static Material load(IRenderer renderer, string file)
+	public Material load(string file)
 	{
 		JSONValue value = parseJSON!string(std.file.readText(file));
 
@@ -102,11 +113,34 @@ class GLMaterial
 		fs.load(ShaderType.Fragment, fragment);
 		fs.compile();
 
-		auto program = renderer.createShader([vs, fs]);
-		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "cam_translation"] ~textureSlotUniforms);
+		auto program = m_renderer.createShader([vs, fs]);
+		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "cam_translation"] ~ textureSlotUniforms);
 
 		mat.program = program;
 
 		return mat;
 	}
+
+	public deprecated static Material load(IRenderer renderer, string file)
+	{
+		auto m = new GLMaterialManager(cast(GL3Renderer)renderer);
+		return m.load(file);
+	}
+}
+
+deprecated alias GLMaterial = GLMaterialManager;
+
+class GLMaterialPool
+{
+	public static Material load(GL3Renderer renderer, string texture)
+	{
+		if ((texture in m_materials) !is null)
+			return m_materials[texture];
+
+		GLMaterialManager mat = new GLMaterialManager(renderer);
+		m_materials[texture] = mat.load(texture);
+		return m_materials[texture];
+	}
+
+	private static Material[string] m_materials;
 }

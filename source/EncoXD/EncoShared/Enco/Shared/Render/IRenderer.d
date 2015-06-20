@@ -13,7 +13,7 @@ enum RenderingBuffer : int
 
 interface IRenderer
 {
-	void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window);
+	void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window, bool useGui = true, string guiMaterial = "res/materials/gui.json");
 	void deleteContext();
 
 	void importSettings(JSONValue json);

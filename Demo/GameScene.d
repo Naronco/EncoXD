@@ -9,23 +9,29 @@ class Game3DLayer : RenderLayer
 	AnimatedProperty!float carY;
 	GameObject carObj, carGlassObj;
 	bool	   up = false;
+	ContentManager content;
+
+	public this(ContentManager content)
+	{
+		this.content = content;
+	}
 
 	public override void init(Scene scene)
 	{
 		auto meshes = Mesh.loadFromObj("res/meshes/yard.obj", 0);
 
-		addGameObject(new MeshObject(meshes[0], GLMaterial.load(scene.renderer, "res/materials/grass.json")));
-		addGameObject(new MeshObject(meshes[1], GLMaterial.load(scene.renderer, "res/materials/brick.json")));
-		addGameObject(new MeshObject(meshes[2], GLMaterial.load(scene.renderer, "res/materials/yard_decoration.json")));
-		addGameObject(new MeshObject(meshes[3], GLMaterial.load(scene.renderer, "res/materials/tree.json")));
+		addGameObject(new MeshObject(meshes[0], content.loadMaterial("res/materials/grass.json")));
+		addGameObject(new MeshObject(meshes[1], content.loadMaterial("res/materials/brick.json")));
+		addGameObject(new MeshObject(meshes[2], content.loadMaterial("res/materials/yard_decoration.json")));
+		addGameObject(new MeshObject(meshes[3], content.loadMaterial("res/materials/tree.json")));
 
 		auto	   clouds	 = Mesh.loadFromObj("res/meshes/cloudPlane.obj", 0)[0];
-		MeshObject cloudsObj = new MeshObject(clouds, GLMaterial.load(scene.renderer, "res/materials/clouds.json"));
+		MeshObject cloudsObj = new MeshObject(clouds, content.loadMaterial("res/materials/clouds.json"));
 		cloudsObj.transform.scale = vec3(600, 400, 600);
 		cloudsObj.renderRelative  = true;
 		addGameObject(cloudsObj);
 
-		MeshObject cloudsObj2 = new MeshObject(clouds, GLMaterial.load(scene.renderer, "res/materials/clouds2.json"));
+		MeshObject cloudsObj2 = new MeshObject(clouds, content.loadMaterial("res/materials/clouds2.json"));
 		cloudsObj2.transform.scale = vec3(600, 300, 600);
 		cloudsObj2.renderRelative  = true;
 		addGameObject(cloudsObj2);
@@ -42,8 +48,8 @@ class Game3DLayer : RenderLayer
 		};
 
 		auto car = Mesh.loadFromObj("res/meshes/lamborghini.obj", 0);
-		carGlassObj = addGameObject(new MeshObject(car[0], GLMaterial.load(scene.renderer, "res/materials/glass.json")));
-		carObj		= addGameObject(new MeshObject(car[1], GLMaterial.load(scene.renderer, "res/materials/lamborghini.json")));
+		carGlassObj = addGameObject(new MeshObject(car[0], content.loadMaterial("res/materials/glass.json")));
+		carObj		= addGameObject(new MeshObject(car[1], content.loadMaterial("res/materials/lamborghini.json")));
 	}
 
 	override protected void update(f64 deltaTime)
@@ -104,10 +110,16 @@ class DebugLayer : RenderLayer
 class GameScene : Scene
 {
 	public Game3DLayer game3DLayer;
+	public ContentManager content;
+
+	this(ContentManager content)
+	{
+		this.content = content;
+	}
 
 	public override void init()
 	{
-		addLayer(game3DLayer = new Game3DLayer());
+		addLayer(game3DLayer = new Game3DLayer(content));
 		addLayer(new UILayer());
 		addLayer(new DebugLayer());
 	}

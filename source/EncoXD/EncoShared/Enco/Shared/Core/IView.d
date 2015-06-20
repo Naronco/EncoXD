@@ -6,7 +6,21 @@ import EncoShared;
 
 abstract class IView
 {
-	public abstract void create();
+	public void doCreate()
+	{
+		create();
+
+		if(!m_created && m_scene !is null)
+		{
+			m_scene.view = this;
+			if (renderer !is null)
+				m_scene.setRenderer(renderer);
+			m_scene.init();
+		}
+		m_created = true;
+	}
+
+	protected abstract void create();
 	public abstract void destroy();
 
 	public void importSettings(JSONValue json);
@@ -17,6 +31,7 @@ abstract class IView
 	{
 		m_size = size; onResize();
 	}
+
 	public @property void name(string name)
 	{
 		m_name = name; onRename();
@@ -26,6 +41,7 @@ abstract class IView
 	{
 		return m_size;
 	}
+
 	public @property string name()
 	{
 		return m_name;
@@ -38,15 +54,32 @@ abstract class IView
 	{
 		return m_size.x;
 	}
+
 	public @property u32 height()
 	{
 		return m_size.y;
 	}
 
-	public ref @property Scene scene()
+	public @property void scene(Scene scene)
+	{
+		if (scene !is null)
+		{
+			if(m_created)
+			{
+				scene.view = this;
+				if (renderer !is null)
+					scene.setRenderer(renderer);
+				scene.init();
+			}
+			m_scene = scene;
+		}
+	}
+
+	public @property Scene scene()
 	{
 		return m_scene;
 	}
+
 	public ref @property IRenderer renderer()
 	{
 		return m_renderer;
@@ -86,10 +119,12 @@ abstract class IView
 	protected abstract void onDraw()
 	{
 	}
+
 	protected abstract void onUpdate(f64 delta)
 	{
 	}
 
+	protected bool m_created = false;
 	protected u32vec2	m_size;
 	protected string	m_name;
 	protected Scene		m_scene;

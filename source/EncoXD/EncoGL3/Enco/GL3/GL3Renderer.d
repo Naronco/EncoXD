@@ -146,7 +146,7 @@ class GL3Renderer : IRenderer
 		}
 	}
 
-	public void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window)
+	public void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window, bool useGui = true, string guiMaterial = "res/materials/gui.json")
 	{
 		if (window !is null)
 		{
@@ -167,8 +167,12 @@ class GL3Renderer : IRenderer
 			}
 
 			m_valid = true;
-			m_gui	= new GUIRenderer(this, GLMaterial.load(this, "res/materials/gui.json"));
-			m_gui.resize(width, height);
+
+			if(useGui)
+			{
+				m_gui	= new GUIRenderer(this, GLMaterialPool.load(this, "res/materials/gui.json"));
+				m_gui.resize(width, height);
+			}
 
 			m_width	 = width;
 			m_height = height;

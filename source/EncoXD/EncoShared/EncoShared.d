@@ -32,6 +32,8 @@ public
 	import Enco.Shared.Core.Event;
 	import Enco.Shared.Core.Window;
 	import Enco.Shared.Core.TimeHelper;
+	import Enco.Shared.Core.ContentManager;
+	import Enco.Shared.Core.IDevice;
 
 	import Enco.Shared.Render.IRenderer;
 	import Enco.Shared.Render.ITexture;
