@@ -67,9 +67,9 @@ class GameObject
 				com.preUpdate(deltaTime);
 			}
 
+			update(deltaTime);
 			foreach (ref GameObject child; m_children)
 				child.performUpdate(deltaTime);
-			update(deltaTime);
 
 			foreach (IComponent com; m_components)
 			{
@@ -89,9 +89,9 @@ class GameObject
 				com.preDraw(context, renderer);
 			}
 
+			draw(context, renderer);
 			foreach (ref GameObject child; m_children)
 				child.performDraw(context, renderer);
-			draw(context, renderer);
 
 			foreach (IComponent com; m_components)
 			{
@@ -109,9 +109,9 @@ class GameObject
 				com.preDraw2D(renderer);
 			}
 
+			draw2D(renderer);
 			foreach (ref GameObject child; m_children)
 				child.performDraw2D(renderer);
-			draw2D(renderer);
 
 			foreach (IComponent com; m_components)
 			{
