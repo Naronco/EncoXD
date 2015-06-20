@@ -1,0 +1,19 @@
+{
+	"Name": "Metal Floor",
+	"Textures":
+	{
+		"0":
+		{
+			"File": "res/tex/tilesbox.png",
+			"MipMap": false,
+			"Smooth": false
+		}
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "diffuse",
+		"Ambient": "vec3(0.7, 0.7, 0.7)",
+		"Color": "tex(slot0, 5.25, 5.25)"
+	}
+}

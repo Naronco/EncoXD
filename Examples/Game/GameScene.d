@@ -9,6 +9,28 @@ import Player;
 import luad.error;
 import std.file;
 
+class BackgroundLayer : RenderLayer
+{
+	private ContentManager content;
+	private MeshObject object;
+
+	public this(ContentManager content)
+	{
+		this.content = content;
+	}
+
+	override protected void init(Scene scene)
+	{
+		addGameObject(object = new MeshObject(MeshUtils.invert(MeshUtils.createCube(50, 50, 50)), content.loadMaterial("res/materials/tilesbox.json")));
+	}
+
+	override public void performDraw(RenderContext context, IRenderer renderer)
+	{
+		object.transform.position = context.camera.transform.position;
+		super.performDraw(context, renderer);
+	}
+}
+
 class Game3DLayer : RenderLayer
 {
 	public Player player;
@@ -221,6 +243,7 @@ class GameScene : Scene
 
 	public override void init()
 	{
+		addLayer(new BackgroundLayer(content));
 		addLayer(game3DLayer = new Game3DLayer(content));
 	}
 }
