@@ -12,7 +12,7 @@ class GLRenderTarget : IRenderTarget
 		glGenFramebuffers(1, &fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-		m_color			  = new GLTexture();
+		m_color = new GLTexture();
 		m_color.minFilter = TextureFilterMode.Nearest;
 		m_color.magFilter = TextureFilterMode.Nearest;
 		m_color.create(width, height, GL_RGB, null);
@@ -20,7 +20,7 @@ class GLRenderTarget : IRenderTarget
 
 		if (depth)
 		{
-			m_depth			  = new GLTexture();
+			m_depth = new GLTexture();
 			m_depth.minFilter = TextureFilterMode.Nearest;
 			m_depth.magFilter = TextureFilterMode.Nearest;
 			m_depth.create(width, height, GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, null, GL_FLOAT);
@@ -44,13 +44,13 @@ class GLRenderTarget : IRenderTarget
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			assert(0);
 
-		this.width	= width;
+		this.width = width;
 		this.height = height;
 	}
 
 	public void resize(u32 width, u32 height)
 	{
-		this.width	= width;
+		this.width = width;
 		this.height = height;
 		m_color.resize(width, height);
 		if (m_depth !is null)
@@ -86,8 +86,8 @@ class GLRenderTarget : IRenderTarget
 		return m_view;
 	}
 
-	private u32		  width, height;
-	public u32		  fbo, drb;
+	private u32 width, height;
+	public u32 fbo, drb;
 	private GLTexture m_color, m_depth;
-	private IView	  m_view;
+	private IView m_view;
 }

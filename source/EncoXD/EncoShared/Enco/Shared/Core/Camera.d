@@ -32,8 +32,8 @@ class Camera : GameObject
 	public @property mat4 rotationMatrix()
 	{
 		return mat4.identity.rotate(transform.rotation.x, vec3(1, 0, 0)) *
-			   mat4.identity.rotate(transform.rotation.y, vec3(0, 1, 0)) *
-			   mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1));
+		       mat4.identity.rotate(transform.rotation.y, vec3(0, 1, 0)) *
+		       mat4.identity.rotate(transform.rotation.z, vec3(0, 0, 1));
 	}
 
 	public @property mat4 translationMatrix()
@@ -103,16 +103,16 @@ class Camera : GameObject
 		m_needUpdate = m_needUpdate || m_mode != value; m_mode = value;
 	}
 
-	private f32			   m_near	= 0.1f;
-	private f32			   m_far	= 100;
-	private f32			   m_width	= 1;
-	private f32			   m_height = 1;
-	private f32			   m_aspect = 1;
-	private f32			   m_fov	= 45;
-	private f32			   m_iZoom	= 1 / 7.0f;
-	private ProjectionMode m_mode	= ProjectionMode.Perspective;
+	private f32 m_near = 0.1f;
+	private f32 m_far = 100;
+	private f32 m_width = 1;
+	private f32 m_height = 1;
+	private f32 m_aspect = 1;
+	private f32 m_fov = 45;
+	private f32 m_iZoom = 1 / 7.0f;
+	private ProjectionMode m_mode = ProjectionMode.Perspective;
 
-	private mat4		   m_projectionMatrix = mat4.perspective(1, 1, 45, 0.1f, 100);
-	private mat4		   m_viewMatrix		  = mat4.identity;
-	private bool		   m_needUpdate		  = false;
+	private mat4 m_projectionMatrix = mat4.perspective(1, 1, 45, 0.1f, 100);
+	private mat4 m_viewMatrix = mat4.identity;
+	private bool m_needUpdate = false;
 }

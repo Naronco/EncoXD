@@ -10,7 +10,7 @@ abstract class IView
 	{
 		create();
 
-		if(!m_created && m_scene !is null)
+		if (!m_created && m_scene !is null)
 		{
 			m_scene.view = this;
 			if (renderer !is null)
@@ -64,7 +64,7 @@ abstract class IView
 	{
 		if (scene !is null)
 		{
-			if(m_created)
+			if (m_created)
 			{
 				scene.view = this;
 				if (renderer !is null)
@@ -125,8 +125,8 @@ abstract class IView
 	}
 
 	protected bool m_created = false;
-	protected u32vec2	m_size;
-	protected string	m_name;
-	protected Scene		m_scene;
+	protected u32vec2 m_size;
+	protected string m_name;
+	protected Scene m_scene;
 	protected IRenderer m_renderer;
 }

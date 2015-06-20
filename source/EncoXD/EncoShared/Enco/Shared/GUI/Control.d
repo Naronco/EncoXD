@@ -4,19 +4,19 @@ import EncoShared;
 
 enum Alignment
 {
-	Top			 = 1 << 0,
-	Bottom		 = 1 << 1,
-	Left		 = 1 << 2,
-	Right		 = 1 << 3,
+	Top          = 1 << 0,
+	Bottom       = 1 << 1,
+	Left         = 1 << 2,
+	Right        = 1 << 3,
 
-	TopLeft		 = Top | Left,
-	TopRight	 = Top | Right,
-	TopCenter	 = Top | Left | Right,
-	MiddleLeft	 = Bottom | Top | Left,
-	MiddleRight	 = Bottom | Top | Right,
+	TopLeft      = Top | Left,
+	TopRight     = Top | Right,
+	TopCenter    = Top | Left | Right,
+	MiddleLeft   = Bottom | Top | Left,
+	MiddleRight  = Bottom | Top | Right,
 	MiddleCenter = Bottom | Top | Left | Right,
-	BottomLeft	 = Bottom | Left,
-	BottomRight	 = Bottom | Right,
+	BottomLeft   = Bottom | Left,
+	BottomRight  = Bottom | Right,
 	BottomCenter = Bottom | Left | Right,
 }
 
@@ -62,13 +62,13 @@ class Control : GameObject
 {
 	public this()
 	{
-		m_x			 = 0;
-		m_y			 = 0;
-		m_width		 = 100;
-		m_height	 = 100;
+		m_x = 0;
+		m_y = 0;
+		m_width = 100;
+		m_height = 100;
 		m_background = Color.White;
 		m_foreground = Color.Black;
-		m_align		 = Alignment.TopLeft;
+		m_align = Alignment.TopLeft;
 	}
 
 	override protected void draw2D(GUIRenderer renderer)
@@ -154,10 +154,10 @@ class Control : GameObject
 		return m_align;
 	}
 
-	private f32		  m_x, m_y;
-	private f32		  m_width, m_height;
-	private bool	  m_visible;
-	private Color	  m_background, m_foreground;
-	private vec2	  m_guiSize;
+	private f32 m_x, m_y;
+	private f32 m_width, m_height;
+	private bool m_visible;
+	private Color m_background, m_foreground;
+	private vec2 m_guiSize;
 	private Alignment m_align;
 }

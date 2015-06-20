@@ -42,7 +42,7 @@ public:
 
 		JSONValue[string] textures = value["Textures"].object;
 
-		string	 textureSlots = "";
+		string textureSlots = "";
 		string[] textureSlotUniforms;
 
 		foreach (string id, JSONValue texture; textures)
@@ -52,13 +52,13 @@ public:
 
 			if (texture["File"].str != "null")
 			{
-				int		  i = parse!int (id);
+				int i = parse!int (id);
 
 				GLTexture tex = GLTexturePool.load(texture["File"].str);
 				if (("MipMap" in texture) !is null && texture["MipMap"].type == JSON_TYPE.TRUE)
 				{
 					tex.enableMipMaps = true;
-					tex.minFilter	  = TextureFilterMode.LinearMipmapLinear;
+					tex.minFilter = TextureFilterMode.LinearMipmapLinear;
 				}
 				if (("Smooth" in texture) !is null && texture["Smooth"].type == JSON_TYPE.FALSE)
 				{
@@ -114,7 +114,7 @@ public:
 		fs.compile();
 
 		auto program = m_renderer.createShader([vs, fs]);
-		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "cam_translation"] ~ textureSlotUniforms);
+		program.registerUniforms(["modelview", "projection", "normalmatrix", "l_direction", "cam_translation"] ~textureSlotUniforms);
 
 		mat.program = program;
 
@@ -123,7 +123,7 @@ public:
 
 	public deprecated static Material load(IRenderer renderer, string file)
 	{
-		auto m = new GLMaterialManager(cast(GL3Renderer)renderer);
+		auto m = new GLMaterialManager(cast(GL3Renderer) renderer);
 		return m.load(file);
 	}
 }

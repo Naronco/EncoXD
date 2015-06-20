@@ -24,26 +24,26 @@ private:
 	import std.ascii;
 	import std.regex;
 
-	ParsingState	  currentParsingState	   = ParsingState.Text;
+	ParsingState currentParsingState = ParsingState.Text;
 	InterpretingState currentInterpretingState = InterpretingState.Type;
 
-	string			  content;
+	string content;
 
-	string[]		  stack = [""];
-	string[]		  arguments;
-	string			  entryType = "";
-	int				  loopCount = 0;
-	string			  code		= "";
-	int				  nameIndex = 1;
-	bool			  writeType = false;
-	string			  root		= "";
+	string[] stack = [""];
+	string[] arguments;
+	string entryType = "";
+	int loopCount = 0;
+	string code = "";
+	int nameIndex = 1;
+	bool writeType = false;
+	string root = "";
 
 	void parseType()
 	{
 		string typeName = content.munch("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_");
 		if (typeName.length > 0)
 		{
-			entryType				= typeName;
+			entryType = typeName;
 			stack[stack.length - 1] = "_" ~ typeName.toLower() ~to!string(nameIndex++);
 		}
 		currentParsingState = ParsingState.Identifier;
@@ -58,8 +58,8 @@ private:
 		}
 		nameIndex--;
 		stack[stack.length - 1] = content[0 .. index];
-		content					= content[(index + 1) .. $];
-		currentParsingState		= ParsingState.Identifier;
+		content = content[(index + 1) .. $];
+		currentParsingState = ParsingState.Identifier;
 	}
 
 	void parseArgumentName()
@@ -72,7 +72,7 @@ private:
 		}
 
 		arguments ~= "." ~ content[0 .. index] ~ "(";
-		content					 = content[(index + 1) .. $];
+		content = content[(index + 1) .. $];
 		currentInterpretingState = InterpretingState.ArgumentValue;
 	}
 
@@ -120,7 +120,7 @@ private:
 				arguments[arguments.length - 1] ~= content[0 .. comma] ~ ")";
 			else
 				arguments[arguments.length - 1] ~= argument ~ ")";
-			content					 = content[(comma + 1) .. $];
+			content = content[(comma + 1) .. $];
 			currentInterpretingState = InterpretingState.ArgumentName;
 		}
 		else
@@ -129,7 +129,7 @@ private:
 				arguments[arguments.length - 1] ~= content[0 .. end] ~ ")";
 			else
 				arguments[arguments.length - 1] ~= argument ~ ")";
-			content				= content[(end + 1) .. $];
+			content = content[(end + 1) .. $];
 			currentParsingState = ParsingState.Identifier;
 		}
 	}
@@ -140,14 +140,14 @@ private:
 		currentParsingState = ParsingState.Text;
 		if (type == '<')
 		{
-			content					 = content[1 .. $];
-			content					 = content.strip();
+			content = content[1 .. $];
+			content = content.strip();
 			currentInterpretingState = InterpretingState.Name;
 		}
 		else if (type == '(')
 		{
-			content					 = content[1 .. $];
-			content					 = content.strip();
+			content = content[1 .. $];
+			content = content.strip();
 			currentInterpretingState = InterpretingState.ArgumentName;
 		}
 		else if (type == '{')
@@ -164,8 +164,8 @@ private:
 		}
 		else
 		{
-			content				= content[1 .. $];
-			content				= content.strip();
+			content = content[1 .. $];
+			content = content.strip();
 			currentParsingState = ParsingState.Build;
 		}
 	}
@@ -175,7 +175,7 @@ public:
 	this(bool writeType = false, string root = "")
 	{
 		this.writeType = writeType;
-		this.root	   = root;
+		this.root = root;
 	}
 
 	string compileLevel(string content_)
@@ -183,8 +183,8 @@ public:
 		content = content_.strip();
 		while (content.indexOf("//") != -1)
 		{
-			int	   start = content.indexOf("//");
-			int	   end	 = content.indexOf('\n', start);
+			int start = content.indexOf("//");
+			int end = content.indexOf('\n', start);
 			int[]  rng;
 			char[] ncontent = content.dup;
 			for (int i = 0; i < end - start; i++)
@@ -247,7 +247,7 @@ public:
 				{
 					code ~= stack[stack.length - 2] ~ ".addChild(" ~ stack[stack.length - 1] ~ ");\n";
 				}
-				currentParsingState		 = ParsingState.Text;
+				currentParsingState = ParsingState.Text;
 				currentInterpretingState = InterpretingState.Type;
 
  Stacker:
@@ -297,8 +297,8 @@ unittest
 		public A[] children;
 
 		public int _value = -1;
-		public int _a	  = -1;
-		public int _b	  = -1;
+		public int _a = -1;
+		public int _b = -1;
 
 		public this() {}
 

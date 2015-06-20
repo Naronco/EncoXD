@@ -43,12 +43,12 @@ class DragTableX : IComponent
 		mstate = Mouse.getState();
 	}
 
-	private bool		   wasDown		 = false;
-	private float		   startMousePos = 0;
-	private float		   startRotation = 0;
-	private MouseState	   * mstate;
+	private bool wasDown = false;
+	private float startMousePos = 0;
+	private float startRotation = 0;
+	private MouseState     * mstate;
 	private ControllerState* cstate;
-	public GameObject	   object;
+	public GameObject object;
 }
 
 class DragTableHalfY : IComponent
@@ -95,10 +95,10 @@ class DragTableHalfY : IComponent
 		mstate = Mouse.getState();
 	}
 
-	private bool		   wasDown		 = false;
-	private float		   startMousePos = 0;
-	private float		   startRotation = 0;
-	private MouseState	   * mstate;
+	private bool wasDown = false;
+	private float startMousePos = 0;
+	private float startRotation = 0;
+	private MouseState     * mstate;
 	private ControllerState* cstate;
-	public GameObject	   object;
+	public GameObject object;
 }

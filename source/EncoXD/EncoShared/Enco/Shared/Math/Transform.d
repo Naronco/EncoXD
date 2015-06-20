@@ -7,15 +7,15 @@ import std.format;
 struct Transform
 {
 private:
-	vec3	 m_position = vec3(0), m_rotation = vec3(0), m_scale = vec3(1);
+	vec3 m_position = vec3(0), m_rotation = vec3(0), m_scale = vec3(1);
 	Transform* m_parent;
 
 public:
 	@property mat4 transform()
 	{
 		return (m_parent ? m_parent.transform : mat4.identity) * (mat4.translation(m_position.x, m_position.y, m_position.z))
-			   * (mat4.identity.rotatez(-m_rotation.z) * mat4.identity.rotatey(-m_rotation.y) * mat4.identity.rotatex(-m_rotation.x))
-			   * mat4.identity.scale(m_scale.x, m_scale.y, m_scale.z);
+		       * (mat4.identity.rotatez(-m_rotation.z) * mat4.identity.rotatey(-m_rotation.y) * mat4.identity.rotatex(-m_rotation.x))
+		       * mat4.identity.scale(m_scale.x, m_scale.y, m_scale.z);
 	}
 
 	string toString(int depth)
@@ -47,18 +47,18 @@ public:
 	{
 		m_position = vec3(0);
 		m_rotation = vec3(0);
-		m_scale	   = vec3(1);
+		m_scale = vec3(1);
 	}
 
-	@property ref vec3	   position()
+	@property ref vec3     position()
 	{
 		return m_position;
 	}
-	@property ref vec3	   rotation()
+	@property ref vec3     rotation()
 	{
 		return m_rotation;
 	}
-	@property ref vec3	   scale()
+	@property ref vec3     scale()
 	{
 		return m_scale;
 	}

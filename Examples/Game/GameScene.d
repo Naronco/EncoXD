@@ -11,11 +11,11 @@ import std.file;
 
 class Game3DLayer : RenderLayer
 {
-	public Player	   player;
-	private int		   currentLevel = 0;
+	public Player player;
+	private int currentLevel = 0;
 	private Material[] materials;
-	private Level	   level;
-	private LuaTable   playerTable;
+	private Level level;
+	private LuaTable playerTable;
 	private ContentManager content;
 
 	public this(ContentManager content)
@@ -113,7 +113,7 @@ class Game3DLayer : RenderLayer
 	public void setLua(LuaState lua)
 	{
 		player = new Player(scene.renderer.createMesh(MeshUtils.createCube(0.5f, 0.5f, 0.5f)), content.loadMaterial("res/materials/player.json"));
-		level  = new Level(lua, player);
+		level = new Level(lua, player);
 
 		materials ~= content.loadMaterial("res/materials/metal.json");
 		materials ~= content.loadMaterial("res/materials/start.json");

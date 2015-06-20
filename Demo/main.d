@@ -10,12 +10,12 @@ import std.traits;
 
 class GameWindow : DesktopView
 {
-	RenderContext	context;
-	GameScene		game;
-	GLRenderTarget	target;
-	Mesh			plane;
+	RenderContext context;
+	GameScene game;
+	GLRenderTarget target;
+	Mesh plane;
 	GLShaderProgram program;
-	GLTexture3D		palette;
+	GLTexture3D palette;
 
 	public this()
 	{
@@ -23,13 +23,13 @@ class GameWindow : DesktopView
 
 	public void init()
 	{
-		scene = game = new GameScene(new ContentManager(new GLDevice(cast(GL3Renderer)renderer)));
+		scene = game = new GameScene(new ContentManager(new GLDevice(cast(GL3Renderer) renderer)));
 
 		Camera camera = new Camera();
 		camera.farClip = 600;
-		camera.fov	   = 45;
-		camera.width   = width;
-		camera.height  = height;
+		camera.fov = 45;
+		camera.width = width;
+		camera.height = height;
 
 		camera.transform.position = vec3(0, 1, 2);
 		camera.addComponent(new FPSRotation());
@@ -41,7 +41,7 @@ class GameWindow : DesktopView
 
 		plane = renderer.createMesh(MeshUtils.createPlane());
 
-		palette		  = new GLTexture3D();
+		palette = new GLTexture3D();
 		palette.wrapX = TextureClampMode.ClampToEdge;
 		palette.wrapY = TextureClampMode.ClampToEdge;
 		palette.wrapZ = TextureClampMode.ClampToEdge;

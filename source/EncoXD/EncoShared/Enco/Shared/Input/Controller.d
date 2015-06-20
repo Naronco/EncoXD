@@ -4,9 +4,9 @@ import EncoShared;
 
 struct ControllerState
 {
-	public						 bool[] keys = new bool[SDL_CONTROLLER_BUTTON_MAX];
-	public						 f64[] axis = new float[SDL_CONTROLLER_AXIS_MAX];
-	public bool					 isConnected = false;
+	public bool[] keys = new bool[SDL_CONTROLLER_BUTTON_MAX];
+	public f64[] axis = new float[SDL_CONTROLLER_AXIS_MAX];
+	public bool isConnected = false;
 
 	public static ControllerState* init()
 	{
@@ -76,7 +76,7 @@ enum ControllerIndex : i32
 enum ControllerAxis : u8
 {
 	Invalid = 255,
-	LeftX	= 0,
+	LeftX   = 0,
 	LeftY,
 	RightX,
 	RightY,
@@ -90,12 +90,12 @@ struct ControllerAxisEvent
 	union
 	{
 		ControllerIndex index;
-		i32				id;
+		i32 id;
 	}
 	union
 	{
 		ControllerAxis axis;
-		u8			   axisID;
+		u8 axisID;
 	}
 	i16 value;
 }
@@ -103,7 +103,7 @@ struct ControllerAxisEvent
 enum ControllerButton : u8
 {
 	Invalid = 255,
-	A		= 0,
+	A       = 0,
 	B,
 	X,
 	Y,
@@ -126,12 +126,12 @@ struct ControllerButtonDownEvent
 	union
 	{
 		ControllerIndex index;
-		i32				id;
+		i32 id;
 	}
 	union
 	{
 		ControllerButton button;
-		u8				 buttonID;
+		u8 buttonID;
 	}
 	u8 state;
 }
@@ -142,12 +142,12 @@ struct ControllerButtonUpEvent
 	union
 	{
 		ControllerIndex index;
-		i32				id;
+		i32 id;
 	}
 	union
 	{
 		ControllerButton button;
-		u8				 buttonID;
+		u8 buttonID;
 	}
 	u8 state;
 }
@@ -158,7 +158,7 @@ struct ControllerAddedEvent
 	union
 	{
 		ControllerIndex index;
-		i32				id;
+		i32 id;
 	}
 }
 
@@ -168,6 +168,6 @@ struct ControllerRemovedEvent
 	union
 	{
 		ControllerIndex index;
-		i32				id;
+		i32 id;
 	}
 }

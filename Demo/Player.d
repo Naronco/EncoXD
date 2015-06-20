@@ -5,7 +5,7 @@ import EncoDesktop;
 
 class Player : IComponent
 {
-	GameObject	   object;
+	GameObject object;
 	KeyboardState  * state;
 	ControllerState* controller;
 
@@ -20,7 +20,7 @@ class Player : IComponent
 
 	override void update(f64 deltaTime)
 	{
-		state	   = Keyboard.getState();
+		state = Keyboard.getState();
 		controller = Controller.getState(0);
 
 		vec3 off = vec3(0);

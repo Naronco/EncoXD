@@ -5,7 +5,7 @@ import EncoShared;
 class Window
 {
 	private SDL_Window* m_handle;
-	private int		  m_id;
+	private int m_id;
 
 	public @property SDL_Window* window()
 	{
@@ -23,7 +23,7 @@ class Window
 	public this(string title, i32 x, i32 y, i32 w, i32 h, u32 flags)
 	{
 		m_handle = SDL_CreateWindow(title.toStringz(), x, y, w, h, flags);
-		m_id	 = SDL_GetWindowID(m_handle);
+		m_id = SDL_GetWindowID(m_handle);
 	}
 
 	public ~this()

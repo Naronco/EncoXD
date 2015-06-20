@@ -7,8 +7,8 @@ import EncoShared;
 class GameObject
 {
 	private GameObject[] m_children;
-	private GameObject	 m_parent;
-	private bool		 m_enabled = true;
+	private GameObject m_parent;
+	private bool m_enabled = true;
 
 	public this()
 	{
@@ -25,7 +25,7 @@ class GameObject
 	{
 		if (child == this)
 			return child;
-		child.m_parent		   = this;
+		child.m_parent = this;
 		child.transform.parent = &transform;
 		m_children ~= child;
 		return child;
@@ -125,7 +125,7 @@ class GameObject
 	}
 
 	public Transform transform = Transform();
-	public void[]	 data	   = null;
+	public void[]    data = null;
 
 	public void addComponent(IComponent component)
 	{
@@ -143,7 +143,7 @@ class GameObject
 	{
 		return m_renderer;
 	}
-	private IRenderer	 m_renderer;
+	private IRenderer m_renderer;
 
 	private IComponent[] m_components;
 }
@@ -206,7 +206,7 @@ class Scene : GameObject
 		return child;
 	}
 
-	public IView  view;
+	public IView view;
 
 	private Scene m_next = null;
 }

@@ -6,7 +6,7 @@ import EncoShared;
 class TcpSocket
 {
 	private std.socket.InternetAddress ipaddress;
-	private std.socket.TcpSocket	   tcpsock;
+	private std.socket.TcpSocket tcpsock;
 
 	public this(std.socket.TcpSocket handle)
 	{
@@ -20,7 +20,7 @@ class TcpSocket
 
 	public bool bind(const string host)
 	{
-		i16	   port		= 0;
+		i16 port = 0;
 		string hostname = host;
 
 		if (!host.contains(":"))
@@ -39,7 +39,7 @@ class TcpSocket
 
 	public void bind(const string host, i16 fallbackPort)
 	{
-		i16	   port		= fallbackPort;
+		i16 port = fallbackPort;
 		string hostname = host;
 
 		if (host.contains(":"))
@@ -107,7 +107,7 @@ class TcpSocket
 	public ptrdiff_t send(IPacket packet)
 	{
 		void[] data;
-		data[0 .. 0]			 = [packet.length];
+		data[0 .. 0] = [packet.length];
 		data[1 .. packet.length] = packet.serialize()[0 .. packet.length];
 		return send(data);
 	}

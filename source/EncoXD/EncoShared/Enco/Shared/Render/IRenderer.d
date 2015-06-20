@@ -6,8 +6,8 @@ import EncoShared;
 
 enum RenderingBuffer : int
 {
-	colorBuffer	  = 1 << 0,
-	depthBuffer	  = 1 << 1,
+	colorBuffer   = 1 << 0,
+	depthBuffer   = 1 << 1,
 	stencilBuffer = 1 << 2,
 }
 

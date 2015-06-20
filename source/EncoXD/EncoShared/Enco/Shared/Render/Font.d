@@ -31,9 +31,9 @@ class Font
 
 	public ITexture render(T : ITexture)(string text, Color color)
 	{
-		ITexture tex   = new T();
+		ITexture tex = new T();
 		string[] lines = text.split('\n');
-		i32		 maxWidth;
+		i32 maxWidth;
 		foreach (string line; lines)
 		{
 			i32 w, h;

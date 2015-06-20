@@ -9,16 +9,16 @@ interface IMaterialManager
 
 struct Material
 {
-	public string		 name;
+	public string name;
 
-	public bool			 blend = false;
-	public bool			 depth = true;
+	public bool blend = false;
+	public bool depth = true;
 
-	public				 ITexture[int] textures;
+	public ITexture[int] textures;
 
 	public ShaderProgram program;
 
-	public void			 bind(IRenderer renderer, RenderContext context)
+	public void          bind(IRenderer renderer, RenderContext context)
 	{
 		foreach (int id, ITexture texture; textures)
 		{
@@ -27,7 +27,7 @@ struct Material
 		program.bind();
 		program.set("l_direction", context.lightDirection);
 		program.set("cam_translation", context.camera.transform.position);
-		renderer.enableBlend	 = blend;
+		renderer.enableBlend = blend;
 		renderer.enableDepthTest = depth;
 	}
 
@@ -38,7 +38,7 @@ struct Material
 			texture.bind(id);
 		}
 		program.bind();
-		renderer.enableBlend	 = blend;
+		renderer.enableBlend = blend;
 		renderer.enableDepthTest = depth;
 	}
 }

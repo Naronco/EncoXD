@@ -11,14 +11,14 @@ enum AnimationState
 /// Animation handler for a numeric type
 class AnimatedProperty(T)
 {
-	private T			   intVal	 = 0;
-	private T			   finishVal = 0;
-	private f64			   time		 = 0;
-	private f64			   iTimeSec	 = 1;
-	private AnimationState state	 = AnimationState.Still;
-	private string		   easeType	 = "linear";
+	private T intVal = 0;
+	private T finishVal = 0;
+	private f64 time = 0;
+	private f64 iTimeSec = 1;
+	private AnimationState state = AnimationState.Still;
+	private string easeType = "linear";
 
-	public Trigger		   onDone = new Trigger();
+	public Trigger onDone = new Trigger();
 
 	public this()
 	{
@@ -40,10 +40,10 @@ class AnimatedProperty(T)
 	{
 		if (finishVal == val)
 			return;
-		intVal	  = value;
+		intVal = value;
 		finishVal = val;
-		state	  = AnimationState.Animating;
-		time	  = 0;
+		state = AnimationState.Animating;
+		time = 0;
 	}
 
 	/// Current animation state
@@ -86,7 +86,7 @@ class AnimatedProperty(T)
 			if (time >= 1)
 			{
 				intVal = finishVal;
-				state  = AnimationState.Still;
+				state = AnimationState.Still;
 				onDone(this);
 			}
 		}
@@ -118,13 +118,13 @@ class AnimatedFunctionValue(T)
 		return start + delta * time;
 	};
 
-	private T			   intVal	 = 0;
-	private T			   finishVal = 0;
-	private f64			   time		 = 0;
-	private f64			   iTimeSec	 = 1;
-	private AnimationState state	 = AnimationState.Still;
+	private T intVal = 0;
+	private T finishVal = 0;
+	private f64 time = 0;
+	private f64 iTimeSec = 1;
+	private AnimationState state = AnimationState.Still;
 
-	public Trigger		   onDone = new Trigger();
+	public Trigger onDone = new Trigger();
 
 	public this()
 	{
@@ -146,10 +146,10 @@ class AnimatedFunctionValue(T)
 	{
 		if (finishVal == val)
 			return;
-		intVal	  = value;
+		intVal = value;
 		finishVal = val;
-		state	  = AnimationState.Animating;
-		time	  = 0;
+		state = AnimationState.Animating;
+		time = 0;
 	}
 
 	/// Current animation state
@@ -180,7 +180,7 @@ class AnimatedFunctionValue(T)
 			if (time >= 1)
 			{
 				intVal = finishVal;
-				state  = AnimationState.Still;
+				state = AnimationState.Still;
 				onDone(this);
 			}
 		}

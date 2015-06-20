@@ -9,7 +9,7 @@ import GameScene;
 class GameWindow : DesktopView
 {
 	RenderContext context;
-	GameScene	  game;
+	GameScene game;
 
 	public this()
 	{
@@ -17,16 +17,16 @@ class GameWindow : DesktopView
 
 	public void init()
 	{
-		scene = game = new GameScene(new ContentManager(new GLDevice(cast(GL3Renderer)renderer)));
+		scene = game = new GameScene(new ContentManager(new GLDevice(cast(GL3Renderer) renderer)));
 
 		Camera camera = new Camera();
 		renderer.setClearColor(0.8f, 0.8f, 0.8f);
-		auto   lua = EncoContext.instance.createLuaState();
-		camera.farClip		  = 100;
-		camera.nearClip		  = -100;
-		camera.width		  = width;
-		camera.height		  = height;
-		camera.zoom			  = 10;
+		auto lua = EncoContext.instance.createLuaState();
+		camera.farClip = 100;
+		camera.nearClip = -100;
+		camera.width = width;
+		camera.height = height;
+		camera.zoom = 10;
 		camera.projectionMode = ProjectionMode.Orthographic3D;
 
 		debug EncoContext.instance.onKeyDown += (sender, key) {

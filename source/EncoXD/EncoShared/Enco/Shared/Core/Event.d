@@ -5,7 +5,7 @@ import EncoShared;
 class Event(T ...)
 {
 	alias EventMethod = void delegate(const Object, const T);
-	private EventMethod[]									funcs;
+	private EventMethod[]                                   funcs;
 
 	public this()
 	{
@@ -28,7 +28,7 @@ class Event(T ...)
 					newFuncs ~= method;
 			}
 			funcs[] = null;
-			funcs	= newFuncs;
+			funcs = newFuncs;
 		}
 	}
 
@@ -43,7 +43,7 @@ class Event(T ...)
 class Trigger
 {
 	alias EventMethod = void delegate(const Object);
-	private EventMethod[]						   funcs;
+	private EventMethod[]                          funcs;
 
 	public this()
 	{
@@ -66,7 +66,7 @@ class Trigger
 					newFuncs ~= method;
 			}
 			funcs[] = null;
-			funcs	= newFuncs;
+			funcs = newFuncs;
 		}
 	}
 

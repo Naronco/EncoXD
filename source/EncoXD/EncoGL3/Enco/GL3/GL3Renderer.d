@@ -52,7 +52,7 @@ class GL3Renderer : IRenderer
 
 	public void resize(u32 width, u32 height)
 	{
-		m_width	 = width;
+		m_width = width;
 		m_height = height;
 		m_gui.resize(width, height);
 		glViewport(0, 0, width, height);
@@ -63,13 +63,13 @@ class GL3Renderer : IRenderer
 		return GLTexture.white;
 	}
 
-	private bool				m_valid		= false;
-	private bool				m_depthTest = false;
-	private bool				m_blend		= false;
-	private u32					m_width, m_height;
-	private GUIRenderer			m_gui;
+	private bool m_valid = false;
+	private bool m_depthTest = false;
+	private bool m_blend = false;
+	private u32 m_width, m_height;
+	private GUIRenderer m_gui;
 
-	public Window				m_window;
+	public Window m_window;
 	public static SDL_GLContext glContext = null;
 
 	public this()
@@ -128,9 +128,9 @@ class GL3Renderer : IRenderer
 					if (("Enabled" in json["Context"]["Blend"]) !is null && json["Context"]["Blend"]["Enabled"].type == JSON_TYPE.TRUE)
 					{
 						if (("Src" in json["Context"]["Blend"]) !is null && ("Dest" in json["Context"]["Blend"]) !is null &&
-							json["Context"]["Blend"]["Src"].type == JSON_TYPE.STRING && json["Context"]["Blend"]["Dest"].type == JSON_TYPE.STRING)
+						    json["Context"]["Blend"]["Src"].type == JSON_TYPE.STRING && json["Context"]["Blend"]["Dest"].type == JSON_TYPE.STRING)
 						{
-							string src	= json["Context"]["Blend"]["Src"].str;
+							string src = json["Context"]["Blend"]["Src"].str;
 							string dest = json["Context"]["Blend"]["Dest"].str;
 
 							glBlendFunc(blendFuncFromString(src), blendFuncFromString(dest));
@@ -168,13 +168,13 @@ class GL3Renderer : IRenderer
 
 			m_valid = true;
 
-			if(useGui)
+			if (useGui)
 			{
-				m_gui	= new GUIRenderer(this, GLMaterialPool.load(this, "res/materials/gui.json"));
+				m_gui = new GUIRenderer(this, GLMaterialPool.load(this, "res/materials/gui.json"));
 				m_gui.resize(width, height);
 			}
 
-			m_width	 = width;
+			m_width = width;
 			m_height = height;
 
 			GLTexture.init();

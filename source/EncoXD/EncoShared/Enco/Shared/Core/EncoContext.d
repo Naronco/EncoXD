@@ -13,15 +13,15 @@ enum DynamicLibrary
 
 struct FileDropEvent
 {
-	u32	   timestamp;
+	u32 timestamp;
 	string file;
 }
 
 class EncoContext
 {
 	public static EncoContext instance;
-	public string			  settings;
-	public LuaState			  lua;
+	public string settings;
+	public LuaState lua;
 
 	public Trigger onClose = new Trigger;
 	public Event!MouseWheelEvent onScroll = new Event!MouseWheelEvent;
@@ -51,13 +51,13 @@ class EncoContext
 		return m_currentView;
 	}
 
-	private IView[]			m_views;
-	private IView			m_currentView;
+	private IView[]         m_views;
+	private IView m_currentView;
 
 	public DynamicLibrary[] loaded;
 
-	private StopWatch		sw;
-	private TickDuration	delta;
+	private StopWatch sw;
+	private TickDuration delta;
 
 	public LuaFunction[][string] lua_events;
 
@@ -149,13 +149,13 @@ class EncoContext
 	{
 		auto lua = new LuaState;
 		lua.openLibs();
-		lua["print"]	 = &LuaLogger.writeln!LuaObject;
-		lua["printerr"]	 = &LuaLogger.errln!LuaObject;
+		lua["print"] = &LuaLogger.writeln!LuaObject;
+		lua["printerr"] = &LuaLogger.errln!LuaObject;
 		lua["printwarn"] = &LuaLogger.warnln!LuaObject;
-		lua["on"]		 = &luaOn;
-		lua["emit"]		 = &luaEmit!LuaObject;
-		lua["emite"]	 = &luaEmitSingle;
-		lua				 = LuaExt.apply(lua);
+		lua["on"] = &luaOn;
+		lua["emit"] = &luaEmit!LuaObject;
+		lua["emite"] = &luaEmitSingle;
+		lua = LuaExt.apply(lua);
 
 		lua.setPanicHandler(&panic);
 		return lua;
@@ -236,50 +236,50 @@ class EncoContext
 				switch (event.type)
 				{
 				case SDL_DROPFILE:
-					string		  file = fromStringz(event.drop.file).dup;
+					string file = fromStringz(event.drop.file).dup;
 					SDL_free(event.drop.file);
 					FileDropEvent e;
 					e.timestamp = event.drop.timestamp;
-					e.file		= file;
+					e.file = file;
 					onFileDrop(this, e);
 					break;
 				case SDL_KEYDOWN:
 					Keyboard.setKey(event.key.keysym.sym, true);
 					KeyDownEvent e;
 					e.timestamp = event.key.timestamp;
-					e.window	= event.key.windowID;
-					e.state		= event.key.state;
-					e.repeat	= event.key.repeat;
-					e.keyID		= event.key.keysym.sym;
+					e.window = event.key.windowID;
+					e.state = event.key.state;
+					e.repeat = event.key.repeat;
+					e.keyID = event.key.keysym.sym;
 					onKeyDown(this, e);
 					break;
 				case SDL_KEYUP:
 					Keyboard.setKey(event.key.keysym.sym, false);
 					KeyUpEvent e;
 					e.timestamp = event.key.timestamp;
-					e.window	= event.key.windowID;
-					e.state		= event.key.state;
-					e.repeat	= event.key.repeat;
-					e.keyID		= event.key.keysym.sym;
+					e.window = event.key.windowID;
+					e.state = event.key.state;
+					e.repeat = event.key.repeat;
+					e.keyID = event.key.keysym.sym;
 					onKeyUp(this, e);
 					break;
 				case SDL_MOUSEWHEEL:
 					MouseWheelEvent e;
 					e.timestamp = event.wheel.timestamp;
-					e.windowID	= event.wheel.windowID;
-					e.id		= event.wheel.which;
-					e.amount	= i32vec2(event.wheel.x, event.wheel.y);
-					e.flipped	= event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED;
+					e.windowID = event.wheel.windowID;
+					e.id = event.wheel.which;
+					e.amount = i32vec2(event.wheel.x, event.wheel.y);
+					e.flipped = event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED;
 					onScroll(this, e);
 					break;
 				case SDL_MOUSEMOTION:
 					Mouse.setPosition(event.motion.x, event.motion.y);
 					Mouse.addOffset(event.motion.xrel, event.motion.yrel);
 					MouseMoveEvent e;
-					e.position	= i32vec2(event.motion.x, event.motion.y);
-					e.offset	= i32vec2(event.motion.xrel, event.motion.yrel);
-					e.id		= event.motion.which;
-					e.windowID	= event.motion.windowID;
+					e.position = i32vec2(event.motion.x, event.motion.y);
+					e.offset = i32vec2(event.motion.xrel, event.motion.yrel);
+					e.id = event.motion.which;
+					e.windowID = event.motion.windowID;
 					e.timestamp = event.motion.timestamp;
 					onMouseMove(this, e);
 					break;
@@ -290,24 +290,24 @@ class EncoContext
 					if (event.button.state == SDL_PRESSED)
 					{
 						MouseButtonDownEvent e;
-						e.buttonID	= event.button.button;
-						e.position	= i32vec2(event.button.x, event.button.y);
-						e.id		= event.button.which;
-						e.windowID	= event.button.windowID;
+						e.buttonID = event.button.button;
+						e.position = i32vec2(event.button.x, event.button.y);
+						e.id = event.button.which;
+						e.windowID = event.button.windowID;
 						e.timestamp = event.button.timestamp;
-						e.state		= event.button.state;
+						e.state = event.button.state;
 
 						onMouseButtonDown(this, e);
 					}
 					else
 					{
 						MouseButtonUpEvent e;
-						e.buttonID	= event.button.button;
-						e.position	= i32vec2(event.button.x, event.button.y);
-						e.id		= event.button.which;
-						e.windowID	= event.button.windowID;
+						e.buttonID = event.button.button;
+						e.position = i32vec2(event.button.x, event.button.y);
+						e.id = event.button.which;
+						e.windowID = event.button.windowID;
 						e.timestamp = event.button.timestamp;
-						e.state		= event.button.state;
+						e.state = event.button.state;
 
 						onMouseButtonUp(this, e);
 					}
@@ -315,7 +315,7 @@ class EncoContext
 				case SDL_CONTROLLERDEVICEADDED:
 					ControllerAddedEvent e;
 					e.timestamp = event.cdevice.timestamp;
-					e.id		= event.cdevice.which;
+					e.id = event.cdevice.which;
 					onControllerAdded(this, e);
 					Controller.setConnected(event.cdevice.which, true);
 					SDL_GameControllerOpen(event.cdevice.which);
@@ -323,7 +323,7 @@ class EncoContext
 				case SDL_CONTROLLERDEVICEREMOVED:
 					ControllerRemovedEvent e;
 					e.timestamp = event.cdevice.timestamp;
-					e.id		= event.cdevice.which;
+					e.id = event.cdevice.which;
 					onControllerRemoved(this, e);
 					Controller.setConnected(event.cdevice.which, false);
 					break;
@@ -334,18 +334,18 @@ class EncoContext
 					{
 						ControllerButtonDownEvent e;
 						e.timestamp = event.cbutton.timestamp;
-						e.id		= event.cbutton.which;
-						e.buttonID	= event.cbutton.button;
-						e.state		= event.cbutton.state;
+						e.id = event.cbutton.which;
+						e.buttonID = event.cbutton.button;
+						e.state = event.cbutton.state;
 						onControllerButtonDown(this, e);
 					}
 					else
 					{
 						ControllerButtonUpEvent e;
 						e.timestamp = event.cbutton.timestamp;
-						e.id		= event.cbutton.which;
-						e.buttonID	= event.cbutton.button;
-						e.state		= event.cbutton.state;
+						e.id = event.cbutton.which;
+						e.buttonID = event.cbutton.button;
+						e.state = event.cbutton.state;
 						onControllerButtonUp(this, e);
 					}
 					break;
@@ -368,9 +368,9 @@ class EncoContext
 					Controller.setAxis(event.caxis.which, event.caxis.axis, value);
 					ControllerAxisEvent e;
 					e.timestamp = event.caxis.timestamp;
-					e.id		= event.caxis.which;
-					e.axisID	= event.caxis.axis;
-					e.value		= value;
+					e.id = event.caxis.which;
+					e.axisID = event.caxis.axis;
+					e.value = value;
 					onControllerAxis(this, e);
 					break;
 				default: break;

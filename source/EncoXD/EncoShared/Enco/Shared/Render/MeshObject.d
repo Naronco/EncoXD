@@ -8,7 +8,7 @@ class MeshObject : GameObject
 {
 	public this(Mesh mesh, Material material)
 	{
-		m_mesh	   = mesh;
+		m_mesh = mesh;
 		m_material = material;
 	}
 
@@ -44,7 +44,7 @@ class MeshObject : GameObject
 		return m_material;
 	}
 
-	protected Mesh	   m_mesh;
+	protected Mesh m_mesh;
 	protected Material m_material;
-	protected bool	   m_relative = false;
+	protected bool m_relative = false;
 }

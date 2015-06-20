@@ -5,34 +5,34 @@ import EncoShared;
 
 enum TextureFilterMode : int
 {
-	Linear				 = GL_LINEAR, Nearest = GL_NEAREST,
+	Linear               = GL_LINEAR, Nearest = GL_NEAREST,
 	NearestMipmapNearest = GL_NEAREST_MIPMAP_NEAREST,
-	LinearMipmapNearest	 = GL_LINEAR_MIPMAP_NEAREST,
-	NearestMipmapLinear	 = GL_NEAREST_MIPMAP_LINEAR,
-	LinearMipmapLinear	 = GL_LINEAR_MIPMAP_LINEAR,
+	LinearMipmapNearest  = GL_LINEAR_MIPMAP_NEAREST,
+	NearestMipmapLinear  = GL_NEAREST_MIPMAP_LINEAR,
+	LinearMipmapLinear   = GL_LINEAR_MIPMAP_LINEAR,
 }
 
 enum TextureClampMode : i32
 {
 	ClampToBorder = GL_CLAMP_TO_BORDER,
-	ClampToEdge	  = GL_CLAMP_TO_EDGE,
-	Repeat		  = GL_REPEAT,
-	Mirror		  = GL_MIRRORED_REPEAT
+	ClampToEdge   = GL_CLAMP_TO_EDGE,
+	Repeat        = GL_REPEAT,
+	Mirror        = GL_MIRRORED_REPEAT
 }
 
 class GLTexture : ITexture
 {
-	public bool				 enableMipMaps = false;
+	public bool enableMipMaps = false;
 
 	public TextureFilterMode minFilter = TextureFilterMode.Linear;
 	public TextureFilterMode magFilter = TextureFilterMode.Linear;
 
-	public TextureClampMode	 wrapX = TextureClampMode.Repeat;
-	public TextureClampMode	 wrapY = TextureClampMode.Repeat;
+	public TextureClampMode wrapX = TextureClampMode.Repeat;
+	public TextureClampMode wrapY = TextureClampMode.Repeat;
 
-	private i32				 inMode, mode;
-	private u32				 m_id;
-	private u32				 m_width, m_height;
+	private i32 inMode, mode;
+	private u32 m_id;
+	private u32 m_width, m_height;
 
 	public @property u32 id()
 	{
@@ -86,9 +86,9 @@ class GLTexture : ITexture
 		applyParameters();
 
 		this.inMode = mode;
-		this.mode	= mode;
-		m_width		= width;
-		m_height	= height;
+		this.mode = mode;
+		m_width = width;
+		m_height = height;
 	}
 
 	public void create(u32 width, u32 height, i32 inMode, i32 mode, void[] pixels, int type = GL_UNSIGNED_BYTE)
@@ -101,9 +101,9 @@ class GLTexture : ITexture
 		applyParameters();
 
 		this.inMode = inMode;
-		this.mode	= mode;
-		m_width		= width;
-		m_height	= height;
+		this.mode = mode;
+		m_width = width;
+		m_height = height;
 	}
 
 	public void applyParameters()
@@ -151,7 +151,7 @@ class GLTexture : ITexture
 	{
 		bind(0);
 		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
-		m_width	 = width;
+		m_width = width;
 		m_height = height;
 	}
 
@@ -191,18 +191,18 @@ class GLTexture3D : ITexture3D
 		return m_depth;
 	}
 
-	private u32				 m_width, m_height, m_depth;
+	private u32 m_width, m_height, m_depth;
 
-	public bool				 enableMipMaps = false;
+	public bool enableMipMaps = false;
 
 	public TextureFilterMode minFilter = TextureFilterMode.Linear;
 	public TextureFilterMode magFilter = TextureFilterMode.Linear;
 
-	public TextureClampMode	 wrapX = TextureClampMode.Repeat;
-	public TextureClampMode	 wrapY = TextureClampMode.Repeat;
-	public TextureClampMode	 wrapZ = TextureClampMode.Repeat;
+	public TextureClampMode wrapX = TextureClampMode.Repeat;
+	public TextureClampMode wrapY = TextureClampMode.Repeat;
+	public TextureClampMode wrapZ = TextureClampMode.Repeat;
 
-	private u32				 m_id;
+	private u32 m_id;
 	public @property u32 id()
 	{
 		return m_id;
@@ -220,9 +220,9 @@ class GLTexture3D : ITexture3D
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_3D, m_id);
 
-		m_width	 = width;
+		m_width = width;
 		m_height = height;
-		m_depth	 = depth;
+		m_depth = depth;
 
 		glTexImage3D(GL_TEXTURE_3D, 0, mode, width, height, depth, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
 		m_mode = mode;
@@ -275,9 +275,9 @@ class GLTexture3D : ITexture3D
 	public void resize(u32 width, u32 height, u32 depth, void[] pixels = null)
 	{
 		bind(0);
-		m_width	 = width;
+		m_width = width;
 		m_height = height;
-		m_depth	 = depth;
+		m_depth = depth;
 		glTexImage3D(GL_TEXTURE_3D, 0, m_mode, width, height, depth, 0, m_mode, GL_UNSIGNED_BYTE, pixels.ptr);
 	}
 

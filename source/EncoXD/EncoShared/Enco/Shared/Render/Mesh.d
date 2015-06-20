@@ -12,8 +12,8 @@ class RenderableMesh
 
 	public this(u32 bufferID, u32 * vbos, u32 indexLength)
 	{
-		this.bufferID	 = bufferID;
-		this.vbos		 = vbos;
+		this.bufferID = bufferID;
+		this.vbos = vbos;
 		this.indexLength = indexLength;
 	}
 }
@@ -93,21 +93,21 @@ class MeshUtils
 
 	public static Mesh createCube(f32 diaX = 1, f32 diaY = 1, f32 diaZ = 1, f32 offX = 0, f32 offY = 0, f32 offZ = 0)
 	{
-		Mesh m	 = new Mesh();
+		Mesh m = new Mesh();
 		vec3 off = vec3(offX, offY, offZ);
 		m.addVertices([
-						  vec3(-diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(-diaX, diaY, -diaZ) + off,
+					      vec3(-diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(-diaX, diaY, -diaZ) + off,
 
-						  vec3(-diaX, -diaY, diaZ) + off, vec3(diaX, -diaY, diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(-diaX, diaY, diaZ) + off,
+					      vec3(-diaX, -diaY, diaZ) + off, vec3(diaX, -diaY, diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(-diaX, diaY, diaZ) + off,
 
-						  vec3(-diaX, -diaY, -diaZ) + off, vec3(-diaX, diaY, -diaZ) + off, vec3(-diaX, diaY, diaZ) + off, vec3(-diaX, -diaY, diaZ) + off,
+					      vec3(-diaX, -diaY, -diaZ) + off, vec3(-diaX, diaY, -diaZ) + off, vec3(-diaX, diaY, diaZ) + off, vec3(-diaX, -diaY, diaZ) + off,
 
-						  vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(diaX, -diaY, diaZ) + off,
+					      vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(diaX, -diaY, diaZ) + off,
 
-						  vec3(-diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, diaZ) + off, vec3(-diaX, -diaY, diaZ) + off,
+					      vec3(-diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, -diaZ) + off, vec3(diaX, -diaY, diaZ) + off, vec3(-diaX, -diaY, diaZ) + off,
 
-						  vec3(-diaX, diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(-diaX, diaY, diaZ) + off
-					  ]);
+					      vec3(-diaX, diaY, -diaZ) + off, vec3(diaX, diaY, -diaZ) + off, vec3(diaX, diaY, diaZ) + off, vec3(-diaX, diaY, diaZ) + off
+		              ]);
 		m.addTexCoords([
 						   vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
 						   vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
@@ -115,32 +115,32 @@ class MeshUtils
 						   vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
 						   vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1),
 						   vec2(0, 0), vec2(1, 0), vec2(1, 1), vec2(0, 1)
-					   ]);
+		               ]);
 		m.addNormals([
-						 vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1),
-						 vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1),
+					     vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1), vec3(0, 0, -1),
+					     vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1), vec3(0, 0, 1),
 
-						 vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0),
-						 vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0),
+					     vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0), vec3(-1, 0, 0),
+					     vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0), vec3(1, 0, 0),
 
-						 vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0),
-						 vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0)
-					 ]);
+					     vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0), vec3(0, -1, 0),
+					     vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0), vec3(0, 1, 0)
+		             ]);
 		m.addIndices([
-						 2, 1, 0, 3, 2, 0,
-						 4, 5, 6, 4, 6, 7,
-						 10, 9, 8, 11, 10, 8,
-						 12, 13, 14, 12, 14, 15,
-						 16, 17, 18, 16, 18, 19,
-						 22, 21, 20, 23, 22, 20
-					 ]);
+					     2, 1, 0, 3, 2, 0,
+					     4, 5, 6, 4, 6, 7,
+					     10, 9, 8, 11, 10, 8,
+					     12, 13, 14, 12, 14, 15,
+					     16, 17, 18, 16, 18, 19,
+					     22, 21, 20, 23, 22, 20
+		             ]);
 		return m;
 	}
 
 	public static Mesh merge(Mesh[] meshes)
 	{
-		Mesh m		  = new Mesh();
-		u32	 maxIndex = 0;
+		Mesh m = new Mesh();
+		u32 maxIndex = 0;
 		foreach (ref Mesh mesh; meshes)
 		{
 			m.addVertices(mesh.vertices);
@@ -215,8 +215,8 @@ class Mesh
 	public static Mesh[] loadFromObj(string file, u32 flags)
 	{
 		const aiScene* scene = aiImportFile(file.toStringz(), aiProcess_GenNormals |
-											aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs | flags);
-		Mesh[]		 meshes;
+		                                    aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs | flags);
+		Mesh[]       meshes;
 		meshes.length = scene.mNumMeshes;
 
 		for (int j = 0; j < scene.mNumMeshes; j++)
@@ -247,8 +247,8 @@ class Mesh
 
 	public RenderableMesh renderable = null;
 
-	private vec3[]		  m_vertices;
-	private vec3[]		  m_normals;
-	private vec2[]		  m_texCoords;
-	private u32[]		  m_indices;
+	private vec3[]        m_vertices;
+	private vec3[]        m_normals;
+	private vec2[]        m_texCoords;
+	private u32[]         m_indices;
 }

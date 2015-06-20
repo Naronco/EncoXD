@@ -17,9 +17,9 @@ void main(string[] args)
 {
 	string output = "";
 
-	auto   help = getopt(args,
-						 config.passThrough,
-						 "of|outputFolder", "output folder for generated D files", &output);
+	auto help = getopt(args,
+	                   config.passThrough,
+	                   "of|outputFolder", "output folder for generated D files", &output);
 	if (help.helpWanted)
 	{
 		defaultGetoptPrinter("Level to D converter for EncoXD", help.options);
@@ -36,17 +36,17 @@ void main(string[] args)
 	{
 		try
 		{
-			string	 content	= std.file.readText(input);
-			string[] lines		= content.splitLines();
-			string	 moduleName = std.path.stripExtension(std.path.baseName(input)).replace(".", "_");
-			string	 entryVoid	= "void generate_" ~ std.path.stripExtension(std.path.baseName(input)).replace(".", "_") ~ "()";
+			string content = std.file.readText(input);
+			string[] lines = content.splitLines();
+			string moduleName = std.path.stripExtension(std.path.baseName(input)).replace(".", "_");
+			string entryVoid = "void generate_" ~ std.path.stripExtension(std.path.baseName(input)).replace(".", "_") ~ "()";
 			string[] imports;
 			foreach (line; lines)
 			{
 				if (line.indexOf("//#") != -1)
 				{
-					string	 pragmaExpr = line[line.indexOf("//#") + 3 .. $];
-					string[] cargs		= pragmaExpr.split(' ');
+					string pragmaExpr = line[line.indexOf("//#") + 3 .. $];
+					string[] cargs = pragmaExpr.split(' ');
 					if (cargs.length > 1)
 					{
 						cargs[1] = cargs[1 .. $].join(" ");

@@ -5,8 +5,8 @@ import EncoShared;
 struct MouseState
 {
 	public vec2 position = vec2(0, 0);
-	public vec2 offset	 = vec2(0, 0);
-	public		bool[] buttons = new bool[8];
+	public vec2 offset = vec2(0, 0);
+	public bool[] buttons = new bool[8];
 
 	public bool isButtonDown(u8 button)
 	{
@@ -71,9 +71,9 @@ class Mouse
 
 struct MouseMoveEvent
 {
-	u32		id;
-	u32		windowID;
-	u32		timestamp;
+	u32 id;
+	u32 windowID;
+	u32 timestamp;
 	i32vec2 position;
 	i32vec2 offset;
 }
@@ -89,13 +89,13 @@ enum MouseButton : u8
 
 struct MouseButtonDownEvent
 {
-	u32		id;
-	u32		windowID;
-	u32		timestamp;
+	u32 id;
+	u32 windowID;
+	u32 timestamp;
 	i32vec2 position;
 	union
 	{
-		u8			buttonID;
+		u8 buttonID;
 		MouseButton button;
 	}
 	u8 clicks;
@@ -104,13 +104,13 @@ struct MouseButtonDownEvent
 
 struct MouseButtonUpEvent
 {
-	u32		id;
-	u32		windowID;
-	u32		timestamp;
+	u32 id;
+	u32 windowID;
+	u32 timestamp;
 	i32vec2 position;
 	union
 	{
-		u8			buttonID;
+		u8 buttonID;
 		MouseButton button;
 	}
 	u8 clicks;
@@ -119,9 +119,9 @@ struct MouseButtonUpEvent
 
 struct MouseWheelEvent
 {
-	u32		timestamp;
-	u32		windowID;
-	u32		id;
+	u32 timestamp;
+	u32 windowID;
+	u32 id;
 	i32vec2 amount;
-	bool	flipped;
+	bool flipped;
 }

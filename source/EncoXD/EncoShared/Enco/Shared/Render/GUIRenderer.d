@@ -7,12 +7,12 @@ import EncoShared;
 class GUIRenderer
 {
 	private IRenderer renderer;
-	private Mesh	  quad;
-	private Material  material;
-	private bool	  depthTestState = false;
+	private Mesh quad;
+	private Material material;
+	private bool depthTestState = false;
 
-	private float	  iwidth, iheight;
-	private vec2	  m_size;
+	private float iwidth, iheight;
+	private vec2 m_size;
 
 	public this(IRenderer renderer, Material material)
 	{
@@ -22,9 +22,9 @@ class GUIRenderer
 
 		this.material = material;
 
-		iwidth	= 1.0f;
+		iwidth = 1.0f;
 		iheight = 1.0f;
-		m_size	= vec2(1, 1);
+		m_size = vec2(1, 1);
 
 		material.program.registerUniforms(["slot0", "color"]);
 		material.program.set("slot0", 0);
@@ -38,14 +38,14 @@ class GUIRenderer
 
 	public void resize(u32 width, u32 height)
 	{
-		iwidth	= 1.0f / width;
+		iwidth = 1.0f / width;
 		iheight = 1.0f / height;
-		m_size	= vec2(width, height);
+		m_size = vec2(width, height);
 	}
 
 	public void begin()
 	{
-		depthTestState			 = renderer.enableDepthTest;
+		depthTestState = renderer.enableDepthTest;
 		renderer.enableDepthTest = false;
 	}
 

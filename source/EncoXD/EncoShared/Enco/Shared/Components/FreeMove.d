@@ -55,5 +55,5 @@ class FreeMove : IComponent
 
 	private KeyboardState  * kstate;
 	private ControllerState* cstate;
-	public GameObject	   object;
+	public GameObject object;
 }

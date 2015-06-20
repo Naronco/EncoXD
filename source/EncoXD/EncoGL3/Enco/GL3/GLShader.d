@@ -158,6 +158,6 @@ class GLShader : Shader
 		return m_id;
 	}
 
-	private u32	   m_id = 0;
+	private u32 m_id = 0;
 	private string content;
 }

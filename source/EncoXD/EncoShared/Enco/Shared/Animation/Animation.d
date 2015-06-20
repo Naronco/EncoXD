@@ -9,8 +9,8 @@ class AnimationFunctions
 
 struct DoubleDoublePair
 {
-	public f64	  a;
-	public f64	  b;
+	public f64 a;
+	public f64 b;
 
 	public string toString()
 	{
@@ -21,8 +21,8 @@ struct DoubleDoublePair
 struct AnimatedAnimationProperty
 {
 	public string name;
-	public		  string[] functions;
-	public		  DoubleDoublePair[] keyframes;
+	public string[] functions;
+	public DoubleDoublePair[] keyframes;
 
 	public string toString()
 	{
@@ -32,7 +32,7 @@ struct AnimatedAnimationProperty
 	public @property AnimatedAnimationProperty dup()
 	{
 		AnimatedAnimationProperty b;
-		b.name		= name;
+		b.name = name;
 		b.functions = functions.dup;
 		b.keyframes = keyframes.dup;
 		return b;
@@ -43,13 +43,13 @@ alias EasingFunction = f64 function(f64, f64, f64);
 
 class Animation
 {
-	private f64							currentTime	 = 0;
-	private f64							iLengthInSec = 0;
+	private f64 currentTime = 0;
+	private f64 iLengthInSec = 0;
 	private AnimatedAnimationProperty[] props;
 
-	public								f64[string] properties;
-	public f64							time   = 0;
-	private bool						m_done = false;
+	public f64[string] properties;
+	public f64 time = 0;
+	private bool m_done = false;
 	public @property bool done()
 	{
 		return m_done;
@@ -87,16 +87,16 @@ class Animation
 					assert(isSorted!cmp(current.keyframes));
 					props ~= current.dup;
 				}
-				current.name			 = line.trim()[1 .. $];
+				current.name = line.trim()[1 .. $];
 				current.keyframes.length = 0;
 			}
 			else
 			{
 				string[] splits = line.split(' ');
 				current.functions ~= splits[0].toLower();
-				f64		 t, val;
+				f64 t, val;
 
-				t	= to!f64(splits[1].trim());
+				t = to!f64(splits[1].trim());
 				val = to!f64(splits[2].trim());
 
 				current.keyframes ~= DoubleDoublePair(t, val);
@@ -126,11 +126,11 @@ class Animation
 		if (!m_done)
 		{
 			currentTime += delta;
-			time		 = currentTime * iLengthInSec;
+			time = currentTime * iLengthInSec;
 
 			if (time > 1)
 			{
-				time   = 1;
+				time = 1;
 				m_done = true;
 			}
 
@@ -142,10 +142,10 @@ class Animation
 
 					if (kv.a <= time)
 					{
-						f64	   a = kv.b;
-						f64	   b = prop.keyframes[i + 1].b;
+						f64 a = kv.b;
+						f64 b = prop.keyframes[i + 1].b;
 
-						f64	   t = (time - kv.a) / cast(f64) (prop.keyframes[i + 1].a - kv.a);
+						f64 t = (time - kv.a) / cast(f64) (prop.keyframes[i + 1].a - kv.a);
 
 						string type = prop.functions[i + 1];
 						if (type == "start")

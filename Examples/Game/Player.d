@@ -16,22 +16,22 @@ enum AnimationType : u8
 
 class Player : GameObject
 {
-	private int			  m_x, m_y;
-	private int			  m_topX, m_topY;
-	private int			  m_respawnX, m_respawnY;
-	private int			  m_targetX, m_targetY;
-	private f32			  m_animationProgress = 0;
-	private AnimationType m_animationType	  = AnimationType.Still;
-	private MeshObject	  m_bottom, m_top;
-	private int			  m_topState	= 0;
-	private f32			  m_camRotation = 0;
-	private Transform	  m_origin;
-	private int			  m_nextKey = 0;
+	private int m_x, m_y;
+	private int m_topX, m_topY;
+	private int m_respawnX, m_respawnY;
+	private int m_targetX, m_targetY;
+	private f32 m_animationProgress = 0;
+	private AnimationType m_animationType = AnimationType.Still;
+	private MeshObject m_bottom, m_top;
+	private int m_topState = 0;
+	private f32 m_camRotation = 0;
+	private Transform m_origin;
+	private int m_nextKey = 0;
 
-	private bool		  m_double;
+	private bool m_double;
 
-	public Trigger		  onStateChange = new Trigger;
-	public Trigger		  onRespawn		= new Trigger;
+	public Trigger onStateChange = new Trigger;
+	public Trigger onRespawn = new Trigger;
 
 	public @property bool isDouble()
 	{
@@ -100,19 +100,19 @@ class Player : GameObject
 
 	public this(Mesh mesh, Material material)
 	{
-		m_double   = true;
-		m_x		   = 0;
-		m_y		   = 0;
+		m_double = true;
+		m_x = 0;
+		m_y = 0;
 		m_respawnX = 0;
 		m_respawnY = 0;
-		m_topX	   = 0;
-		m_topY	   = 0;
+		m_topX = 0;
+		m_topY = 0;
 
 		addChild(m_bottom = new MeshObject(mesh, material));
 		m_bottom.transform.parent = null;
 		addChild(m_top = new MeshObject(mesh, material));
 		m_bottom.transform.position.y = 0.5f;
-		m_bottom.transform.parent	  = &m_origin;
+		m_bottom.transform.parent = &m_origin;
 
 		EncoContext.instance.onKeyDown += (sender, key)
 		{
@@ -149,9 +149,9 @@ class Player : GameObject
 
 	public void respawn()
 	{
-		m_x		   = m_respawnX;
-		m_y		   = m_respawnY;
-		m_double   = true;
+		m_x = m_respawnX;
+		m_y = m_respawnY;
+		m_double = true;
 		m_topState = 0;
 		onRespawn(this);
 	}
@@ -198,13 +198,13 @@ class Player : GameObject
 			if (dir == 0)
 			{
 				m_animationType = AnimationType.X;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.NX;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 		}
 		else if (m_topState == 2)
@@ -212,13 +212,13 @@ class Player : GameObject
 			if (dir == 0)
 			{
 				m_animationType = AnimationType.X;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.NX;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 		}
 		else if (m_topState == 3)
@@ -226,13 +226,13 @@ class Player : GameObject
 			if (dir == 1)
 			{
 				m_animationType = AnimationType.NZ;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 			if (dir == 3)
 			{
 				m_animationType = AnimationType.Z;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 		}
 		else if (m_topState == 4)
@@ -240,12 +240,12 @@ class Player : GameObject
 			if (dir == 1)
 			{
 				m_animationType = AnimationType.NZ;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 			if (dir == 3)
 			{
-				m_topState		= 0;
+				m_topState = 0;
 				m_animationType = AnimationType.Z;
 			}
 		}
@@ -283,40 +283,40 @@ class Player : GameObject
 			if (dir == 0)
 			{
 				m_animationType = AnimationType.NX;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.X;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 		}
 		else if (m_topState == 2)
 		{
 			if (dir == 0)
 			{
-				m_topState		= 0;
+				m_topState = 0;
 				m_animationType = AnimationType.NX;
-				steps			= 2;
+				steps = 2;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.X;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 		}
 		else if (m_topState == 3)
 		{
 			if (dir == 1)
 			{
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 				m_animationType = AnimationType.Z;
 			}
 			if (dir == 3)
 			{
-				m_topState		= 0;
+				m_topState = 0;
 				m_animationType = AnimationType.NZ;
 			}
 		}
@@ -324,13 +324,13 @@ class Player : GameObject
 		{
 			if (dir == 1)
 			{
-				m_topState		= 0;
+				m_topState = 0;
 				m_animationType = AnimationType.Z;
 			}
 			if (dir == 3)
 			{
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 				m_animationType = AnimationType.NZ;
 			}
 		}
@@ -369,13 +369,13 @@ class Player : GameObject
 			if (dir == 1)
 			{
 				m_animationType = AnimationType.NX;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 			if (dir == 3)
 			{
 				m_animationType = AnimationType.X;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 		}
 		else if (m_topState == 1)
@@ -383,13 +383,13 @@ class Player : GameObject
 			if (dir == 1)
 			{
 				m_animationType = AnimationType.NX;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 			if (dir == 3)
 			{
 				m_animationType = AnimationType.X;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 		}
 		else if (m_topState == 4)
@@ -397,13 +397,13 @@ class Player : GameObject
 			if (dir == 0)
 			{
 				m_animationType = AnimationType.NZ;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.Z;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 		}
 		else if (m_topState == 3)
@@ -411,13 +411,13 @@ class Player : GameObject
 			if (dir == 0)
 			{
 				m_animationType = AnimationType.NZ;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.Z;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 		}
 
@@ -453,13 +453,13 @@ class Player : GameObject
 		{
 			if (dir == 1)
 			{
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 				m_animationType = AnimationType.X;
 			}
 			if (dir == 3)
 			{
-				m_topState		= 0;
+				m_topState = 0;
 				m_animationType = AnimationType.NX;
 			}
 		}
@@ -467,13 +467,13 @@ class Player : GameObject
 		{
 			if (dir == 1)
 			{
-				m_topState		= 0;
+				m_topState = 0;
 				m_animationType = AnimationType.X;
 			}
 			if (dir == 3)
 			{
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 				m_animationType = AnimationType.NX;
 			}
 		}
@@ -482,27 +482,27 @@ class Player : GameObject
 			if (dir == 0)
 			{
 				m_animationType = AnimationType.Z;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.NZ;
-				m_topState		= 0;
+				m_topState = 0;
 			}
 		}
 		else if (m_topState == 4)
 		{
 			if (dir == 0)
 			{
-				m_topState		= 0;
+				m_topState = 0;
 				m_animationType = AnimationType.Z;
 			}
 			if (dir == 2)
 			{
 				m_animationType = AnimationType.NZ;
-				m_topState		= 0;
-				steps			= 2;
+				m_topState = 0;
+				steps = 2;
 			}
 		}
 
@@ -599,66 +599,66 @@ class Player : GameObject
 			if (m_animationProgress >= 1.0f)
 			{
 				m_bottom.transform.position.x = 0;
-				m_animationProgress			  = 0;
-				m_animationType				  = AnimationType.Still;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
 				m_origin.setIdentity();
 				onStateChange(this);
 			}
 			else
 			{
 				m_bottom.transform.position.x = 0.5f;
-				offX						  = 0;
-				m_origin.rotation.z			  = Animation.call("sinusoidalIn", 1.57079633f, 0, m_animationProgress) - 1.57079633f;
+				offX = 0;
+				m_origin.rotation.z = Animation.call("sinusoidalIn", 1.57079633f, 0, m_animationProgress) - 1.57079633f;
 			}
 			break;
 		case AnimationType.NX:
 			if (m_animationProgress >= 1.0f)
 			{
 				m_bottom.transform.position.x = 0;
-				m_animationProgress			  = 0;
-				m_animationType				  = AnimationType.Still;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
 				m_origin.setIdentity();
 				onStateChange(this);
 			}
 			else
 			{
 				m_bottom.transform.position.x = -0.5f;
-				offX						  = 1;
-				m_origin.rotation.z			  = Animation.call("sinusoidalIn", -1.57079633f, 0, m_animationProgress) + 1.57079633f;
+				offX = 1;
+				m_origin.rotation.z = Animation.call("sinusoidalIn", -1.57079633f, 0, m_animationProgress) + 1.57079633f;
 			}
 			break;
 		case AnimationType.NZ:
 			if (m_animationProgress >= 1.0f)
 			{
 				m_bottom.transform.position.z = 0;
-				m_animationProgress			  = 0;
-				m_animationType				  = AnimationType.Still;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
 				m_origin.setIdentity();
 				onStateChange(this);
 			}
 			else
 			{
 				m_bottom.transform.position.z = -0.5f;
-				m_origin.position.y			  = 0;
-				offY						  = 1;
-				m_origin.rotation.x			  = Animation.call("sinusoidalIn", 1.57079633f, 0, m_animationProgress) - 1.57079633f;
+				m_origin.position.y = 0;
+				offY = 1;
+				m_origin.rotation.x = Animation.call("sinusoidalIn", 1.57079633f, 0, m_animationProgress) - 1.57079633f;
 			}
 			break;
 		case AnimationType.Z:
 			if (m_animationProgress >= 1.0f)
 			{
 				m_bottom.transform.position.z = 0;
-				m_animationProgress			  = 0;
-				m_animationType				  = AnimationType.Still;
+				m_animationProgress = 0;
+				m_animationType = AnimationType.Still;
 				m_origin.setIdentity();
 				onStateChange(this);
 			}
 			else
 			{
 				m_bottom.transform.position.z = 0.5f;
-				m_origin.position.y			  = 0;
-				offY						  = 0;
-				m_origin.rotation.x			  = Animation.call("sinusoidalIn", -1.57079633f, 0, m_animationProgress) + 1.57079633f;
+				m_origin.position.y = 0;
+				offY = 0;
+				m_origin.rotation.x = Animation.call("sinusoidalIn", -1.57079633f, 0, m_animationProgress) + 1.57079633f;
 			}
 			break;
 		default:
@@ -700,8 +700,8 @@ class Player : GameObject
 		}
 		if (m_topState == 5) // Splitted
 		{
-			m_top.transform.parent	   = null;
-			m_top.transform.position   = transform.position;
+			m_top.transform.parent = null;
+			m_top.transform.position = transform.position;
 			m_top.transform.position.x = m_topX;
 			m_top.transform.position.z = m_topX;
 		}
@@ -718,22 +718,22 @@ class PlayerLock : IComponent
 {
 	AnimatedFunctionValue!vec3 camMovement;
 	AnimatedProperty!f64 zoom;
-	f64	   zoomVal = 8;
+	f64 zoomVal = 8;
 	Camera camera;
-	vec3   pos;
+	vec3 pos;
 
 	public this(Player player, Camera camera)
 	{
-		this.player						  = player;
-		camMovement						  = new AnimatedFunctionValue!vec3(vec3(0, 0, 0));
+		this.player = player;
+		camMovement = new AnimatedFunctionValue!vec3(vec3(0, 0, 0));
 		camMovement.interpolationFunction = (vec3 delta, vec3 offset, f64 time)
 		{
 			return delta * (-pow(2, -10 * time) + 1) + offset;
 		};
 		camMovement.length = 300;
 
-		zoom			= new AnimatedProperty!f64(zoomVal);
-		zoom.length		= 30;
+		zoom = new AnimatedProperty!f64(zoomVal);
+		zoom.length = 30;
 		zoom.easingType = "quadratic";
 
 		EncoContext.instance.onScroll += (s, v) {
@@ -767,16 +767,16 @@ class PlayerLock : IComponent
 
 	public override void update(f64 deltaTime)
 	{
-		pos				   = (player.topTransform.appliedPosition + player.bottomTransform.appliedPosition) * 0.5f;
-		pos.y			   = 0.5f;
+		pos = (player.topTransform.appliedPosition + player.bottomTransform.appliedPosition) * 0.5f;
+		pos.y = 0.5f;
 		player.camRotation = camera.transform.rotation.y;
-		camMovement.value  = pos;
+		camMovement.value = pos;
 		camMovement.update(deltaTime);
 		zoom.update(deltaTime);
 		object.transform.position = camMovement.value;
-		camera.zoom				  = zoom.value;
+		camera.zoom = zoom.value;
 	}
 
-	private Player	  player;
+	private Player player;
 	public GameObject object;
 }

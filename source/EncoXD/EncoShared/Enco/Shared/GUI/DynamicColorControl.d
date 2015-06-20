@@ -4,7 +4,7 @@ import EncoShared;
 
 class DynamicColorControl : Control
 {
-	private vec4  m_color4f;
+	private vec4 m_color4f;
 	private Color m_color;
 
 	public @property Color color()

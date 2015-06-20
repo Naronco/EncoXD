@@ -5,8 +5,8 @@ import EncoShared;
 class PictureControl : Control
 {
 	private ITexture m_texture;
-	private vec4	 m_color4f;
-	private Color	 m_color;
+	private vec4 m_color4f;
+	private Color m_color;
 
 	public @property Color color()
 	{
@@ -20,9 +20,9 @@ class PictureControl : Control
 	public this(ITexture texture)
 	{
 		m_texture = texture;
-		width	  = texture.width;
-		height	  = texture.height;
-		color	  = Color.White;
+		width = texture.width;
+		height = texture.height;
+		color = Color.White;
 	}
 
 	public static PictureControl fromColor(T : ITexture)(Color color)
