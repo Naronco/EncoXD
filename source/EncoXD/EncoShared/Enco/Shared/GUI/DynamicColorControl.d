@@ -16,7 +16,7 @@ class DynamicColorControl : Control
 		m_color = color; m_color4f = vec4(color.R * 0.00392156862f, color.G * 0.00392156862, color.B * 0.00392156862, 1);
 	}
 
-	public this(Color color)
+	public this(Color color = Color.White)
 	{
 		this.color = color;
 	}
