@@ -137,6 +137,21 @@ class MeshUtils
 		return m;
 	}
 
+	public static Mesh invert(Mesh mesh)
+	{
+		Mesh m = new Mesh();
+		m.addNormals(mesh.normals);
+		m.addTexCoords(mesh.texCoords);
+		m.addVertices(mesh.vertices);
+
+		for (int i = 0; i < mesh.indices.length; i += 3)
+		{
+			m.addIndices([mesh.indices[i + 2], mesh.indices[i + 1], mesh.indices[i]]);
+		}
+
+		return m;
+	}
+
 	public static Mesh merge(Mesh[] meshes)
 	{
 		Mesh m = new Mesh();
