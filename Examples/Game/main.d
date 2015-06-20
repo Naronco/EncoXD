@@ -6,6 +6,8 @@ import DragTable;
 
 import GameScene;
 
+import Scenes.MainMenu;
+
 class GameWindow : DesktopView
 {
 	RenderContext context;
@@ -17,7 +19,8 @@ class GameWindow : DesktopView
 
 	public void init()
 	{
-		scene = game = new GameScene(new ContentManager(new GLDevice(cast(GL3Renderer) renderer)));
+		auto content = new ContentManager(new GLDevice(cast(GL3Renderer) renderer));
+		scene = game = new GameScene(content);
 
 		Camera camera = new Camera();
 		renderer.setClearColor(0.8f, 0.8f, 0.8f);
@@ -63,6 +66,8 @@ class GameWindow : DesktopView
 		game.game3DLayer.setLua(lua);
 		game.game3DLayer.applyCamera(camera);
 		game.game3DLayer.addGameObject(camera);
+
+		scene = new MainMenu(content);
 	}
 
 	override protected void onDraw()
@@ -81,7 +86,7 @@ class GameWindow : DesktopView
 
 void main(string[] args)
 {
-	EncoContext.create([DynamicLibrary.Lua, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image]);
+	EncoContext.create([DynamicLibrary.Lua, DynamicLibrary.SDL2, DynamicLibrary.SDL2Image, DynamicLibrary.SDL2TTF]);
 
 	GameWindow window = new GameWindow();
 	EncoContext.instance.addView!GL3Renderer(window);

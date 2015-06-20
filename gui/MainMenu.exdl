@@ -1,0 +1,14 @@
+//#module Generated.MainMenu
+//#entry void generateMainMenu(MainMenu menu)
+
+//#import Scenes.MainMenu
+
+//#import EncoGL3
+//#import EncoShared
+
+//#root menu
+
+DynamicColorControl(x>=0, y>=0, width>=100, height>=30, alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 16)), alignment>=Alignment.MiddleCenter, text>="Text")
+}

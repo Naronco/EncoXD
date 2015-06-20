@@ -208,8 +208,11 @@
   <Folder name="Blocks">
    <File path="..\..\blocks\default.lua" />
   </Folder>
+  <Folder name="Generated">
+   <File path="Generated\MainMenu.d" />
+  </Folder>
   <Folder name="Scenes">
-   <File path="MainMenu.d" />
+   <File path="Scenes\MainMenu.d" />
   </Folder>
   <Folder name="Plugins">
    <File path="..\..\plugins\default.lua" />
