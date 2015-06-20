@@ -107,14 +107,14 @@ class Control : GameObject
 	public @property f32 x()
 	{
 		if (cast(Control) parent)
-			return computeX(m_x, (cast(Control) parent).x);
+			return computeX(m_x, (cast(Control) parent).width) + (cast(Control) parent).x;
 		return computeX(m_x, m_guiSize.x);
 	}
 
 	public @property f32 y()
 	{
 		if (cast(Control) parent)
-			return computeX(m_y, (cast(Control) parent).y);
+			return computeX(m_y, (cast(Control) parent).height) + (cast(Control) parent).y;
 		return computeX(m_y, m_guiSize.y);
 	}
 
@@ -156,7 +156,7 @@ class Control : GameObject
 
 	private f32 m_x, m_y;
 	private f32 m_width, m_height;
-	private bool m_visible;
+	private bool m_visible = true;
 	private Color m_background, m_foreground;
 	private vec2 m_guiSize;
 	private Alignment m_align;
