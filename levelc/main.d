@@ -40,6 +40,7 @@ void main(string[] args)
 			string[] lines = content.splitLines();
 			string moduleName = std.path.stripExtension(std.path.baseName(input)).replace(".", "_");
 			string entryVoid = "void generate_" ~ std.path.stripExtension(std.path.baseName(input)).replace(".", "_") ~ "()";
+			string root = "";
 			string[] imports;
 			foreach (line; lines)
 			{
@@ -61,6 +62,9 @@ void main(string[] args)
 						case "import":
 							imports ~= "import " ~ cargs[1] ~ ";";
 							break;
+						case "root":
+							root = cargs[1];
+							break;
 						default:
 							writefln("WARN: Unknown compiler statement '%s'", cargs[0]);
 							break;
@@ -68,7 +72,7 @@ void main(string[] args)
 					}
 				}
 			}
-			outputFile(std.path.buildPath(output, std.path.stripExtension(std.path.baseName(input)) ~ ".d"), format("module %s;\n\n%-(%s\n%)\n\n%s {\n\t%-(%s\n\t%)\n}", moduleName, imports, entryVoid, new LevelCompiler(true).compileLevel(content).splitLines()));
+			outputFile(std.path.buildPath(output, std.path.stripExtension(std.path.baseName(input)) ~ ".d"), format("module %s;\n\n%-(%s\n%)\n\n%s {\n\t%-(%s\n\t%)\n}", moduleName, imports, entryVoid, new LevelCompiler(true, root).compileLevel(content).splitLines()));
 		}
 		catch (Exception e)
 		{
