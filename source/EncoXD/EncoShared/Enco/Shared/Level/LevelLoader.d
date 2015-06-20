@@ -40,10 +40,12 @@ private:
 
 	void parseType()
 	{
-		string typeName = content.munch("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_");
+		string typeName = content.munch("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_!"); // ! for templates
 		if (typeName.length > 0)
 		{
 			entryType = typeName;
+			if(typeName.indexOf('!') != -1) // ! for templates
+				typeName = typeName[0 .. typeName.indexOf('!')];
 			stack[stack.length - 1] = "_" ~ typeName.toLower() ~to!string(nameIndex++);
 		}
 		currentParsingState = ParsingState.Identifier;
@@ -71,7 +73,10 @@ private:
 			throw new Exception("Invalid argument at " ~ content);
 		}
 
-		arguments ~= "." ~ content[0 .. index] ~ "(";
+		if(content[index - 1] == '>')
+			arguments ~= "." ~ content[0 .. (index - 1)] ~ " = (";
+		else
+			arguments ~= "." ~ content[0 .. index] ~ "(";
 		content = content[(index + 1) .. $];
 		currentInterpretingState = InterpretingState.ArgumentValue;
 	}
@@ -194,7 +199,8 @@ public:
 		if (root.length > 0)
 		{
 			stack.length++;
-			stack[stack.length - 1] = root;
+			assert(stack.length - 2 == 0);
+			stack[0] = root;
 		}
 		while (true)
 		{
@@ -241,7 +247,11 @@ public:
 				code ~= (writeType ? entryType ~ " " : "") ~
 				stack[stack.length - 1]
 				~ " = new " ~ entryType
-				~ "()" ~ arguments.join() ~ ";\n";
+				~ "();\n";
+				foreach(argument; arguments)
+				{
+					code ~= stack[stack.length - 1] ~ argument ~ ";\n";
+				}
 				arguments.length = 0;
 				if (stack.length > 1)
 				{
