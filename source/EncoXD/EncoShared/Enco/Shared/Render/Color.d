@@ -2,6 +2,8 @@ module Enco.Shared.Render.Color;
 
 import EncoShared;
 
+import std.format;
+
 struct Color
 {
 	public static const Color AliceBlue = Color.fromRGB(0xF0F8FF);
@@ -285,6 +287,11 @@ struct Color
 	public @property i32 BGR()
 	{
 		return m_r | m_g << 8 | m_b << 16;
+	}
+
+	public string toString()
+	{
+		return format("[R: %s, G: %s, B: %s]", m_r, m_g, m_b);
 	}
 
 	private u8 m_r, m_g, m_b;
