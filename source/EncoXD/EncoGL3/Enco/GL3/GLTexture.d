@@ -133,7 +133,7 @@ class GLTexture : ITexture
 	{
 		if (!bitmap.valid)
 		{
-			Logger.errln(name, " is invalid!");
+			Logger.errln(name, " is invalid! (handle = null)");
 			return;
 		}
 
