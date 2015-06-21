@@ -2,7 +2,7 @@
 	"name": "EncoX",
 	"description": "Naronco open source 3D engine",
 	"authors": ["shirookad", "WebFreak001"],
-	"homepage": "https://github.com/Naronco/EncoX",
+	"homepage": "https://github.com/Naronco/EncoXD",
 	"targetPath": "bin",
 	"targetType": "executable",
 	"license": "MIT",
