@@ -114,8 +114,8 @@ class Control : GameObject
 	public @property f32 y()
 	{
 		if (cast(Control) parent)
-			return computeX(m_y, (cast(Control) parent).height) + (cast(Control) parent).y;
-		return computeX(m_y, m_guiSize.y);
+			return computeY(m_y, (cast(Control) parent).height) + (cast(Control) parent).y;
+		return computeY(m_y, m_guiSize.y);
 	}
 
 	public @property void x(f32 value)
