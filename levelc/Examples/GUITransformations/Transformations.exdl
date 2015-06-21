@@ -1,0 +1,50 @@
+//#module Generated.MainMenu
+//#entry void generateMainMenu(MainMenu menu)
+
+//#import Scenes.MainMenu
+
+//#import EncoGL3
+//#import EncoShared
+
+//#root menu
+
+TextControl!GLTexture(y>=-120, color>=(Color.fromRGB(0x37474F)), font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 40)), alignment>=Alignment.MiddleCenter, text>="Transformations in a nutshell")
+
+DynamicColorControl(size=(-220, -60, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.TopLeft, text>="Top Left")
+}
+DynamicColorControl(size=(0, -60, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.TopCenter, text>="Top Center")
+}
+DynamicColorControl(size=(220, -60, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.TopRight, text>="Top Right")
+}
+
+DynamicColorControl(size=(-220, 0, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.MiddleLeft, text>="Middle Left")
+}
+DynamicColorControl(size=(0, 0, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.MiddleCenter, text>="Middle Center")
+}
+DynamicColorControl(size=(220, 0, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.MiddleRight, text>="Middle Right")
+}
+
+DynamicColorControl(size=(-220, 60, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.BottomLeft, text>="Bottom Left")
+}
+DynamicColorControl(size=(0, 60, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.BottomCenter, text>="Bottom Center")
+}
+DynamicColorControl(size=(220, 60, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+{
+	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.BottomRight, text>="Bottom Right")
+}
