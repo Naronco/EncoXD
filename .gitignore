@@ -76,3 +76,4 @@ ExampleGame/
 ExampleGame.zip
 *.blend1
 .vs/
+Examples/Game/Generated/
