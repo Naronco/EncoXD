@@ -216,12 +216,12 @@
   </Folder>
   <Folder name="Core">
    <File path="Enco\Shared\Core\Camera.d" />
-   <File path="ContentManager.d" />
+   <File path="Enco\Shared\Core\ContentManager.d" />
    <File path="Enco\Shared\Core\EncoContext.d" />
    <File path="Enco\Shared\Core\Event.d" />
    <File path="Enco\Shared\Core\GameObject.d" />
    <File path="Enco\Shared\Core\IComponent.d" />
-   <File path="IDevice.d" />
+   <File path="Enco\Shared\Core\IDevice.d" />
    <File path="Enco\Shared\Core\IView.d" />
    <File path="Enco\Shared\Core\Logger.d" />
    <File path="Enco\Shared\Core\TemplateParser.d" />
@@ -235,7 +235,9 @@
   <Folder name="GUI">
    <File path="Enco\Shared\GUI\Control.d" />
    <File path="Enco\Shared\GUI\DynamicColorControl.d" />
+   <File path="Enco\Shared\GUI\PanelControl.d" />
    <File path="Enco\Shared\GUI\PictureControl.d" />
+   <File path="SpriteControl.d" />
    <File path="Enco\Shared\GUI\TextControl.d" />
   </Folder>
   <Folder name="Input">
