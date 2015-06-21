@@ -104,6 +104,14 @@ class Control : GameObject
 			return (cast(i32) (parentHeight - height) >> 1) + y;
 	}
 
+	public void size(f32 x, f32 y, f32 width, f32 height)
+	{
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+
 	public @property f32 x()
 	{
 		if (cast(Control) parent)
