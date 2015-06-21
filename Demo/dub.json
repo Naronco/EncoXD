@@ -3,7 +3,7 @@
 	"description": "Example for EncoX",
 	"authors": ["NaroncoNexo", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoXD",
-	"license": "GPL-2.0",
+	"license": "MIT",
 	"targetType": "executable",
 	"sourcePaths": [".", "../source/"],
 	"importPaths": [".", "../source/"]

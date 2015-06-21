@@ -3,7 +3,7 @@
 	"description": "OpenGL3 specific code for EncoX",
 	"authors": ["shirookad", "WebFreak001"],
 	"homepage": "https://github.com/Naronco/EncoXD",
-	"license": "GPL-2.0",
+	"license": "MIT",
 	"targetType": "library",
 	"sourcePaths": ["."],
 	"importPaths": ["."],
