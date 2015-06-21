@@ -15,6 +15,6 @@ class MainMenu : Scene
 
 	override public void init()
 	{
-		Generated.MainMenu.generateMainMenu(this);
+		Generated.MainMenu.generateMainMenu(this, content);
 	}
 }

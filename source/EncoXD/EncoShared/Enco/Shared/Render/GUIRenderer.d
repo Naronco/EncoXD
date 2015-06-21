@@ -26,9 +26,10 @@ class GUIRenderer
 		iheight = 1.0f;
 		m_size = vec2(1, 1);
 
-		material.program.registerUniforms(["slot0", "color"]);
+		material.program.registerUniforms(["slot0", "color", "clip"]);
 		material.program.set("slot0", 0);
 		material.program.set("color", vec4(1, 1, 1, 1));
+		material.program.set("clip", vec4(0, 0, 1, 1));
 	}
 
 	public @property vec2 size()
@@ -58,6 +59,21 @@ class GUIRenderer
 	{
 		material.bind(renderer);
 
+		material.program.set("clip", vec4(0, 0, 1, 1));
+		material.program.set("color", color);
+		material.program.set("modelview", mat4.identity.translate(position.x * iwidth * 2 - 1, -(position.y * iheight * 2 + size.y * iheight * 2 - 1), 0) * mat4.identity.scale(size.x * iwidth * 2, size.y * iheight * 2, 1));
+		material.program.set("projection", mat4.identity);
+
+		texture.bind(0);
+
+		renderer.renderMesh(quad);
+	}
+
+	public void renderRectangle(vec2 position, vec2 size, vec4 clip, ITexture texture, vec4 color = vec4(1, 1, 1, 1))
+	{
+		material.bind(renderer);
+
+		material.program.set("clip", vec4(clip.x / cast(f32)texture.width, clip.y / cast(f32)texture.height, clip.z / cast(f32)texture.width, clip.w / cast(f32)texture.height));
 		material.program.set("color", color);
 		material.program.set("modelview", mat4.identity.translate(position.x * iwidth * 2 - 1, -(position.y * iheight * 2 + size.y * iheight * 2 - 1), 0) * mat4.identity.scale(size.x * iwidth * 2, size.y * iheight * 2, 1));
 		material.program.set("projection", mat4.identity);

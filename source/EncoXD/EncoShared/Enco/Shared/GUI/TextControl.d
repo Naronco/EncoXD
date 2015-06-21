@@ -31,8 +31,8 @@ class TextControl(T : ITexture) : Control
 		if(m_text != "")
 		{
 			m_texture = m_font.render!T(m_text, Color.White);
-			width = m_texture.width;
-			height = m_texture.height;
+			width = cast(f32)m_texture.width;
+			height = cast(f32)m_texture.height;
 		}
 	}
 
@@ -46,8 +46,8 @@ class TextControl(T : ITexture) : Control
 			return;
 		m_text = text;
 		m_texture = m_font.render!T(text, Color.White);
-		width = m_texture.width;
-		height = m_texture.height;
+		width = cast(f32)m_texture.width;
+		height = cast(f32)m_texture.height;
 	}
 
 	public this(Font font = null)

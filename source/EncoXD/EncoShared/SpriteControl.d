@@ -1,11 +1,12 @@
-module Enco.Shared.GUI.PictureControl;
+module Enco.Shared.GUI.SpriteControl;
 
 import EncoShared;
 
-class PictureControl : Control
+class SpriteControl : Control
 {
 	private ITexture m_texture;
 	private vec4 m_color4f;
+	private vec4 m_clip;
 	private Color m_color;
 
 	public @property Color color()
@@ -23,14 +24,14 @@ class PictureControl : Control
 		return m_color4f.w;
 	}
 
+	public @property ref vec4 clip()
+	{
+		return m_clip;
+	}
+
 	public @property void texture(ITexture texture)
 	{
 		m_texture = texture;
-		if(texture !is null)
-		{
-			width = texture.width;
-			height = texture.height;
-		}
 	}
 
 	public @property ITexture texture()
@@ -41,11 +42,7 @@ class PictureControl : Control
 	public this(ITexture texture = null)
 	{
 		m_texture = texture;
-		if(texture !is null)
-		{
-			width = texture.width;
-			height = texture.height;
-		}
+		m_clip = vec4(0, 0, 1, 1);
 		color = Color.White;
 	}
 
@@ -59,6 +56,6 @@ class PictureControl : Control
 	override protected void drawGUI(GUIRenderer renderer)
 	{
 		if(m_texture !is null)
-			renderer.renderRectangle(vec2(x, y), vec2(width, height), m_texture, m_color4f);
+			renderer.renderRectangle(vec2(x, y), vec2(width, height), m_clip, m_texture, m_color4f);
 	}
 }

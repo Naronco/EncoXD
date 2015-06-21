@@ -1,5 +1,5 @@
 //#module Generated.MainMenu
-//#entry void generateMainMenu(MainMenu menu)
+//#entry void generateMainMenu(MainMenu menu, ContentManager content)
 
 //#import Scenes.MainMenu
 
@@ -8,7 +8,23 @@
 
 //#root menu
 
-DynamicColorControl(size=(0, 0, 200, 40), alignment>=Alignment.MiddleCenter, color>=(Color.fromRGB(0x3F51B5)))
+TextControl!GLTexture(y>=-110, color>=(Color.fromRGB(0x37474F)), font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 40)), alignment>=Alignment.MiddleCenter, text>="ExampleGame")
+
+PanelControl(size=(0, 30, 200, 190), alignment>=Alignment.MiddleCenter)
 {
-	TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 16)), alignment>=Alignment.MiddleCenter, text>="PLAY")
+	DynamicColorControl(size=(0, 0, 100.per100, 40), alignment>=Alignment.TopCenter, color>=(Color.fromRGB(0x3F51B5)))
+	{
+		SpriteControl(texture>=(content.loadTexture("res/tex/icons.png")), clip>=(vec4(0, 64, 64, 64)), size=(0, 0, 40, 40), alignment>=Alignment.MiddleLeft)
+		TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.MiddleCenter, text>="Play")
+	}
+	DynamicColorControl(size=(0, 50, 100.per100, 40), alignment>=Alignment.TopCenter, color>=(Color.fromRGB(0x3F51B5)))
+	{
+		SpriteControl(texture>=(content.loadTexture("res/tex/icons.png")), clip>=(vec4(0, 0, 64, 64)), size=(0, 0, 40, 40), alignment>=Alignment.MiddleLeft)
+		TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.MiddleCenter, text>="Settings")
+	}
+	DynamicColorControl(size=(0, 150, 100.per100, 40), alignment>=Alignment.TopCenter, color>=(Color.fromRGB(0x3F51B5)))
+	{
+		SpriteControl(texture>=(content.loadTexture("res/tex/icons.png")), clip>=(vec4(64, 0, 64, 64)), size=(0, 0, 40, 40), alignment>=Alignment.MiddleLeft)
+		TextControl!GLTexture(font>=(new Font("res/fonts/Roboto/Roboto-Regular.ttf", 20)), alignment>=Alignment.MiddleCenter, text>="Exit")
+	}
 }

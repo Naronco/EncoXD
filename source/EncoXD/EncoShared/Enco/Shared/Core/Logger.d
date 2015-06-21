@@ -1,5 +1,6 @@
 module Enco.Shared.Core.Logger;
 
+static import std.stdio;
 import colorize;
 import std.array;
 
@@ -12,14 +13,74 @@ class Logger
 		cwriteln("INFO > ".color(fg.light_black), "".color(fg.white), args);
 	}
 
+	/// writeln with separator between args
+	public static void writesln(T, S ...)(T separator, S args)
+	{
+		cwrite("INFO > ".color(fg.light_black), "".color(fg.white));
+		foreach(i, arg; args)
+		{
+			if(i != args.length - 1)
+				cwrite(args[i], separator);
+			else
+				cwriteln(args[i]);
+		}
+	}
+
+	/// writeln with format
+	public static void writefln(S ...)(S args)
+	{
+		cwrite("INFO > ".color(fg.light_black), "".color(fg.white));
+		std.stdio.writeln(args);
+	}
+
 	public static void warnln(S ...)(S args)
 	{
 		cwriteln("WARN > ".color(fg.yellow), "".color(fg.white), args);
 	}
 
+	/// warnln with separator between args
+	public static void warnsln(T, S ...)(T separator, S args)
+	{
+		cwrite("WARN > ".color(fg.yellow), "".color(fg.white));
+		foreach(i, arg; args)
+		{
+			if(i != args.length - 1)
+				cwrite(args[i], separator);
+			else
+				cwriteln(args[i]);
+		}
+	}
+
+	/// warnln with format
+	public static void warnfln(S ...)(S args)
+	{
+		cwrite("WARN > ".color(fg.yellow), "".color(fg.white));
+		std.stdio.writeln(args);
+	}
+
 	public static void errln(S ...)(S args)
 	{
 		cwriteln("ERROR > ".color(fg.red), "".color(fg.white), args);
+	}
+
+	/// errln with separator between args
+	public static void errsln(T, S ...)(T separator, S args)
+	{
+		cwrite("ERROR > ".color(fg.red), "".color(fg.white));
+		foreach(i, arg; args)
+		{
+			if(i != args.length - 1)
+				cwrite(args[i], separator);
+			else
+				cwriteln(args[i]);
+		}
+	}
+
+	/// errln with format
+	public static void errfln(S ...)(S args)
+	{
+		cwrite("ERROR > ".color(fg.red), "".color(fg.white));
+		std.stdio.writeln(args);
 	}
 
 	public static void errln(Exception e)

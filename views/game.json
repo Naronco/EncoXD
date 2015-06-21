@@ -1,8 +1,8 @@
 {
 	"Window":
 	{
-		"Width": 1024,
-		"Height": 600,
+		"Width": 800,
+		"Height": 480,
 		"Title": "Example Game"
 	},
 	"Context":

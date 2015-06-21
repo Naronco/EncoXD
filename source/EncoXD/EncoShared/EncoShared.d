@@ -54,6 +54,8 @@ public
 	import Enco.Shared.GUI.PictureControl;
 	import Enco.Shared.GUI.DynamicColorControl;
 	import Enco.Shared.GUI.TextControl;
+	import Enco.Shared.GUI.PanelControl;
+	import Enco.Shared.GUI.SpriteControl;
 
 	import Enco.Shared.Ext.Array;
 	import Enco.Shared.Ext.String;
