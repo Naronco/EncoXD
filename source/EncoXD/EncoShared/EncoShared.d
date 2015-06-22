@@ -59,6 +59,7 @@ public
 
 	import Enco.Shared.Ext.Array;
 	import Enco.Shared.Ext.String;
+	import Enco.Shared.Ext.Vector;
 
 	import Enco.Shared.Network.Network;
 	import Enco.Shared.Network.Tcp;
