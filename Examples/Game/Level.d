@@ -163,7 +163,7 @@ class Level : GameObject
  PxLoopI: for (int y = 0; y < bmp.height; y++)
 			{
 				Color pixel = bmp.getPixel(x, y);
-				if (pixel.RGB == 16777215)
+				if (pixel.RGB == 0xFFFFFF)
 					continue PxLoopI;
 				foreach (ref BlockRegister block; m_registeredI)
 				{
@@ -183,8 +183,8 @@ class Level : GameObject
  PxLoop: for (int y = 0; y < bmp.height; y++)
 			{
 				Color pixel = bmp.getPixel(x, y);
-				if (pixel.RGB == 16777215)
-					continue PxLoop;                       // #FFFFFF
+				if (pixel.RGB == 0xFFFFFF)
+					continue PxLoop;
 				foreach (ref BlockRegister block; m_registered)
 				{
 					if (pixel.RGB == block.rgb)
