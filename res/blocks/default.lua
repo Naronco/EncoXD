@@ -28,6 +28,13 @@ end, function(x, y)
 	setBlockEnabled(x, y, true)
 end) -- Donut Block
 
+registerBlockImportant(0, 64, 0, 1, function() end, function(x, y)
+	if player.getX() == x and player.getY() == y and player.getState() == 0 then
+		player.respawn()
+	end
+end, function(x, y)
+end) -- Light Bridge
+
 registerBlock(96, 0, 0, 1, function(x, y) -- Start
 	player.setRespawnX(x)
 	player.setRespawnY(y)

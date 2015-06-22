@@ -1,5 +1,6 @@
 R: 0 - Block
   G: 32 - Donut Block (Mario)
+  G: 64 - Light Bridge
 R: 32 - Switch or Conditional Path
   B: 0-127 - Path
     G: 0 - First off
