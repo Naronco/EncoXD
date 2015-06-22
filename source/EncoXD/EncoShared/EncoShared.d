@@ -62,6 +62,8 @@ public
 	import Enco.Shared.Ext.Vector;
 
 	import Enco.Shared.Network.Network;
+	import Enco.Shared.Network.StringPacket;
+	import Enco.Shared.Network.ArrayPackets;
 
 	import Enco.Shared.Animation.Animation;
 	import Enco.Shared.Animation.BasicEaseFunctions;
@@ -105,6 +107,7 @@ public
 	{
 		return f * 0.0174532925f;
 	}
+
 	static float radToDeg(float f)
 	{
 		return f * 57.2957795f;

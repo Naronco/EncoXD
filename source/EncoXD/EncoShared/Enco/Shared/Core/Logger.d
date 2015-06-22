@@ -1,7 +1,7 @@
 module Enco.Shared.Core.Logger;
 
 static import std.stdio;
-import colorize;
+import consoled;
 import std.array;
 
 import EncoShared;
@@ -10,82 +10,82 @@ class Logger
 {
 	public static void writeln(S ...)(S args)
 	{
-		cwriteln("INFO > ".color(fg.light_black), "".color(fg.white), args);
+		writecln(Fg.gray, "INFO > ", Fg.lightGray, args);
 	}
 
 	/// writeln with separator between args
 	public static void writesln(T, S ...)(T separator, S args)
 	{
-		cwrite("INFO > ".color(fg.light_black), "".color(fg.white));
+		writec(Fg.gray, "INFO > ", Fg.lightGray);
 		foreach(i, arg; args)
 		{
 			if(i != args.length - 1)
-				cwrite(args[i], separator);
+				writec(args[i], separator);
 			else
-				cwriteln(args[i]);
+				writecln(args[i]);
 		}
 	}
 
 	/// writeln with format
 	public static void writefln(S ...)(S args)
 	{
-		cwrite("INFO > ".color(fg.light_black), "".color(fg.white));
+		writec(Fg.gray, "INFO > ", Fg.lightGray);
 		std.stdio.writeln(args);
 	}
 
 	public static void warnln(S ...)(S args)
 	{
-		cwriteln("WARN > ".color(fg.yellow), "".color(fg.white), args);
+		writecln(Fg.yellow, "WARN > ", Fg.lightGray, args);
 	}
 
 	/// warnln with separator between args
 	public static void warnsln(T, S ...)(T separator, S args)
 	{
-		cwrite("WARN > ".color(fg.yellow), "".color(fg.white));
+		writec(Fg.yellow, "WARN > ", Fg.lightGray);
 		foreach(i, arg; args)
 		{
 			if(i != args.length - 1)
-				cwrite(args[i], separator);
+				writec(args[i], separator);
 			else
-				cwriteln(args[i]);
+				writecln(args[i]);
 		}
 	}
 
 	/// warnln with format
 	public static void warnfln(S ...)(S args)
 	{
-		cwrite("WARN > ".color(fg.yellow), "".color(fg.white));
+		writec(Fg.yellow, "WARN > ", Fg.lightGray);
 		std.stdio.writeln(args);
 	}
 
 	public static void errln(S ...)(S args)
 	{
-		cwriteln("ERROR > ".color(fg.red), "".color(fg.white), args);
+		writecln(Fg.red, "ERROR > ", Fg.lightGray, args);
 	}
 
 	/// errln with separator between args
 	public static void errsln(T, S ...)(T separator, S args)
 	{
-		cwrite("ERROR > ".color(fg.red), "".color(fg.white));
+		writec(Fg.red, "ERROR > ", Fg.lightGray);
 		foreach(i, arg; args)
 		{
 			if(i != args.length - 1)
-				cwrite(args[i], separator);
+				writec(args[i], separator);
 			else
-				cwriteln(args[i]);
+				writecln(args[i]);
 		}
 	}
 
 	/// errln with format
 	public static void errfln(S ...)(S args)
 	{
-		cwrite("ERROR > ".color(fg.red), "".color(fg.white));
+		writec(Fg.red, "ERROR > ", Fg.lightGray);
 		std.stdio.writeln(args);
 	}
 
 	public static void errln(Exception e)
 	{
-		cwriteln("ERROR > ".color(fg.red), "".color(fg.white), e.file, "@", e.line, ": ", e.msg);
+		writecln(Fg.red, "ERROR > ", Fg.lightGray, e.file, "@", e.line, ": ", e.msg);
 	}
 }
 
@@ -93,7 +93,7 @@ class LuaLogger
 {
 	public static void writeln(S)(S[] args ...)
 	{
-		cwrite("LUA INFO > ".color(fg.light_black), "".color(fg.white));
+		writec(Fg.gray, "LUA INFO > ", Fg.lightGray);
 		foreach (param; args)
 			std.stdio.write(param);
 		std.stdio.writeln();
@@ -101,7 +101,7 @@ class LuaLogger
 
 	public static void warnln(S)(S[] args ...)
 	{
-		cwrite("LUA WARN > ".color(fg.yellow), "".color(fg.white));
+		writec(Fg.yellow, "LUA WARN > ", Fg.lightGray);
 		foreach (param; args)
 			std.stdio.write(param);
 		std.stdio.writeln();
@@ -109,7 +109,7 @@ class LuaLogger
 
 	public static void errln(S)(S[] args ...)
 	{
-		cwrite("LUA ERROR > ".color(fg.red), "".color(fg.white));
+		writec(Fg.red, "LUA ERROR > ", Fg.lightGray);
 		foreach (param; args)
 			std.stdio.write(param);
 		std.stdio.writeln();
