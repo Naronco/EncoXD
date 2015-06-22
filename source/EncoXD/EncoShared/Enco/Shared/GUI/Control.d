@@ -171,7 +171,8 @@ class Control : GameObject
 		m_guiSize.x = renderer.size.x;
 		m_guiSize.y = renderer.size.y;
 
-		
+		m_mouseState = Mouse.getState();
+		m_hover = m_mouseState.position.inRect(vec4(x, y, width, height));
 
 		drawGUI(renderer);
 	}
@@ -324,6 +325,13 @@ class Control : GameObject
 		return m_align;
 	}
 
+	public @property bool isHover()
+	{
+		return m_hover;
+	}
+
+	private MouseState* m_mouseState;
+	private bool m_hover;
 	private GUILength m_x, m_y;
 	private GUILength m_width, m_height;
 	private bool m_visible = true;
