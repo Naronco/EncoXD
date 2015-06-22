@@ -5,12 +5,12 @@ import std.datetime;
 
 class Random
 {
-	public this(u64 seed)
+	public this(ulong seed)
 	{
 		setSeed(seed);
 	}
 
-	public this(u64 x, u64 y, u64 z)
+	public this(ulong x, ulong y, ulong z)
 	{
 		m_x = x + 1; // Make sure they are not zero
 		m_y = y + 1;
@@ -22,27 +22,27 @@ class Random
 		setSeed(Clock.currSystemTick().length);
 	}
 
-	public void setSeed(u64 seed)
+	public void setSeed(ulong seed)
 	{
 		m_x = seed + 1; // Make sure they are not zero
 		m_y = seed + 2;
 		m_z = seed + 3;
 	}
 
-	public void setSeed(u64 x, u64 y, u64 z)
+	public void setSeed(ulong x, ulong y, ulong z)
 	{
 		m_x = x + 1; // Make sure they are not zero
 		m_y = y + 1;
 		m_z = z + 1;
 	}
 
-	public u64 nextLong()
+	public ulong nextLong()
 	{
 		m_x ^= m_x << 16;
 		m_x ^= m_x >> 5;
 		m_x ^= m_x << 1;
 
-		u64 t = m_x;
+		ulong t = m_x;
 		m_x = m_y;
 		m_y = m_z;
 		m_z = t ^ m_x ^ m_y;
@@ -50,24 +50,24 @@ class Random
 		return m_z;
 	}
 
-	public u32 nextInt()
+	public uint nextInt()
 	{
-		return nextLong() % u32.max;
+		return nextLong() % uint.max;
 	}
 
-	public u32 nextInt(u32 max)
+	public uint nextInt(uint max)
 	{
 		return nextLong() % max;
 	}
 
-	public f64 nextDouble()
+	public double nextDouble()
 	{
-		return (nextLong() % u64.max) / cast(f64) u64.max;
+		return (nextLong() % ulong.max) / cast(double) ulong.max;
 	}
 
-	public f32 nextFloat()
+	public float nextFloat()
 	{
-		return cast(f32) nextDouble();
+		return cast(float) nextDouble();
 	}
 
 	public bool nextBool()
@@ -75,7 +75,7 @@ class Random
 		return nextInt(2) == 0;
 	}
 
-	private u64 m_x = 56447;
-	private u64 m_y = 48914;
-	private u64 m_z = 84792;
+	private ulong m_x = 56447;
+	private ulong m_y = 48914;
+	private ulong m_z = 84792;
 }

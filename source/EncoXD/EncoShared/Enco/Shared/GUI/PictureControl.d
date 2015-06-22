@@ -18,7 +18,7 @@ class PictureControl : Control
 		m_color = color; m_color4f = vec4(color.R * 0.00392156862f, color.G * 0.00392156862, color.B * 0.00392156862, 1);
 	}
 
-	public @property ref f32 opacity()
+	public @property ref float opacity()
 	{
 		return m_color4f.w;
 	}

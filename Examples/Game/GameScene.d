@@ -128,7 +128,7 @@ class Game3DLayer : RenderLayer
 
 	private int makeUniqueFromXY(int x, int y)
 	{
-		return cast(i32) ((x & 0xFFFF) << 16 | (y & 0xFFFF));
+		return cast(int) ((x & 0xFFFF) << 16 | (y & 0xFFFF));
 	}
 
 

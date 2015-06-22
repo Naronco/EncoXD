@@ -2,14 +2,14 @@ module Enco.Shared.Render.Shader;
 
 import EncoShared;
 
-enum ShaderType : u8
+enum ShaderType : ubyte
 {
 	Vertex, TessControl, TessEvaluation, Geometry, Fragment
 }
 
 interface ShaderProgram
 {
-	u32 create();
+	uint create();
 
 	void attach(Shader shader);
 
@@ -41,7 +41,7 @@ interface ShaderProgram
 
 	void set(string uniform, mat4 value);
 
-	u32 id();
+	uint id();
 }
 
 interface Shader
@@ -50,5 +50,5 @@ interface Shader
 
 	bool compile();
 
-	u32 id();
+	uint id();
 }

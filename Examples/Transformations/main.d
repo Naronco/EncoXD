@@ -23,7 +23,7 @@ class SolarsystemLayer : RenderLayer
 		// TODO: Add more planets
 	}
 
-	override protected void update(f64 deltaTime)
+	override protected void update(double deltaTime)
 	{
 		sun.transform.rotation = earth.transform.rotation + vec3(0, deltaTime * 0.1f, 0);
 		earth.transform.rotation = earth.transform.rotation + vec3(0, deltaTime * 2.1f, 0);
@@ -76,7 +76,7 @@ class GameWindow : DesktopView
 		draw2D();
 	}
 
-	override protected void onUpdate(f64 delta)
+	override protected void onUpdate(double delta)
 	{
 		update(delta);
 	}

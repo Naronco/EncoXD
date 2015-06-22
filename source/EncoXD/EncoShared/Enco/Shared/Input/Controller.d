@@ -5,7 +5,7 @@ import EncoShared;
 struct ControllerState
 {
 	public bool[] keys = new bool[SDL_CONTROLLER_BUTTON_MAX];
-	public f64[] axis = new float[SDL_CONTROLLER_AXIS_MAX];
+	public double[] axis = new float[SDL_CONTROLLER_AXIS_MAX];
 	public bool isConnected = false;
 
 	public static ControllerState* init()
@@ -16,17 +16,17 @@ struct ControllerState
 		return state;
 	}
 
-	public bool isKeyDown(u8 key)
+	public bool isKeyDown(ubyte key)
 	{
 		return keys[key];
 	}
 
-	public bool isKeyUp(u8 key)
+	public bool isKeyUp(ubyte key)
 	{
 		return !keys[key];
 	}
 
-	public f64 getAxis(i8 index)
+	public double getAxis(byte index)
 	{
 		return axis[index];
 	}
@@ -34,38 +34,38 @@ struct ControllerState
 
 class Controller
 {
-	public static ControllerState* getState(i32 index)
+	public static ControllerState* getState(int index)
 	{
 		if ((index in states) == null)
 			states[index] = ControllerState.init();
 		return states[index];
 	}
 
-	public static void setKey(i32 index, u8 key, bool state)
+	public static void setKey(int index, ubyte key, bool state)
 	{
 		if ((index in states) is null)
 			states[index] = ControllerState.init();
 		states[index].keys[key] = state;
 	}
 
-	public static void setAxis(i32 index, u8 axis, i16 value)
+	public static void setAxis(int index, ubyte axis, short value)
 	{
 		if ((index in states) is null)
 			states[index] = ControllerState.init();
 		states[index].axis[axis] = value * 0.00003051757; // 1 / 32768
 	}
 
-	public static void setConnected(i32 index, bool connected)
+	public static void setConnected(int index, bool connected)
 	{
 		if ((index in states) is null)
 			states[index] = ControllerState.init();
 		states[index].isConnected = connected;
 	}
 
-	public static ControllerState*[i32] states;
+	public static ControllerState*[int] states;
 }
 
-enum ControllerIndex : i32
+enum ControllerIndex : int
 {
 	One = 0,
 	Two,
@@ -73,7 +73,7 @@ enum ControllerIndex : i32
 	Four
 }
 
-enum ControllerAxis : u8
+enum ControllerAxis : ubyte
 {
 	Invalid = 255,
 	LeftX   = 0,
@@ -86,21 +86,21 @@ enum ControllerAxis : u8
 
 struct ControllerAxisEvent
 {
-	u32 timestamp;
+	uint timestamp;
 	union
 	{
 		ControllerIndex index;
-		i32 id;
+		int id;
 	}
 	union
 	{
 		ControllerAxis axis;
-		u8 axisID;
+		ubyte axisID;
 	}
-	i16 value;
+	short value;
 }
 
-enum ControllerButton : u8
+enum ControllerButton : ubyte
 {
 	Invalid = 255,
 	A       = 0,
@@ -122,52 +122,52 @@ enum ControllerButton : u8
 
 struct ControllerButtonDownEvent
 {
-	u32 timestamp;
+	uint timestamp;
 	union
 	{
 		ControllerIndex index;
-		i32 id;
+		int id;
 	}
 	union
 	{
 		ControllerButton button;
-		u8 buttonID;
+		ubyte buttonID;
 	}
-	u8 state;
+	ubyte state;
 }
 
 struct ControllerButtonUpEvent
 {
-	u32 timestamp;
+	uint timestamp;
 	union
 	{
 		ControllerIndex index;
-		i32 id;
+		int id;
 	}
 	union
 	{
 		ControllerButton button;
-		u8 buttonID;
+		ubyte buttonID;
 	}
-	u8 state;
+	ubyte state;
 }
 
 struct ControllerAddedEvent
 {
-	u32 timestamp;
+	uint timestamp;
 	union
 	{
 		ControllerIndex index;
-		i32 id;
+		int id;
 	}
 }
 
 struct ControllerRemovedEvent
 {
-	u32 timestamp;
+	uint timestamp;
 	union
 	{
 		ControllerIndex index;
-		i32 id;
+		int id;
 	}
 }

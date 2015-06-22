@@ -8,10 +8,10 @@ abstract class IComponent
 	{
 	}
 
-	void preUpdate(f64 deltaTime)
+	void preUpdate(double deltaTime)
 	{
 	}
-	void update(f64 deltaTime)
+	void update(double deltaTime)
 	{
 	}
 

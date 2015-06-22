@@ -12,7 +12,7 @@ enum TextureFilterMode : int
 	LinearMipmapLinear   = GL_LINEAR_MIPMAP_LINEAR,
 }
 
-enum TextureClampMode : i32
+enum TextureClampMode : int
 {
 	ClampToBorder = GL_CLAMP_TO_BORDER,
 	ClampToEdge   = GL_CLAMP_TO_EDGE,
@@ -30,21 +30,21 @@ class GLTexture : ITexture
 	public TextureClampMode wrapX = TextureClampMode.Repeat;
 	public TextureClampMode wrapY = TextureClampMode.Repeat;
 
-	private i32 inMode, mode;
-	private u32 m_id;
-	private u32 m_width, m_height;
+	private int inMode, mode;
+	private uint m_id;
+	private uint m_width, m_height;
 
-	public @property u32 id()
+	public @property uint id()
 	{
 		return m_id;
 	}
 
-	public @property u32 width()
+	public @property uint width()
 	{
 		return m_width;
 	}
 
-	public @property u32 height()
+	public @property uint height()
 	{
 		return m_height;
 	}
@@ -71,12 +71,12 @@ class GLTexture : ITexture
 		destroy();
 	}
 
-	public void create(u32 width, u32 height, void[] pixels)
+	public void create(uint width, uint height, void[] pixels)
 	{
 		create(width, height, GL_RGBA, pixels);
 	}
 
-	public void create(u32 width, u32 height, i32 mode, void[] pixels)
+	public void create(uint width, uint height, int mode, void[] pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
@@ -91,7 +91,7 @@ class GLTexture : ITexture
 		m_height = height;
 	}
 
-	public void create(u32 width, u32 height, i32 inMode, i32 mode, void[] pixels, int type = GL_UNSIGNED_BYTE)
+	public void create(uint width, uint height, int inMode, int mode, void[] pixels, int type = GL_UNSIGNED_BYTE)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
@@ -123,7 +123,7 @@ class GLTexture : ITexture
 		}
 	}
 
-	public void bind(u32 unit)
+	public void bind(uint unit)
 	{
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_2D, m_id);
@@ -137,7 +137,7 @@ class GLTexture : ITexture
 			return;
 		}
 
-		i32 mode = GL_RGB;
+		int mode = GL_RGB;
 
 		if (bitmap.surface.format.BytesPerPixel == 4)
 		{
@@ -147,7 +147,7 @@ class GLTexture : ITexture
 		create(bitmap.width, bitmap.height, mode, bitmap.surface.pixels[0 .. bitmap.width * bitmap.height * bitmap.surface.format.BytesPerPixel]);
 	}
 
-	public void resize(u32 width, u32 height, void[] pixels = null)
+	public void resize(uint width, uint height, void[] pixels = null)
 	{
 		bind(0);
 		glTexImage2D(GL_TEXTURE_2D, 0, inMode, width, height, 0, mode, GL_UNSIGNED_BYTE, pixels.ptr);
@@ -163,35 +163,35 @@ class GLTexture : ITexture
 	public Bitmap toBitmap()
 	{
 		bind(0);
-		u8[] pixels = new u8[width * height];
+		ubyte[] pixels = new ubyte[width * height];
 		glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixels.ptr);
 		scope (exit)
 		{
 			delete pixels; // Otherwise program crashes after second time and destroy, pixels = null, pixels[] = 0 doesnt work
 		}
-		return new Bitmap(pixels, cast(i32) width, cast(i32) height, 32);
+		return new Bitmap(pixels, cast(int) width, cast(int) height, 32);
 	}
 }
 
 
 class GLTexture3D : ITexture3D
 {
-	@property u32 width()
+	@property uint width()
 	{
 		return m_width;
 	}
 
-	@property u32 height()
+	@property uint height()
 	{
 		return m_height;
 	}
 
-	@property u32 depth()
+	@property uint depth()
 	{
 		return m_depth;
 	}
 
-	private u32 m_width, m_height, m_depth;
+	private uint m_width, m_height, m_depth;
 
 	public bool enableMipMaps = false;
 
@@ -202,20 +202,20 @@ class GLTexture3D : ITexture3D
 	public TextureClampMode wrapY = TextureClampMode.Repeat;
 	public TextureClampMode wrapZ = TextureClampMode.Repeat;
 
-	private u32 m_id;
-	public @property u32 id()
+	private uint m_id;
+	public @property uint id()
 	{
 		return m_id;
 	}
 
-	private i32 m_mode;
+	private int m_mode;
 
-	public void create(u32 width, u32 height, u32 depth, void[] pixels)
+	public void create(uint width, uint height, uint depth, void[] pixels)
 	{
 		create(width, height, depth, GL_RGBA, pixels);
 	}
 
-	public void create(u32 width, u32 height, u32 depth, i32 mode, void[] pixels)
+	public void create(uint width, uint height, uint depth, int mode, void[] pixels)
 	{
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_3D, m_id);
@@ -248,7 +248,7 @@ class GLTexture3D : ITexture3D
 		}
 	}
 
-	public void bind(u32 unit)
+	public void bind(uint unit)
 	{
 		glActiveTexture(GL_TEXTURE0 + unit);
 		glBindTexture(GL_TEXTURE_3D, m_id);
@@ -262,7 +262,7 @@ class GLTexture3D : ITexture3D
 			return;
 		}
 
-		i32 mode = GL_RGB;
+		int mode = GL_RGB;
 
 		if (bitmap.surface.format.BytesPerPixel == 4)
 		{
@@ -272,7 +272,7 @@ class GLTexture3D : ITexture3D
 		create(bitmap.width, bitmap.width, bitmap.height / bitmap.width, mode, bitmap.surface.pixels[0 .. bitmap.width * bitmap.width * (bitmap.height / bitmap.width) * bitmap.surface.format.BytesPerPixel]);
 	}
 
-	public void resize(u32 width, u32 height, u32 depth, void[] pixels = null)
+	public void resize(uint width, uint height, uint depth, void[] pixels = null)
 	{
 		bind(0);
 		m_width = width;

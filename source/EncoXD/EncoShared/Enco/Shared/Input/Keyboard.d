@@ -6,12 +6,12 @@ struct KeyboardState
 {
 	public bool[int] keys;
 
-	public bool isKeyDown(u32 key)
+	public bool isKeyDown(uint key)
 	{
 		return (key in keys) !is null;
 	}
 
-	public bool isKeyUp(u32 key)
+	public bool isKeyUp(uint key)
 	{
 		return (key in keys) is null;
 	}
@@ -24,7 +24,7 @@ class Keyboard
 		return state;
 	}
 
-	public static void setKey(u32 key, bool click)
+	public static void setKey(uint key, bool click)
 	{
 		if (click)
 			state.keys[key] = true;
@@ -42,29 +42,29 @@ class Keyboard
 
 struct KeyDownEvent
 {
-	u32 timestamp;
-	u32 window;
-	u8 state;
-	u8 repeat;
+	uint timestamp;
+	uint window;
+	ubyte state;
+	ubyte repeat;
 
 	union
 	{
 		Key key;
-		i32 keyID;
+		int keyID;
 	}
 }
 
 struct KeyUpEvent
 {
-	u32 timestamp;
-	u32 window;
-	u8 state;
-	u8 repeat;
+	uint timestamp;
+	uint window;
+	ubyte state;
+	ubyte repeat;
 
 	union
 	{
 		Key key;
-		i32 keyID;
+		int keyID;
 	}
 }
 

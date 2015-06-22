@@ -6,11 +6,11 @@ import EncoShared;
 
 class RenderableMesh
 {
-	public u32 bufferID;
-	public u32 * vbos;
-	public u32 indexLength;
+	public uint bufferID;
+	public uint * vbos;
+	public uint indexLength;
 
-	public this(u32 bufferID, u32 * vbos, u32 indexLength)
+	public this(uint bufferID, uint * vbos, uint indexLength)
 	{
 		this.bufferID = bufferID;
 		this.vbos = vbos;
@@ -20,7 +20,7 @@ class RenderableMesh
 
 class MeshUtils
 {
-	public static Mesh createPlane(f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	public static Mesh createPlane(float left = -1, float right = 1, float bottom = 1, float top = -1, float uvX1 = 0, float uvY1 = 0, float uvX2 = 1, float uvY2 = 1)
 	{
 		Mesh m = new Mesh();
 		m.addVertices([vec3(left, top, 0), vec3(right, top, 0), vec3(right, bottom, 0), vec3(left, bottom, 0)]);
@@ -30,7 +30,7 @@ class MeshUtils
 		return m;
 	}
 
-	public static Mesh createPlaneX(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	public static Mesh createPlaneX(float offset = 0, float left = -1, float right = 1, float bottom = 1, float top = -1, float uvX1 = 0, float uvY1 = 0, float uvX2 = 1, float uvY2 = 1)
 	{
 		Mesh m = new Mesh();
 		m.addVertices([vec3(offset, left, top), vec3(offset, right, top), vec3(offset, right, bottom), vec3(offset, left, bottom)]);
@@ -40,7 +40,7 @@ class MeshUtils
 		return m;
 	}
 
-	public static Mesh createPlaneY(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	public static Mesh createPlaneY(float offset = 0, float left = -1, float right = 1, float bottom = 1, float top = -1, float uvX1 = 0, float uvY1 = 0, float uvX2 = 1, float uvY2 = 1)
 	{
 		Mesh m = new Mesh();
 		m.addVertices([vec3(left, offset, top), vec3(right, offset, top), vec3(right, offset, bottom), vec3(left, offset, bottom)]);
@@ -50,7 +50,7 @@ class MeshUtils
 		return m;
 	}
 
-	public static Mesh createPlaneZ(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	public static Mesh createPlaneZ(float offset = 0, float left = -1, float right = 1, float bottom = 1, float top = -1, float uvX1 = 0, float uvY1 = 0, float uvX2 = 1, float uvY2 = 1)
 	{
 		Mesh m = new Mesh();
 		m.addVertices([vec3(left, top, offset), vec3(right, top, offset), vec3(right, bottom, offset), vec3(left, bottom, offset)]);
@@ -60,7 +60,7 @@ class MeshUtils
 		return m;
 	}
 
-	public static Mesh createPlaneXInv(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	public static Mesh createPlaneXInv(float offset = 0, float left = -1, float right = 1, float bottom = 1, float top = -1, float uvX1 = 0, float uvY1 = 0, float uvX2 = 1, float uvY2 = 1)
 	{
 		Mesh m = new Mesh();
 		m.addVertices([vec3(offset, left, top), vec3(offset, right, top), vec3(offset, right, bottom), vec3(offset, left, bottom)]);
@@ -70,7 +70,7 @@ class MeshUtils
 		return m;
 	}
 
-	public static Mesh createPlaneYInv(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	public static Mesh createPlaneYInv(float offset = 0, float left = -1, float right = 1, float bottom = 1, float top = -1, float uvX1 = 0, float uvY1 = 0, float uvX2 = 1, float uvY2 = 1)
 	{
 		Mesh m = new Mesh();
 		m.addVertices([vec3(left, offset, top), vec3(right, offset, top), vec3(right, offset, bottom), vec3(left, offset, bottom)]);
@@ -80,7 +80,7 @@ class MeshUtils
 		return m;
 	}
 
-	public static Mesh createPlaneZInv(f32 offset = 0, f32 left = -1, f32 right = 1, f32 bottom = 1, f32 top = -1, f32 uvX1 = 0, f32 uvY1 = 0, f32 uvX2 = 1, f32 uvY2 = 1)
+	public static Mesh createPlaneZInv(float offset = 0, float left = -1, float right = 1, float bottom = 1, float top = -1, float uvX1 = 0, float uvY1 = 0, float uvX2 = 1, float uvY2 = 1)
 	{
 		Mesh m = new Mesh();
 		m.addVertices([vec3(left, top, offset), vec3(right, top, offset), vec3(right, bottom, offset), vec3(left, bottom, offset)]);
@@ -91,7 +91,7 @@ class MeshUtils
 	}
 
 
-	public static Mesh createCube(f32 diaX = 1, f32 diaY = 1, f32 diaZ = 1, f32 offX = 0, f32 offY = 0, f32 offZ = 0)
+	public static Mesh createCube(float diaX = 1, float diaY = 1, float diaZ = 1, float offX = 0, float offY = 0, float offZ = 0)
 	{
 		Mesh m = new Mesh();
 		vec3 off = vec3(offX, offY, offZ);
@@ -155,14 +155,14 @@ class MeshUtils
 	public static Mesh merge(Mesh[] meshes)
 	{
 		Mesh m = new Mesh();
-		u32 maxIndex = 0;
+		uint maxIndex = 0;
 		foreach (ref Mesh mesh; meshes)
 		{
 			m.addVertices(mesh.vertices);
 			m.addTexCoords(mesh.texCoords);
 			m.addNormals(mesh.normals);
-			u32 off = maxIndex;
-			foreach (ref u32 index; mesh.indices)
+			uint off = maxIndex;
+			foreach (ref uint index; mesh.indices)
 			{
 				m.addIndex(index + off);
 				maxIndex = max(maxIndex, index);
@@ -182,7 +182,7 @@ class Mesh
 	{
 		return m_normals;
 	}
-	public @property u32[] indices()
+	public @property uint[] indices()
 	{
 		return m_indices;
 	}
@@ -209,11 +209,11 @@ class Mesh
 		m_normals ~= normals;
 	}
 
-	public void addIndex(u32 index)
+	public void addIndex(uint index)
 	{
 		m_indices.length++; m_indices[m_indices.length - 1] = index;
 	}
-	public void addIndices(const u32[] indices)
+	public void addIndices(const uint[] indices)
 	{
 		m_indices ~= indices;
 	}
@@ -227,7 +227,7 @@ class Mesh
 		m_texCoords ~= texCoords;
 	}
 
-	public static Mesh[] loadFromObj(string file, u32 flags)
+	public static Mesh[] loadFromObj(string file, uint flags)
 	{
 		const aiScene* scene = aiImportFile(file.toStringz(), aiProcess_GenNormals |
 		                                    aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_FlipUVs | flags);
@@ -265,5 +265,5 @@ class Mesh
 	private vec3[]        m_vertices;
 	private vec3[]        m_normals;
 	private vec2[]        m_texCoords;
-	private u32[]         m_indices;
+	private uint[]         m_indices;
 }

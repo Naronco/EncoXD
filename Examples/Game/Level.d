@@ -69,7 +69,7 @@ class LuaBlock : Block
 struct BlockRegister
 {
 	int			rgb;
-	u8			mid;
+	ubyte			mid;
 	LuaFunction added;
 	LuaFunction playerStateChange;
 	LuaFunction playerRespawn;
@@ -107,12 +107,12 @@ class Level : GameObject
 		};
 	}
 
-	private void registerBlock(u8 r, u8 g, u8 b, u8 mid, LuaFunction added, LuaFunction playerStateChange, LuaFunction playerRespawn)
+	private void registerBlock(ubyte r, ubyte g, ubyte b, ubyte mid, LuaFunction added, LuaFunction playerStateChange, LuaFunction playerRespawn)
 	{
 		m_registered ~= BlockRegister(r << 16 | g << 8 | b, mid, added, playerStateChange, playerRespawn);
 	}
 
-	private void registerBlockImportant(u8 r, u8 g, u8 b, u8 mid, LuaFunction added, LuaFunction playerStateChange, LuaFunction playerRespawn)
+	private void registerBlockImportant(ubyte r, ubyte g, ubyte b, ubyte mid, LuaFunction added, LuaFunction playerStateChange, LuaFunction playerRespawn)
 	{
 		m_registeredI ~= BlockRegister(r << 16 | g << 8 | b, mid, added, playerStateChange, playerRespawn);
 	}

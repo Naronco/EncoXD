@@ -148,7 +148,7 @@ struct Color
 	public static const Color Yellow = Color.fromRGB(0xFFFF00);
 	public static const Color YellowGreen = Color.fromRGB(0x9ACD32);
 
-	public this(u8 r, u8 g, u8 b)
+	public this(ubyte r, ubyte g, ubyte b)
 	{
 		m_r = r;
 		m_g = g;
@@ -156,17 +156,17 @@ struct Color
 	}
 
 	deprecated ("Use fromRGB instead")
-	public static Color fromHex(const i32 hex)
+	public static Color fromHex(const int hex)
 	{
 		return Color((hex >> 16) & 0xFF, (hex >> 8) & 0xFF, hex & 0xFF);
 	}
 
-	public static Color fromRGB(const i32 hex)
+	public static Color fromRGB(const int hex)
 	{
 		return Color((hex >> 16) & 0xFF, (hex >> 8) & 0xFF, hex & 0xFF);
 	}
 
-	public static Color fromBGR(const i32 hex)
+	public static Color fromBGR(const int hex)
 	{
 		return Color(hex & 0xFF, (hex >> 8) & 0xFF, (hex >> 16) & 0xFF);
 	}
@@ -177,23 +177,23 @@ struct Color
 	/// <param name="saturation">Saturation in range 0 - 1</param>
 	/// <param name="lightness">Lightness in range 0 - 1</param>
 	/// </summary>
-	public void fromHSL(f64 hue, f64 saturation, f64 lightness)
+	public void fromHSL(double hue, double saturation, double lightness)
 	{
-		f64 v = lightness <= 0.5 ? (lightness * (1 + saturation)) : (1 + saturation - lightness * saturation);
-		f64 r, g, b;
+		double v = lightness <= 0.5 ? (lightness * (1 + saturation)) : (1 + saturation - lightness * saturation);
+		double r, g, b;
 		r = g = b = 1;
 
 		if (v > 0)
 		{
-			f64 m;
-			f64 sv;
-			i32 sextant;
-			f64 fract, vsf, mid1, mid2;
+			double m;
+			double sv;
+			int sextant;
+			double fract, vsf, mid1, mid2;
 
 			m = lightness + lightness - v;
 			sv = (v - m) / v;
 			hue *= 6.0;
-			sextant = cast(i32) hue;
+			sextant = cast(int) hue;
 			fract = hue - sextant;
 			vsf = v * sv * fract;
 			mid1 = m + vsf;
@@ -234,9 +234,9 @@ struct Color
 				break;
 			}
 		}
-		m_r = cast(u8) (r * 255);
-		m_g = cast(u8) (g * 255);
-		m_b = cast(u8) (b * 255);
+		m_r = cast(ubyte) (r * 255);
+		m_g = cast(ubyte) (g * 255);
+		m_b = cast(ubyte) (b * 255);
 	}
 
 	public override bool opEquals()(auto ref const Color color) const
@@ -249,28 +249,28 @@ struct Color
 		return SDL_Color(m_r, m_g, m_b, 255);
 	}
 
-	public @property ref u8 R()
+	public @property ref ubyte R()
 	{
 		return m_r;
 	}
-	public @property ref u8 G()
+	public @property ref ubyte G()
 	{
 		return m_g;
 	}
-	public @property ref u8 B()
+	public @property ref ubyte B()
 	{
 		return m_b;
 	}
 
-	public @property f32 fR()
+	public @property float fR()
 	{
 		return m_r * 0.00392156862f;
 	}
-	public @property f32 fG()
+	public @property float fG()
 	{
 		return m_g * 0.00392156862f;
 	}
-	public @property f32 fB()
+	public @property float fB()
 	{
 		return m_b * 0.00392156862f;
 	}
@@ -280,11 +280,11 @@ struct Color
 		return vec3(fR, fG, fB);
 	}
 
-	public @property i32 RGB()
+	public @property int RGB()
 	{
 		return m_r << 16 | m_g << 8 | m_b;
 	}
-	public @property i32 BGR()
+	public @property int BGR()
 	{
 		return m_r | m_g << 8 | m_b << 16;
 	}
@@ -294,5 +294,5 @@ struct Color
 		return format("[R: %s, G: %s, B: %s]", m_r, m_g, m_b);
 	}
 
-	private u8 m_r, m_g, m_b;
+	private ubyte m_r, m_g, m_b;
 }

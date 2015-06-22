@@ -17,11 +17,11 @@ class FreeMove : IComponent
 	{
 	}
 
-	public override void preUpdate(f64 deltaTime)
+	public override void preUpdate(double deltaTime)
 	{
 	}
 
-	public override void update(f64 deltaTime)
+	public override void update(double deltaTime)
 	{
 		kstate = Keyboard.getState();
 		cstate = Controller.getState(0);

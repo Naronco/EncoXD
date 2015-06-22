@@ -231,6 +231,7 @@
   <Folder name="Ext">
    <File path="Enco\Shared\Ext\Array.d" />
    <File path="Enco\Shared\Ext\String.d" />
+   <File path="Vector.d" />
   </Folder>
   <Folder name="GUI">
    <File path="Enco\Shared\GUI\Control.d" />
@@ -255,7 +256,6 @@
   </Folder>
   <Folder name="Network">
    <File path="Enco\Shared\Network\Network.d" />
-   <File path="Enco\Shared\Network\Tcp.d" />
   </Folder>
   <Folder name="Render">
    <File path="Enco\Shared\Render\Bitmap.d" />

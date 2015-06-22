@@ -14,11 +14,11 @@ class Player : IComponent
 		this.object = object;
 	}
 
-	override void preUpdate(f64 deltaTime)
+	override void preUpdate(double deltaTime)
 	{
 	}
 
-	override void update(f64 deltaTime)
+	override void update(double deltaTime)
 	{
 		state = Keyboard.getState();
 		controller = Controller.getState(0);

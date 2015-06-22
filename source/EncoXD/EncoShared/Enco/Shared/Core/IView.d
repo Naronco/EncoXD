@@ -50,12 +50,12 @@ abstract class IView
 	protected abstract void onResize();
 	protected abstract void onRename();
 
-	public @property u32 width()
+	public @property uint width()
 	{
 		return m_size.x;
 	}
 
-	public @property u32 height()
+	public @property uint height()
 	{
 		return m_size.y;
 	}
@@ -93,7 +93,7 @@ abstract class IView
 		renderer.endFrame();
 	}
 
-	public void performUpdate(f64 delta)
+	public void performUpdate(double delta)
 	{
 		onUpdate(delta);
 	}
@@ -110,7 +110,7 @@ abstract class IView
 			scene.performDraw2D(renderer.gui);
 	}
 
-	public void update(f64 delta)
+	public void update(double delta)
 	{
 		if (m_scene !is null)
 			m_scene.performUpdate(delta);
@@ -120,7 +120,7 @@ abstract class IView
 	{
 	}
 
-	protected abstract void onUpdate(f64 delta)
+	protected abstract void onUpdate(double delta)
 	{
 	}
 

@@ -37,7 +37,7 @@ class GUIRenderer
 		return m_size;
 	}
 
-	public void resize(u32 width, u32 height)
+	public void resize(uint width, uint height)
 	{
 		iwidth = 1.0f / width;
 		iheight = 1.0f / height;
@@ -73,7 +73,7 @@ class GUIRenderer
 	{
 		material.bind(renderer);
 
-		material.program.set("clip", vec4(clip.x / cast(f32)texture.width, clip.y / cast(f32)texture.height, clip.z / cast(f32)texture.width, clip.w / cast(f32)texture.height));
+		material.program.set("clip", vec4(clip.x / cast(float)texture.width, clip.y / cast(float)texture.height, clip.z / cast(float)texture.width, clip.w / cast(float)texture.height));
 		material.program.set("color", color);
 		material.program.set("modelview", mat4.identity.translate(position.x * iwidth * 2 - 1, -(position.y * iheight * 2 + size.y * iheight * 2 - 1), 0) * mat4.identity.scale(size.x * iwidth * 2, size.y * iheight * 2, 1));
 		material.program.set("projection", mat4.identity);

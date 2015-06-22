@@ -6,7 +6,7 @@ class Font
 {
 	private TTF_Font* handle;
 
-	public this(string font, i32 sizeInPt)
+	public this(string font, int sizeInPt)
 	{
 		if (!EncoContext.instance.loaded.contains(DynamicLibrary.SDL2TTF))
 		{
@@ -33,10 +33,10 @@ class Font
 	{
 		ITexture tex = new T();
 		string[] lines = text.split('\n');
-		i32 maxWidth;
+		int maxWidth;
 		foreach (string line; lines)
 		{
-			i32 w, h;
+			int w, h;
 			TTF_SizeText(handle, line.toStringz(), &w, &h);
 			maxWidth = max(w, maxWidth);
 		}

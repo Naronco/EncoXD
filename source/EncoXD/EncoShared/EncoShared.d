@@ -62,7 +62,6 @@ public
 	import Enco.Shared.Ext.Vector;
 
 	import Enco.Shared.Network.Network;
-	import Enco.Shared.Network.Tcp;
 
 	import Enco.Shared.Animation.Animation;
 	import Enco.Shared.Animation.BasicEaseFunctions;
@@ -81,12 +80,12 @@ public
 	import std.string;
 	import std.conv;
 
-	alias char int8, i8;
+	alias byte int8, i8;
 	alias short int16, i16;
 	alias int int32, i32;
 	alias long int64, i64;
 
-	alias ubyte uchar, uint8, u8;
+	alias ubyte uint8, u8;
 	alias ushort uint16, u16;
 	alias uint uint32, u32;
 	alias ulong uint64, u64;
@@ -94,8 +93,8 @@ public
 	alias float f32, float32;
 	alias double f64, float64;
 
-	alias Vector!(u32, 2) u32vec2;
-	alias Vector!(i32, 2) i32vec2;
+	alias Vector!(uint, 2) u32vec2;
+	alias Vector!(int, 2) i32vec2;
 
 	enum ENCO_VERSION = "1.0.0";
 	enum ENCO_VERSION_ID = 1;

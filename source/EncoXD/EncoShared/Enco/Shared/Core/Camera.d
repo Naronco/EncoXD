@@ -41,29 +41,29 @@ class Camera : GameObject
 		return mat4.identity.translate(-transform.position.x, -transform.position.y, -transform.position.z);
 	}
 
-	public @property f32 nearClip()
+	public @property float nearClip()
 	{
 		return m_near;
 	}
-	public @property f32 farClip()
+	public @property float farClip()
 	{
 		return m_far;
 	}
-	public @property f32 width()
+	public @property float width()
 	{
 		return m_width;
 	}
-	public @property f32 height()
+	public @property float height()
 	{
 		return m_height;
 	}
-	public @property f32 fov()
+	public @property float fov()
 	{
 		return m_fov;
 	}
 
 	/// Zoom for Orthographic3D (Defaults to 7)
-	public @property f32 zoom()
+	public @property float zoom()
 	{
 		return 1 / m_iZoom;
 	}
@@ -72,29 +72,29 @@ class Camera : GameObject
 		return m_mode;
 	}
 
-	public @property void nearClip(f32 value)
+	public @property void nearClip(float value)
 	{
 		m_needUpdate = m_needUpdate || m_near != value; m_near = value;
 	}
-	public @property void farClip(f32 value)
+	public @property void farClip(float value)
 	{
 		m_needUpdate = m_needUpdate || m_far != value; m_far = value;
 	}
-	public @property void width(f32 value)
+	public @property void width(float value)
 	{
 		m_needUpdate = m_needUpdate || m_width != value; m_width = value; m_aspect = m_width / m_height;
 	}
-	public @property void height(f32 value)
+	public @property void height(float value)
 	{
 		m_needUpdate = m_needUpdate || m_height != value; m_height = value; m_aspect = m_width / m_height;
 	}
-	public @property void fov(f32 value)
+	public @property void fov(float value)
 	{
 		m_needUpdate = m_needUpdate || m_fov != value; m_fov = value;
 	}
 
 	/// Zoom for Orthographic3D (Defaults to 7)
-	public @property void zoom(f32 value)
+	public @property void zoom(float value)
 	{
 		m_needUpdate = true; m_iZoom = 1 / value;
 	}
@@ -103,13 +103,13 @@ class Camera : GameObject
 		m_needUpdate = m_needUpdate || m_mode != value; m_mode = value;
 	}
 
-	private f32 m_near = 0.1f;
-	private f32 m_far = 100;
-	private f32 m_width = 1;
-	private f32 m_height = 1;
-	private f32 m_aspect = 1;
-	private f32 m_fov = 45;
-	private f32 m_iZoom = 1 / 7.0f;
+	private float m_near = 0.1f;
+	private float m_far = 100;
+	private float m_width = 1;
+	private float m_height = 1;
+	private float m_aspect = 1;
+	private float m_fov = 45;
+	private float m_iZoom = 1 / 7.0f;
 	private ProjectionMode m_mode = ProjectionMode.Perspective;
 
 	private mat4 m_projectionMatrix = mat4.perspective(1, 1, 45, 0.1f, 100);

@@ -6,17 +6,17 @@ import std.datetime;
 
 class Timer
 {
-	public static i64 getMilliseconds()
+	public static long getMilliseconds()
 	{
 		return Clock.currStdTime() / 10000;
 	}
 
-	public static i64 getMicroseconds()
+	public static long getMicroseconds()
 	{
 		return Clock.currStdTime() / 10;
 	}
 
-	public static i64 getHectonanoseconds()
+	public static long getHectonanoseconds()
 	{
 		return Clock.currStdTime();
 	}

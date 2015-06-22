@@ -8,12 +8,12 @@ struct MouseState
 	public vec2 offset = vec2(0, 0);
 	public bool[] buttons = new bool[8];
 
-	public bool isButtonDown(u8 button)
+	public bool isButtonDown(ubyte button)
 	{
 		return buttons[button];
 	}
 
-	public bool isButtonUp(u8 button)
+	public bool isButtonUp(ubyte button)
 	{
 		return !buttons[button];
 	}
@@ -38,24 +38,24 @@ class Mouse
 		SDL_ShowCursor(true);
 	}
 
-	public static void setButton(i8 button, bool isDown)
+	public static void setButton(byte button, bool isDown)
 	{
 		state.buttons[button - 1] = isDown;
 	}
 
-	public static void setPosition(i32 x, i32 y)
+	public static void setPosition(int x, int y)
 	{
 		state.position.x = x;
 		state.position.y = y;
 	}
 
-	public static void addOffset(i32 x, i32 y)
+	public static void addOffset(int x, int y)
 	{
 		state.offset.x += x;
 		state.offset.y += y;
 	}
 
-	public static void setOffset(i32 x, i32 y)
+	public static void setOffset(int x, int y)
 	{
 		state.offset.x = x;
 		state.offset.y = y;
@@ -71,14 +71,14 @@ class Mouse
 
 struct MouseMoveEvent
 {
-	u32 id;
-	u32 windowID;
-	u32 timestamp;
+	uint id;
+	uint windowID;
+	uint timestamp;
 	i32vec2 position;
 	i32vec2 offset;
 }
 
-enum MouseButton : u8
+enum MouseButton : ubyte
 {
 	Left,
 	Middle,
@@ -89,39 +89,39 @@ enum MouseButton : u8
 
 struct MouseButtonDownEvent
 {
-	u32 id;
-	u32 windowID;
-	u32 timestamp;
+	uint id;
+	uint windowID;
+	uint timestamp;
 	i32vec2 position;
 	union
 	{
-		u8 buttonID;
+		ubyte buttonID;
 		MouseButton button;
 	}
-	u8 clicks;
-	u8 state;
+	ubyte clicks;
+	ubyte state;
 }
 
 struct MouseButtonUpEvent
 {
-	u32 id;
-	u32 windowID;
-	u32 timestamp;
+	uint id;
+	uint windowID;
+	uint timestamp;
 	i32vec2 position;
 	union
 	{
-		u8 buttonID;
+		ubyte buttonID;
 		MouseButton button;
 	}
-	u8 clicks;
-	u8 state;
+	ubyte clicks;
+	ubyte state;
 }
 
 struct MouseWheelEvent
 {
-	u32 timestamp;
-	u32 windowID;
-	u32 id;
+	uint timestamp;
+	uint windowID;
+	uint id;
 	i32vec2 amount;
 	bool flipped;
 }

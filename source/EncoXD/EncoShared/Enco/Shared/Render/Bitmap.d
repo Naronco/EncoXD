@@ -15,11 +15,11 @@ class Bitmap
 		return m_handle !is null;
 	}
 
-	public @property i32 width()
+	public @property int width()
 	{
 		return m_handle.w;
 	}
-	public @property i32 height()
+	public @property int height()
 	{
 		return m_handle.h;
 	}
@@ -29,7 +29,7 @@ class Bitmap
 		m_handle = surface;
 	}
 
-	public this(i32 width, i32 height, i32 depth)
+	public this(int width, int height, int depth)
 	{
 		m_handle = SDL_CreateRGBSurface(0, width, height, depth, 0, 0, 0, 0);
 	}
@@ -39,7 +39,7 @@ class Bitmap
 		destroy();
 	}
 
-	public this(void[] pixels, i32 width, i32 height, i32 depth)
+	public this(void[] pixels, int width, int height, int depth)
 	{
 		m_handle = SDL_CreateRGBSurfaceFrom(pixels.ptr, width, height, depth, width * (depth >> 3), 0, 0, 0, 0);
 	}
@@ -78,7 +78,7 @@ class Bitmap
 		return new Bitmap(SDL_ConvertSurface(m_handle, format, 0));
 	}
 
-	public u32 mapRGB(Color color)
+	public uint mapRGB(Color color)
 	{
 		return SDL_MapRGB(m_handle.format, color.R, color.G, color.B);
 	}
@@ -88,20 +88,20 @@ class Bitmap
 		SDL_FillRect(m_handle, null, mapRGB(color));
 	}
 
-	public void fill(i32 x, i32 y, i32 width, i32 height, Color color)
+	public void fill(int x, int y, int width, int height, Color color)
 	{
 		SDL_FillRect(m_handle, new SDL_Rect(x, y, width, height), mapRGB(color));
 	}
 
-	public Color getPixel(i32 x, i32 y)
+	public Color getPixel(int x, int y)
 	{
-		u8 r, g, b;
-		SDL_GetRGB((cast(u32*) m_handle.pixels)[x + y * width], m_handle.format, &r, &g, &b);
+		ubyte r, g, b;
+		SDL_GetRGB((cast(uint*) m_handle.pixels)[x + y * width], m_handle.format, &r, &g, &b);
 		return Color(r, g, b);
 	}
 
-	public void setPixel(i32 x, i32 y, Color color)
+	public void setPixel(int x, int y, Color color)
 	{
-		(cast(u32*) m_handle.pixels)[x + y * width] = mapRGB(color);
+		(cast(uint*) m_handle.pixels)[x + y * width] = mapRGB(color);
 	}
 }

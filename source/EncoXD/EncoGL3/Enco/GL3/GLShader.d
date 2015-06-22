@@ -7,7 +7,7 @@ import std.conv;
 
 class GLShaderProgram : ShaderProgram
 {
-	public u32 create()
+	public uint create()
 	{
 		return program = glCreateProgram();
 	}
@@ -89,12 +89,12 @@ class GLShaderProgram : ShaderProgram
 		glUniformMatrix4fv(m_properties[uniform], 1, 1, value.value_ptr);
 	}
 
-	public u32 id()
+	public uint id()
 	{
 		return program;
 	}
 
-	private u32 program;
+	private uint program;
 	private int[string] m_properties;
 }
 
@@ -125,7 +125,7 @@ class GLShader : Shader
 			return false;
 		}
 
-		const i32 len = cast(const(i32)) content.length;
+		const int len = cast(const(int)) content.length;
 
 		glShaderSource(m_id, 1, [content.ptr].ptr, &len);
 		return true;
@@ -134,12 +134,12 @@ class GLShader : Shader
 	public bool compile()
 	{
 		glCompileShader(m_id);
-		i32 success = 0;
+		int success = 0;
 		glGetShaderiv(m_id, GL_COMPILE_STATUS, &success);
 
 		if (success == 0)
 		{
-			i32 logSize = 0;
+			int logSize = 0;
 			glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &logSize);
 
 			char* log = new char[logSize].ptr;
@@ -153,11 +153,11 @@ class GLShader : Shader
 		return true;
 	}
 
-	public @property u32 id()
+	public @property uint id()
 	{
 		return m_id;
 	}
 
-	private u32 m_id = 0;
+	private uint m_id = 0;
 	private string content;
 }

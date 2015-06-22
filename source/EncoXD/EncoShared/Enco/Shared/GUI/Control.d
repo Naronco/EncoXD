@@ -60,7 +60,7 @@ unittest
 
 version(DisableGUILength)
 {
-	alias GUILength = f32;
+	alias GUILength = float;
 }
 else
 {
@@ -82,16 +82,16 @@ version(UseGUILength)
 
 	struct GUILength
 	{
-		f32 amount;
+		float amount;
 		GUILengthUnit unit;
 
 		this(T)(T amount_, GUILengthUnit unit_ = GUILengthUnit.Pixel) if(isNumeric!T)
 		{
-			amount = cast(f32)amount_;
+			amount = cast(float)amount_;
 			unit = unit_;
 		}
 
-		f32 computePixels(f32 vw, f32 vh, f32 parentLength)
+		float computePixels(float vw, float vh, float parentLength)
 		{
 			if(unit == GUILengthUnit.Pixel) return amount;
 			else if(unit == GUILengthUnit.Percentage) return amount * 0.01 * parentLength;
@@ -102,11 +102,11 @@ version(UseGUILength)
 
 		void opAssign(T)(T newAmount) if(isNumeric!T)
 		{
-			amount = cast(f32)newAmount;
+			amount = cast(float)newAmount;
 			unit = GUILengthUnit.Pixel;
 		}
 
-		T opCast(T)() if(is(T == f32))
+		T opCast(T)() if(is(T == float))
 		{
 			return amount;
 		}
@@ -123,22 +123,22 @@ version(UseGUILength)
 
 	GUILength px(T)(T amount) if(isNumeric!T)
 	{
-		return GUILength(cast(f32)amount, GUILengthUnit.Pixel);
+		return GUILength(cast(float)amount, GUILengthUnit.Pixel);
 	}
 
 	GUILength per100(T)(T amount) if(isNumeric!T)
 	{
-		return GUILength(cast(f32)amount, GUILengthUnit.Percentage);
+		return GUILength(cast(float)amount, GUILengthUnit.Percentage);
 	}
 
 	GUILength vw(T)(T amount) if(isNumeric!T)
 	{
-		return GUILength(cast(f32)amount, GUILengthUnit.ViewportWidth);
+		return GUILength(cast(float)amount, GUILengthUnit.ViewportWidth);
 	}
 
 	GUILength vh(T)(T amount) if(isNumeric!T)
 	{
-		return GUILength(cast(f32)amount, GUILengthUnit.ViewportHeight);
+		return GUILength(cast(float)amount, GUILengthUnit.ViewportHeight);
 	}
 
 	unittest
@@ -181,24 +181,24 @@ class Control : GameObject
 	{
 	}
 
-	private f32 computeX(f32 x, f32 parentWidth)
+	private float computeX(float x, float parentWidth)
 	{
 		if (m_align.getHorizontal() == -1)
 			return x;
 		else if (m_align.getHorizontal() == 1)
 			return parentWidth - x - width;
 		else
-			return (cast(i32) (parentWidth - width) >> 1) + x;
+			return (cast(int) (parentWidth - width) >> 1) + x;
 	}
 
-	private f32 computeY(f32 y, f32 parentHeight)
+	private float computeY(float y, float parentHeight)
 	{
 		if (m_align.getVertical() == -1)
 			return y;
 		else if (m_align.getVertical() == 1)
 			return parentHeight - y - height;
 		else
-			return (cast(i32) (parentHeight - height) >> 1) + y;
+			return (cast(int) (parentHeight - height) >> 1) + y;
 	}
 
 	public void size(X, Y, W, H)(X x, Y y, W width, H height)
@@ -209,7 +209,7 @@ class Control : GameObject
 		this.height = height;
 	}
 
-	public @property f32 x()
+	public @property float x()
 	{
 		version(UseGUILength)
 		{
@@ -221,7 +221,7 @@ class Control : GameObject
 			return computeX(m_x, parentWidth);
 	}
 
-	public @property f32 y()
+	public @property float y()
 	{
 		version(UseGUILength)
 		{
@@ -235,11 +235,11 @@ class Control : GameObject
 
 	version(UseGUILength)
 	{
-		public @property void x(f32 value)
+		public @property void x(float value)
 		{
 			m_x = value;
 		}
-		public @property void y(f32 value)
+		public @property void y(float value)
 		{
 			m_y = value;
 		}
@@ -254,14 +254,14 @@ class Control : GameObject
 		m_y = value;
 	}
 
-	public @property f32 parentWidth()
+	public @property float parentWidth()
 	{
 		if (cast(Control) parent)
 			return (cast(Control)parent).width;
 		return m_guiSize.x;
 	}
 
-	public @property f32 parentHeight()
+	public @property float parentHeight()
 	{
 		if (cast(Control) parent)
 			return (cast(Control)parent).height;
@@ -270,17 +270,17 @@ class Control : GameObject
 
 	version(UseGUILength)
 	{
-		public @property void width(f32 value)
+		public @property void width(float value)
 		{
 			m_width = value;
 		}
-		public @property void height(f32 value)
+		public @property void height(float value)
 		{
 			m_height = value;
 		}
 	}
 
-	public @property f32 width()
+	public @property float width()
 	{
 		version(UseGUILength)
 			return m_width.computePixels(m_guiSize.x, m_guiSize.y, parentWidth);
@@ -294,7 +294,7 @@ class Control : GameObject
 	}
 
 
-	public @property f32 height()
+	public @property float height()
 	{
 		version(UseGUILength)
 			return m_height.computePixels(m_guiSize.x, m_guiSize.y, parentHeight);

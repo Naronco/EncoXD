@@ -13,8 +13,8 @@ class AnimatedProperty(T)
 {
 	private T intVal = 0;
 	private T finishVal = 0;
-	private f64 time = 0;
-	private f64 iTimeSec = 1;
+	private double time = 0;
+	private double iTimeSec = 1;
 	private AnimationState state = AnimationState.Still;
 	private string easeType = "linear";
 
@@ -33,7 +33,7 @@ class AnimatedProperty(T)
 	{
 		if (state == AnimationState.Still)
 			return intVal;
-		return cast(T) Animation.call(easeType, cast(f64) (finishVal - intVal), cast(f64) intVal, min(1, max(0, time)));
+		return cast(T) Animation.call(easeType, cast(double) (finishVal - intVal), cast(double) intVal, min(1, max(0, time)));
 	}
 
 	public @property void value(T val)
@@ -78,7 +78,7 @@ class AnimatedProperty(T)
 	/// Update
 	/// Params:
 	///		delta = Delta time in seconds
-	public void update(f64 delta)
+	public void update(double delta)
 	{
 		if (state == AnimationState.Animating)
 		{
@@ -113,15 +113,15 @@ class AnimatedProperty(T)
 /// Animated Property with custom functions and support for more types than numerics
 class AnimatedFunctionValue(T)
 {
-	T function(T, T, f64) interpolationFunction = (T delta, T start, f64 time)
+	T function(T, T, double) interpolationFunction = (T delta, T start, double time)
 	{
 		return start + delta * time;
 	};
 
 	private T intVal = 0;
 	private T finishVal = 0;
-	private f64 time = 0;
-	private f64 iTimeSec = 1;
+	private double time = 0;
+	private double iTimeSec = 1;
 	private AnimationState state = AnimationState.Still;
 
 	public Trigger onDone = new Trigger();
@@ -172,7 +172,7 @@ class AnimatedFunctionValue(T)
 	/// Update
 	/// Params:
 	///		delta = Delta time in seconds
-	public void update(f64 delta)
+	public void update(double delta)
 	{
 		if (state == AnimationState.Animating)
 		{

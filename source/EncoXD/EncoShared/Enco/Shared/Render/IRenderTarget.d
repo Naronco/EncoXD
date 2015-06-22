@@ -4,9 +4,9 @@ import EncoShared;
 
 interface IRenderTarget
 {
-	void init(u32 width, u32 height, bool depth, IView view);
+	void init(uint width, uint height, bool depth, IView view);
 
-	void resize(u32 width, u32 height);
+	void resize(uint width, uint height);
 
 	void bind();
 

@@ -13,7 +13,7 @@ enum DynamicLibrary
 
 struct FileDropEvent
 {
-	u32 timestamp;
+	uint timestamp;
 	string file;
 }
 
@@ -37,9 +37,9 @@ class EncoContext
 	public Event!ControllerButtonDownEvent onControllerButtonDown = new Event!ControllerButtonDownEvent;
 	public Event!ControllerButtonUpEvent onControllerButtonUp = new Event!ControllerButtonUpEvent;
 
-	public @property f64 deltaTime()
+	public @property double deltaTime()
 	{
-		return delta.to!("seconds", f64);
+		return delta.to!("seconds", double);
 	}
 
 	public @property IRenderer renderer()
@@ -216,7 +216,7 @@ class EncoContext
 		foreach (ref IView view; m_views)
 		{
 			m_currentView = view;
-			view.performUpdate(delta.to!("seconds", f64));
+			view.performUpdate(delta.to!("seconds", double));
 		}
 		luaEmitSingle("update");
 
@@ -350,7 +350,7 @@ class EncoContext
 					}
 					break;
 				case SDL_CONTROLLERAXISMOTION:
-					i16 value = event.caxis.value;
+					short value = event.caxis.value;
 					if (value < -32767)
 						value = -32767;
 					if ((event.caxis.axis == 0 || event.caxis.axis == 1) && abs(value) < 7849)

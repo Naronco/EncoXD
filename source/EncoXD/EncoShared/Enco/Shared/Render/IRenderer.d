@@ -13,7 +13,7 @@ enum RenderingBuffer : int
 
 interface IRenderer
 {
-	void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window, bool useGui = true, string guiMaterial = "res/materials/gui.json");
+	void createContext(int x, int y, uint width, uint height, uint colorBits, uint depthBits, uint stencilBits, bool fullscreen, Window window, bool useGui = true, string guiMaterial = "res/materials/gui.json");
 	void deleteContext();
 
 	void importSettings(JSONValue json);
@@ -39,9 +39,9 @@ interface IRenderer
 	{
 		setClearColor(color.r, color.g, color.b);
 	}
-	void setClearColor(f32 r, f32 g, f32 b);
+	void setClearColor(float r, float g, float b);
 
-	void setClearDepth(f64 clearDepth);
+	void setClearDepth(double clearDepth);
 
 	void clearBuffer(RenderingBuffer buffers);
 
@@ -49,7 +49,7 @@ interface IRenderer
 	void deleteMesh(Mesh mesh);
 	void renderMesh(Mesh mesh);
 
-	void resize(u32 width, u32 height);
+	void resize(uint width, uint height);
 
 	Bitmap getComputed();
 

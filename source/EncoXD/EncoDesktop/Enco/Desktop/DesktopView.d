@@ -36,7 +36,7 @@ abstract class DesktopView : IView
 	public Trigger onClose = new Trigger;
 
 	public this(string title, u32vec2 size = u32vec2(320, 240)) { m_name = title; m_size = size; }
-	public this(string title, u32 width, u32 height) { this(title, u32vec2(width, height)); }
+	public this(string title, uint width, uint height) { this(title, u32vec2(width, height)); }
 	public this() { this("", 0, 0); }
 	public ~this() {}
 
@@ -76,7 +76,7 @@ abstract class DesktopView : IView
 			{
 				if (("Width" in json["Window"]) !is null && ("Height" in json["Window"]) !is null && json["Window"]["Width"].type == JSON_TYPE.INTEGER && json["Window"]["Height"].type == JSON_TYPE.INTEGER)
 				{
-					size = u32vec2(cast(u32) json["Window"]["Width"].integer, cast(u32) json["Window"]["Height"].integer);
+					size = u32vec2(cast(uint) json["Window"]["Width"].integer, cast(uint) json["Window"]["Height"].integer);
 				}
 				if (("Title" in json["Window"]) !is null && json["Window"]["Title"].type == JSON_TYPE.STRING)
 				{

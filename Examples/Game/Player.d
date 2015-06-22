@@ -5,7 +5,7 @@ import EncoShared;
 
 // TODO: Clean this mess up
 
-enum AnimationType : u8
+enum AnimationType : ubyte
 {
 	Still,
 	X,
@@ -20,11 +20,11 @@ class Player : GameObject
 	private int m_topX, m_topY;
 	private int m_respawnX, m_respawnY;
 	private int m_targetX, m_targetY;
-	private f32 m_animationProgress = 0;
+	private float m_animationProgress = 0;
 	private AnimationType m_animationType = AnimationType.Still;
 	private MeshObject m_bottom, m_top;
 	private int m_topState = 0;
-	private f32 m_camRotation = 0;
+	private float m_camRotation = 0;
 	private Transform m_origin;
 	private int m_nextKey = 0;
 
@@ -61,7 +61,7 @@ class Player : GameObject
 		return m_topY;
 	}
 
-	public ref @property f32 camRotation()
+	public ref @property float camRotation()
 	{
 		return m_camRotation;
 	}
@@ -585,7 +585,7 @@ class Player : GameObject
 		}
 	}
 
-	override protected void update(f64 deltaTime)
+	override protected void update(double deltaTime)
 	{
 		if (m_animationType != AnimationType.Still)
 			m_animationProgress += deltaTime * 7.0f;
@@ -717,8 +717,8 @@ class Player : GameObject
 class PlayerLock : IComponent
 {
 	AnimatedFunctionValue!vec3 camMovement;
-	AnimatedProperty!f64 zoom;
-	f64 zoomVal = 8;
+	AnimatedProperty!double zoom;
+	double zoomVal = 8;
 	Camera camera;
 	vec3 pos;
 
@@ -726,13 +726,13 @@ class PlayerLock : IComponent
 	{
 		this.player = player;
 		camMovement = new AnimatedFunctionValue!vec3(vec3(0, 0, 0));
-		camMovement.interpolationFunction = (vec3 delta, vec3 offset, f64 time)
+		camMovement.interpolationFunction = (vec3 delta, vec3 offset, double time)
 		{
 			return delta * (-pow(2, -10 * time) + 1) + offset;
 		};
 		camMovement.length = 300;
 
-		zoom = new AnimatedProperty!f64(zoomVal);
+		zoom = new AnimatedProperty!double(zoomVal);
 		zoom.length = 30;
 		zoom.easingType = "quadratic";
 
@@ -761,11 +761,11 @@ class PlayerLock : IComponent
 	{
 	}
 
-	public override void preUpdate(f64 deltaTime)
+	public override void preUpdate(double deltaTime)
 	{
 	}
 
-	public override void update(f64 deltaTime)
+	public override void update(double deltaTime)
 	{
 		pos = (player.topTransform.appliedPosition + player.bottomTransform.appliedPosition) * 0.5f;
 		pos.y = 0.5f;

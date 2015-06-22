@@ -18,11 +18,11 @@ class DragTableX : IComponent
 	{
 	}
 
-	public override void preUpdate(f64 deltaTime)
+	public override void preUpdate(double deltaTime)
 	{
 	}
 
-	public override void update(f64 deltaTime)
+	public override void update(double deltaTime)
 	{
 		cstate = Controller.getState(0);
 		if (mstate !is null)
@@ -66,11 +66,11 @@ class DragTableHalfY : IComponent
 	{
 	}
 
-	public override void preUpdate(f64 deltaTime)
+	public override void preUpdate(double deltaTime)
 	{
 	}
 
-	public override void update(f64 deltaTime)
+	public override void update(double deltaTime)
 	{
 		cstate = Controller.getState(0);
 		if (mstate !is null)

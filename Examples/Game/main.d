@@ -78,7 +78,7 @@ class GameWindow : DesktopView
 		draw2D();
 	}
 
-	override protected void onUpdate(f64 delta)
+	override protected void onUpdate(double delta)
 	{
 		update(delta);
 	}

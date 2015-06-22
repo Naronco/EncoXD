@@ -5,7 +5,7 @@ import EncoGL3;
 
 class GLRenderTarget : IRenderTarget
 {
-	public void init(u32 width, u32 height, bool depth, IView view)
+	public void init(uint width, uint height, bool depth, IView view)
 	{
 		m_view = view;
 
@@ -48,7 +48,7 @@ class GLRenderTarget : IRenderTarget
 		this.height = height;
 	}
 
-	public void resize(u32 width, u32 height)
+	public void resize(uint width, uint height)
 	{
 		this.width = width;
 		this.height = height;
@@ -86,8 +86,8 @@ class GLRenderTarget : IRenderTarget
 		return m_view;
 	}
 
-	private u32 width, height;
-	public u32 fbo, drb;
+	private uint width, height;
+	public uint fbo, drb;
 	private GLTexture m_color, m_depth;
 	private IView m_view;
 }

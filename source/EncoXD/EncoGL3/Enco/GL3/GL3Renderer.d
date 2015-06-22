@@ -50,7 +50,7 @@ class GL3Renderer : IRenderer
 		return m_gui;
 	}
 
-	public void resize(u32 width, u32 height)
+	public void resize(uint width, uint height)
 	{
 		m_width = width;
 		m_height = height;
@@ -66,7 +66,7 @@ class GL3Renderer : IRenderer
 	private bool m_valid = false;
 	private bool m_depthTest = false;
 	private bool m_blend = false;
-	private u32 m_width, m_height;
+	private uint m_width, m_height;
 	private GUIRenderer m_gui;
 
 	public Window m_window;
@@ -84,7 +84,7 @@ class GL3Renderer : IRenderer
 	{
 	}
 
-	public u32 blendFuncFromString(string str)
+	public uint blendFuncFromString(string str)
 	{
 		switch (str)
 		{
@@ -146,7 +146,7 @@ class GL3Renderer : IRenderer
 		}
 	}
 
-	public void createContext(i32 x, i32 y, u32 width, u32 height, u32 colorBits, u32 depthBits, u32 stencilBits, bool fullscreen, Window window, bool useGui = true, string guiMaterial = "res/materials/gui.json")
+	public void createContext(int x, int y, uint width, uint height, uint colorBits, uint depthBits, uint stencilBits, bool fullscreen, Window window, bool useGui = true, string guiMaterial = "res/materials/gui.json")
 	{
 		if (window !is null)
 		{
@@ -154,8 +154,8 @@ class GL3Renderer : IRenderer
 
 			if (glContext is null)
 			{
-				SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, cast(i32) depthBits);
-				SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, cast(i32) stencilBits);
+				SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, cast(int) depthBits);
+				SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, cast(int) stencilBits);
 
 				SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 				SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -220,12 +220,12 @@ class GL3Renderer : IRenderer
 	}
 
 
-	public void setClearColor(f32 r, f32 g, f32 b)
+	public void setClearColor(float r, float g, float b)
 	{
 		glClearColor(r, g, b, 1);
 	}
 
-	public void setClearDepth(f64 clearDepth)
+	public void setClearDepth(double clearDepth)
 	{
 		glClearDepth(clearDepth);
 	}
@@ -250,28 +250,28 @@ class GL3Renderer : IRenderer
 
 	public Mesh createMesh(Mesh mesh)
 	{
-		u32 vao;
+		uint vao;
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
 
 
-		u32* vbo = new u32[bufferCount].ptr;
+		uint* vbo = new uint[bufferCount].ptr;
 
 		glGenBuffers(bufferCount, vbo);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 		glBufferData(GL_ARRAY_BUFFER, vec3.sizeof * mesh.vertices.length, mesh.vertices.ptr, GL_STATIC_DRAW);
-		glVertexAttribPointer(0u, 3, GL_FLOAT, cast(u8) 0, 0, null);
+		glVertexAttribPointer(0u, 3, GL_FLOAT, cast(ubyte) 0, 0, null);
 		glEnableVertexAttribArray(0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 		glBufferData(GL_ARRAY_BUFFER, vec2.sizeof * mesh.texCoords.length, mesh.texCoords.ptr, GL_STATIC_DRAW);
-		glVertexAttribPointer(1u, 2, GL_FLOAT, cast(u8) 0, 0, null);
+		glVertexAttribPointer(1u, 2, GL_FLOAT, cast(ubyte) 0, 0, null);
 		glEnableVertexAttribArray(1);
 
 		glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
 		glBufferData(GL_ARRAY_BUFFER, vec3.sizeof * mesh.normals.length, mesh.normals.ptr, GL_STATIC_DRAW);
-		glVertexAttribPointer(2u, 3, GL_FLOAT, cast(u8) 0, 0, null);
+		glVertexAttribPointer(2u, 3, GL_FLOAT, cast(ubyte) 0, 0, null);
 		glEnableVertexAttribArray(2);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[bufferCount - 1]);
@@ -279,7 +279,7 @@ class GL3Renderer : IRenderer
 
 		glBindVertexArray(0);
 
-		mesh.renderable = new RenderableMesh(vao, vbo, cast(u32) mesh.indices.length);
+		mesh.renderable = new RenderableMesh(vao, vbo, cast(uint) mesh.indices.length);
 
 		return mesh;
 	}
@@ -313,7 +313,7 @@ class GL3Renderer : IRenderer
 
 	public Bitmap getComputed()
 	{
-		u8[] pixels = new u8[3 * m_width * m_height];
+		ubyte[] pixels = new ubyte[3 * m_width * m_height];
 		glReadPixels(0, 0, m_width, m_height, GL_BGR, GL_UNSIGNED_BYTE, pixels.ptr);
 		return new Bitmap(pixels, m_width, m_height, 24);
 	}

@@ -105,7 +105,7 @@ class GameWindow : DesktopView
 		renderer.gui.end();
 	}
 
-	override protected void onUpdate(f64 delta)
+	override protected void onUpdate(double delta)
 	{
 		update(delta);
 	}

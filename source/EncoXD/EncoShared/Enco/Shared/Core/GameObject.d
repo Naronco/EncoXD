@@ -41,7 +41,7 @@ class GameObject
 		return m_children;
 	}
 
-	protected void update(f64 deltaTime)
+	protected void update(double deltaTime)
 	{
 	}
 
@@ -58,7 +58,7 @@ class GameObject
 		return m_parent;
 	}
 
-	public void performUpdate(f64 deltaTime)
+	public void performUpdate(double deltaTime)
 	{
 		if (m_enabled)
 		{

@@ -1,46 +1,49 @@
 module Enco.Shared.Network.Network;
 
+import std.bitmanip;
+
 import EncoShared;
 
+///
 interface IPacket
 {
-	@property u32 length();
-	void[] serialize();
-	void deserialize(void[]);
+	@property ushort id();
+	/// Streams should be Big Endian
+	ubyte[] serialize();
+	/// Streams should be Big Endian
+	void deserialize(ref ubyte[] stream);
 }
 
+/// Length prefixed string packet with maximum length ushort.max with default id 65500
 class StringPacket : IPacket
 {
-	private string content;
+private:
+	string m_content;
 
-	public this(string content = "")
+public:
+	this(string content = "")
 	{
-		this.content = content;
+		m_content = content;
 	}
 
-	public @property u32 length()
+	@property ushort id()
 	{
-		return cast(u32) (content.length + 1);
+		return PACKET_ID;
 	}
 
-	public @property string text()
+	@property ref string text()
 	{
-		return content;
+		return m_content;
 	}
 
-	public @property void text(string c)
+	ubyte[] serialize()
 	{
-		content = c;
+		return nativeToBigEndian(cast(ushort)m_content.length) ~ cast(ubyte[])m_content;
 	}
 
-	public void[] serialize()
+	void deserialize(ref ubyte[] stream)
 	{
-		void[] data = cast(void[]) (content.idup ~ '\0');
-		return data[0 .. length];
 	}
 
-	public void deserialize(void[] buf)
-	{
-		content = cast(immutable(char)[]) (buf);
-	}
+	static ushort PACKET_ID = 65500;
 }

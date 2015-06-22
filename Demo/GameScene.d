@@ -52,7 +52,7 @@ class Game3DLayer : RenderLayer
 		carObj = addGameObject(new MeshObject(car[1], content.loadMaterial("res/materials/lamborghini.json")));
 	}
 
-	override protected void update(f64 deltaTime)
+	override protected void update(double deltaTime)
 	{
 		carY.update(deltaTime);
 	}

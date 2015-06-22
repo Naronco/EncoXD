@@ -9,8 +9,8 @@ class AnimationFunctions
 
 struct DoubleDoublePair
 {
-	public f64 a;
-	public f64 b;
+	public double a;
+	public double b;
 
 	public string toString()
 	{
@@ -39,16 +39,16 @@ struct AnimatedAnimationProperty
 	}
 }
 
-alias EasingFunction = f64 function(f64, f64, f64);
+alias EasingFunction = double function(double, double, double);
 
 class Animation
 {
-	private f64 currentTime = 0;
-	private f64 iLengthInSec = 0;
+	private double currentTime = 0;
+	private double iLengthInSec = 0;
 	private AnimatedAnimationProperty[] props;
 
-	public f64[string] properties;
-	public f64 time = 0;
+	public double[string] properties;
+	public double time = 0;
 	private bool m_done = false;
 	public @property bool done()
 	{
@@ -94,10 +94,10 @@ class Animation
 			{
 				string[] splits = line.split(' ');
 				current.functions ~= splits[0].toLower();
-				f64 t, val;
+				double t, val;
 
-				t = to!f64(splits[1].trim());
-				val = to!f64(splits[2].trim());
+				t = to!double(splits[1].trim());
+				val = to!double(splits[2].trim());
 
 				current.keyframes ~= DoubleDoublePair(t, val);
 			}
@@ -114,14 +114,14 @@ class Animation
 			properties[prop.name] = 0;
 	}
 
-	public f64 get(string name)
+	public double get(string name)
 	{
 		if ((name in properties) !is null)
 			return properties[name];
 		return 0;
 	}
 
-	public void update(f64 delta)
+	public void update(double delta)
 	{
 		if (!m_done)
 		{
@@ -136,16 +136,16 @@ class Animation
 
 			foreach (prop; props)
 			{
-				for (u32 i = cast(u32) prop.keyframes.length - 2; i >= 0; i--)
+				for (uint i = cast(uint) prop.keyframes.length - 2; i >= 0; i--)
 				{
 					DoubleDoublePair kv = prop.keyframes[i];
 
 					if (kv.a <= time)
 					{
-						f64 a = kv.b;
-						f64 b = prop.keyframes[i + 1].b;
+						double a = kv.b;
+						double b = prop.keyframes[i + 1].b;
 
-						f64 t = (time - kv.a) / cast(f64) (prop.keyframes[i + 1].a - kv.a);
+						double t = (time - kv.a) / cast(double) (prop.keyframes[i + 1].a - kv.a);
 
 						string type = prop.functions[i + 1];
 						if (type == "start")
@@ -175,7 +175,7 @@ class Animation
 
 	public static const EasingFunction[string] easingFunctions;
 
-	public static f64 call(string func, f64 delta, f64 offset, f64 time)
+	public static double call(string func, double delta, double offset, double time)
 	{
 		func = func.toLower();
 		if ((func in easingFunctions) is null)
