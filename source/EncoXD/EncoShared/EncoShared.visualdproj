@@ -219,6 +219,7 @@
    <File path="Enco\Shared\Core\ContentManager.d" />
    <File path="Enco\Shared\Core\EncoContext.d" />
    <File path="Enco\Shared\Core\Event.d" />
+   <File path="Enco\Shared\Core\FPSLimiter.d" />
    <File path="Enco\Shared\Core\GameObject.d" />
    <File path="Enco\Shared\Core\IComponent.d" />
    <File path="Enco\Shared\Core\IDevice.d" />
@@ -231,14 +232,14 @@
   <Folder name="Ext">
    <File path="Enco\Shared\Ext\Array.d" />
    <File path="Enco\Shared\Ext\String.d" />
-   <File path="Vector.d" />
+   <File path="Enco\Shared\Ext\Vector.d" />
   </Folder>
   <Folder name="GUI">
    <File path="Enco\Shared\GUI\Control.d" />
    <File path="Enco\Shared\GUI\DynamicColorControl.d" />
    <File path="Enco\Shared\GUI\PanelControl.d" />
    <File path="Enco\Shared\GUI\PictureControl.d" />
-   <File path="SpriteControl.d" />
+   <File path="Enco\Shared\GUI\SpriteControl.d" />
    <File path="Enco\Shared\GUI\TextControl.d" />
   </Folder>
   <Folder name="Input">
@@ -255,9 +256,10 @@
    <File path="Enco\Shared\Math\Transform.d" />
   </Folder>
   <Folder name="Network">
-   <File path="ArrayPackets.d" />
+   <File path="Enco\Shared\Network\ArrayPackets.d" />
+   <File path="Enco\Shared\Network\AsyncSocket.d" />
    <File path="Enco\Shared\Network\Network.d" />
-   <File path="StringPacket.d" />
+   <File path="Enco\Shared\Network\StringPacket.d" />
   </Folder>
   <Folder name="Render">
    <File path="Enco\Shared\Render\Bitmap.d" />

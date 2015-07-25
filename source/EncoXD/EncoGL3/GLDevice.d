@@ -1,4 +1,4 @@
-module Enco.GL3.GLDevice;
+module EncoGL3.GLDevice;
 
 import EncoGL3;
 

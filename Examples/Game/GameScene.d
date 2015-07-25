@@ -60,6 +60,13 @@ class Game3DLayer : RenderLayer
 			Logger.writeln(new Exception("Invalid Level!"));
 	}
 
+	public void restart()
+	{
+		currentLevel = 1;
+		if (!level.fromBitmap("res/levels/level0.png", materials, scene.renderer))
+			Logger.writeln(new Exception("Invalid Level!"));
+	}
+
 	public void debugLevel()
 	{
 		if (!level.fromBitmap("res/levels/debug.png", materials, scene.renderer))

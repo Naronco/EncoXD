@@ -12,9 +12,21 @@ class GameWindow : DesktopView
 {
 	RenderContext context;
 	GameScene game;
+	Camera camera;
 
 	public this()
 	{
+		flags |= WindowFlags.Resizable;
+	}
+
+	override protected void onResize()
+	{
+		renderer.resize(size.x, size.y);
+		if(camera)
+		{
+			camera.width = size.x;
+			camera.height = size.y;
+		}
 	}
 
 	public void init()
@@ -22,7 +34,7 @@ class GameWindow : DesktopView
 		auto content = new ContentManager(new GLDevice(cast(GL3Renderer) renderer));
 		scene = game = new GameScene(content);
 
-		Camera camera = new Camera();
+		camera = new Camera();
 		renderer.setClearColor(0.8f, 0.8f, 0.8f);
 		auto lua = EncoContext.instance.createLuaState();
 		camera.farClip = 55;
@@ -33,27 +45,34 @@ class GameWindow : DesktopView
 		camera.projectionMode = ProjectionMode.Orthographic3D;
 
 		debug EncoContext.instance.onKeyDown += (sender, key) {
-				if (key.key == Key.F1)
-				{
-					Logger.writeln("Rotation: ", camera.transform.rotation.y);
-				}
-				if (key.key == Key.F2)
-				{
-					game.game3DLayer.nextLevel();
-				}
-				if (key.key == Key.F3)
-				{
-					Logger.writeln("Position: ", game.game3DLayer.player.transform.position);
-				}
-				if (key.key == Key.F4)
-				{
-					Logger.writeln("Transform: ", game.game3DLayer.player.transform);
-				}
-				if (key.key == Key.F5)
-				{
-					game.game3DLayer.debugLevel();
-				}
-			};
+			if (key.key == Key.F1)
+			{
+				Logger.writeln("Rotation: ", camera.transform.rotation.y);
+			}
+			if (key.key == Key.F2)
+			{
+				game.game3DLayer.nextLevel();
+			}
+			if (key.key == Key.F3)
+			{
+				Logger.writeln("Position: ", game.game3DLayer.player.transform.position);
+			}
+			if (key.key == Key.F4)
+			{
+				Logger.writeln("Transform: ", game.game3DLayer.player.transform);
+			}
+			if (key.key == Key.F5)
+			{
+				game.game3DLayer.debugLevel();
+			}
+		};
+
+		EncoContext.instance.onKeyDown += (sender, key) {
+			if (key.key == Key.F12)
+			{
+				game.game3DLayer.restart();
+			}
+		};
 
 		camera.addComponent(new DragTableX());
 		camera.addComponent(new DragTableHalfY());
@@ -67,7 +86,7 @@ class GameWindow : DesktopView
 		game.game3DLayer.applyCamera(camera);
 		game.game3DLayer.addGameObject(camera);
 
-		scene = new MainMenu(content);
+		//scene = new MainMenu(content);
 	}
 
 	override protected void onDraw()
