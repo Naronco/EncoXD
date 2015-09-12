@@ -10,11 +10,12 @@ abstract class IView
 	{
 		create();
 
-		if (!m_created && m_scene !is null)
+		if (!m_created && m_scene !is null && !scene.initialized)
 		{
 			m_scene.view = this;
 			if (renderer !is null)
 				m_scene.setRenderer(renderer);
+			scene.initialized = true;
 			m_scene.init();
 		}
 		m_created = true;
@@ -64,11 +65,12 @@ abstract class IView
 	{
 		if (scene !is null)
 		{
-			if (m_created)
+			if (m_created && !scene.initialized)
 			{
 				scene.view = this;
 				if (renderer !is null)
 					scene.setRenderer(renderer);
+				scene.initialized = true;
 				scene.init();
 			}
 			m_scene = scene;

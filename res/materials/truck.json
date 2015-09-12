@@ -1,0 +1,19 @@
+{
+	"Name": "TruckInside",
+	"Textures":
+	{
+		"0":
+		{
+			"File": "res/tex/inside.png",
+			"MipMap": true
+		}
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "specular",
+		"Ambient": "vec3(0.2, 0.2, 0.2)",
+		"Color": "tex(slot0)",
+		"Shininess": "50"
+	}
+}

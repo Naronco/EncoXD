@@ -207,6 +207,7 @@ class Scene : GameObject
 	}
 
 	public IView view;
+	public bool initialized;
 
 	private Scene m_next = null;
 }

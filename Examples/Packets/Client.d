@@ -6,6 +6,8 @@ import std.bitmanip;
 import std.socket;
 import std.stdio;
 
+import consoled;
+
 import core.thread;
 
 class Client
@@ -17,58 +19,50 @@ public:
 		this.port = port;
 	}
 
-	void handleReceive()
-	{
-		ubyte[] packet = new ubyte[1024];
-
-		while(true)
-		{
-			ptrdiff_t length = socket.receive(packet);
-
-			if(length == 0)
-			{
-				std.stdio.writeln("Disconnect from Server");
-				socket.shutdown(SocketShutdown.BOTH);
-				socket.close();
-				return;
-			}
-			else if(length > 0)
-			{
-				ubyte[] data = packet[];
-				while(length == 1024)
-				{
-					length = socket.receive(packet);
-					if(length > 0)
-						data ~= packet[];
-				}
-				data = data.stripRight(0);
-				ushort packetID = data.read!ushort();
-				if(packetID != 65500)
-				{
-					std.stdio.writeln("Invalid packet received!");
-					socket.shutdown(SocketShutdown.BOTH);
-					socket.close();
-					return;
-				}
-				StringPacket strPacket = new StringPacket();
-				strPacket.deserialize(data);
-				std.stdio.writeln(" << ", strPacket.text);
-			}
-		}
-	}
-
 	void connect()
 	{
 		socket = new TcpSocket();
 		socket.connect(new InternetAddress(ip, port));
 		socket.blocking = false;
 
-		new Thread(&handleReceive).start();
+		ubyte[1024] buffer = new ubyte[1024];
+		ubyte[] data;
 
-		while(true)
+		string line = "";
+
+		writeln("Joined.");
+
+		while (true)
 		{
-			write(" >> ");
-			socket.send(nativeToBigEndian(StringPacket.PACKET_ID) ~ new StringPacket(readln()[0 .. $ - 1]).serialize());
+			int received;
+			while ((received = socket.receive(buffer)) > 0)
+			{
+				data = buffer[0 .. received];
+			}
+			if (data.length > 0)
+			{
+				StringPacket msg = new StringPacket();
+				msg.deserialize(data);
+				drawHorizontalLine(ConsolePoint(0, cursorPos.y), width, ' ');
+				setCursorPos(0, cursorPos.y);
+				writeln(" >> ", msg.text);
+				write(line);
+			}
+
+			if (kbhit())
+			{
+				line ~= getch();
+				if (line.length > 0 && line[$ - 1] == '\n')
+				{
+					socket.send(nativeToBigEndian(StringPacket.PACKET_ID) ~new StringPacket(line[0 .. $ - 1]).serialize());
+					line = "";
+				}
+				//drawHorizontalLine(ConsolePoint(0, cursorPos.y), width, ' ');
+				setCursorPos(0, cursorPos.y);
+				write(line);
+				setCursorPos(line.length, cursorPos.y);
+			}
+
 			Thread.sleep(50.msecs);
 		}
 	}

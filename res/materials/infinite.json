@@ -1,0 +1,21 @@
+{
+	"Name": "InfiniteStreet",
+	"Textures":
+	{
+		"0":
+		{
+			"File": "res/tex/asphalt.png",
+			"MipMap": true
+		},
+		"1":
+		{
+			"File": "res/tex/grass.png",
+			"MipMap": true
+		}
+	},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "infinite"
+	}
+}

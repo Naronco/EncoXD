@@ -26,7 +26,7 @@ class Camera : GameObject
 
 	public @property mat4 viewMatrix()
 	{
-		return m_viewMatrix = rotationMatrix * translationMatrix;
+		return rotationMatrix * translationMatrix;
 	}
 
 	public @property mat4 rotationMatrix()
@@ -113,6 +113,5 @@ class Camera : GameObject
 	private ProjectionMode m_mode = ProjectionMode.Perspective;
 
 	private mat4 m_projectionMatrix = mat4.perspective(1, 1, 45, 0.1f, 100);
-	private mat4 m_viewMatrix = mat4.identity;
 	private bool m_needUpdate = false;
 }

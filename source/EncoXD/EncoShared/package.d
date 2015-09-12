@@ -61,7 +61,6 @@ public
 	import EncoShared.Ext.String;
 	import EncoShared.Ext.Vector;
 
-	import EncoShared.Network.AsyncSocket;
 	import EncoShared.Network.Network;
 	import EncoShared.Network.StringPacket;
 	import EncoShared.Network.ArrayPackets;
@@ -102,13 +101,16 @@ public
 	enum ENCO_VERSION = "1.0.0";
 	enum ENCO_VERSION_ID = 1;
 
+	/// 2*pi
 	enum PI2 = 6.28318530718;
 
+	/// Converts degrees to radians
 	static float degToRad(float f)
 	{
 		return f * 0.0174532925f;
 	}
 
+	/// Converts radians to degrees
 	static float radToDeg(float f)
 	{
 		return f * 57.2957795f;

@@ -19,52 +19,60 @@ public:
 		this.port = port;
 	}
 
-	void connection(Object sender, AsyncTCPSocket client)
-	{
-		int id = _id++;
-		std.stdio.writeln("Incoming connection from Socket #", id, " (", client.remoteAddress.toAddrString(), ")");
-		client.onData += (c, data)
-		{
-			ushort packetID = data.read!ushort();
-
-			if(packetID != 65500)
-			{
-				std.stdio.writeln("Invalid packet from Socket #", id);
-				client.shutdown(SocketShutdown.BOTH);
-				client.close();
-				return;
-			}
-			std.stdio.writefln("Received packet #%s from Socket #%s", packetID, id);
-
-			StringPacket strPacket = new StringPacket();
-			strPacket.deserialize(data);
-			std.stdio.writeln(strPacket.text);
-
-			if(strPacket.text == "password")
-			{
-				client.send(nativeToBigEndian(StringPacket.PACKET_ID) ~ new StringPacket("Password Accepted!").serialize());
-			}
-		};
-		client.receiveAsync();
-	}
-
 	void listen()
 	{
-		mutex = new Mutex;
-		socket = new AsyncTCPSocket();
+		socket = new TcpSocket();
 		socket.bind(new InternetAddress(port));
+		socket.listen(0);
+		socket.blocking = false;
 
-		socket.onError += (sender, e)
-		{
-			Logger.writeln("Error!");
-			throw e;
-		};
-		socket.onConnection += &connection;
+		ubyte[1024] buffer = new ubyte[1024];
+		ubyte[] data;
 
-		socket.listenAsync(0);
-		
-		while(true)
+		Socket[] sockets;
+
+		while (true)
 		{
+			auto sock = socket.accept();
+			if (sock && sock.isAlive)
+			{
+				sockets ~= sock;
+				std.stdio.writeln("New Connection");
+			}
+
+			for (size_t i = 0; i < sockets.length; i++)
+			{
+				if (sockets[i].isAlive)
+				{
+					data.length = 0;
+					int received;
+					while ((received = sockets[i].receive(buffer)) > 0)
+					{
+						data ~= buffer[0 .. received];
+					}
+					if (data.length > 0)
+					{
+						if (data.read!ushort != StringPacket.PACKET_ID)
+						{
+							sockets[i].close();
+						}
+						else
+						{
+							try
+							{
+								for (size_t j = 0; j < sockets.length; j++)
+								{
+									sockets[j].send(data);
+								}
+							}
+							catch (Exception)
+							{
+								sockets[i].close();
+							}
+						}
+					}
+				}
+			}
 			Thread.sleep(50.msecs);
 		}
 	}
@@ -76,5 +84,5 @@ public:
 	}
 
 	ushort port;
-	AsyncTCPSocket socket;
+	TcpSocket socket;
 }

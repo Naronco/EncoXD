@@ -4,7 +4,7 @@ import std.bitmanip;
 
 import EncoShared;
 
-/// Length prefixed string packet with maximum length of ushort.max with default id 65500
+/// Length prefixed string packet with maximum length of ushort.max with default id 65400
 class StringPacket : IPacket
 {
 private:
@@ -30,15 +30,15 @@ public:
 
 	ubyte[] serialize()
 	{
-		return nativeToBigEndian(cast(ushort)m_content.length) ~ cast(ubyte[])m_content;
+		return nativeToBigEndian(cast(ushort) m_content.length) ~cast(ubyte[]) m_content;
 	}
 
 	void deserialize(ref ubyte[] stream)
 	{
-		ushort length = stream.read!ushort();
-		m_content = cast(string)stream[0 .. length];
+		ushort length = stream.read!ushort ();
+		m_content = cast(string) stream[0 .. length];
 		stream = stream[length .. $];
 	}
 
-	static ushort PACKET_ID = 65500;
+	static ushort PACKET_ID = 65400;
 }

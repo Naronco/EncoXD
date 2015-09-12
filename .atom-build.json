@@ -1,0 +1,113 @@
+{
+	"cmd": "dub",
+	"args": [
+		"build"
+	],
+	"name": "Build Default",
+	"sh": false,
+	"targets": {
+		"Run Default": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"run"
+			]
+		},
+		"Build Demo": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"build",
+				"--config=Demo"
+			]
+		},
+		"Run Demo": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"run",
+				"--config=Demo"
+			]
+		},
+		"Build Transformations": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"build",
+				"--config=Transformations"
+			]
+		},
+		"Run Transformations": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"run",
+				"--config=Transformations"
+			]
+		},
+		"Build Game": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"build",
+				"--config=Game"
+			]
+		},
+		"Run Game": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"run",
+				"--config=Game"
+			]
+		},
+		"Build Packets": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"build",
+				"--config=Packets"
+			]
+		},
+		"Run Packets": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"run",
+				"--config=Packets"
+			]
+		},
+		"Build InfiniteTerrain": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"build",
+				"--config=InfiniteTerrain"
+			]
+		},
+		"Run InfiniteTerrain": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"run",
+				"--config=InfiniteTerrain"
+			]
+		},
+		"Build levelc": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"build",
+				"--config=levelc"
+			]
+		},
+		"Run levelc": {
+			"cmd": "dub",
+			"sh": false,
+			"args": [
+				"run",
+				"--config=levelc"
+			]
+		}
+	}
+}

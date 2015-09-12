@@ -32,19 +32,19 @@ public:
 
 	ubyte[] serialize()
 	{
-		ubyte[] data = nativeToBigEndian(cast(ushort)(m_content.length * ElemType.sizeof));
-		foreach(ref ElemType child; m_content)
+		ubyte[] data = nativeToBigEndian(cast(ushort) (m_content.length * ElemType.sizeof));
+		foreach (ref ElemType child; m_content)
 			data ~= nativeToBigEndian(child);
 		return data;
 	}
 
 	void deserialize(ref ubyte[] stream)
 	{
-		ushort length = stream.read!ushort();
+		ushort length = stream.read!ushort ();
 		m_content.length = length / ElemType.sizeof;
 
-		for(ushort i = 0; i < length; i++)
-			m_content[i] = stream.read!ElemType();
+		for (ushort i = 0; i < length; i++)
+			m_content[i] = stream.read!ElemType ();
 
 		stream = stream[length .. $];
 	}
@@ -52,50 +52,50 @@ public:
 	static ushort PACKET_ID = defaultPacketId;
 }
 
-/// Length prefixed ushort[] packet with maximum length of ushort.max with default id 65501
+/// Length prefixed ushort[] packet with maximum length of ushort.max with default id 65401
 class UShortArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(ushort, 65501);
+	mixin CommonArrayPacket!(ushort, 65401);
 }
 
-/// Length prefixed short[] packet with maximum length of ushort.max with default id 65502
+/// Length prefixed short[] packet with maximum length of ushort.max with default id 65402
 class ShortArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(short, 65502);
+	mixin CommonArrayPacket!(short, 65402);
 }
 
-/// Length prefixed uint[] packet with maximum length of ushort.max with default id 65503
+/// Length prefixed uint[] packet with maximum length of ushort.max with default id 65403
 class UIntArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(uint, 65503);
+	mixin CommonArrayPacket!(uint, 65403);
 }
 
-/// Length prefixed int[] packet with maximum length of ushort.max with default id 65504
+/// Length prefixed int[] packet with maximum length of ushort.max with default id 65404
 class IntArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(int, 65504);
+	mixin CommonArrayPacket!(int, 65404);
 }
 
-/// Length prefixed ulong[] packet with maximum length of ushort.max with default id 65505
+/// Length prefixed ulong[] packet with maximum length of ushort.max with default id 65405
 class ULongArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(ulong, 65505);
+	mixin CommonArrayPacket!(ulong, 65405);
 }
 
-/// Length prefixed long[] packet with maximum length of ushort.max with default id 65506
+/// Length prefixed long[] packet with maximum length of ushort.max with default id 65406
 class LongArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(long, 65506);
+	mixin CommonArrayPacket!(long, 65406);
 }
 
-/// Length prefixed float[] packet with maximum length of ushort.max with default id 65507
+/// Length prefixed float[] packet with maximum length of ushort.max with default id 65407
 class FloatArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(float, 65507);
+	mixin CommonArrayPacket!(float, 65407);
 }
 
-/// Length prefixed double[] packet with maximum length of ushort.max with default id 65508
+/// Length prefixed double[] packet with maximum length of ushort.max with default id 65408
 class DoubleArrayPacket : IPacket
 {
-	mixin CommonArrayPacket!(double, 65508);
+	mixin CommonArrayPacket!(double, 65408);
 }

@@ -55,6 +55,20 @@ class GUIRenderer
 		renderer.enableDepthTest = depthTestState;
 	}
 
+	public void renderMesh(Mesh mesh, vec2 position, vec2 size, ITexture texture, vec4 color = vec4(1, 1, 1, 1))
+	{
+		material.bind(renderer);
+
+		material.program.set("clip", vec4(0, 0, 1, 1));
+		material.program.set("color", color);
+		material.program.set("modelview", mat4.identity.translate(position.x * iwidth * 2 - 1, -(position.y * iheight * 2 + size.y * iheight * 2 - 1), 0) * mat4.identity.scale(size.x * iwidth * 2, size.y * iheight * 2, 1));
+		material.program.set("projection", mat4.identity);
+
+		texture.bind(0);
+
+		renderer.renderMesh(mesh);
+	}
+
 	public void renderRectangle(vec2 position, vec2 size, ITexture texture, vec4 color = vec4(1, 1, 1, 1))
 	{
 		material.bind(renderer);
@@ -73,7 +87,7 @@ class GUIRenderer
 	{
 		material.bind(renderer);
 
-		material.program.set("clip", vec4(clip.x / cast(float)texture.width, clip.y / cast(float)texture.height, clip.z / cast(float)texture.width, clip.w / cast(float)texture.height));
+		material.program.set("clip", vec4(clip.x / cast(float) texture.width, clip.y / cast(float) texture.height, clip.z / cast(float) texture.width, clip.w / cast(float) texture.height));
 		material.program.set("color", color);
 		material.program.set("modelview", mat4.identity.translate(position.x * iwidth * 2 - 1, -(position.y * iheight * 2 + size.y * iheight * 2 - 1), 0) * mat4.identity.scale(size.x * iwidth * 2, size.y * iheight * 2, 1));
 		material.program.set("projection", mat4.identity);

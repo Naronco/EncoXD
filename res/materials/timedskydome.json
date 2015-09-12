@@ -1,0 +1,18 @@
+{
+	"Name": "Timebased SkyDome",
+	"Textures":
+	{
+		"0":
+		{
+			"File": "res/tex/timesky.png",
+			"MipMap": true,
+			"Smooth": true
+		}
+	},
+	"DepthTest": false,
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "timesky"
+	}
+}

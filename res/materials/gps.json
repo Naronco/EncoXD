@@ -1,0 +1,10 @@
+{
+	"Name": "GPS",
+	"Textures":
+	{},
+	"Vertex": "default",
+	"Fragment":
+	{
+		"Base": "gui"
+	}
+}

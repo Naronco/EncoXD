@@ -56,6 +56,13 @@
 		"targetName": "packets"
 	},
 	{
+		"name": "InfiniteTerrain",
+		"targetType": "executable",
+		"sourcePaths": ["Examples/InfiniteTerrain/", "source/"],
+		"importPaths": ["Examples/InfiniteTerrain/", "source/"],
+		"targetName": "infinitegame"
+	},
+	{
 		"name": "levelc",
 		"targetType": "executable",
 		"sourcePaths": ["levelc/", "source/"],
