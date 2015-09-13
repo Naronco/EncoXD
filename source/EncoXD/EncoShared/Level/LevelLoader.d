@@ -44,7 +44,7 @@ private:
 		if (typeName.length > 0)
 		{
 			entryType = typeName;
-			if(typeName.indexOf('!') != -1) // ! for templates
+			if (typeName.indexOf('!') != -1) // ! for templates
 				typeName = typeName[0 .. typeName.indexOf('!')];
 			stack[stack.length - 1] = "_" ~ typeName.toLower() ~to!string(nameIndex++);
 		}
@@ -53,7 +53,7 @@ private:
 
 	void parseName()
 	{
-		int index = content.indexOf(">");
+		size_t index = content.indexOf(">");
 		if (index == -1)
 		{
 			throw new Exception("Unclosed name");
@@ -66,14 +66,14 @@ private:
 
 	void parseArgumentName()
 	{
-		int index = content.indexOf("=");
+		size_t index = content.indexOf("=");
 
 		if (index == -1)
 		{
 			throw new Exception("Invalid argument at " ~ content);
 		}
 
-		if(content[index - 1] == '>')
+		if (content[index - 1] == '>')
 			arguments ~= "." ~ content[0 .. (index - 1)] ~ " = (";
 		else
 			arguments ~= "." ~ content[0 .. index] ~ "(";
@@ -188,8 +188,8 @@ public:
 		content = content_.strip();
 		while (content.indexOf("//") != -1)
 		{
-			int start = content.indexOf("//");
-			int end = content.indexOf('\n', start);
+			size_t start = content.indexOf("//");
+			size_t end = content.indexOf('\n', start);
 			int[]  rng;
 			char[] ncontent = content.dup;
 			for (int i = 0; i < end - start; i++)
@@ -248,9 +248,9 @@ public:
 				stack[stack.length - 1]
 				~ " = new " ~ entryType
 				~ "();\n";
-				foreach(argument; arguments)
+				foreach (argument; arguments)
 				{
-					code ~= stack[stack.length - 1] ~ argument ~ ";\n";
+					code ~= stack[stack.length - 1] ~argument ~ ";\n";
 				}
 				arguments.length = 0;
 				if (stack.length > 1)
